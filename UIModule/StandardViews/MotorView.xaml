@@ -1,0 +1,420 @@
+﻿<UserControl x:Class="UIModule.StandardViews.MotorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:UIModule.StandardViews"
+             xmlns:control="clr-namespace:GreatechApp.Core.Resources.Controls;assembly=GreatechApp.Core"
+             xmlns:prism="http://prismlibrary.com/"
+             mc:Ignorable="d" 
+             IsEnabled="{Binding IsAllowAccess}"
+             d:DesignHeight="1020" d:DesignWidth="1720">
+
+    <Border Margin="3,0,0,3"  CornerRadius="5,5,5,5"  BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="1" >
+        <Grid  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Content="{Binding Title}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Margin="0" Padding="18,2,2,0" />
+
+            <Grid Grid.Row="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="360" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <GroupBox Grid.Column="0" Header="{Binding Path=MtrOpr, Source={StaticResource StringTableODP}}" FontWeight="DemiBold"  FontSize="14" BorderBrush="{DynamicResource GridLineBrush}" IsEnabled="{Binding CanAccess}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1.5*" />
+                                    <RowDefinition Height="6.8*" />
+                                </Grid.RowDefinitions>
+
+                                <GroupBox Header="{Binding Path=CurrentPos, Source={StaticResource StringTableODP}}" Grid.Row="0" BorderBrush="{DynamicResource GridLineBrush}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="43"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Height="23" Text="{Binding CurrentPos}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="90" TextAlignment="Right" IsReadOnly="True" Grid.ColumnSpan="2" Margin="0,0,38,0"  />
+                                        <Label Content="{Binding UoM}" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
+                                    </Grid>
+                                </GroupBox>
+
+                                <GroupBox Header="{Binding Path=Status, Source={StaticResource StringTableODP}}" Grid.Row="1" Name="gbxStatus"   BorderBrush="{DynamicResource GridLineBrush}" >
+                                    <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="90" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image Source="{Binding Ready}" Stretch="Fill"  Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblReadyIcon"  Width="25" Grid.Row="0" Grid.Column="0" Visibility="{Binding IsReadyVisible}"/>
+                                            <Image Source="{Binding Alarm}" Stretch="Fill"  Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblAlarmIcon"  Width="25" Grid.Row="1" Grid.Column="0" Visibility="{Binding IsAlarmVisible}"/>
+                                            <Image Source="{Binding InPos}" Stretch="Fill"  Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblInPosIcon"  Width="25" Grid.Row="2" Grid.Column="0" Visibility="{Binding IsInPosVisible}"/>
+                                            <Image Source="{Binding Busy}" Stretch="Fill"  Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblBusyIcon"  Width="25" Grid.Row="3" Grid.Column="0" />
+                                            <Image Source="{Binding PosLmt}" Stretch="Fill"  Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblPositiveLimitIcon"  Width="25" Grid.Row="4" Grid.Column="0" Visibility="{Binding IsFwdLmtVisible}"/>
+                                            <Image Source="{Binding NegLmt}" Stretch="Fill"  Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblNegativeLimitIcon"  Width="25" Grid.Row="5" Grid.Column="0" Visibility="{Binding IsNegLmtVisible}"/>
+                                            <Image Source="{Binding Home}" Stretch="Fill"  Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblHomeDoneIcon"  Width="25" Grid.Row="6" Grid.Column="0" />
+
+                                            <Label Content="{Binding Path=Ready, Source={StaticResource StringTableODP}}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblReady" Grid.Row="0" Grid.Column="1" Visibility="{Binding IsReadyVisible}"/>
+                                            <Label Content="{Binding Path=Alarm, Source={StaticResource StringTableODP}}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblAlarm" Grid.Row="1" Grid.Column="1" Visibility="{Binding IsAlarmVisible}"/>
+                                            <Label Content="{Binding Path=InPos, Source={StaticResource StringTableODP}}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblInPos" Grid.Row="2" Grid.Column="1" Visibility="{Binding IsInPosVisible}"/>
+                                            <Label Content="{Binding Path=Busy, Source={StaticResource StringTableODP}}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblBusy" Grid.Row="3" Grid.Column="1" />
+                                            <Label Content="{Binding Path=PosLimit, Source={StaticResource StringTableODP}}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblPositiveLimit" Grid.Row="4" Grid.Column="1" Visibility="{Binding IsFwdLmtVisible}"/>
+                                            <Label Content="{Binding Path=NegLimit, Source={StaticResource StringTableODP}}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblNegativeLimit" Grid.Row="5" Grid.Column="1" Visibility="{Binding IsNegLmtVisible}"/>
+                                            <Label Content="{Binding Path=Home, Source={StaticResource StringTableODP}}" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblHomeDone" Grid.Row="6" Grid.Column="1" />
+                                        </Grid>
+                                    </ScrollViewer>
+                                </GroupBox>
+                            </Grid>
+
+                            <Grid Grid.Column="1" IsEnabled="{Binding IsMtrServoOn, Mode=OneWay}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="120" />
+                                </Grid.RowDefinitions>
+
+                                <GroupBox Header="{Binding Path=JogCtrl, Source={StaticResource StringTableODP}}" Grid.Row="0" BorderBrush="{DynamicResource GridLineBrush}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Background="{Binding HighBackground}"  Content="{Binding Path=Fast, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}" Height="55" HorizontalAlignment="Center"  Style="{DynamicResource styGlassButton}" Width="55" FontSize="18" Grid.Row="0" Grid.Column="0"  Command="{Binding ChangeSpeedCommand}" CommandParameter="High" />
+                                        <Button Background="{Binding MedBackground}"  Content="{Binding Path=Med, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}" Height="55" HorizontalAlignment="Center"  Style="{DynamicResource styGlassButton}" Width="55" FontSize="18" Grid.Row="0" Grid.Column="1"  Command="{Binding ChangeSpeedCommand}" CommandParameter="Med" />
+                                        <Button Background="{Binding LowBackground}" Content="{Binding Path=Slow, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}"  Height="55" HorizontalAlignment="Center"  Style="{DynamicResource  styGlassButton}" Width="55" FontSize="18" Grid.Row="0" Grid.Column="2"  Command="{Binding ChangeSpeedCommand}" CommandParameter="Low" />
+
+                                        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Button Background="Silver" Foreground="{DynamicResource NormalForegroundBrush}" Height="55" HorizontalAlignment="Center" Name="btnJogNegative" Style="{DynamicResource styGlassButton}" Margin="2" Width="90" FontSize="18"  Grid.Column="0">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Image Source="{Binding Icon1, Mode=OneWay}" Width="30" Height="30"  Margin="5,0,2,0"/>
+                                                    <TextBlock Text="{Binding Dir1, Mode=OneWay}" VerticalAlignment="Center" Margin="2,0,5,0"/>
+                                                </StackPanel>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                                        <prism:InvokeCommandAction Command="{Binding MotorOperationCommand}" CommandParameter="StartNegJog"  />
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewMouseUp">
+                                                        <prism:InvokeCommandAction Command="{Binding MotorOperationCommand}" CommandParameter="MotorStop"  />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+
+                                            <Button Background="Silver" Foreground="{DynamicResource NormalForegroundBrush}" Height="55" HorizontalAlignment="Center" Name="btnJogPositive" Style="{DynamicResource styGlassButton}" Margin="2" Width="90" FontSize="18" Grid.Column="1">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <TextBlock Text="{Binding Dir2, Mode=OneWay}" VerticalAlignment="Center" Margin="5,0,2,0"/>
+                                                    <Image Source="{Binding Icon2, Mode=OneWay}" Width="30" Height="30" Margin="2,0,5,0"/>
+                                                </StackPanel>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                                        <prism:InvokeCommandAction Command="{Binding MotorOperationCommand}" CommandParameter="StartPosJog"  />
+                                                    </i:EventTrigger>
+                                                    <i:EventTrigger EventName="PreviewMouseUp">
+                                                        <prism:InvokeCommandAction Command="{Binding MotorOperationCommand}" CommandParameter="MotorStop"  />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </GroupBox>
+
+
+                                <GroupBox Header="{Binding Path=MovCtrl, Source={StaticResource StringTableODP}}" Grid.Row="1" BorderBrush="{DynamicResource GridLineBrush}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Content="+/-" Height="25" Width="30" Margin="0,0,3,0" Command="{Binding InvertCommand}" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource NormalForegroundBrush}"/>
+                                            <TextBox Height="30" Text="{Binding MovingPos}" Width="100"  TextAlignment="Right" VerticalContentAlignment="Center"/>
+                                            <Label Content="{Binding UoM}" Height="28"  Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+
+                                        <Button Grid.Row="1" Grid.Column="0" Content="{Binding Path=MovAbs, Source={StaticResource StringTableODP}}" Height="30" Command="{Binding MotorOperationCommand}" CommandParameter="MoveAbs" Width="90" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource NormalForegroundBrush}" FontSize="15"  />
+                                        <Button Grid.Row="1" Grid.Column="1" Content="{Binding Path=MovRel, Source={StaticResource StringTableODP}}" Height="30" Command="{Binding MotorOperationCommand}" CommandParameter="MoveRel" Width="90" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource NormalForegroundBrush}" FontSize="15"  />
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="1" Margin="0,5,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!--Servo ON-->
+                            <Button Grid.Row="0" Grid.Column="0" Background="Silver" Command="{Binding MotorOperationCommand}" CommandParameter="Servo" Foreground="{DynamicResource NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" FontSize="15" Width="160" Height="60" Margin="0,0,0,5">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Path=Motor, Source={StaticResource StringTableODP}}" VerticalAlignment="Center" Padding="2" Margin="0,0,10,0"/>
+                                    <Image Source="{Binding ServoOnOffIcon}" Width="50" Height="50" />
+                                </StackPanel>
+                            </Button>
+
+                            <!--Home-->
+                            <Button Grid.Row="0" Grid.Column="1" Background="Silver"  Command="{Binding MotorOperationCommand}" CommandParameter="MotorHome" Foreground="{DynamicResource  NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" FontSize="15" Width="160" Height="60" Margin="0,0,0,5" IsEnabled="{Binding IsMtrServoOn, Mode=OneWay}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Image Source="/GreatechApp.Core;component/Icon/HomeBtn.png" Grid.RowSpan="2" Grid.Column="0" Width="45" Height="45" Margin="0,0,10,0"/>
+                                    <Image Source="{Binding AxisHome, Mode=OneWay}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"  Width="20" Height="20" ToolTip="{Binding AxisHomeToolTip}"/>
+                                    <TextBlock Text="{Binding Path=Home, Source={StaticResource StringTableODP}}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Padding="2"/>
+                                </Grid>
+                            </Button>
+
+                            <!--Set Zero-->
+                            <Button Grid.Row="1" Grid.Column="0" Content="{Binding Path=SetZero, Source={StaticResource StringTableODP}}" Background="Silver" Command="{Binding MotorOperationCommand}" CommandParameter="SetZero" Foreground="{DynamicResource NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" FontSize="15" Width="160" Height="60" Margin="0,0,0,5"/>
+
+                            <!--Reset-->
+                            <Button Grid.Row="1" Grid.Column="1" Background="Silver" Foreground="{DynamicResource NormalForegroundBrush}" Style="{DynamicResource  styGlassButton}" FontSize="15" Width="160" Height="60" Margin="0,0,0,5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/GreatechApp.Core;component/Icon/ResetBtn.png" Width="50" Height="50" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{Binding Path=Reset, Source={StaticResource StringTableODP}}" VerticalAlignment="Center" Padding="2"/>
+                                </StackPanel>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                        <prism:InvokeCommandAction Command="{Binding MotorOperationCommand}" CommandParameter="TurnOnAlarmReset"  />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="PreviewMouseUp">
+                                        <prism:InvokeCommandAction Command="{Binding MotorOperationCommand}" CommandParameter="TurnOffAlarmReset"  />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
+
+                            <!--Stop-->
+                            <Button Grid.Row="2" Grid.ColumnSpan="2" Background="Silver" Command="{Binding MotorOperationCommand}" CommandParameter="MotorStop" Foreground="{DynamicResource NormalForegroundBrush}" Style="{DynamicResource  styGlassButton}"  FontSize="15" Width="250" Height="70" Margin="0,0,0,5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/GreatechApp.Core;component/Icon/StopBtn.png" Width="50" Height="50" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{Binding Path=MtrStop, Source={StaticResource StringTableODP}}" VerticalAlignment="Center" Padding="2"/>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+
+                <TabControl Grid.Column="1" ItemsSource="{Binding MotorList}" SelectedIndex="{Binding SelectedTabIndex}" TabStripPlacement="Right">
+                    <TabControl.Template>
+                        <ControlTemplate TargetType="TabControl">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <ContentPresenter Grid.Column="0" x:Name="PART_SelectedContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ContentSource="SelectedContent"/>
+                                <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled"   VerticalScrollBarVisibility="Auto">
+                                    <GroupBox Header="{Binding Path=MtrAxisList, Source={StaticResource StringTableODP}}" FontWeight="DemiBold"  FontSize="14" BorderBrush="{DynamicResource GridLineBrush}">
+                                        <TabPanel Margin="0,5,0,0"
+                                                  x:Name="HeaderPanel"
+                                                  Panel.ZIndex ="1" 
+                                                  KeyboardNavigation.TabIndex="0"
+                                                  IsItemsHost="true"/>
+                                    </GroupBox>
+                                </ScrollViewer>
+                            </Grid>
+                        </ControlTemplate>
+                    </TabControl.Template>
+
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="30">
+                                <TextBlock Text="{Binding AxisName}" FontWeight="DemiBold" FontSize="14" MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                            </Grid>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+
+                    <TabControl.ContentTemplate>
+                        <DataTemplate>
+                            <TabControl>
+                                <TabItem Header="{Binding Path=TeachPos, Source={StaticResource StringTableODP}}" FontWeight="DemiBold" FontSize="14" Height="30" MinWidth="60" >
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="0 20 0 0" >
+                                        <ItemsControl ItemsSource="{Binding Positions}" IsEnabled="{Binding IsAllowAccess}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate >
+                                                    <Grid Margin="2" Name="TeachingList" >
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="200" />
+                                                            <ColumnDefinition Width="100" />
+                                                            <ColumnDefinition Width="100" />
+                                                            <ColumnDefinition Width="140" />
+                                                            <ColumnDefinition Width="100" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Label Content="{Binding TeachingPointName}" Margin="0,0,20,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"   />
+
+                                                        <TextBox Grid.Column="1" Text="{Binding TeachingPointValue}" IsReadOnly="{Binding IsReadOnly}" Height="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" ToolTip="{Binding SoftLimitToolTip}">
+                                                            <i:Interaction.Triggers>
+                                                                <i:EventTrigger EventName="LostFocus">
+                                                                    <prism:InvokeCommandAction Command="{Binding DataContext.TextBoxLostFocusCommand,RelativeSource={RelativeSource AncestorLevel=2, AncestorType=TabControl}}" CommandParameter="{Binding ElementName=TeachingList,Path=DataContext}"/>
+                                                                </i:EventTrigger>
+                                                            </i:Interaction.Triggers>
+                                                            <i:Interaction.Behaviors>
+                                                                <control:TextBoxEnterKeyUpdateBehavior />
+                                                            </i:Interaction.Behaviors>
+                                                        </TextBox>
+
+                                                        <Label Grid.Column="2" Content="{Binding TeachingPointUOM}" Margin="0,0,0,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
+
+                                                        <Button Grid.Column="3" Height="30" Width="120"  HorizontalAlignment="Center" Content="{Binding Path=TeachCurPos, Source={StaticResource StringTableODP}}" Style="{DynamicResource  styGlassButton}" Background="Silver" Foreground="Black" 
+                                                            Command="{Binding DataContext.TeachCommand,RelativeSource={RelativeSource AncestorLevel=2, AncestorType=TabControl}}" CommandParameter="{Binding ElementName=TeachingList,Path=DataContext}"/>
+
+                                                        <Button Grid.Column="4" Visibility="{Binding btnGoVisible}" Height="30" Width="60" HorizontalAlignment="Center"  Content="{Binding Path=Go, Source={StaticResource StringTableODP}}" Style="{DynamicResource  styGlassButton}" Background="Silver" Foreground="Black" 
+                                                                Command="{Binding DataContext.GoCommand,RelativeSource={RelativeSource AncestorLevel=2, AncestorType=TabControl}}" CommandParameter="{Binding ElementName=TeachingList,Path=DataContext}"  IsEnabled="{Binding IsAllowMoveMtr}"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </TabItem>
+
+                                <TabItem Header="{Binding Path=MtrProfile, Source={StaticResource StringTableODP}}" FontWeight="DemiBold" FontSize="14" Height="30" MinWidth="60" >
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" FontWeight="DemiBold"  FontSize="14">
+                                        <ItemsControl ItemsSource="{Binding Velocities}" IsEnabled="{Binding DataContext.CanAccess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorLevel=2, AncestorType=TabControl}}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="*" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                    </Grid>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style>
+                                                    <Setter Property="Grid.Row" Value="{Binding RowNum}"/>
+                                                    <Setter Property="Grid.Column" Value="{Binding ColNum}"/>
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate >
+
+                                                    <DockPanel>
+                                                        <GroupBox Header="{Binding ProfileNameWithCulture}" Foreground="Blue" Margin="2" Name="ProfileList" IsEnabled="{Binding CanAccess}">
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="20"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="100" />
+                                                                    <ColumnDefinition Width="100" />
+                                                                    <ColumnDefinition Width="80" />
+                                                                    <ColumnDefinition Width="80" />
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <Label Content="{Binding Path=DriveVel, Source={StaticResource StringTableODP}}" Grid.Row="1" Margin="0,0,20,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"   />
+                                                                <TextBox Text="{Binding DriveVel}" Grid.Row="1" Grid.Column="1" Height="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" ToolTip="{Binding MaxDriveVel}"/>
+                                                                <Label Content="{Binding VelUoM}" Grid.Row="1" Grid.Column="2" Margin="0,0,0,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" ToolTip="{Binding Path=pps, Source={StaticResource StringTableODP}}"/>
+
+                                                                <Label Content="{Binding Path=Acc, Source={StaticResource StringTableODP}}" Grid.Row="2" Margin="0,0,20,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"   />
+                                                                <TextBox Text="{Binding Acc}" Grid.Row="2" Grid.Column="1" Height="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" ToolTip="{Binding MaxAccVel}"/>
+                                                                <Label Content="{Binding AccUoM}" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" ToolTip="{Binding Path=pps2, Source={StaticResource StringTableODP}}"/>
+
+                                                                <Label Content="{Binding Path=Dcc, Source={StaticResource StringTableODP}}" Grid.Row="3" Margin="0,0,20,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"   />
+                                                                <TextBox Text="{Binding Dcc}" Grid.Row="3" Grid.Column="1" Height="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" ToolTip="{Binding MaxDccVel}"/>
+                                                                <Label Content="{Binding AccUoM}" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" ToolTip="{Binding Path=pps2, Source={StaticResource StringTableODP}}"/>
+
+                                                                <Label Content="{Binding Path=JerkTime, Source={StaticResource StringTableODP}}" Grid.Row="4" Margin="0,0,20,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"   Visibility="{Binding IsACSMotion}"/>
+                                                                <TextBox Text="{Binding JerkTime}" Grid.Row="4" Grid.Column="1" Height="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Visibility="{Binding IsACSMotion}"/>
+                                                                <Label Content="{Binding JerkTimeUoM}" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" ToolTip="{Binding Path=pps2, Source={StaticResource StringTableODP}}" Visibility="{Binding IsACSMotion}"/>
+
+                                                                <Label Content="{Binding Path=KillDcc, Source={StaticResource StringTableODP}}" Grid.Row="5" Margin="0,0,20,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14" Visibility="{Binding IsACSMotion}"/>
+                                                                <TextBox Text="{Binding KillDcc}" Grid.Row="5" Grid.Column="1" Height="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" Visibility="{Binding IsACSMotion}"/>
+                                                                <Label Content="{Binding KillDccUoM}" Grid.Row="5" Grid.Column="2" Margin="0,0,0,0" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" ToolTip="{Binding Path=pps2, Source={StaticResource StringTableODP}}"/>
+
+                                                                <Button Grid.Row="5" Grid.Column="3" Height="25" Width="55"  HorizontalAlignment="Center" Content="{Binding Path=Save, Source={StaticResource StringTableODP}}" Style="{DynamicResource  styGlassButton}" Background="Silver" Foreground="Black" 
+                                                                        Command="{Binding DataContext.SaveSpeedCommand,RelativeSource={RelativeSource AncestorLevel=2, AncestorType=TabControl}}" CommandParameter="{Binding ElementName=ProfileList,Path=DataContext}" />
+                                                            </Grid>
+                                                        </GroupBox>
+                                                    </DockPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </TabItem>
+                            </TabControl>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </TabControl>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

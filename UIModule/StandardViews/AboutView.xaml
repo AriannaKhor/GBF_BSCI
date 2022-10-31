@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="UIModule.StandardViews.AboutView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:res="clr-namespace:GreatechApp.Core.Resources;assembly=GreatechApp.Core"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://prismlibrary.com/"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="LanguagesDataTemplate">
+            <TextBlock Text="{Binding Path=NativeName}" />
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid >
+        <Image Source="/GreatechApp.Core;component/Images/About.jpg" Stretch="Fill" VerticalAlignment="Center"/>
+
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
+            <Label Content="{Binding Path=Language, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" FontSize="14" FontWeight="Black"
+                   Foreground="White" HorizontalAlignment="Center"/>
+            <ComboBox MinWidth="150" Margin="0,10" FontSize="14" 
+                SelectedItem="{Binding SelectedCulture}"
+                  ItemsSource="{Binding Path=SupportedCultures, Mode=OneWay, Source={StaticResource CultureResourcesDS}}" 
+                    ItemTemplate="{StaticResource LanguagesDataTemplate}"/>
+        </StackPanel>
+
+        <Border CornerRadius="5,5,5,5" BorderBrush="LightBlue" BorderThickness="1" Background="WhiteSmoke" Opacity="0.85" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,50,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Name="menuTitle" Content="{Binding Title}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="18,2,2,0" />
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="230"/>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Row="0" Grid.Column="0" x:Name="imgLogo" Height="40" Stretch="Uniform" Margin="3,0,0,0" Source="/GreatechApp.Core;component/Images/k.png" />
+                    <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" FontSize="20" Name="lblMachineName" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding MachName}" Margin="5" />
+                    <Label Grid.Row="1" Grid.Column="0" FontSize="12" Name="lblSoftwareVersionTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=SoftwareVer, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="2" Grid.Column="0" FontSize="12" Name="lblSoftwareBuildDateTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=SoftwareBuildDate, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="3" Grid.Column="0" FontSize="12" Name="lblCopyrightTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=CopyRight, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="4" Grid.Column="0" FontSize="12" Name="lblCompanyNameTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=CompName, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="5" Grid.Column="0" FontSize="12" Grid.RowSpan="3" Name="lblCompanyAddressTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=CompAdd, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="8" Grid.Column="0" FontSize="12" Name="lblCompanyTelTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=CompTel, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="9" Grid.Column="0" FontSize="12" Name="lblCompanyFaxTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=CompFax, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="10" Grid.Column="0" FontSize="12" Name="lblCompanyEmailTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=CompEmail, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="11" Grid.Column="0" FontSize="12" Name="lblCompanyWebsiteTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=CompWebsite, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="1" Grid.Column="2" FontSize="12" Name="lblModelTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=MachModel, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="2" Grid.Column="2" FontSize="12" Name="lblSerialNoTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=SerialNo, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="3" Grid.Column="2" FontSize="12" Name="lblMachineBuildDateTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=MachBuildDate, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="4" Grid.Column="2" FontSize="12" Name="lblCurrentTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=Current, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="5" Grid.Column="2" FontSize="12" Name="lblLineVoltageVACTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=LineVol, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="6" Grid.Column="2" FontSize="12" Name="lblFrequencyTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=Frequency, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="7" Grid.Column="2" FontSize="12" Name="lblPowerVATag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=Power, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+                    <Label Grid.Row="8" Grid.Column="2" FontSize="12" Name="lblContryOfOriginTag" FontWeight="DemiBold" HorizontalAlignment="Right" Content="{Binding Path=Country, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" />
+
+                    <Label Grid.Row="1" Grid.Column="1" FontSize="12" Name="lblVersion" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding SoftwareVersion}"  />
+                    <Label Grid.Row="2" Grid.Column="1" FontSize="12" Name="lblBuildDate" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding SoftwareBuildDate}"  />
+                    <Label Grid.Row="3" Grid.Column="1" FontSize="12" Name="lblCopyright" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=CopyRightValue, Source={StaticResource StringTableODP}}"/>
+                    <Label Grid.Row="4" Grid.Column="1" FontSize="12" Name="lblCompanyName" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=CompanyName, Source={StaticResource StringTableODP}}"/>
+                    <Label Grid.Row="5" Grid.Column="1" FontSize="12" Grid.RowSpan="3" FontWeight="DemiBold" HorizontalAlignment="Left" Height="80" Width="200" >
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Path=CompanyAddress, Source={StaticResource StringTableODP}}"/>
+                    </Label>
+                    <Label Grid.Row="8" Grid.Column="1" FontSize="12" Name="lblCompanyTel" FontWeight="DemiBold" HorizontalAlignment="Left" Content="+604 646 3260"  />
+                    <Label Grid.Row="9" Grid.Column="1" FontSize="12" Name="lblCompanyFax" FontWeight="DemiBold" HorizontalAlignment="Left" Content="+604 646 3261"  />
+                    <Label Grid.Row="10" Grid.Column="1" FontSize="12" Name="lblCompanyEmail" FontWeight="DemiBold" HorizontalAlignment="Left" Content="info@greatech-group.com"  />
+                    <Label Grid.Row="11" Grid.Column="1" FontSize="12" Name="lblCompanyWebsite" FontWeight="DemiBold" HorizontalAlignment="Left" Content="www.greatech-group.com"  />
+                    <Label Grid.Row="1" Grid.Column="3" FontSize="12" Name="lblModel" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding MachineModel}"  />
+                    <Label Grid.Row="2" Grid.Column="3" FontSize="12" Name="lblSerialNo" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding SerialNumber}"/>
+                    <Label Grid.Row="3" Grid.Column="3" FontSize="12" Name="lblMachineBuildDate" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=MachBuildDateValue, Source={StaticResource StringTableODP}}"/>
+                    <Label Grid.Row="4" Grid.Column="3" FontSize="12" Name="lblCurrent" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=MacCurrent, Source={StaticResource StringTableODP}}"/>
+                    <Label Grid.Row="5" Grid.Column="3" FontSize="12" Name="lblLineVoltageVAC" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=VacValue, Source={StaticResource StringTableODP}}"/>
+                    <Label Grid.Row="6" Grid.Column="3" FontSize="12" Name="lblFrequency" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=FrequencyValue, Source={StaticResource StringTableODP}}"/>
+                    <Label Grid.Row="7" Grid.Column="3" FontSize="12" Name="lblPowerVA" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=PowerVA, Source={StaticResource StringTableODP}}"/>
+                    <Label Grid.Row="8" Grid.Column="3" FontSize="12" Name="lblContryOfOrigin" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=CountryValue, Source={StaticResource StringTableODP}}"/>
+
+
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="DialogManager.ErrorMsg.ErrMessageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:res="clr-namespace:GreatechApp.Core.Resources;assembly=GreatechApp.Core"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DialogManager.ErrorMsg"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="550" Background="Transparent">
+
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="ResizeMode" Value="NoResize"/>
+            <Setter Property="WindowStyle" Value="None" />
+            <Setter Property="Width" Value="700" />
+            <Setter Property="Height" Value="300" />
+            <Setter Property="Topmost" Value="True"/>
+            <Setter Property="Panel.ZIndex" Value="100"/>
+        </Style>
+    </prism:Dialog.WindowStyle>
+
+    <Border BorderBrush="#2c4158" BorderThickness="0.3" CornerRadius="5" Background="Transparent">
+        <Grid Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" VerticalAlignment="Top">
+                <Label Name="menuTitle" Style="{DynamicResource styTopPenalRed}" VerticalAlignment="Center" Height="38" FontSize="18">
+                    <Label.Content>
+                        <TextBlock Text="{Binding Path=Error, Source={StaticResource StringTableODP}}" Margin="5,0,0,0" Foreground="WhiteSmoke" FontWeight="Bold"/>
+                    </Label.Content>
+                </Label>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="/GreatechApp.Core;component/Icon/error.png" Width="50" Height="50"/>
+                    <ScrollViewer Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="5*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding ErrorMsg}" TextWrapping="WrapWithOverflow" FontSize="22" Margin="6,10" HorizontalAlignment="Left" Grid.ColumnSpan="2" FontWeight="Bold"/>
+                            <Label Grid.Row="1" Content="{Binding Path=Sequence, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0}:" FontSize="16" Margin="3" VerticalAlignment="Center"/>
+                            <Label Grid.Row="2" Content="{Binding Path=Recovery, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0}:" FontSize="16" Margin="3" VerticalAlignment="Top"/>
+                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Station}" TextWrapping="WrapWithOverflow" FontSize="16" Margin="6" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Action}" TextWrapping="WrapWithOverflow" FontSize="16" Margin="6" VerticalAlignment="Top"/>
+                        </Grid>
+                    </ScrollViewer>
+
+               </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Column="2" Visibility="{Binding SkipRetestVis}" IsChecked="{Binding IsSkipRetest}" Content="{Binding Path=SkipRetest, Source={StaticResource StringTableODP}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button Grid.Column="3" Visibility="{Binding ResetVis}" Content="{Binding Path=Reset, Source={StaticResource StringTableODP}}" Command="{Binding OperationCommand}" CommandParameter="Reset" Width="70" Height="30" HorizontalAlignment="Right" Margin="10,5" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15"/>
+                    <Button Grid.Column="3" Visibility="{Binding OkVis}" Content="{Binding Path=Ok, Source={StaticResource StringTableODP}}" Command="{Binding OperationCommand}" CommandParameter="Ok" Width="70" Height="30" HorizontalAlignment="Right" Margin="10,5" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15"/>
+
+                    <!--Customize Button-->
+                    <Button Grid.Column="1" Visibility="{Binding SkipTray}" Content="{Binding Path=SkipTray, Source={StaticResource StringTableODP}}" Command="{Binding OperationCommand}" CommandParameter="SkipTray" Width="70" Height="30" HorizontalAlignment="Right" Margin="10,5" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

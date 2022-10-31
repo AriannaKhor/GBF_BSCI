@@ -1,0 +1,18 @@
+﻿<prism:PrismApplication x:Class="GreatechApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Converters="clr-namespace:GreatechApp.Core.Helpers;assembly=GreatechApp.Core"
+	         xmlns:prism="http://prismlibrary.com/"
+             xmlns:local="clr-namespace:GreatechApp">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreatechApp.Core;component/Cultures/CultureRD.xaml"/>
+                <ResourceDictionary Source="/GreatechApp.Core;component/Resources/Controls/Border.xaml"/>
+                <ResourceDictionary Source="/GreatechApp.Core;component/Resources/Controls/Button.xaml"/>
+                <ResourceDictionary Source="/GreatechApp.Core;component/Resources/Controls/ComboBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Converters:TrueToVisibleConverter x:Key="trueToVisible" />
+        </ResourceDictionary>
+    </Application.Resources>
+</prism:PrismApplication>

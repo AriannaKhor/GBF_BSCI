@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Abort" xml:space="preserve">
+    <value>中止</value>
+  </data>
+  <data name="AlarmActive" xml:space="preserve">
+    <value>电机警报未解除</value>
+  </data>
+  <data name="AlarmSummarySave" xml:space="preserve">
+    <value>已保存警报摘要</value>
+  </data>
+  <data name="alreadyexistindatabase" xml:space="preserve">
+    <value>已存在于数据库中</value>
+  </data>
+  <data name="AskConfirmCloseApp" xml:space="preserve">
+    <value>是否确实要关闭该应用程序？</value>
+  </data>
+  <data name="AskConfirmDeleteLiveSeq" xml:space="preserve">
+    <value>是否确实要清除?</value>
+  </data>
+  <data name="AskConfirmDeleteRecipe" xml:space="preserve">
+    <value>确定要删除此配方？</value>
+  </data>
+  <data name="AskConfirmDeleteUser" xml:space="preserve">
+    <value>确定要删除此用户记录？</value>
+  </data>
+  <data name="AskConfirmEndLot" xml:space="preserve">
+    <value>是否确实要结束当前批次:</value>
+  </data>
+  <data name="AskConfirmInit" xml:space="preserve">
+    <value>确实要执行初始化？</value>
+  </data>
+  <data name="AskConfirmMakeChanges" xml:space="preserve">
+    <value>是否确实要对此参数进行更改？</value>
+  </data>
+  <data name="AskConfirmSaveAlarmDetails" xml:space="preserve">
+    <value>是否确实要更改警报详细？</value>
+  </data>
+  <data name="AskConfirmSaveMPChanges" xml:space="preserve">
+    <value>是否确实要保存更改配置文件？</value>
+  </data>
+  <data name="AskConfirmSavePosition" xml:space="preserve">
+    <value>是否确实要保存此参数？</value>
+  </data>
+  <data name="AskConfirmStartLot" xml:space="preserve">
+    <value>确定要开始这批货：</value>
+  </data>
+  <data name="AskConfirmUpdateTLSetting" xml:space="preserve">
+    <value>是否要保存塔灯设置？</value>
+  </data>
+  <data name="AskOffActivedMotor" xml:space="preserve">
+    <value>退出程序前是否要禁用电机？</value>
+  </data>
+  <data name="AskReset" xml:space="preserve">
+    <value>你确定要重置</value>
+  </data>
+  <data name="AskResetAllCounter" xml:space="preserve">
+    <value>是否确实要重置所有清洁和工具寿命计数器？</value>
+  </data>
+  <data name="AskSaveChange" xml:space="preserve">
+    <value>是否保存更改到</value>
+  </data>
+  <data name="AskUpdate" xml:space="preserve">
+    <value>你确定要更新</value>
+  </data>
+  <data name="BothPassNotMatch" xml:space="preserve">
+    <value>密码不匹配</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CleaningCounter" xml:space="preserve">
+    <value>清洁计数器</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="DeleteLiveSeqConfirmation" xml:space="preserve">
+    <value>删除实时序列确认</value>
+  </data>
+  <data name="DeleteRecipeConfirmation" xml:space="preserve">
+    <value>删除配方确认</value>
+  </data>
+  <data name="DeleteUserConfirmation" xml:space="preserve">
+    <value>删除用户确认</value>
+  </data>
+  <data name="EndLot" xml:space="preserve">
+    <value>结束批次</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>警报</value>
+  </data>
+  <data name="Estop" xml:space="preserve">
+    <value>急停控制</value>
+  </data>
+  <data name="FailAddNewUser" xml:space="preserve">
+    <value>添加新用户失败</value>
+  </data>
+  <data name="FaildeleteUser" xml:space="preserve">
+    <value>删除用户失败</value>
+  </data>
+  <data name="FailInsertLot" xml:space="preserve">
+    <value>无法将批次信息插入数据库</value>
+  </data>
+  <data name="FailReconnect" xml:space="preserve">
+    <value>重新连接失败</value>
+  </data>
+  <data name="FailReconnectSomeTCP" xml:space="preserve">
+    <value>某些网络设备重新连接失败</value>
+  </data>
+  <data name="FailUpdateAccessCtrl" xml:space="preserve">
+    <value>更新访问控制失败</value>
+  </data>
+  <data name="FailupdateUser" xml:space="preserve">
+    <value>更新用户失败</value>
+  </data>
+  <data name="HEXErrorContent" xml:space="preserve">
+    <value>请输入正确的十六进制格式
+示例: A1 61 FF 97 </value>
+  </data>
+  <data name="HEXErrorTitle" xml:space="preserve">
+    <value>十六进制数据格式错误</value>
+  </data>
+  <data name="HomeCompleted" xml:space="preserve">
+    <value>电机归位完成</value>
+  </data>
+  <data name="Ignore" xml:space="preserve">
+    <value>忽视</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>信息</value>
+  </data>
+  <data name="InputEmpty" xml:space="preserve">
+    <value>请确保所有输入都不是空的</value>
+  </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>无效日期。开始日期迟于结束日期！</value>
+  </data>
+  <data name="InvalidSelectionDate" xml:space="preserve">
+    <value>无效日期。开始日期不能迟于结束日期！</value>
+  </data>
+  <data name="LiveSeqCleared" xml:space="preserve">
+    <value>实时序列已清除</value>
+  </data>
+  <data name="LiveSeqSave" xml:space="preserve">
+    <value>已保存实时序列</value>
+  </data>
+  <data name="LotIDEmpty" xml:space="preserve">
+    <value>请输入批次号</value>
+  </data>
+  <data name="MachineInit" xml:space="preserve">
+    <value>机器初始化</value>
+  </data>
+  <data name="MaxCleaningCounter" xml:space="preserve">
+    <value>最大清洁计数器</value>
+  </data>
+  <data name="ModulePerfSaved" xml:space="preserve">
+    <value>已保存模块性能摘要</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="NoRecordFound" xml:space="preserve">
+    <value>没有找到相关记录</value>
+  </data>
+  <data name="NotAllowToCloseApp" xml:space="preserve">
+    <value>关闭应用程序前，请确保机器状态为空闲</value>
+  </data>
+  <data name="OEEDataSaved" xml:space="preserve">
+    <value>已保存数据</value>
+  </data>
+  <data name="OEESaved" xml:space="preserve">
+    <value>设置已成功更新</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="OperatorIDEmpty" xml:space="preserve">
+    <value>请输入操作员号</value>
+  </data>
+  <data name="ProductExist" xml:space="preserve">
+    <value>数据库中已存在产品名称</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>问题</value>
+  </data>
+  <data name="RecipeAdded" xml:space="preserve">
+    <value>已成功添加新配方</value>
+  </data>
+  <data name="RecipeDeleted" xml:space="preserve">
+    <value>配方已成功删除</value>
+  </data>
+  <data name="RecipeEmpty" xml:space="preserve">
+    <value>请选择配方</value>
+  </data>
+  <data name="RecipeUpdated" xml:space="preserve">
+    <value>配方已成功更新</value>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>请重新启动应用程序</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>重试</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>保存完成！</value>
+  </data>
+  <data name="SeqStatusSaved" xml:space="preserve">
+    <value>序列状态已保存</value>
+  </data>
+  <data name="ServoNotON" xml:space="preserve">
+    <value>电机未开启</value>
+  </data>
+  <data name="ServoOff" xml:space="preserve">
+    <value>电机未开启</value>
+  </data>
+  <data name="ServoOn" xml:space="preserve">
+    <value>电机已开启</value>
+  </data>
+  <data name="SettingSaved" xml:space="preserve">
+    <value>设置已保存!</value>
+  </data>
+  <data name="StartLot" xml:space="preserve">
+    <value>启动批次</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="SuccessAddNewUser" xml:space="preserve">
+    <value>成功添加新用户</value>
+  </data>
+  <data name="SuccessdeleteUser" xml:space="preserve">
+    <value>成功删除用户</value>
+  </data>
+  <data name="SuccessUpdateAccessCtrl" xml:space="preserve">
+    <value>成功更新访问控制</value>
+  </data>
+  <data name="SuccessupdateUser" xml:space="preserve">
+    <value>成功更新用户</value>
+  </data>
+  <data name="TestRunCompleted" xml:space="preserve">
+    <value>测试运行已完成</value>
+  </data>
+  <data name="TestRunError" xml:space="preserve">
+    <value>测试运行警报：</value>
+  </data>
+  <data name="TestRunNotFound" xml:space="preserve">
+    <value>找不到测试运行模式</value>
+  </data>
+  <data name="ToolLifeCounter" xml:space="preserve">
+    <value>工具寿命计数器</value>
+  </data>
+  <data name="ToolMaxCounter" xml:space="preserve">
+    <value>工具寿命最大计数器</value>
+  </data>
+  <data name="TurnOnServo" xml:space="preserve">
+    <value>电机未开启，是否开启电机？</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>用户</value>
+  </data>
+  <data name="ValueNotMoreThan" xml:space="preserve">
+    <value>数值不能超过</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+</root>

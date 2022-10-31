@@ -1,0 +1,163 @@
+﻿<UserControl x:Class="UIModule.MainPanel.EquipmentView"
+             x:Name="EquipView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UIModule.MainPanel"   
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:res="clr-namespace:GreatechApp.Core.Resources;assembly=GreatechApp.Core"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:core="clr-namespace:GreatechApp.Core;assembly=GreatechApp.Core"
+             mc:Ignorable="d" 
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="EquipView_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/GreatechApp.Core;component/Resources/Controls/ExpanderStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--Equipment View-->
+        <Grid Grid.Row="0" Background="GhostWhite" IsEnabled="{Binding CanAccess}" Width="Auto" Height="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="{Binding Path=TopInspection, Source={StaticResource StringTableODP}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <WrapPanel>
+                        <Label Content="{Binding Path=Status, Source={StaticResource StringTableODP}}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" Margin="10"/>
+                        <Label Content="{Binding VisionConnStatus}" Foreground="{Binding StatusFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    </WrapPanel>
+
+                    <Label Grid.Row="1" Content="{Binding VisInspectResult}" Foreground="{Binding VisResultFG}" Background="{Binding VisResultBG}" FontWeight="DemiBold" FontSize="30" VerticalAlignment="Stretch"
+                           HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
+                    <Grid Grid.Row="5" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <WrapPanel >
+                            <Label Content="{Binding Path=TotalQuantity, Source={StaticResource StringTableODP}}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding StatusFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="1">
+                            <Label Content="{Binding Path=CorrectOrientation, Source={StaticResource StringTableODP}}"  FontSize="14" VerticalAlignment="Center"  Margin="10"/>
+                            <Label Content="{Binding VisProductCrtOrientation}" Foreground="{Binding CorrectOrientationFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="2">
+                            <Label Content="{Binding Path=WrongOrientation, Source={StaticResource StringTableODP}}"  FontSize="14" VerticalAlignment="Center"  Margin="10"/>
+                            <Label Content= "{Binding VisProductWrgOrientation}" Foreground="{Binding WrgOrientationFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </WrapPanel>
+                    </Grid>
+
+                    <WrapPanel Grid.Row="6" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                        <Button Content="{Binding TriggerLiveVis}" Command="{Binding TriggerVisCmd}" CommandParameter="Trigger Vision Live"  Height="50" Width="180" FontSize="16" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource NormalForegroundBrush}" Margin="0,50,70,0"/>
+                    </WrapPanel>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Header="{Binding Path=CodeReader, Source={StaticResource StringTableODP}}"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsEnabled="{Binding EnableCodeReader}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <WrapPanel>
+                        <Label Content="{Binding Path=Status, Source={StaticResource StringTableODP}}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" Margin="10"/>
+                        <Label Content="{Binding CodeReaderConnStatus}" Foreground="{Binding CdStatusFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        <Label Content="{Binding Path=Batch, Source={StaticResource StringTableODP}}" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50,0,0,0"/>
+                        <Label Content="{Binding ViewCurrentBatchNumber}" Foreground="{Binding BatchNoFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,0,0"/>
+                        <Label Content="{Binding Path=Container, Source={StaticResource StringTableODP}}" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50,0,0,0"/>
+                        <Label Content="{Binding ViewCurrentContainerNumber}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,0,0"/>
+                    </WrapPanel>
+                    <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" FontWeight="DemiBold" FontSize="30"
+                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
+                    <Grid Grid.Row="5" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <WrapPanel >
+                            <Label Content="{Binding Path=TotalBatchQuantity, Source={StaticResource StringTableODP}}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                            <Label Content="{Binding ViewCurrentBatchTotalQuantity}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="1">
+                            <Label Content="{Binding Path=TotalCurrentBatchQuantity, Source={StaticResource StringTableODP}}"  FontSize="14" VerticalAlignment="Center"  Margin="10"/>
+                            <Label Content="{Binding ViewAccumulateCurrentTotalBatchQuantity}" Foreground="{Binding CurrentTotalBatchQuantityFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="2">
+                            <Label Content="{Binding Path=TotalCurrentBoxQuantity, Source={StaticResource StringTableODP}}"  FontSize="14" VerticalAlignment="Center"  Margin="10"/>
+                            <Label Content= "{Binding ViewCurrentBoxQuantity}" Foreground="{Binding CurrentQuantityFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </WrapPanel>
+                    </Grid>
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+        <!--DataLog-->
+        <Expander Grid.Row="1" Grid.Column="1" Template="{StaticResource StretchyExpanderToUp}" OverridesDefaultStyle="True" IsExpanded="False" Header="{Binding Path=Datalog, Source={StaticResource StringTableODP}}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ListView x:Name="dataloglist"  ItemsSource="{Binding DataLogCollection, UpdateSourceTrigger=PropertyChanged}" MaxHeight="220" GridViewColumnHeader.Click="ListView_Click">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Status">
+                            <GridViewColumn Width="90" Header="{Binding Path=Date, Source={StaticResource StringTableODP}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Width="Auto" TextAlignment="Center" Text="{Binding Date}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="90" Header="{Binding Path=Time, Source={StaticResource StringTableODP}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Width="Auto" TextAlignment="Center" Text="{Binding Time}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="70" Header="{Binding Path=DataType, Source={StaticResource StringTableODP}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Width="Auto" TextAlignment="Center" Text="{Binding MsgType}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="1000" Header="{Binding Path=Description, Source={StaticResource StringTableODP}}">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Width="Auto" TextAlignment="Left" Text="{Binding MsgText}" TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+        </Expander>
+    </Grid>
+</UserControl>

@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="GreatechApp.Core.Resources.Controls.InputIcon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GreatechApp.Core.Resources"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="25">
+    <Grid>
+        <Ellipse Width = "25" Height = "25" Stroke="Gray" StrokeThickness="2">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop x:Name="Grad0" Offset = "0" Color="DarkGreen"/>
+                    <GradientStop x:Name="Grad1" Offset = "1.1" Color="DarkOliveGreen"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+    </Grid>
+</UserControl>

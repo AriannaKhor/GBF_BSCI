@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Abort" xml:space="preserve">
+    <value>Abort</value>
+  </data>
+  <data name="AlarmActive" xml:space="preserve">
+    <value>Motor alarm is active</value>
+  </data>
+  <data name="AlarmSummarySave" xml:space="preserve">
+    <value>Alarm summary saved</value>
+  </data>
+  <data name="alreadyexistindatabase" xml:space="preserve">
+    <value>already exist in database</value>
+  </data>
+  <data name="AskConfirmCloseApp" xml:space="preserve">
+    <value>Are you sure want to Close The Application ?</value>
+  </data>
+  <data name="AskConfirmDeleteLiveSeq" xml:space="preserve">
+    <value>Are you sure want to clear live sequence collection?</value>
+  </data>
+  <data name="AskConfirmDeleteRecipe" xml:space="preserve">
+    <value>Are you sure to delete this Recipe ?</value>
+  </data>
+  <data name="AskConfirmDeleteUser" xml:space="preserve">
+    <value>Are you sure to delete this User record ?</value>
+  </data>
+  <data name="AskConfirmEndLot" xml:space="preserve">
+    <value>Are you sure want to End Current Lot:</value>
+  </data>
+  <data name="AskConfirmInit" xml:space="preserve">
+    <value>Are you sure want to perform Initialization ?</value>
+  </data>
+  <data name="AskConfirmMakeChanges" xml:space="preserve">
+    <value>Are you sure want to make changes to this parameter ?</value>
+  </data>
+  <data name="AskConfirmSaveAlarmDetails" xml:space="preserve">
+    <value>Are you sure want to save the changes to alarm details ?</value>
+  </data>
+  <data name="AskConfirmSaveMPChanges" xml:space="preserve">
+    <value>Are you sure want to save the changes to motion profile ?</value>
+  </data>
+  <data name="AskConfirmSavePosition" xml:space="preserve">
+    <value>Are you sure want to save this parameter to current position ?</value>
+  </data>
+  <data name="AskConfirmStartLot" xml:space="preserve">
+    <value>Are you sure want to start this Lot :</value>
+  </data>
+  <data name="AskConfirmUpdateTLSetting" xml:space="preserve">
+    <value>Do you want to save the tower light setting ?</value>
+  </data>
+  <data name="AskOffActivedMotor" xml:space="preserve">
+    <value>Do you want to disable motors before exit program?</value>
+  </data>
+  <data name="AskReset" xml:space="preserve">
+    <value>Are you sure want to reset</value>
+  </data>
+  <data name="AskResetAllCounter" xml:space="preserve">
+    <value>Are you sure want to reset All Cleaning and Tool Life Counter ?</value>
+  </data>
+  <data name="AskSaveChange" xml:space="preserve">
+    <value>Are you sure want to save the changes to</value>
+  </data>
+  <data name="AskUpdate" xml:space="preserve">
+    <value>Are you sure want to update</value>
+  </data>
+  <data name="BothPassNotMatch" xml:space="preserve">
+    <value>Both Password not match</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CleaningCounter" xml:space="preserve">
+    <value>Cleaning Counter</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="DeleteLiveSeqConfirmation" xml:space="preserve">
+    <value>Delete Live Seq Confirmation</value>
+  </data>
+  <data name="DeleteRecipeConfirmation" xml:space="preserve">
+    <value>Delete Recipe Confirmation</value>
+  </data>
+  <data name="DeleteUserConfirmation" xml:space="preserve">
+    <value>Delete User Confirmation</value>
+  </data>
+  <data name="EndLot" xml:space="preserve">
+    <value>End Lot</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Estop" xml:space="preserve">
+    <value>E-Stop</value>
+  </data>
+  <data name="FailAddNewUser" xml:space="preserve">
+    <value>Fail Add New user</value>
+  </data>
+  <data name="FaildeleteUser" xml:space="preserve">
+    <value>Fail delete user</value>
+  </data>
+  <data name="FailInsertLot" xml:space="preserve">
+    <value>Fail to insert Lot Info to Database</value>
+  </data>
+  <data name="FailReconnect" xml:space="preserve">
+    <value>Fail to reconnect</value>
+  </data>
+  <data name="FailReconnectSomeTCP" xml:space="preserve">
+    <value>Some TCP devices reconnect fail</value>
+  </data>
+  <data name="FailUpdateAccessCtrl" xml:space="preserve">
+    <value>Fail update access control</value>
+  </data>
+  <data name="FailupdateUser" xml:space="preserve">
+    <value>Fail update user</value>
+  </data>
+  <data name="HEXErrorContent" xml:space="preserve">
+    <value>Invalid HEX data format, please insert proper HEX.
+Example: A1 61 FF 97 </value>
+  </data>
+  <data name="HEXErrorTitle" xml:space="preserve">
+    <value>Hexadecimal data format error</value>
+  </data>
+  <data name="HomeCompleted" xml:space="preserve">
+    <value>Home Completed</value>
+  </data>
+  <data name="Ignore" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="InputEmpty" xml:space="preserve">
+    <value>Please make sure all Input is not empty</value>
+  </data>
+  <data name="InvalidDate" xml:space="preserve">
+    <value>Invalid Selection Date. Start date is later than end date!</value>
+  </data>
+  <data name="InvalidSelectionDate" xml:space="preserve">
+    <value>Invalid Selection Date. Start Selection Date cannot larger than Selection End !</value>
+  </data>
+  <data name="LiveSeqCleared" xml:space="preserve">
+    <value>Live sequence cleared</value>
+  </data>
+  <data name="LiveSeqSave" xml:space="preserve">
+    <value>Live sequence saved</value>
+  </data>
+  <data name="LotIDEmpty" xml:space="preserve">
+    <value>Please Make Sure Lot ID is not Empty</value>
+  </data>
+  <data name="MachineInit" xml:space="preserve">
+    <value>Machine Initialization</value>
+  </data>
+  <data name="MaxCleaningCounter" xml:space="preserve">
+    <value>Max Cleaning Counter</value>
+  </data>
+  <data name="ModulePerfSaved" xml:space="preserve">
+    <value>Module performance summary saved</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoRecordFound" xml:space="preserve">
+    <value>No record found</value>
+  </data>
+  <data name="NotAllowToCloseApp" xml:space="preserve">
+    <value>Please Make Sure Machine Status is Idle before Close Application</value>
+  </data>
+  <data name="OEEDataSaved" xml:space="preserve">
+    <value>OEE Data saved</value>
+  </data>
+  <data name="OEESaved" xml:space="preserve">
+    <value>OEE Setting has been updated successfully</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OperatorIDEmpty" xml:space="preserve">
+    <value>Please Make Sure Operator ID is not Empty</value>
+  </data>
+  <data name="ProductExist" xml:space="preserve">
+    <value>Product Name already exist in database</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="RecipeAdded" xml:space="preserve">
+    <value>New Recipe has been added successfully</value>
+  </data>
+  <data name="RecipeDeleted" xml:space="preserve">
+    <value>Recipe has been deleted successfully</value>
+  </data>
+  <data name="RecipeEmpty" xml:space="preserve">
+    <value>Please Make Sure Recipe is not empty</value>
+  </data>
+  <data name="RecipeUpdated" xml:space="preserve">
+    <value>Recipe has been updated successfully</value>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>Please Restart The Application</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Saved successfully!</value>
+  </data>
+  <data name="SeqStatusSaved" xml:space="preserve">
+    <value>Sequence status saved</value>
+  </data>
+  <data name="ServoNotON" xml:space="preserve">
+    <value>Servo is not ON</value>
+  </data>
+  <data name="ServoOff" xml:space="preserve">
+    <value>Servo is not ON</value>
+  </data>
+  <data name="ServoOn" xml:space="preserve">
+    <value>Servo is ON</value>
+  </data>
+  <data name="SettingSaved" xml:space="preserve">
+    <value>Setting Saved!</value>
+  </data>
+  <data name="StartLot" xml:space="preserve">
+    <value>Start Lot</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="SuccessAddNewUser" xml:space="preserve">
+    <value>Success Add New User</value>
+  </data>
+  <data name="SuccessdeleteUser" xml:space="preserve">
+    <value>Success delete User</value>
+  </data>
+  <data name="SuccessUpdateAccessCtrl" xml:space="preserve">
+    <value>Success update access control</value>
+  </data>
+  <data name="SuccessupdateUser" xml:space="preserve">
+    <value>Success update User</value>
+  </data>
+  <data name="TestRunCompleted" xml:space="preserve">
+    <value>Test Run Completed</value>
+  </data>
+  <data name="TestRunError" xml:space="preserve">
+    <value>Test Run Error :</value>
+  </data>
+  <data name="TestRunNotFound" xml:space="preserve">
+    <value>Test Run mode not found</value>
+  </data>
+  <data name="ToolLifeCounter" xml:space="preserve">
+    <value>Tool Life Counter</value>
+  </data>
+  <data name="ToolMaxCounter" xml:space="preserve">
+    <value>Tool life Max Counter</value>
+  </data>
+  <data name="TurnOnServo" xml:space="preserve">
+    <value>Servo is not ON. Do you want to turn on servo?</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="ValueNotMoreThan" xml:space="preserve">
+    <value>Value should not more than</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+</root>

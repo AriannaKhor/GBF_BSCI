@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="UIModule.StandardViews.IOView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:res="clr-namespace:GreatechApp.Core.Resources;assembly=GreatechApp.Core"
+             xmlns:ctrl="clr-namespace:GreatechApp.Core.Resources.Controls;assembly=GreatechApp.Core"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:mahApp="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             xmlns:prism="http://prismlibrary.com/">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/GreatechApp.Core;component/Resources/Controls/ExpanderStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Margin="0,0,0,3"  CornerRadius="5,5,5,5"  BorderThickness="1" BorderBrush="{DynamicResource GridLineBrush }" >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Expander Name="ModuleStationExpander" Grid.Column="0" Template="{StaticResource StretchyExpanderToRight}" MaxWidth="300" IsExpanded="True" OverridesDefaultStyle="True" >
+                <Expander.Header>
+                    <Grid>
+                        <Label Content="{Binding Path=Station, Source={StaticResource StringTableODP}}">
+                            <Label.LayoutTransform>
+                                <RotateTransform Angle="90"/>
+                            </Label.LayoutTransform>
+                        </Label>
+                    </Grid>
+                </Expander.Header>
+
+                <GroupBox Header="{Binding Path=Station, Source={StaticResource StringTableODP}}" FontSize="12">
+                    <ListView BorderThickness="2" Margin="2 5 2 2" ItemsSource="{Binding ModuleStations}" SelectedItem="{Binding SelectedModuleStation, Mode=TwoWay}" FontSize="15">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Margin" Value="2" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="25">
+                                    <TextBlock Text="{Binding}" FontWeight="DemiBold" FontSize="14" MinWidth="60" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding DataContext.SelectedItemChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListView>
+                </GroupBox>
+            </Expander>
+
+            <GroupBox Header="{Binding Path=Input, Source={StaticResource StringTableODP}}" Grid.Column="1" IsEnabled="{Binding CanAccess}">
+                <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" mahApp:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True">
+                    <ItemsControl ItemsSource="{Binding InputList, Mode=TwoWay}" >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate >
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Border BorderBrush="Black" BorderThickness="0.5" Margin="5">
+                                        <StackPanel Orientation="Horizontal" Margin="3" Width="auto">
+                                            <ctrl:InputIcon IsOn="{Binding Status}" Margin="2,1.3,5,1.3"/>
+                                            <TextBlock Text="{Binding Assignment, Mode=OneWay}" Padding="2" VerticalAlignment="Center" FontSize="13"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Label Content="{Binding Description}" Height="35" HorizontalAlignment="Left" FontSize="14"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </GroupBox>
+
+            <GroupBox Header="{Binding Path=Output, Source={StaticResource StringTableODP}}" Grid.Column="2" IsEnabled="{Binding CanAccess}">
+                <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" mahApp:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True">
+                    <ItemsControl ItemsSource="{Binding OutputList, Mode=TwoWay}" >
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate >
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Border BorderBrush="Black" BorderThickness="0.5" Margin="5">
+                                        <ToggleButton Name="OutputToggle" IsChecked="{Binding Status}" Command="{Binding DataContext.IOCommand,RelativeSource={RelativeSource AncestorType=WrapPanel}}" 
+                                                          CommandParameter="{Binding ElementName=OutputToggle,Path=DataContext}" Margin="2" HorizontalAlignment="Left" Width="auto" Height="30" >
+                                            <ToggleButton.Style>
+                                                <Style TargetType="{x:Type ToggleButton}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="ToggleButton">
+                                                                <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsChecked" Value="True">
+                                                            <Setter Property="Background" Value="DodgerBlue"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsChecked" Value="False">
+                                                            <Setter Property="Background" Value="WhiteSmoke"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </ToggleButton.Style>
+                                            <StackPanel Orientation="Horizontal" Margin="2.5" Width="auto">
+                                                <ctrl:OutputIcon IsOn="{Binding Status}" Margin="2,0,5,0"/>
+                                                <TextBlock Text="{Binding Assignment, Mode=OneWay}" Margin="5,0,3,0" VerticalAlignment="Center" FontSize="13"/>
+                                            </StackPanel>
+                                        </ToggleButton>
+                                    </Border>
+                                    <Label Content="{Binding Description}" Height="35" HorizontalAlignment="Left" FontSize="14"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </GroupBox>
+        </Grid>
+    </Border>
+</UserControl>

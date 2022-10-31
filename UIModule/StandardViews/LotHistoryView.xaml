@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="UIModule.StandardViews.LotHistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:GreatechApp.Core.Resources;assembly=GreatechApp.Core"
+             xmlns:framework="clr-namespace:GreatechApp.Core.Helpers;assembly=GreatechApp.Core"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:prism="http://prismlibrary.com/"
+             IsEnabled="{Binding CanAccess}"
+             mc:Ignorable="d" 
+             d:DesignHeight="985" d:DesignWidth="1720">
+    
+    <Border Margin="3,0,0,3" CornerRadius="5,5,5,5" BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+           
+            <Label Grid.Row="0" Name="menuTitle" Content="{Binding Title}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Margin="0" Padding="18,2,2,0" />
+
+            <DataGrid Name="dg" Grid.Row="1"  AutoGenerateColumns="False" FontSize="14" ItemsSource="{Binding LotHistoryCollection}" IsReadOnly="True" Margin="5"  MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=Grid}}" HeadersVisibility="Column" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Lot_Number}" Header="{Binding Path=LotID, Source={StaticResource StringTableODP}}"  Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Operator_ID}" Header="{Binding Path=OperatorID, Source={StaticResource StringTableODP}}"  Width="100"/>
+                    <DataGridTextColumn Binding="{Binding Recipe}" Header="{Binding Path=Recipe, Source={StaticResource StringTableODP}}"  Width="100"/>
+                    <DataGridTextColumn Binding="{Binding Start_Time}" Header="{Binding Path=StartTime, Source={StaticResource StringTableODP}}"  Width="*"/>
+                    <DataGridTextColumn Binding="{Binding End_Time}" Header="{Binding Path=EndTime, Source={StaticResource StringTableODP}}"  Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Total_Input}" Header="{Binding Path=TotalInput, Source={StaticResource StringTableODP}}" Width="100" />
+                    <DataGridTextColumn Binding="{Binding Total_Output}" Header="{Binding Path=TotalOutput, Source={StaticResource StringTableODP}}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
+</UserControl>

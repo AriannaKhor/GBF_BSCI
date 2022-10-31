@@ -1,0 +1,58 @@
+﻿{
+   "CodeGenerationMode": 1,
+   "ContextClassName": "AppDBContext",
+   "ContextNamespace": "Domains",
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": "",
+   "OutputContextPath": "",
+   "OutputPath": "",
+   "ProjectRootNamespace": "DBManager",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[TblAccessControl]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TblError]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TblLot]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TblOEE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TblOEEConfig]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TblRecipe]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TblUser]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "CSL-0222\\SQLEXPRESS.AppDb",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoNavigations": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSpatial": false
+}

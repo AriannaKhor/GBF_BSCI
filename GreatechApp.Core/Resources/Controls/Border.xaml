@@ -1,0 +1,106 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+    <SolidColorBrush x:Key="GridLineBrush" Color="#FF5E5B9D" />
+
+    <LinearGradientBrush x:Key="GreenBorderBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="Lime" Offset="0"/>
+        <GradientStop Color="Green" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="RedBorderBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="Red" Offset="0"/>
+        <GradientStop Color="DarkRed" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="YellowBorderBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="Yellow" Offset="0"/>
+        <GradientStop Color="Gold" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="BlueBorderBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#FF008DFF" Offset="0"/>
+        <GradientStop Color="Blue" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LightBlueBorderBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="CadetBlue" Offset="0"/>
+        <GradientStop Color="SteelBlue" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="WhiteBorderBackground" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="WhiteSmoke" Offset="0"/>
+        <GradientStop Color="White" Offset="1"/>
+    </LinearGradientBrush>
+
+    <Style x:Key="styTopPenal" TargetType="{x:Type Label}">
+        <Setter Property="Background" Value="{StaticResource TopPanelTitleBrush}"/>
+        <Setter Property="Foreground" Value="#FF7D7D7D" />
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontWeight" Value="Bold"  />
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="styTopPenalBlue" TargetType="{x:Type Label}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Label}">
+                    <Grid>
+                        <Border Name="Bd" CornerRadius="3,3,0,0" >
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF627793" Offset="0"/>
+                                    <GradientStop Color="#FF234372" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Label Content="{Binding Path=Content, RelativeSource={RelativeSource AncestorType={x:Type Label}}}"  Margin="0,0,0,0"  VerticalAlignment="Top" Foreground="Snow" Padding="{Binding Path=Padding, RelativeSource={RelativeSource AncestorType={x:Type Label}}}" HorizontalAlignment="{Binding Path=HorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type Label}}}" HorizontalContentAlignment="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type Label}}}" ></Label>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="styTopPenalRed" TargetType="{x:Type Label}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Label}">
+                    <Grid>
+                        <Border Name="Bd" CornerRadius="3,3,0,0" >
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFBB3939" Offset="0"/>
+                                    <GradientStop Color="#FF9E1F1F" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Label Content="{Binding Path=Content, RelativeSource={RelativeSource AncestorType={x:Type Label}}}"  Margin="0,0,0,0"  VerticalAlignment="Top" Foreground="Snow" Padding="{Binding Path=Padding, RelativeSource={RelativeSource AncestorType={x:Type Label}}}" HorizontalAlignment="{Binding Path=HorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type Label}}}" HorizontalContentAlignment="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type Label}}}" ></Label>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="styTopPenalYellow" TargetType="{x:Type Label}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Label}">
+                    <Grid>
+                        <Border Name="Bd" CornerRadius="3,3,0,0" >
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFAFBB39" Offset="0"/>
+                                    <GradientStop Color="#FFD3D324" Offset="0.5"/>
+                                    <GradientStop Color="#FFE2E210" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Label Content="{Binding Path=Content, RelativeSource={RelativeSource AncestorType={x:Type Label}}}"  Margin="0,0,0,0"  VerticalAlignment="Top" Foreground="Snow" Padding="{Binding Path=Padding, RelativeSource={RelativeSource AncestorType={x:Type Label}}}" HorizontalAlignment="{Binding Path=HorizontalAlignment, RelativeSource={RelativeSource AncestorType={x:Type Label}}}" HorizontalContentAlignment="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type Label}}}" ></Label>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,1694 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AccessCtrl" xml:space="preserve">
+    <value>Access Control</value>
+  </data>
+  <data name="AccessCtrlInfo" xml:space="preserve">
+    <value>Access Control Info</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="Alarm" xml:space="preserve">
+    <value>Alarm</value>
+  </data>
+  <data name="AlarmCfg" xml:space="preserve">
+    <value>Alarm Config</value>
+  </data>
+  <data name="AlarmConfig" xml:space="preserve">
+    <value>Alarm Config</value>
+  </data>
+  <data name="AllPurgeOff" xml:space="preserve">
+    <value>All Purge Off</value>
+  </data>
+  <data name="AllPurgeOn" xml:space="preserve">
+    <value>All Purge On</value>
+  </data>
+  <data name="AllVacOff" xml:space="preserve">
+    <value>All Vacuum Off</value>
+  </data>
+  <data name="AllVacOn" xml:space="preserve">
+    <value>All Vacuum On</value>
+  </data>
+  <data name="AmberLight" xml:space="preserve">
+    <value>Amber Light</value>
+  </data>
+  <data name="Analysis" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="AutoMode" xml:space="preserve">
+    <value>Auto Mode</value>
+  </data>
+  <data name="Availability" xml:space="preserve">
+    <value>Availability</value>
+  </data>
+  <data name="AvailabilityToolTip" xml:space="preserve">
+    <value>Run Time / Planned Production Time</value>
+  </data>
+  <data name="AvgCycleTime" xml:space="preserve">
+    <value>Avg Cycle Time</value>
+  </data>
+  <data name="AvgCycleTimeMessage" xml:space="preserve">
+    <value>Average Cycle Time</value>
+  </data>
+  <data name="Axis" xml:space="preserve">
+    <value>Axis</value>
+  </data>
+  <data name="AxisHomeToolTip" xml:space="preserve">
+    <value>Is Axis already home ?</value>
+  </data>
+  <data name="BaudRate" xml:space="preserve">
+    <value>Baud Rate</value>
+  </data>
+  <data name="Blinking" xml:space="preserve">
+    <value>Blinking</value>
+  </data>
+  <data name="BlinkInt" xml:space="preserve">
+    <value>Light Blink Interval</value>
+  </data>
+  <data name="BtmInspection" xml:space="preserve">
+    <value>Bottom Inspection</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>Busy</value>
+  </data>
+  <data name="Buzzer" xml:space="preserve">
+    <value>Buzzer</value>
+  </data>
+  <data name="BuzzerInt" xml:space="preserve">
+    <value>Buzzer Sound Interval</value>
+  </data>
+  <data name="BypassStation" xml:space="preserve">
+    <value>Bypass Station</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CleaningCounter" xml:space="preserve">
+    <value>Cleaning Counter</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="ClickClearBuffer" xml:space="preserve">
+    <value>Click here to clear the buffer</value>
+  </data>
+  <data name="ClickClearTCPCommand" xml:space="preserve">
+    <value>Click here to clear the TCP Command</value>
+  </data>
+  <data name="ClickClearTCPMessage" xml:space="preserve">
+    <value>Click here to clear the TCP message</value>
+  </data>
+  <data name="ClickCloseSerialPort" xml:space="preserve">
+    <value>Click here to close the serial port</value>
+  </data>
+  <data name="ClickCloseTCPSocket" xml:space="preserve">
+    <value>Click here to Close TCP Socket Connection</value>
+  </data>
+  <data name="ClickOpenSerialPort" xml:space="preserve">
+    <value>Click here to open the serial port</value>
+  </data>
+  <data name="ClickOpenTCPSocket" xml:space="preserve">
+    <value>Click here to Open TCP Socket Connection</value>
+  </data>
+  <data name="ClickSendMsg" xml:space="preserve">
+    <value>Click here to send message</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ClosePort" xml:space="preserve">
+    <value>Close Port</value>
+  </data>
+  <data name="Communication" xml:space="preserve">
+    <value>Communication</value>
+  </data>
+  <data name="CompAdd" xml:space="preserve">
+    <value>Company Address</value>
+  </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>Plot 287(A), 287(B) &amp; 287(C)   Lengkok Kampung Jawa 1 Phase 3 Bayan Lepas Free Industrial Zone 11900, Penang, Malaysia</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Greatech Integration (M) SDN. BHD</value>
+  </data>
+  <data name="CompEmail" xml:space="preserve">
+    <value>Company Email</value>
+  </data>
+  <data name="CompFax" xml:space="preserve">
+    <value>Company Fax</value>
+  </data>
+  <data name="CompileMode" xml:space="preserve">
+    <value>Compile Mode</value>
+  </data>
+  <data name="CompName" xml:space="preserve">
+    <value>Company Name</value>
+  </data>
+  <data name="CompTel" xml:space="preserve">
+    <value>Company Telephone</value>
+  </data>
+  <data name="CompWebsite" xml:space="preserve">
+    <value>Company Website</value>
+  </data>
+  <data name="Config" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="ConfirmPass" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="CopyRight" xml:space="preserve">
+    <value>CopyRight</value>
+  </data>
+  <data name="CopyRightValue" xml:space="preserve">
+    <value>Copyright © 2021 | Greatech</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>Count</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country of Origin</value>
+  </data>
+  <data name="CountryValue" xml:space="preserve">
+    <value>Malaysia</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Electric Current</value>
+  </data>
+  <data name="CurrentPos" xml:space="preserve">
+    <value>Current Position</value>
+  </data>
+  <data name="CurrentToolLife" xml:space="preserve">
+    <value>Current Tool Life</value>
+  </data>
+  <data name="CycleTime" xml:space="preserve">
+    <value>Cycle Time</value>
+  </data>
+  <data name="CycleTimeSecond" xml:space="preserve">
+    <value>Cycle Time (s)</value>
+  </data>
+  <data name="Cylinder" xml:space="preserve">
+    <value>Cylinder</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="DataBit" xml:space="preserve">
+    <value>Data Bit</value>
+  </data>
+  <data name="Datalog" xml:space="preserve">
+    <value>Datalog</value>
+  </data>
+  <data name="DataType" xml:space="preserve">
+    <value>Data Type</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="DateRange" xml:space="preserve">
+    <value>Date Range</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Date/Time</value>
+  </data>
+  <data name="Debug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="degree" xml:space="preserve">
+    <value>deg</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DownTime" xml:space="preserve">
+    <value>Machine Down Time</value>
+  </data>
+  <data name="DownTimeMessage" xml:space="preserve">
+    <value>Duration calculated from machine stoppages</value>
+  </data>
+  <data name="DryRun" xml:space="preserve">
+    <value>Dry Run</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>Edit User</value>
+  </data>
+  <data name="ElapsedTime" xml:space="preserve">
+    <value>Machine Elapsed Time</value>
+  </data>
+  <data name="ElapsedTimeMessage" xml:space="preserve">
+    <value>Duration calculated from machine initial run till now</value>
+  </data>
+  <data name="EndEmptyPocket" xml:space="preserve">
+    <value>Ending Empty Pocket</value>
+  </data>
+  <data name="EndLot" xml:space="preserve">
+    <value>End Lot</value>
+  </data>
+  <data name="EndOfSummary" xml:space="preserve">
+    <value>End Of Summary</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>End Time</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorAnalysis" xml:space="preserve">
+    <value>Error Analysis</value>
+  </data>
+  <data name="ErrorCause" xml:space="preserve">
+    <value>Error Cause</value>
+  </data>
+  <data name="ErrorCode" xml:space="preserve">
+    <value>Error Code</value>
+  </data>
+  <data name="ErrorHistory" xml:space="preserve">
+    <value>Error History</value>
+  </data>
+  <data name="ErrorInfo" xml:space="preserve">
+    <value>Error Info</value>
+  </data>
+  <data name="ErrorMsg" xml:space="preserve">
+    <value>Error Message</value>
+  </data>
+  <data name="ErrorType" xml:space="preserve">
+    <value>Error Type</value>
+  </data>
+  <data name="EStopNotRelease" xml:space="preserve">
+    <value>E-Stop Button not released</value>
+  </data>
+  <data name="ExeTime" xml:space="preserve">
+    <value>Machine Execution Period</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportMessage" xml:space="preserve">
+    <value>Export data to file</value>
+  </data>
+  <data name="FinishTime" xml:space="preserve">
+    <value>Lot Finish Time</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Frequency</value>
+  </data>
+  <data name="FrequencyValue" xml:space="preserve">
+    <value>50/60Hz</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="FrontInspection" xml:space="preserve">
+    <value>Front Inspection</value>
+  </data>
+  <data name="GenInput" xml:space="preserve">
+    <value>General Input</value>
+  </data>
+  <data name="GenOutput" xml:space="preserve">
+    <value>General Output</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="Greatech" xml:space="preserve">
+    <value>GREATECH</value>
+  </data>
+  <data name="GreenLight" xml:space="preserve">
+    <value>Green Light</value>
+  </data>
+  <data name="Handler" xml:space="preserve">
+    <value>Handler</value>
+  </data>
+  <data name="HandShake" xml:space="preserve">
+    <value>HandShake</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="HomeDone" xml:space="preserve">
+    <value>Home Done</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="Init" xml:space="preserve">
+    <value>Init</value>
+  </data>
+  <data name="InitState" xml:space="preserve">
+    <value>INIT STATE</value>
+  </data>
+  <data name="InPos" xml:space="preserve">
+    <value>In Pos</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="InputOutput" xml:space="preserve">
+    <value>Input/Output</value>
+  </data>
+  <data name="Interlock" xml:space="preserve">
+    <value>INTERLOCK</value>
+  </data>
+  <data name="InvalidLoginInfo" xml:space="preserve">
+    <value>Invalid Login Info</value>
+  </data>
+  <data name="IO" xml:space="preserve">
+    <value>IO</value>
+  </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP Address</value>
+  </data>
+  <data name="IsAlive" xml:space="preserve">
+    <value>Is Alive?</value>
+  </data>
+  <data name="IssuedBy" xml:space="preserve">
+    <value>IssuedBy</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="JogCtrl" xml:space="preserve">
+    <value>Jog Control</value>
+  </data>
+  <data name="LastCycleTime" xml:space="preserve">
+    <value>Last Cycle Time</value>
+  </data>
+  <data name="LineVol" xml:space="preserve">
+    <value>Line Voltage VAC</value>
+  </data>
+  <data name="LiveSequence" xml:space="preserve">
+    <value>Sequence History</value>
+  </data>
+  <data name="LiveTracking" xml:space="preserve">
+    <value>Live Tracking</value>
+  </data>
+  <data name="LogFileDuration" xml:space="preserve">
+    <value>Log File Keep Duration</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LogInfo" xml:space="preserve">
+    <value>Log Info</value>
+  </data>
+  <data name="LotElapsedTime" xml:space="preserve">
+    <value>Lot Elapsed Time</value>
+  </data>
+  <data name="LotElapsedTimeMessage" xml:space="preserve">
+    <value>Duration start from Lot Start Time till now</value>
+  </data>
+  <data name="LotEntry" xml:space="preserve">
+    <value>Lot Entry</value>
+  </data>
+  <data name="LotFinishTimeMessage" xml:space="preserve">
+    <value>End Lot</value>
+  </data>
+  <data name="LotHistory" xml:space="preserve">
+    <value>Lot History</value>
+  </data>
+  <data name="LotID" xml:space="preserve">
+    <value>Lot ID</value>
+  </data>
+  <data name="LotStartTime" xml:space="preserve">
+    <value>Lot Start Time</value>
+  </data>
+  <data name="LotStartTimeMessage" xml:space="preserve">
+    <value>Time where new lot start to run</value>
+  </data>
+  <data name="LotSummary" xml:space="preserve">
+    <value>Lot Summary</value>
+  </data>
+  <data name="LotYield" xml:space="preserve">
+    <value>Yield</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="MacCurrent" xml:space="preserve">
+    <value>15A</value>
+  </data>
+  <data name="MachBuildDate" xml:space="preserve">
+    <value>Machine Build Date</value>
+  </data>
+  <data name="MachBuildDateValue" xml:space="preserve">
+    <value>1-January-2021</value>
+  </data>
+  <data name="MachID" xml:space="preserve">
+    <value>Machine ID</value>
+  </data>
+  <data name="MachineMode" xml:space="preserve">
+    <value>Machine Mode</value>
+  </data>
+  <data name="MachineOperation" xml:space="preserve">
+    <value>Machine Operation</value>
+  </data>
+  <data name="MachinePerf" xml:space="preserve">
+    <value>Machine Performance</value>
+  </data>
+  <data name="MachineState" xml:space="preserve">
+    <value>Machine State</value>
+  </data>
+  <data name="MachineStatus" xml:space="preserve">
+    <value>Machine Status</value>
+  </data>
+  <data name="MachineStatusToolTip" xml:space="preserve">
+    <value>Green  : Machine Running
+Yellow : Machine Idle
+Red    : Machine Down</value>
+  </data>
+  <data name="MachMode" xml:space="preserve">
+    <value>Machine Mode</value>
+  </data>
+  <data name="MachModel" xml:space="preserve">
+    <value>Machine Model</value>
+  </data>
+  <data name="MachName" xml:space="preserve">
+    <value>Machine Name</value>
+  </data>
+  <data name="MachPerf" xml:space="preserve">
+    <value>Machine Perf</value>
+  </data>
+  <data name="MachStatus" xml:space="preserve">
+    <value>Machine Status</value>
+  </data>
+  <data name="MaxCleanCounter" xml:space="preserve">
+    <value>Max Cleaning Counter</value>
+  </data>
+  <data name="MaxCycleTime" xml:space="preserve">
+    <value>Max Cycle Time</value>
+  </data>
+  <data name="MaxCycleTimeMessage" xml:space="preserve">
+    <value>Maximum Cycle Time</value>
+  </data>
+  <data name="MaxToolLife" xml:space="preserve">
+    <value>Max Tool Life</value>
+  </data>
+  <data name="Med" xml:space="preserve">
+    <value>Med</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Millisecond" xml:space="preserve">
+    <value>Millisecond (ms)</value>
+  </data>
+  <data name="MinCycleTime" xml:space="preserve">
+    <value>Min Cycle Time</value>
+  </data>
+  <data name="MinCycleTimeMessage" xml:space="preserve">
+    <value>Minimum Cycle Time</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="mm" xml:space="preserve">
+    <value>mm</value>
+  </data>
+  <data name="ModPerf" xml:space="preserve">
+    <value>Module Perf</value>
+  </data>
+  <data name="ModPerfSummary" xml:space="preserve">
+    <value>Module Performance Summary</value>
+  </data>
+  <data name="ModulePerf" xml:space="preserve">
+    <value>Module Performance</value>
+  </data>
+  <data name="ModulePic" xml:space="preserve">
+    <value>Module Picture</value>
+  </data>
+  <data name="Modules" xml:space="preserve">
+    <value>Modules</value>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>Motion</value>
+  </data>
+  <data name="Motor" xml:space="preserve">
+    <value>Motor</value>
+  </data>
+  <data name="MotorAlarm" xml:space="preserve">
+    <value>Motor Alarm signal is active</value>
+  </data>
+  <data name="MotorMove" xml:space="preserve">
+    <value>Motor is moving</value>
+  </data>
+  <data name="MotorNotEnabled" xml:space="preserve">
+    <value>Motor is not enabled</value>
+  </data>
+  <data name="MovAbs" xml:space="preserve">
+    <value>Go Absolute</value>
+  </data>
+  <data name="MovCtrl" xml:space="preserve">
+    <value>Moving Control</value>
+  </data>
+  <data name="MoveNegative" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="MovePositive" xml:space="preserve">
+    <value>+</value>
+  </data>
+  <data name="MovRel" xml:space="preserve">
+    <value>Go Relative</value>
+  </data>
+  <data name="ms" xml:space="preserve">
+    <value>ms</value>
+  </data>
+  <data name="MsgFromSerialPort" xml:space="preserve">
+    <value>Message received from Serial Port</value>
+  </data>
+  <data name="MsgFromTCPSocket" xml:space="preserve">
+    <value>Message received from TCP / IP Socket</value>
+  </data>
+  <data name="MsgSentSerialPort" xml:space="preserve">
+    <value>Messages sent to serial port</value>
+  </data>
+  <data name="MsgSentTCPSocket" xml:space="preserve">
+    <value>Messages sent to TCP / IP Socket</value>
+  </data>
+  <data name="MTBA" xml:space="preserve">
+    <value>MTBA</value>
+  </data>
+  <data name="MTBA_M" xml:space="preserve">
+    <value>MTBA (Min)</value>
+  </data>
+  <data name="MTBAMessage" xml:space="preserve">
+    <value>Mean Time Between Assists : Average number of hours producing until an assist is required</value>
+  </data>
+  <data name="MTBF" xml:space="preserve">
+    <value>MTBF</value>
+  </data>
+  <data name="MTBFMessage" xml:space="preserve">
+    <value>Mean Time Between Failures : Time between one system breakdown and the next</value>
+  </data>
+  <data name="MtrAxisList" xml:space="preserve">
+    <value>Motor Axis List</value>
+  </data>
+  <data name="MtrHome" xml:space="preserve">
+    <value>Motor Home</value>
+  </data>
+  <data name="MtrOpr" xml:space="preserve">
+    <value>Motor Operation</value>
+  </data>
+  <data name="MtrProfile" xml:space="preserve">
+    <value>Motor Profile</value>
+  </data>
+  <data name="MtrStop" xml:space="preserve">
+    <value>Motor Stop</value>
+  </data>
+  <data name="MTTA" xml:space="preserve">
+    <value>MTTA</value>
+  </data>
+  <data name="MTTAMessage" xml:space="preserve">
+    <value>Mean Time To Assist : Amount of time to be Assisted</value>
+  </data>
+  <data name="MTTR" xml:space="preserve">
+    <value>MTTR</value>
+  </data>
+  <data name="MTTRMessage" xml:space="preserve">
+    <value>Mean Time To Repair : Amount of time required to repair a system and restore it to full functionality</value>
+  </data>
+  <data name="NegLimit" xml:space="preserve">
+    <value>-ve Limit</value>
+  </data>
+  <data name="NetworkAdap" xml:space="preserve">
+    <value>Network Adapter</value>
+  </data>
+  <data name="NewPass" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="OEE" xml:space="preserve">
+    <value>OEE</value>
+  </data>
+  <data name="OEEData" xml:space="preserve">
+    <value>OEE Data</value>
+  </data>
+  <data name="OEEFilter" xml:space="preserve">
+    <value>OEE Filter</value>
+  </data>
+  <data name="OEEGaugeChart" xml:space="preserve">
+    <value>OEE Gauge Chart</value>
+  </data>
+  <data name="OEEInfo" xml:space="preserve">
+    <value>OEE Info</value>
+  </data>
+  <data name="OEESetting" xml:space="preserve">
+    <value>OEE Setting</value>
+  </data>
+  <data name="OEEToolTip" xml:space="preserve">
+    <value>Availability * Performance * Quality</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="OnlineStatus" xml:space="preserve">
+    <value>Online Status</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="OpenPort" xml:space="preserve">
+    <value>Open Port</value>
+  </data>
+  <data name="OperatorID" xml:space="preserve">
+    <value>Operator ID</value>
+  </data>
+  <data name="OutCarrierTapeUnit" xml:space="preserve">
+    <value>Output Carrier Tape Unit</value>
+  </data>
+  <data name="Output" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="OverallYield" xml:space="preserve">
+    <value>Overall Yield</value>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>Parity</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Performance" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="PerformanceToolTip" xml:space="preserve">
+    <value>(Ideal Cycle Time * Total Count) / Run Time</value>
+  </data>
+  <data name="PerfSummary" xml:space="preserve">
+    <value>Performance Summary</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="PosLimit" xml:space="preserve">
+    <value>+ve Limit</value>
+  </data>
+  <data name="Power" xml:space="preserve">
+    <value>Power VA</value>
+  </data>
+  <data name="PowerVA" xml:space="preserve">
+    <value>5196</value>
+  </data>
+  <data name="pps" xml:space="preserve">
+    <value>pulse / second</value>
+  </data>
+  <data name="pps2" xml:space="preserve">
+    <value>pulse / second ^ 2</value>
+  </data>
+  <data name="Preset" xml:space="preserve">
+    <value>Preset</value>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="CCW" xml:space="preserve">
+    <value>CCW</value>
+  </data>
+  <data name="CriticalError" xml:space="preserve">
+    <value>Critical Error</value>
+  </data>
+  <data name="CW" xml:space="preserve">
+    <value>CW</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="Equipment" xml:space="preserve">
+    <value>Equipment</value>
+  </data>
+  <data name="Fast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="Front" xml:space="preserve">
+    <value>Front</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>Idle</value>
+  </data>
+  <data name="InitDone" xml:space="preserve">
+    <value>Init Done</value>
+  </data>
+  <data name="InitFail" xml:space="preserve">
+    <value>Init Fail</value>
+  </data>
+  <data name="Initializing" xml:space="preserve">
+    <value>Initializing</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="LotEnded" xml:space="preserve">
+    <value>Lot Ended</value>
+  </data>
+  <data name="LotEnding" xml:space="preserve">
+    <value>Lot Ending</value>
+  </data>
+  <data name="Acc" xml:space="preserve">
+    <value>Acc</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Dcc" xml:space="preserve">
+    <value>Dcc</value>
+  </data>
+  <data name="DriveVel" xml:space="preserve">
+    <value>DriveVel</value>
+  </data>
+  <data name="JerkTime" xml:space="preserve">
+    <value>Jerk Time</value>
+  </data>
+  <data name="KillDcc" xml:space="preserve">
+    <value>Kill Dcc</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="Counter" xml:space="preserve">
+    <value>Counter</value>
+  </data>
+  <data name="CurrentShift" xml:space="preserve">
+    <value>Current Shift</value>
+  </data>
+  <data name="DateNTime" xml:space="preserve">
+    <value>Date &amp; Time</value>
+  </data>
+  <data name="DelayTimer" xml:space="preserve">
+    <value>Delay Timer</value>
+  </data>
+  <data name="ErrorTimer" xml:space="preserve">
+    <value>Error Timer</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="IdealCycleTime" xml:space="preserve">
+    <value>Ideal Cycle Time</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="LotFinishTime" xml:space="preserve">
+    <value>Lot Finish Time</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="ModuleParameter" xml:space="preserve">
+    <value>Module Parameter</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OEEAnalysis" xml:space="preserve">
+    <value>OEE Analysis</value>
+  </data>
+  <data name="OEEConfig" xml:space="preserve">
+    <value>OEE Config</value>
+  </data>
+  <data name="OEEView" xml:space="preserve">
+    <value>OEE View</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="PerformanceHour" xml:space="preserve">
+    <value>Performance (Hour)</value>
+  </data>
+  <data name="PerformanceShift" xml:space="preserve">
+    <value>Performance (Shift)</value>
+  </data>
+  <data name="PlannedDownTime" xml:space="preserve">
+    <value>Planned Down Time</value>
+  </data>
+  <data name="PlannedProdTime" xml:space="preserve">
+    <value>Planned Production Time</value>
+  </data>
+  <data name="Database" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>Fail</value>
+  </data>
+  <data name="FailResetMeanTime" xml:space="preserve">
+    <value>Fail to reset Mean Time</value>
+  </data>
+  <data name="IsValidEntryCheck" xml:space="preserve">
+    <value>Is Valid Entry Check</value>
+  </data>
+  <data name="LogTime" xml:space="preserve">
+    <value>Log Time</value>
+  </data>
+  <data name="LotNo" xml:space="preserve">
+    <value>Lot No</value>
+  </data>
+  <data name="MachineError" xml:space="preserve">
+    <value>Machine Error</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="AddLotInfo" xml:space="preserve">
+    <value>Add Lot Info</value>
+  </data>
+  <data name="AllToolLifeCounter" xml:space="preserve">
+    <value>All ToolLife counter</value>
+  </data>
+  <data name="DataMaker" xml:space="preserve">
+    <value>Data Maker</value>
+  </data>
+  <data name="EncounterCriticalError" xml:space="preserve">
+    <value>encounter critical error, please restart software</value>
+  </data>
+  <data name="LoggedIn" xml:space="preserve">
+    <value>logged in</value>
+  </data>
+  <data name="LoggedOut" xml:space="preserve">
+    <value>logged out</value>
+  </data>
+  <data name="Machine" xml:space="preserve">
+    <value>Machine</value>
+  </data>
+  <data name="MotorProfile" xml:space="preserve">
+    <value>Motor Profile</value>
+  </data>
+  <data name="NewValue" xml:space="preserve">
+    <value>New Value</value>
+  </data>
+  <data name="OEEUpdateError" xml:space="preserve">
+    <value>OEE Live Update Error</value>
+  </data>
+  <data name="PerfScanTimerError" xml:space="preserve">
+    <value>Performance Scan Timer Error</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="PrevValue" xml:space="preserve">
+    <value>Previous Value</value>
+  </data>
+  <data name="AlarmSummary" xml:space="preserve">
+    <value>Alarm Summary</value>
+  </data>
+  <data name="DatabaseError" xml:space="preserve">
+    <value>Database Connection Error</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="ErrorOccurence" xml:space="preserve">
+    <value>Error Occurence(s)</value>
+  </data>
+  <data name="FailConnect" xml:space="preserve">
+    <value>fail to connect</value>
+  </data>
+  <data name="IOConnection" xml:space="preserve">
+    <value>IO Device Connection</value>
+  </data>
+  <data name="IOError" xml:space="preserve">
+    <value>IO Error</value>
+  </data>
+  <data name="LoadComplete" xml:space="preserve">
+    <value>Load Complete</value>
+  </data>
+  <data name="LogCompilationCompleted" xml:space="preserve">
+    <value>Log Compilation Completed</value>
+  </data>
+  <data name="MotionControllerConnection" xml:space="preserve">
+    <value>Motion Controller Connection</value>
+  </data>
+  <data name="MotorError" xml:space="preserve">
+    <value>Motion Error</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>Average</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Last</value>
+  </data>
+  <data name="ProdElapsedTime" xml:space="preserve">
+    <value>Product Elapsed Time</value>
+  </data>
+  <data name="ProdStartTime" xml:space="preserve">
+    <value>Product Start Time</value>
+  </data>
+  <data name="ConnectionStatus" xml:space="preserve">
+    <value>Connection Status</value>
+  </data>
+  <data name="ASCII" xml:space="preserve">
+    <value>ASCII</value>
+  </data>
+  <data name="DataFormatReceive" xml:space="preserve">
+    <value>Data Format (Receive)</value>
+  </data>
+  <data name="DataFormatSend" xml:space="preserve">
+    <value>Data Format (Send)</value>
+  </data>
+  <data name="Hex" xml:space="preserve">
+    <value>HEX</value>
+  </data>
+  <data name="ProductIntervalDistance" xml:space="preserve">
+    <value>Interval Distance (mm)</value>
+  </data>
+  <data name="ProductIntervalDelay" xml:space="preserve">
+    <value>Interval Delay (s)</value>
+  </data>
+  <data name="ProductLoopCount" xml:space="preserve">
+    <value>Loop Count</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Product Name</value>
+  </data>
+  <data name="ProductRecipe" xml:space="preserve">
+    <value>Product Recipe</value>
+  </data>
+  <data name="Purge" xml:space="preserve">
+    <value>Purge</value>
+  </data>
+  <data name="Quality" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="QualityToolTip" xml:space="preserve">
+    <value>Good Count / Total Count</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Rear" xml:space="preserve">
+    <value>Rear</value>
+  </data>
+  <data name="RearInspection" xml:space="preserve">
+    <value>Rear Inspection</value>
+  </data>
+  <data name="ReceiveBuffer" xml:space="preserve">
+    <value>Receive Buffer</value>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>Recipe</value>
+  </data>
+  <data name="RecipeList" xml:space="preserve">
+    <value>Recipe List</value>
+  </data>
+  <data name="Recovering" xml:space="preserve">
+    <value>Recovering</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>Recovery</value>
+  </data>
+  <data name="RedLight" xml:space="preserve">
+    <value>Red Light</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="RefreshRate" xml:space="preserve">
+    <value>Refresh Rate</value>
+  </data>
+  <data name="ReInit" xml:space="preserve">
+    <value>ReInit</value>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="ReloadMessage" xml:space="preserve">
+    <value>Reload the alarm records from the database</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="ResetAll" xml:space="preserve">
+    <value>Reset All</value>
+  </data>
+  <data name="ResetCleanCounter" xml:space="preserve">
+    <value>Reset Cleaning Counter</value>
+  </data>
+  <data name="ResetCounter" xml:space="preserve">
+    <value>Reset Counter</value>
+  </data>
+  <data name="ResetCurTL" xml:space="preserve">
+    <value>Reset Current Tool Life</value>
+  </data>
+  <data name="ResetMeanTime" xml:space="preserve">
+    <value>Reset Mean Time</value>
+  </data>
+  <data name="Rest" xml:space="preserve">
+    <value>Rest</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>Running</value>
+  </data>
+  <data name="RunScan" xml:space="preserve">
+    <value>Run Scan</value>
+  </data>
+  <data name="RunTime" xml:space="preserve">
+    <value>Run Time</value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveLotPerf" xml:space="preserve">
+    <value>Write Lot Performance</value>
+  </data>
+  <data name="SaveSetting" xml:space="preserve">
+    <value>Save Setting</value>
+  </data>
+  <data name="SealDistance" xml:space="preserve">
+    <value>Seal Distance</value>
+  </data>
+  <data name="SealingTime" xml:space="preserve">
+    <value>Sealing Time</value>
+  </data>
+  <data name="SealRemainder" xml:space="preserve">
+    <value>Seal Remainder</value>
+  </data>
+  <data name="SealUnit" xml:space="preserve">
+    <value>Seal Unit</value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>Second (s)</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="SeqActive" xml:space="preserve">
+    <value>Sequence is active</value>
+  </data>
+  <data name="SeqParameter" xml:space="preserve">
+    <value>Sequence Parameter</value>
+  </data>
+  <data name="SeqTrace" xml:space="preserve">
+    <value>SequenceTrace</value>
+  </data>
+  <data name="Sequence" xml:space="preserve">
+    <value>Sequence</value>
+  </data>
+  <data name="SequenceID" xml:space="preserve">
+    <value>Sequence ID</value>
+  </data>
+  <data name="SequenceStatus" xml:space="preserve">
+    <value>Sequence Status</value>
+  </data>
+  <data name="SerialNo" xml:space="preserve">
+    <value>Serial Number</value>
+  </data>
+  <data name="SerialPort" xml:space="preserve">
+    <value>Serial Port</value>
+  </data>
+  <data name="Setting" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SetZero" xml:space="preserve">
+    <value>Set Zero Pos</value>
+  </data>
+  <data name="ShiftCount" xml:space="preserve">
+    <value>Shift Count</value>
+  </data>
+  <data name="ShiftNo" xml:space="preserve">
+    <value>Shift No</value>
+  </data>
+  <data name="ShiftStartTime" xml:space="preserve">
+    <value>Shift Start Time</value>
+  </data>
+  <data name="ShiftTime" xml:space="preserve">
+    <value>Shift Start/End Time</value>
+  </data>
+  <data name="Simulation" xml:space="preserve">
+    <value>Simulation</value>
+  </data>
+  <data name="SkipCoreSeq" xml:space="preserve">
+    <value>Skip Core Seq</value>
+  </data>
+  <data name="SkipRetest" xml:space="preserve">
+    <value>Skip Retest</value>
+  </data>
+  <data name="SkipTray" xml:space="preserve">
+    <value>Skip Tray</value>
+  </data>
+  <data name="Slow" xml:space="preserve">
+    <value>Slow</value>
+  </data>
+  <data name="SoftwareBuildDate" xml:space="preserve">
+    <value>Software Build Date</value>
+  </data>
+  <data name="SoftwareStartTime" xml:space="preserve">
+    <value>Software Start Time</value>
+  </data>
+  <data name="SoftwareVer" xml:space="preserve">
+    <value>Software Version</value>
+  </data>
+  <data name="SQLService" xml:space="preserve">
+    <value>SQL service</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="StartEmptyPocket" xml:space="preserve">
+    <value>Starting Empty Pocket</value>
+  </data>
+  <data name="StartLot" xml:space="preserve">
+    <value>Start Lot</value>
+  </data>
+  <data name="StartTest" xml:space="preserve">
+    <value>Start Test</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
+  <data name="StartTimeMessage" xml:space="preserve">
+    <value>Initial time when machine start production</value>
+  </data>
+  <data name="Station" xml:space="preserve">
+    <value>Station</value>
+  </data>
+  <data name="StationStatus" xml:space="preserve">
+    <value>Station Status</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Steady" xml:space="preserve">
+    <value>Steady</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="StopBit" xml:space="preserve">
+    <value>Stop Bit</value>
+  </data>
+  <data name="StopPages" xml:space="preserve">
+    <value>Stoppages</value>
+  </data>
+  <data name="StopPagesMessage" xml:space="preserve">
+    <value>Amount of stoppages occurs</value>
+  </data>
+  <data name="Stopped" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="StopTest" xml:space="preserve">
+    <value>Stop Test</value>
+  </data>
+  <data name="StopTime" xml:space="preserve">
+    <value>Stop Time</value>
+  </data>
+  <data name="SubmitLot" xml:space="preserve">
+    <value>Submit Lot</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="SystemPerf" xml:space="preserve">
+    <value>System Performance</value>
+  </data>
+  <data name="SystemSetting" xml:space="preserve">
+    <value>System Setting</value>
+  </data>
+  <data name="TCPCommand" xml:space="preserve">
+    <value>TCP Command</value>
+  </data>
+  <data name="TCPIP" xml:space="preserve">
+    <value>TCP/IP</value>
+  </data>
+  <data name="TCPReceived" xml:space="preserve">
+    <value>TCP Message</value>
+  </data>
+  <data name="TCPSocketConnection" xml:space="preserve">
+    <value>TCP / IP Socket Connection</value>
+  </data>
+  <data name="TCPSocketInfo" xml:space="preserve">
+    <value>TCP / IP Socket Information</value>
+  </data>
+  <data name="TCPTerminal" xml:space="preserve">
+    <value>TCP / IP Terminal</value>
+  </data>
+  <data name="TeachCurPos" xml:space="preserve">
+    <value>Teach Current Pos</value>
+  </data>
+  <data name="TeachPos" xml:space="preserve">
+    <value>Teach Position</value>
+  </data>
+  <data name="Terminal" xml:space="preserve">
+    <value>Terminal</value>
+  </data>
+  <data name="Test1CleaningCntSaveError" xml:space="preserve">
+    <value>Test1CleaningCnt Save Error</value>
+  </data>
+  <data name="TestCycCount" xml:space="preserve">
+    <value>Test Cycle Count</value>
+  </data>
+  <data name="TestCycTarget" xml:space="preserve">
+    <value>Test Cycle Target</value>
+  </data>
+  <data name="TestCycTime" xml:space="preserve">
+    <value>Test Cycle Time</value>
+  </data>
+  <data name="Tester" xml:space="preserve">
+    <value>Tester</value>
+  </data>
+  <data name="TestRun" xml:space="preserve">
+    <value>Test Run</value>
+  </data>
+  <data name="TestSeq" xml:space="preserve">
+    <value>Test Sequence</value>
+  </data>
+  <data name="Throughput" xml:space="preserve">
+    <value>Throughput</value>
+  </data>
+  <data name="ThroughputMessage" xml:space="preserve">
+    <value>Throughput = Good unit produced / Lot Elapsed Time</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Timer" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="TLSetting" xml:space="preserve">
+    <value>Tower Light Setting</value>
+  </data>
+  <data name="TnRSetting" xml:space="preserve">
+    <value>Tape N Reel Setting</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="ToolLifeCycle" xml:space="preserve">
+    <value>ToolLife Cycle</value>
+  </data>
+  <data name="ToolName" xml:space="preserve">
+    <value>Tool Name</value>
+  </data>
+  <data name="Top5DownReason" xml:space="preserve">
+    <value>Top 5 Downtime Reason</value>
+  </data>
+  <data name="TopInspection" xml:space="preserve">
+    <value>Top Inspection</value>
+  </data>
+  <data name="TotalError" xml:space="preserve">
+    <value>Total Error(s)</value>
+  </data>
+  <data name="TotalErrorCount" xml:space="preserve">
+    <value>Total Error Count</value>
+  </data>
+  <data name="TotalErrorData" xml:space="preserve">
+    <value>Total Error Data</value>
+  </data>
+  <data name="TotalExecutionDay" xml:space="preserve">
+    <value>Total Execution Day</value>
+  </data>
+  <data name="TotalExecutionTime" xml:space="preserve">
+    <value>Total Execution Time</value>
+  </data>
+  <data name="TotalFail" xml:space="preserve">
+    <value>Total Fail</value>
+  </data>
+  <data name="TotalHours" xml:space="preserve">
+    <value>Total Hours</value>
+  </data>
+  <data name="TotalInput" xml:space="preserve">
+    <value>Total Input</value>
+  </data>
+  <data name="TotalOutput" xml:space="preserve">
+    <value>Total Output</value>
+  </data>
+  <data name="TotalPass" xml:space="preserve">
+    <value>Total Pass</value>
+  </data>
+  <data name="TotalWarningCount" xml:space="preserve">
+    <value>Total Warning Count</value>
+  </data>
+  <data name="TowerLight" xml:space="preserve">
+    <value>Tower Light</value>
+  </data>
+  <data name="TransmitBuffer" xml:space="preserve">
+    <value>Transmit Buffer</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="UnitsHour" xml:space="preserve">
+    <value>units / hour</value>
+  </data>
+  <data name="UnplannedDownTime" xml:space="preserve">
+    <value>Unplanned Down Time</value>
+  </data>
+  <data name="UoM" xml:space="preserve">
+    <value>Unit of Measurement</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateAccessControl" xml:space="preserve">
+    <value>update access control</value>
+  </data>
+  <data name="UpdateLotInfo" xml:space="preserve">
+    <value>Update Lot Info</value>
+  </data>
+  <data name="UpdatePosition" xml:space="preserve">
+    <value>update motor teaching point</value>
+  </data>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>update user info</value>
+  </data>
+  <data name="UPH" xml:space="preserve">
+    <value>UPH</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="UserAcc" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="UserAccount" xml:space="preserve">
+    <value>User Account</value>
+  </data>
+  <data name="UserID" xml:space="preserve">
+    <value>User ID</value>
+  </data>
+  <data name="UserInfo" xml:space="preserve">
+    <value>User Info</value>
+  </data>
+  <data name="UserLevel" xml:space="preserve">
+    <value>User Level</value>
+  </data>
+  <data name="UserList" xml:space="preserve">
+    <value>User List</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="UserView" xml:space="preserve">
+    <value>User View</value>
+  </data>
+  <data name="Vacuum" xml:space="preserve">
+    <value>Vacuum</value>
+  </data>
+  <data name="VacValue" xml:space="preserve">
+    <value>1-Phase 200VAC</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="ViewChartByGroup" xml:space="preserve">
+    <value>View Chart By Station</value>
+  </data>
+  <data name="Vision" xml:space="preserve">
+    <value>Vision</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="WarningOccurence" xml:space="preserve">
+    <value>Warning  Occurence(s)</value>
+  </data>
+  <data name="Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="WriteLotSummary" xml:space="preserve">
+    <value>Write Lot Summary</value>
+  </data>
+  <data name="WriteModPerf" xml:space="preserve">
+    <value>Write Module Performance File</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Yield" xml:space="preserve">
+    <value>Yield</value>
+  </data>
+  <data name="YieldMessage" xml:space="preserve">
+    <value>Total Lot Yield (%)</value>
+  </data>
+  <data name="Secs Gem Settings" xml:space="preserve">
+    <value>Secs Gem Settings</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="ConnectProperties" xml:space="preserve">
+    <value>Connection Properties</value>
+  </data>
+  <data name="Directory" xml:space="preserve">
+    <value>Directory</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="EnableSecsGem" xml:space="preserve">
+    <value>Enable Secs Gem</value>
+  </data>
+  <data name="FileExt" xml:space="preserve">
+    <value>File Extension</value>
+  </data>
+  <data name="GemProtocolSetup" xml:space="preserve">
+    <value>GEM Protocol Setup</value>
+  </data>
+  <data name="MachineSetup" xml:space="preserve">
+    <value>Machine Setup</value>
+  </data>
+  <data name="Timeouts" xml:space="preserve">
+    <value>Timeouts</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="Acknowledge" xml:space="preserve">
+    <value>Acknowledge</value>
+  </data>
+  <data name="HostToMachine" xml:space="preserve">
+    <value>Received Terminal Message</value>
+  </data>
+  <data name="MachineToHost" xml:space="preserve">
+    <value>Send Terminal Message</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="SecsGemState" xml:space="preserve">
+    <value>Secs Gem State</value>
+  </data>
+  <data name="DisableSecsGem" xml:space="preserve">
+    <value>Disable Secs Gem</value>
+  </data>
+  <data name="LoadDatabase" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="DataBaseDirectory" xml:space="preserve">
+    <value>Database Directory</value>
+  </data>
+  <data name="Batch" xml:space="preserve">
+    <value>Batch :</value>
+  </data>
+  <data name="CodeReader" xml:space="preserve">
+    <value>Code Reader :</value>
+  </data>
+  <data name="CorrectOrientation" xml:space="preserve">
+    <value>Correct Orientation :</value>
+  </data>
+  <data name="TotalBatchQuantity" xml:space="preserve">
+    <value>T.Batch Quantity :</value>
+  </data>
+  <data name="TotalCurrentBatchQuantity" xml:space="preserve">
+    <value>Total Current Batch Quantity :</value>
+  </data>
+  <data name="TotalCurrentBoxQuantity" xml:space="preserve">
+    <value>Total Current Box Quantity :</value>
+  </data>
+  <data name="TotalQuantity" xml:space="preserve">
+    <value>Total Quantity :</value>
+  </data>
+  <data name="WrongOrientation" xml:space="preserve">
+    <value>Wrong Orientation :</value>
+  </data>
+  <data name="Container" xml:space="preserve">
+    <value>ContainerNo :</value>
+  </data>
+</root>

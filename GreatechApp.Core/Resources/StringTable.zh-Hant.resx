@@ -1,0 +1,1599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="StartTimeMessage" xml:space="preserve">
+    <value>機器生產的初始時間</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>關於</value>
+  </data>
+  <data name="AccessCtrl" xml:space="preserve">
+    <value>權限控制</value>
+  </data>
+  <data name="AccessCtrlInfo" xml:space="preserve">
+    <value>權限控制訊息</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>添新</value>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>添加用戶</value>
+  </data>
+  <data name="Alarm" xml:space="preserve">
+    <value>警報</value>
+  </data>
+  <data name="AlarmCfg" xml:space="preserve">
+    <value>警報設置</value>
+  </data>
+  <data name="AlarmConfig" xml:space="preserve">
+    <value>警報設置</value>
+  </data>
+  <data name="AllPurgeOff" xml:space="preserve">
+    <value>噴力全關</value>
+  </data>
+  <data name="AllPurgeOn" xml:space="preserve">
+    <value>噴力全開</value>
+  </data>
+  <data name="AllVacOff" xml:space="preserve">
+    <value>真空全關</value>
+  </data>
+  <data name="AllVacOn" xml:space="preserve">
+    <value>真空全開</value>
+  </data>
+  <data name="AmberLight" xml:space="preserve">
+    <value>黃燈</value>
+  </data>
+  <data name="Analysis" xml:space="preserve">
+    <value>分析</value>
+  </data>
+  <data name="AutoMode" xml:space="preserve">
+    <value>自動模式</value>
+  </data>
+  <data name="Availability" xml:space="preserve">
+    <value>可用性</value>
+  </data>
+  <data name="AvailabilityToolTip" xml:space="preserve">
+    <value>運行時間/計劃生產時間</value>
+  </data>
+  <data name="AvgCycleTime" xml:space="preserve">
+    <value>平均週期</value>
+  </data>
+  <data name="AvgCycleTimeMessage" xml:space="preserve">
+    <value>平均週期</value>
+  </data>
+  <data name="Axis" xml:space="preserve">
+    <value>軸</value>
+  </data>
+  <data name="AxisHomeToolTip" xml:space="preserve">
+    <value>電機已歸位？</value>
+  </data>
+  <data name="BaudRate" xml:space="preserve">
+    <value>波特率</value>
+  </data>
+  <data name="Blinking" xml:space="preserve">
+    <value>閃爍</value>
+  </data>
+  <data name="BlinkInt" xml:space="preserve">
+    <value>警報燈閃爍間隔</value>
+  </data>
+  <data name="BtmInspection" xml:space="preserve">
+    <value>底部檢驗</value>
+  </data>
+  <data name="Busy" xml:space="preserve">
+    <value>忙碌</value>
+  </data>
+  <data name="Buzzer" xml:space="preserve">
+    <value>蜂鳴器</value>
+  </data>
+  <data name="BuzzerInt" xml:space="preserve">
+    <value>蜂鳴器間隔</value>
+  </data>
+  <data name="BypassStation" xml:space="preserve">
+    <value>繞行序列站</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CleaningCounter" xml:space="preserve">
+    <value>清除台</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="ClickClearBuffer" xml:space="preserve">
+    <value>清除緩衝</value>
+  </data>
+  <data name="ClickClearTCPCommand" xml:space="preserve">
+    <value>清除 TCP 命令</value>
+  </data>
+  <data name="ClickClearTCPMessage" xml:space="preserve">
+    <value>清除 TCP訊息</value>
+  </data>
+  <data name="ClickCloseSerialPort" xml:space="preserve">
+    <value>關閉串口</value>
+  </data>
+  <data name="ClickCloseTCPSocket" xml:space="preserve">
+    <value>關閉 TCP連接</value>
+  </data>
+  <data name="ClickOpenSerialPort" xml:space="preserve">
+    <value>打開串口</value>
+  </data>
+  <data name="ClickOpenTCPSocket" xml:space="preserve">
+    <value>打開 TCP連接</value>
+  </data>
+  <data name="ClickSendMsg" xml:space="preserve">
+    <value>發送消息</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="ClosePort" xml:space="preserve">
+    <value>關閉端口</value>
+  </data>
+  <data name="Communication" xml:space="preserve">
+    <value>溝通</value>
+  </data>
+  <data name="CompAdd" xml:space="preserve">
+    <value>公司地址</value>
+  </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>Plot 287(A), 287(B) &amp; 287(C)   Lengkok Kampung Jawa 1 Phase 3 Bayan Lepas Free Industrial Zone 11900, Penang, Malaysia</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>閣代科技</value>
+  </data>
+  <data name="CompEmail" xml:space="preserve">
+    <value>公司電郵</value>
+  </data>
+  <data name="CompFax" xml:space="preserve">
+    <value>公司傳真</value>
+  </data>
+  <data name="CompileMode" xml:space="preserve">
+    <value>編譯模式</value>
+  </data>
+  <data name="CompName" xml:space="preserve">
+    <value>公司名</value>
+  </data>
+  <data name="CompTel" xml:space="preserve">
+    <value>公司電話</value>
+  </data>
+  <data name="CompWebsite" xml:space="preserve">
+    <value>公司網站</value>
+  </data>
+  <data name="Config" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="ConfirmPass" xml:space="preserve">
+    <value>確認密碼</value>
+  </data>
+  <data name="CopyRight" xml:space="preserve">
+    <value>版權</value>
+  </data>
+  <data name="CopyRightValue" xml:space="preserve">
+    <value>版權所有 © 2021 |閣代科技</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>記數</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>生產國家</value>
+  </data>
+  <data name="CountryValue" xml:space="preserve">
+    <value>馬來西亞</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>電流</value>
+  </data>
+  <data name="CurrentPos" xml:space="preserve">
+    <value>當前位置</value>
+  </data>
+  <data name="CurrentToolLife" xml:space="preserve">
+    <value>當前工具壽命</value>
+  </data>
+  <data name="CycleTime" xml:space="preserve">
+    <value>週期</value>
+  </data>
+  <data name="CycleTimeSecond" xml:space="preserve">
+    <value>週期 (秒)</value>
+  </data>
+  <data name="Cylinder" xml:space="preserve">
+    <value>汽缸</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>數據</value>
+  </data>
+  <data name="DataBit" xml:space="preserve">
+    <value>數據位</value>
+  </data>
+  <data name="Datalog" xml:space="preserve">
+    <value>數據記錄</value>
+  </data>
+  <data name="DataType" xml:space="preserve">
+    <value>數據類型</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="DateRange" xml:space="preserve">
+    <value>日期範圍</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>日期/時間</value>
+  </data>
+  <data name="Debug" xml:space="preserve">
+    <value>調試</value>
+  </data>
+  <data name="degree" xml:space="preserve">
+    <value>度數</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>刪除</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="DownTime" xml:space="preserve">
+    <value>機器停機時間</value>
+  </data>
+  <data name="DownTimeMessage" xml:space="preserve">
+    <value>機器停機訊息</value>
+  </data>
+  <data name="DryRun" xml:space="preserve">
+    <value>空跑</value>
+  </data>
+  <data name="EditUser" xml:space="preserve">
+    <value>編輯用戶</value>
+  </data>
+  <data name="ElapsedTime" xml:space="preserve">
+    <value>機器運行時間</value>
+  </data>
+  <data name="ElapsedTimeMessage" xml:space="preserve">
+    <value>機器運行時長</value>
+  </data>
+  <data name="EndEmptyPocket" xml:space="preserve">
+    <value>空包裝結束中</value>
+  </data>
+  <data name="EndLot" xml:space="preserve">
+    <value>結束批次</value>
+  </data>
+  <data name="EndOfSummary" xml:space="preserve">
+    <value>總結</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>結束時間</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>故障</value>
+  </data>
+  <data name="ErrorAnalysis" xml:space="preserve">
+    <value>故障分析</value>
+  </data>
+  <data name="ErrorCause" xml:space="preserve">
+    <value>故障原因</value>
+  </data>
+  <data name="ErrorCode" xml:space="preserve">
+    <value>故障代碼</value>
+  </data>
+  <data name="ErrorHistory" xml:space="preserve">
+    <value>故障歷史</value>
+  </data>
+  <data name="ErrorInfo" xml:space="preserve">
+    <value>故障信息</value>
+  </data>
+  <data name="ErrorMsg" xml:space="preserve">
+    <value>故障信息</value>
+  </data>
+  <data name="ErrorType" xml:space="preserve">
+    <value>故障類型</value>
+  </data>
+  <data name="EStopNotRelease" xml:space="preserve">
+    <value>急停按鈕未鬆開</value>
+  </data>
+  <data name="ExeTime" xml:space="preserve">
+    <value>機器執行時長</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>導出</value>
+  </data>
+  <data name="ExportMessage" xml:space="preserve">
+    <value>將數據導出到文件</value>
+  </data>
+  <data name="FinishTime" xml:space="preserve">
+    <value>批次完成時間</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>頻率</value>
+  </data>
+  <data name="FrequencyValue" xml:space="preserve">
+    <value>50/60赫茲</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>從</value>
+  </data>
+  <data name="FrontInspection" xml:space="preserve">
+    <value>前部檢驗</value>
+  </data>
+  <data name="GenInput" xml:space="preserve">
+    <value>通用輸入</value>
+  </data>
+  <data name="GenOutput" xml:space="preserve">
+    <value>通用輸出</value>
+  </data>
+  <data name="Go" xml:space="preserve">
+    <value>移動</value>
+  </data>
+  <data name="Greatech" xml:space="preserve">
+    <value>閣代科技</value>
+  </data>
+  <data name="GreenLight" xml:space="preserve">
+    <value>綠燈</value>
+  </data>
+  <data name="Handler" xml:space="preserve">
+    <value>管理者</value>
+  </data>
+  <data name="HandShake" xml:space="preserve">
+    <value>握手</value>
+  </data>
+  <data name="High" xml:space="preserve">
+    <value>高</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>電機歸位</value>
+  </data>
+  <data name="HomeDone" xml:space="preserve">
+    <value>電機歸位完成</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>小時</value>
+  </data>
+  <data name="Init" xml:space="preserve">
+    <value>初始化</value>
+  </data>
+  <data name="InitState" xml:space="preserve">
+    <value>初始狀態</value>
+  </data>
+  <data name="InPos" xml:space="preserve">
+    <value>在位</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>輸入</value>
+  </data>
+  <data name="InputOutput" xml:space="preserve">
+    <value>輸入/輸出</value>
+  </data>
+  <data name="Interlock" xml:space="preserve">
+    <value>互鎖</value>
+  </data>
+  <data name="InvalidLoginInfo" xml:space="preserve">
+    <value>登錄信息錯誤</value>
+  </data>
+  <data name="IO" xml:space="preserve">
+    <value>I/O</value>
+  </data>
+  <data name="IPAddress" xml:space="preserve">
+    <value>IP地址</value>
+  </data>
+  <data name="IsAlive" xml:space="preserve">
+    <value>活躍?</value>
+  </data>
+  <data name="IssuedBy" xml:space="preserve">
+    <value>序列</value>
+  </data>
+  <data name="Item" xml:space="preserve">
+    <value>物品</value>
+  </data>
+  <data name="JogCtrl" xml:space="preserve">
+    <value>漫步控制</value>
+  </data>
+  <data name="LastCycleTime" xml:space="preserve">
+    <value>最後周期</value>
+  </data>
+  <data name="LineVol" xml:space="preserve">
+    <value>電壓</value>
+  </data>
+  <data name="LiveSequence" xml:space="preserve">
+    <value>序列歷史</value>
+  </data>
+  <data name="LiveTracking" xml:space="preserve">
+    <value>實時跟踪</value>
+  </data>
+  <data name="LogFileDuration" xml:space="preserve">
+    <value>日誌文件保留時間</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>登錄</value>
+  </data>
+  <data name="LogInfo" xml:space="preserve">
+    <value>日誌信息</value>
+  </data>
+  <data name="LotElapsedTime" xml:space="preserve">
+    <value>批次運行時間</value>
+  </data>
+  <data name="LotElapsedTimeMessage" xml:space="preserve">
+    <value>從批次開始到現在期間</value>
+  </data>
+  <data name="LotEntry" xml:space="preserve">
+    <value>輸入批次</value>
+  </data>
+  <data name="LotFinishTimeMessage" xml:space="preserve">
+    <value>批次結束</value>
+  </data>
+  <data name="LotHistory" xml:space="preserve">
+    <value>批次歷史</value>
+  </data>
+  <data name="LotID" xml:space="preserve">
+    <value>批號</value>
+  </data>
+  <data name="LotStartTime" xml:space="preserve">
+    <value>批次開始時間</value>
+  </data>
+  <data name="LotStartTimeMessage" xml:space="preserve">
+    <value>新批次開始運行的時間</value>
+  </data>
+  <data name="LotSummary" xml:space="preserve">
+    <value>批次摘要</value>
+  </data>
+  <data name="LotYield" xml:space="preserve">
+    <value>產量</value>
+  </data>
+  <data name="Low" xml:space="preserve">
+    <value>低</value>
+  </data>
+  <data name="MacCurrent" xml:space="preserve">
+    <value>15安培</value>
+  </data>
+  <data name="MachBuildDate" xml:space="preserve">
+    <value>機器製造日期</value>
+  </data>
+  <data name="MachBuildDateValue" xml:space="preserve">
+    <value>1 月 1 日 21 年</value>
+  </data>
+  <data name="MachID" xml:space="preserve">
+    <value>機器號</value>
+  </data>
+  <data name="MachineMode" xml:space="preserve">
+    <value>機器模式</value>
+  </data>
+  <data name="MachineOperation" xml:space="preserve">
+    <value>機器運作</value>
+  </data>
+  <data name="MachinePerf" xml:space="preserve">
+    <value>機器性能</value>
+  </data>
+  <data name="MachineState" xml:space="preserve">
+    <value>機器狀態</value>
+  </data>
+  <data name="MachineStatus" xml:space="preserve">
+    <value>機器狀態</value>
+  </data>
+  <data name="MachineStatusToolTip" xml:space="preserve">
+    <value>綠色：機器運行 黃色：機器空閒 紅色 ：機器停機</value>
+  </data>
+  <data name="MachMode" xml:space="preserve">
+    <value>機器模式</value>
+  </data>
+  <data name="MachModel" xml:space="preserve">
+    <value>機器型號</value>
+  </data>
+  <data name="MachName" xml:space="preserve">
+    <value>機器名稱</value>
+  </data>
+  <data name="MachPerf" xml:space="preserve">
+    <value>機器性能</value>
+  </data>
+  <data name="MachStatus" xml:space="preserve">
+    <value>機器狀態</value>
+  </data>
+  <data name="MaxCleanCounter" xml:space="preserve">
+    <value>最大清除數</value>
+  </data>
+  <data name="MaxCycleTime" xml:space="preserve">
+    <value>最長周期</value>
+  </data>
+  <data name="MaxCycleTimeMessage" xml:space="preserve">
+    <value>最長周期</value>
+  </data>
+  <data name="MaxToolLife" xml:space="preserve">
+    <value>最長工具壽命</value>
+  </data>
+  <data name="Med" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>信息</value>
+  </data>
+  <data name="Millisecond" xml:space="preserve">
+    <value>毫秒</value>
+  </data>
+  <data name="MinCycleTime" xml:space="preserve">
+    <value>最短週期</value>
+  </data>
+  <data name="MinCycleTimeMessage" xml:space="preserve">
+    <value>最短週期</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>分鐘</value>
+  </data>
+  <data name="mm" xml:space="preserve">
+    <value>毫米</value>
+  </data>
+  <data name="ModPerf" xml:space="preserve">
+    <value>模塊性能</value>
+  </data>
+  <data name="ModPerfSummary" xml:space="preserve">
+    <value>模塊性能總結</value>
+  </data>
+  <data name="ModulePerf" xml:space="preserve">
+    <value>模塊性能</value>
+  </data>
+  <data name="ModulePic" xml:space="preserve">
+    <value>模塊圖片</value>
+  </data>
+  <data name="Modules" xml:space="preserve">
+    <value>模塊</value>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>電機運作</value>
+  </data>
+  <data name="Motor" xml:space="preserve">
+    <value>電機</value>
+  </data>
+  <data name="MotorAlarm" xml:space="preserve">
+    <value>電機警報已啟動</value>
+  </data>
+  <data name="MotorMove" xml:space="preserve">
+    <value>電機移動中</value>
+  </data>
+  <data name="MotorNotEnabled" xml:space="preserve">
+    <value>電機未開啟</value>
+  </data>
+  <data name="MovAbs" xml:space="preserve">
+    <value>移至絕對位置</value>
+  </data>
+  <data name="MovCtrl" xml:space="preserve">
+    <value>移動控制</value>
+  </data>
+  <data name="MoveNegative" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="MovePositive" xml:space="preserve">
+    <value>+</value>
+  </data>
+  <data name="MovRel" xml:space="preserve">
+    <value>移至相對位置</value>
+  </data>
+  <data name="ms" xml:space="preserve">
+    <value>毫秒</value>
+  </data>
+  <data name="MsgFromSerialPort" xml:space="preserve">
+    <value>從串列埠接收到的信息</value>
+  </data>
+  <data name="MsgFromTCPSocket" xml:space="preserve">
+    <value>從TCP接收到的信息</value>
+  </data>
+  <data name="MsgSentSerialPort" xml:space="preserve">
+    <value>已發送到串列埠的的信息</value>
+  </data>
+  <data name="MsgSentTCPSocket" xml:space="preserve">
+    <value>已發送到TCP的的信息</value>
+  </data>
+  <data name="MTBA" xml:space="preserve">
+    <value>平均協助間隔時間</value>
+  </data>
+  <data name="MTBA_M" xml:space="preserve">
+    <value>平均協助間隔時間（最低）</value>
+  </data>
+  <data name="MTBAMessage" xml:space="preserve">
+    <value>平均協助間隔時間：在需要輔助之前的平均機器生產時長</value>
+  </data>
+  <data name="MTBF" xml:space="preserve">
+    <value>平均故障間隔時間</value>
+  </data>
+  <data name="MTBFMessage" xml:space="preserve">
+    <value>平均故障間隔時間：兩次系統故障之間的間隔</value>
+  </data>
+  <data name="MtrAxisList" xml:space="preserve">
+    <value>電機軸列表</value>
+  </data>
+  <data name="MtrHome" xml:space="preserve">
+    <value>電機歸位</value>
+  </data>
+  <data name="MtrOpr" xml:space="preserve">
+    <value>電機操作</value>
+  </data>
+  <data name="MtrProfile" xml:space="preserve">
+    <value>電機動力參數</value>
+  </data>
+  <data name="MtrStop" xml:space="preserve">
+    <value>電機停止</value>
+  </data>
+  <data name="MTTA" xml:space="preserve">
+    <value>平均確認時間</value>
+  </data>
+  <data name="MTTAMessage" xml:space="preserve">
+    <value>平均確認時間：需要確認的時間</value>
+  </data>
+  <data name="MTTR" xml:space="preserve">
+    <value>平均修復時間</value>
+  </data>
+  <data name="MTTRMessage" xml:space="preserve">
+    <value>平均修復時間：修復系統並將其恢復所需的時間</value>
+  </data>
+  <data name="NegLimit" xml:space="preserve">
+    <value>負向極限</value>
+  </data>
+  <data name="NetworkAdap" xml:space="preserve">
+    <value>網絡適​​配器</value>
+  </data>
+  <data name="NewPass" xml:space="preserve">
+    <value>新密碼</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>普通</value>
+  </data>
+  <data name="OEE" xml:space="preserve">
+    <value>整體設備效率</value>
+  </data>
+  <data name="OEEData" xml:space="preserve">
+    <value>整體設備效率數據</value>
+  </data>
+  <data name="OEEFilter" xml:space="preserve">
+    <value>整體設備效率過濾器</value>
+  </data>
+  <data name="OEEGaugeChart" xml:space="preserve">
+    <value>整體設備效率儀表圖</value>
+  </data>
+  <data name="OEEInfo" xml:space="preserve">
+    <value>整體設備效率信息</value>
+  </data>
+  <data name="OEESetting" xml:space="preserve">
+    <value>整體設備效率設置</value>
+  </data>
+  <data name="OEEToolTip" xml:space="preserve">
+    <value>可用性 * 性能 * 質量</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>關閉</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>確定</value>
+  </data>
+  <data name="On" xml:space="preserve">
+    <value>開啟</value>
+  </data>
+  <data name="OnlineStatus" xml:space="preserve">
+    <value>在線狀態</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>打開</value>
+  </data>
+  <data name="OpenPort" xml:space="preserve">
+    <value>開放端口</value>
+  </data>
+  <data name="OperatorID" xml:space="preserve">
+    <value>操作員編號</value>
+  </data>
+  <data name="OutCarrierTapeUnit" xml:space="preserve">
+    <value>輸出載帶單元</value>
+  </data>
+  <data name="Output" xml:space="preserve">
+    <value>輸出</value>
+  </data>
+  <data name="OverallYield" xml:space="preserve">
+    <value>總產量</value>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>平價</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密碼</value>
+  </data>
+  <data name="Performance" xml:space="preserve">
+    <value>表現</value>
+  </data>
+  <data name="PerformanceToolTip" xml:space="preserve">
+    <value>（理想週期 * 總計數）/運行時間</value>
+  </data>
+  <data name="PerfSummary" xml:space="preserve">
+    <value>性能總結</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>端口</value>
+  </data>
+  <data name="PosLimit" xml:space="preserve">
+    <value>正向極限</value>
+  </data>
+  <data name="Power" xml:space="preserve">
+    <value>功率</value>
+  </data>
+  <data name="PowerVA" xml:space="preserve">
+    <value>5196</value>
+  </data>
+  <data name="pps" xml:space="preserve">
+    <value>脈衝/秒</value>
+  </data>
+  <data name="pps2" xml:space="preserve">
+    <value>脈衝/秒^2</value>
+  </data>
+  <data name="Preset" xml:space="preserve">
+    <value>預設</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>產品名稱</value>
+  </data>
+  <data name="ProductRecipe" xml:space="preserve">
+    <value>產品配方</value>
+  </data>
+  <data name="Purge" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="Quality" xml:space="preserve">
+    <value>質量</value>
+  </data>
+  <data name="QualityToolTip" xml:space="preserve">
+    <value>良好計數/總計數</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>已準備</value>
+  </data>
+  <data name="RearInspection" xml:space="preserve">
+    <value>後方檢驗</value>
+  </data>
+  <data name="ReceiveBuffer" xml:space="preserve">
+    <value>接收區</value>
+  </data>
+  <data name="Recipe" xml:space="preserve">
+    <value>配方</value>
+  </data>
+  <data name="RecipeList" xml:space="preserve">
+    <value>配方清單</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>修復</value>
+  </data>
+  <data name="RedLight" xml:space="preserve">
+    <value>紅燈</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="RefreshRate" xml:space="preserve">
+    <value>刷新率</value>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>釋放</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>重新加載</value>
+  </data>
+  <data name="ReloadMessage" xml:space="preserve">
+    <value>重新從數據庫加載報警記錄</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="ResetAll" xml:space="preserve">
+    <value>全部重置</value>
+  </data>
+  <data name="ResetCleanCounter" xml:space="preserve">
+    <value>重置清除計數</value>
+  </data>
+  <data name="ResetCounter" xml:space="preserve">
+    <value>重置計數</value>
+  </data>
+  <data name="ResetCurTL" xml:space="preserve">
+    <value>重置當前工具壽命</value>
+  </data>
+  <data name="ResetMeanTime" xml:space="preserve">
+    <value>重置平均時間</value>
+  </data>
+  <data name="Rest" xml:space="preserve">
+    <value>收縮</value>
+  </data>
+  <data name="RunScan" xml:space="preserve">
+    <value>開始掃描</value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SaveSetting" xml:space="preserve">
+    <value>保存設置</value>
+  </data>
+  <data name="SealDistance" xml:space="preserve">
+    <value>密封距離</value>
+  </data>
+  <data name="SealingTime" xml:space="preserve">
+    <value>密封時間</value>
+  </data>
+  <data name="SealRemainder" xml:space="preserve">
+    <value>密封剩餘</value>
+  </data>
+  <data name="SealUnit" xml:space="preserve">
+    <value>密封單元</value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>秒</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>發送</value>
+  </data>
+  <data name="SeqActive" xml:space="preserve">
+    <value>序列運作中</value>
+  </data>
+  <data name="SeqParameter" xml:space="preserve">
+    <value>序列參數</value>
+  </data>
+  <data name="Sequence" xml:space="preserve">
+    <value>序列</value>
+  </data>
+  <data name="SequenceID" xml:space="preserve">
+    <value>序列號</value>
+  </data>
+  <data name="SerialNo" xml:space="preserve">
+    <value>編號</value>
+  </data>
+  <data name="SerialPort" xml:space="preserve">
+    <value>串行端口</value>
+  </data>
+  <data name="Setting" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>設置</value>
+  </data>
+  <data name="SetZero" xml:space="preserve">
+    <value>位置清零</value>
+  </data>
+  <data name="ShiftNo" xml:space="preserve">
+    <value>班次</value>
+  </data>
+  <data name="ShiftTime" xml:space="preserve">
+    <value>班次開始/結束時間</value>
+  </data>
+  <data name="Simulation" xml:space="preserve">
+    <value>模擬</value>
+  </data>
+  <data name="SkipCoreSeq" xml:space="preserve">
+    <value>跳過核心序列</value>
+  </data>
+  <data name="SkipRetest" xml:space="preserve">
+    <value>跳過重新測試</value>
+  </data>
+  <data name="SkipTray" xml:space="preserve">
+    <value>跳過托盤</value>
+  </data>
+  <data name="Slow" xml:space="preserve">
+    <value>慢</value>
+  </data>
+  <data name="SoftwareBuildDate" xml:space="preserve">
+    <value>軟件構建日期</value>
+  </data>
+  <data name="SoftwareStartTime" xml:space="preserve">
+    <value>軟件啟動時間</value>
+  </data>
+  <data name="SoftwareVer" xml:space="preserve">
+    <value>軟件版本</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>開始</value>
+  </data>
+  <data name="StartEmptyPocket" xml:space="preserve">
+    <value>開始空包裝</value>
+  </data>
+  <data name="StartLot" xml:space="preserve">
+    <value>啟動批次</value>
+  </data>
+  <data name="StartTest" xml:space="preserve">
+    <value>開始測試</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>開始時間</value>
+  </data>
+  <data name="Station" xml:space="preserve">
+    <value>序列站</value>
+  </data>
+  <data name="StationStatus" xml:space="preserve">
+    <value>序列站狀態</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>狀態</value>
+  </data>
+  <data name="Steady" xml:space="preserve">
+    <value>穩定</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="StopBit" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="StopPages" xml:space="preserve">
+    <value>停工</value>
+  </data>
+  <data name="StopPagesMessage" xml:space="preserve">
+    <value>停工次數</value>
+  </data>
+  <data name="StopTest" xml:space="preserve">
+    <value>停止測試</value>
+  </data>
+  <data name="StopTime" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="SubmitLot" xml:space="preserve">
+    <value>提交批次</value>
+  </data>
+  <data name="SystemPerf" xml:space="preserve">
+    <value>系統性能</value>
+  </data>
+  <data name="SystemSetting" xml:space="preserve">
+    <value>系統設置</value>
+  </data>
+  <data name="TCPCommand" xml:space="preserve">
+    <value>協議命令</value>
+  </data>
+  <data name="TCPIP" xml:space="preserve">
+    <value>網絡協議</value>
+  </data>
+  <data name="TCPReceived" xml:space="preserve">
+    <value>協議訊息</value>
+  </data>
+  <data name="TCPSocketConnection" xml:space="preserve">
+    <value>網絡協議連接</value>
+  </data>
+  <data name="TCPSocketInfo" xml:space="preserve">
+    <value>網絡協議信息</value>
+  </data>
+  <data name="TCPTerminal" xml:space="preserve">
+    <value>網絡協議終端</value>
+  </data>
+  <data name="TeachCurPos" xml:space="preserve">
+    <value>保存當前位置</value>
+  </data>
+  <data name="TeachPos" xml:space="preserve">
+    <value>電機保存點</value>
+  </data>
+  <data name="Terminal" xml:space="preserve">
+    <value>終端</value>
+  </data>
+  <data name="TestCycCount" xml:space="preserve">
+    <value>測試數</value>
+  </data>
+  <data name="TestCycTarget" xml:space="preserve">
+    <value>測試數目標</value>
+  </data>
+  <data name="TestCycTime" xml:space="preserve">
+    <value>測試週期</value>
+  </data>
+  <data name="Tester" xml:space="preserve">
+    <value>測試機</value>
+  </data>
+  <data name="TestRun" xml:space="preserve">
+    <value>運行測試</value>
+  </data>
+  <data name="TestSeq" xml:space="preserve">
+    <value>測試序列</value>
+  </data>
+  <data name="Throughput" xml:space="preserve">
+    <value>吞吐量</value>
+  </data>
+  <data name="ThroughputMessage" xml:space="preserve">
+    <value>吞吐量 = 良好生產單位 / 批次生產時間</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>時間</value>
+  </data>
+  <data name="Timer" xml:space="preserve">
+    <value>計時器</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>標題</value>
+  </data>
+  <data name="TLSetting" xml:space="preserve">
+    <value>塔燈設置</value>
+  </data>
+  <data name="TnRSetting" xml:space="preserve">
+    <value>磁帶與捲軸設置</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>至</value>
+  </data>
+  <data name="ToolLifeCycle" xml:space="preserve">
+    <value>工俱生命週期</value>
+  </data>
+  <data name="ToolName" xml:space="preserve">
+    <value>工具名稱</value>
+  </data>
+  <data name="TopInspection" xml:space="preserve">
+    <value>頂部檢驗</value>
+  </data>
+  <data name="TotalError" xml:space="preserve">
+    <value>故障總數</value>
+  </data>
+  <data name="TotalExecutionDay" xml:space="preserve">
+    <value>總執行天數</value>
+  </data>
+  <data name="TotalExecutionTime" xml:space="preserve">
+    <value>總執行時間</value>
+  </data>
+  <data name="TotalFail" xml:space="preserve">
+    <value>失敗總數</value>
+  </data>
+  <data name="TotalInput" xml:space="preserve">
+    <value>入產量</value>
+  </data>
+  <data name="TotalOutput" xml:space="preserve">
+    <value>出產量</value>
+  </data>
+  <data name="TotalPass" xml:space="preserve">
+    <value>通過總數</value>
+  </data>
+  <data name="TowerLight" xml:space="preserve">
+    <value>塔燈</value>
+  </data>
+  <data name="TransmitBuffer" xml:space="preserve">
+    <value>發送區</value>
+  </data>
+  <data name="UoM" xml:space="preserve">
+    <value>測量單位</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="UPH" xml:space="preserve">
+    <value>產量/小時</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>用戶</value>
+  </data>
+  <data name="UserAcc" xml:space="preserve">
+    <value>用戶管理</value>
+  </data>
+  <data name="UserAccount" xml:space="preserve">
+    <value>用戶賬號</value>
+  </data>
+  <data name="UserID" xml:space="preserve">
+    <value>用戶號</value>
+  </data>
+  <data name="UserInfo" xml:space="preserve">
+    <value>用戶信息</value>
+  </data>
+  <data name="UserLevel" xml:space="preserve">
+    <value>用戶級別</value>
+  </data>
+  <data name="UserList" xml:space="preserve">
+    <value>用戶列表</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>用戶名</value>
+  </data>
+  <data name="UserView" xml:space="preserve">
+    <value>用戶視圖</value>
+  </data>
+  <data name="Vacuum" xml:space="preserve">
+    <value>真空</value>
+  </data>
+  <data name="VacValue" xml:space="preserve">
+    <value>1相200VAC</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>價值</value>
+  </data>
+  <data name="ViewChartByGroup" xml:space="preserve">
+    <value>按序列站查看圖表</value>
+  </data>
+  <data name="Vision" xml:space="preserve">
+    <value>影像</value>
+  </data>
+  <data name="Work" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="Yield" xml:space="preserve">
+    <value>產量</value>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>已連接</value>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>已断开</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>主頁</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>登出</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>主菜單</value>
+  </data>
+  <data name="CCW" xml:space="preserve">
+    <value>逆時轉</value>
+  </data>
+  <data name="CriticalError" xml:space="preserve">
+    <value>嚴重故障</value>
+  </data>
+  <data name="CW" xml:space="preserve">
+    <value>順時轉</value>
+  </data>
+  <data name="Down" xml:space="preserve">
+    <value>下</value>
+  </data>
+  <data name="Equipment" xml:space="preserve">
+    <value>設備</value>
+  </data>
+  <data name="Fast" xml:space="preserve">
+    <value>快</value>
+  </data>
+  <data name="Front" xml:space="preserve">
+    <value>前</value>
+  </data>
+  <data name="Idle" xml:space="preserve">
+    <value>閒置</value>
+  </data>
+  <data name="InitDone" xml:space="preserve">
+    <value>初始化完成</value>
+  </data>
+  <data name="InitFail" xml:space="preserve">
+    <value>初始化失敗</value>
+  </data>
+  <data name="Initializing" xml:space="preserve">
+    <value>初始化中</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="LotEnded" xml:space="preserve">
+    <value>批次已結束</value>
+  </data>
+  <data name="LotEnding" xml:space="preserve">
+    <value>批次結束中</value>
+  </data>
+  <data name="Rear" xml:space="preserve">
+    <value>後</value>
+  </data>
+  <data name="Recovering" xml:space="preserve">
+    <value>修復中</value>
+  </data>
+  <data name="ReInit" xml:space="preserve">
+    <value>重新初始化</value>
+  </data>
+  <data name="Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="Running" xml:space="preserve">
+    <value>運行中</value>
+  </data>
+  <data name="SequenceStatus" xml:space="preserve">
+    <value>序列狀態</value>
+  </data>
+  <data name="Stopped" xml:space="preserve">
+    <value>暫停中</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>上</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>警惕中</value>
+  </data>
+  <data name="Acc" xml:space="preserve">
+    <value>加速值</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="Dcc" xml:space="preserve">
+    <value>減速值</value>
+  </data>
+  <data name="DriveVel" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="JerkTime" xml:space="preserve">
+    <value>急促時間</value>
+  </data>
+  <data name="KillDcc" xml:space="preserve">
+    <value>壓井減速</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>語言</value>
+  </data>
+  <data name="Medium" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>數量</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="Counter" xml:space="preserve">
+    <value>計數</value>
+  </data>
+  <data name="CurrentShift" xml:space="preserve">
+    <value>當前班次</value>
+  </data>
+  <data name="DateNTime" xml:space="preserve">
+    <value>接收時間</value>
+  </data>
+  <data name="DelayTimer" xml:space="preserve">
+    <value>延時定時器</value>
+  </data>
+  <data name="ErrorTimer" xml:space="preserve">
+    <value>故障計時器</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>編號</value>
+  </data>
+  <data name="IdealCycleTime" xml:space="preserve">
+    <value>理想週期</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>資訊</value>
+  </data>
+  <data name="LotFinishTime" xml:space="preserve">
+    <value>批次結束時間</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>最大</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>最小</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>分鐘</value>
+  </data>
+  <data name="ModuleParameter" xml:space="preserve">
+    <value>模塊參數</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="OEEAnalysis" xml:space="preserve">
+    <value>整體設備效率分析</value>
+  </data>
+  <data name="OEEConfig" xml:space="preserve">
+    <value>整體設備效率配寘</value>
+  </data>
+  <data name="OEEView" xml:space="preserve">
+    <value>整體設備效率圖景</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>選項</value>
+  </data>
+  <data name="PerformanceHour" xml:space="preserve">
+    <value>表現 (小时)</value>
+  </data>
+  <data name="PerformanceShift" xml:space="preserve">
+    <value>表現 (班次)</value>
+  </data>
+  <data name="PlannedDownTime" xml:space="preserve">
+    <value>計畫停機時間</value>
+  </data>
+  <data name="PlannedProdTime" xml:space="preserve">
+    <value>計畫生產時間</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>問題</value>
+  </data>
+  <data name="RunTime" xml:space="preserve">
+    <value>運行時間</value>
+  </data>
+  <data name="ShiftCount" xml:space="preserve">
+    <value>班次數</value>
+  </data>
+  <data name="ShiftStartTime" xml:space="preserve">
+    <value>班次開始時間</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>總結</value>
+  </data>
+  <data name="Top5DownReason" xml:space="preserve">
+    <value>主要停機原因</value>
+  </data>
+  <data name="TotalHours" xml:space="preserve">
+    <value>總小時數</value>
+  </data>
+  <data name="UnplannedDownTime" xml:space="preserve">
+    <value>計畫外停機時間</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="Database" xml:space="preserve">
+    <value>數據庫</value>
+  </data>
+  <data name="Fail" xml:space="preserve">
+    <value>失敗</value>
+  </data>
+  <data name="FailResetMeanTime" xml:space="preserve">
+    <value>未能重置平均時間</value>
+  </data>
+  <data name="IsValidEntryCheck" xml:space="preserve">
+    <value>數據獲取檢查</value>
+  </data>
+  <data name="LogTime" xml:space="preserve">
+    <value>日誌時間</value>
+  </data>
+  <data name="LotNo" xml:space="preserve">
+    <value>批號</value>
+  </data>
+  <data name="MachineError" xml:space="preserve">
+    <value>機器故障</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>文件路徑</value>
+  </data>
+  <data name="WriteLotSummary" xml:space="preserve">
+    <value>保存批次摘要</value>
+  </data>
+  <data name="AddLotInfo" xml:space="preserve">
+    <value>添加批次資訊</value>
+  </data>
+  <data name="AllToolLifeCounter" xml:space="preserve">
+    <value>所有工具壽命</value>
+  </data>
+  <data name="DataMaker" xml:space="preserve">
+    <value>數據表</value>
+  </data>
+  <data name="EncounterCriticalError" xml:space="preserve">
+    <value>遇到嚴重故障，請重新啟動軟件</value>
+  </data>
+  <data name="LoggedIn" xml:space="preserve">
+    <value>已登錄</value>
+  </data>
+  <data name="LoggedOut" xml:space="preserve">
+    <value>已登出</value>
+  </data>
+  <data name="Machine" xml:space="preserve">
+    <value>機器</value>
+  </data>
+  <data name="MotorProfile" xml:space="preserve">
+    <value>電機總則</value>
+  </data>
+  <data name="NewValue" xml:space="preserve">
+    <value>新數值</value>
+  </data>
+  <data name="OEEUpdateError" xml:space="preserve">
+    <value>整體設備效率實時更新故障</value>
+  </data>
+  <data name="PerfScanTimerError" xml:space="preserve">
+    <value>性能掃描計時器錯誤</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>保存點</value>
+  </data>
+  <data name="PrevValue" xml:space="preserve">
+    <value>先前數</value>
+  </data>
+  <data name="SaveLotPerf" xml:space="preserve">
+    <value>保存批次表現</value>
+  </data>
+  <data name="Test1CleaningCntSaveError" xml:space="preserve">
+    <value>清除计数器保存警報</value>
+  </data>
+  <data name="UpdateAccessControl" xml:space="preserve">
+    <value>更新訪問權限</value>
+  </data>
+  <data name="UpdateLotInfo" xml:space="preserve">
+    <value>更新批次資訊</value>
+  </data>
+  <data name="UpdatePosition" xml:space="preserve">
+    <value>更新電機保存點</value>
+  </data>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>更新用戶信息</value>
+  </data>
+  <data name="WriteModPerf" xml:space="preserve">
+    <value>保存模塊表現</value>
+  </data>
+  <data name="SeqTrace" xml:space="preserve">
+    <value>序列追踪</value>
+  </data>
+  <data name="Units" xml:space="preserve">
+    <value>單位</value>
+  </data>
+  <data name="AlarmSummary" xml:space="preserve">
+    <value>警報摘要</value>
+  </data>
+  <data name="DatabaseError" xml:space="preserve">
+    <value>數據庫連接故障</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>結束日期</value>
+  </data>
+  <data name="ErrorOccurence" xml:space="preserve">
+    <value>故障發生（個）</value>
+  </data>
+  <data name="FailConnect" xml:space="preserve">
+    <value>連接失敗</value>
+  </data>
+  <data name="IOConnection" xml:space="preserve">
+    <value>I/O設備連接</value>
+  </data>
+  <data name="IOError" xml:space="preserve">
+    <value>I/O故障</value>
+  </data>
+  <data name="LoadComplete" xml:space="preserve">
+    <value>加載完成</value>
+  </data>
+  <data name="LogCompilationCompleted" xml:space="preserve">
+    <value>日誌編譯已完成</value>
+  </data>
+  <data name="MotionControllerConnection" xml:space="preserve">
+    <value>電機控制器連接</value>
+  </data>
+  <data name="MotorError" xml:space="preserve">
+    <value>電機故障</value>
+  </data>
+  <data name="SQLService" xml:space="preserve">
+    <value>SQL服務</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>開始日期</value>
+  </data>
+  <data name="TotalErrorCount" xml:space="preserve">
+    <value>總故障數</value>
+  </data>
+  <data name="TotalErrorData" xml:space="preserve">
+    <value>總故障數據</value>
+  </data>
+  <data name="TotalWarningCount" xml:space="preserve">
+    <value>總警告數</value>
+  </data>
+  <data name="WarningOccurence" xml:space="preserve">
+    <value>警告出現（個）</value>
+  </data>
+  <data name="Average" xml:space="preserve">
+    <value>平均</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>最新</value>
+  </data>
+  <data name="ProdElapsedTime" xml:space="preserve">
+    <value>產品運行時間</value>
+  </data>
+  <data name="ProdStartTime" xml:space="preserve">
+    <value>產品開始時間</value>
+  </data>
+  <data name="UnitsHour" xml:space="preserve">
+    <value>單位/小時</value>
+  </data>
+  <data name="ConnectionStatus" xml:space="preserve">
+    <value>連接狀態</value>
+  </data>
+  <data name="YieldMessage" xml:space="preserve">
+    <value>批次產量（%）</value>
+  </data>
+  <data name="ASCII" xml:space="preserve">
+    <value>ASCII碼</value>
+  </data>
+  <data name="DataFormatReceive" xml:space="preserve">
+    <value>數據格式 （接收）</value>
+  </data>
+  <data name="DataFormatSend" xml:space="preserve">
+    <value>數據格式（傳輸）</value>
+  </data>
+  <data name="Hex" xml:space="preserve">
+    <value>十六進位</value>
+  </data>
+</root>

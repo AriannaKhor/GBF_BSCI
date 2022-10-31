@@ -1,0 +1,2292 @@
+<PCIE1203L>
+  <DO>
+    <Port0>
+      <RingNo>1</RingNo>
+      <SlaveID>0xF</SlaveID>
+      <Description>Port 0   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port0>
+    <Port1>
+      <RingNo>1</RingNo>
+      <SlaveID>0xF</SlaveID>
+      <Description>Port 1   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port1>
+    <Port2>
+      <RingNo>1</RingNo>
+      <SlaveID>0x10</SlaveID>
+      <Description>Port 0   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port2>
+    <Port3>
+      <RingNo>1</RingNo>
+      <SlaveID>0x10</SlaveID>
+      <Description>Port 1   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port3>
+    <Port4>
+      <RingNo>1</RingNo>
+      <SlaveID>0x11</SlaveID>
+      <Description>Port 0   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port4>
+    <Port5>
+      <RingNo>1</RingNo>
+      <SlaveID>0x11</SlaveID>
+      <Description>Port 1   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port5>
+    <Port6>
+      <RingNo>1</RingNo>
+      <SlaveID>0x12</SlaveID>
+      <Description>Port 0   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port6>
+    <Port7>
+      <RingNo>1</RingNo>
+      <SlaveID>0x12</SlaveID>
+      <Description>Port 1   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port7>
+    <Port8>
+      <RingNo>1</RingNo>
+      <SlaveID>0x13</SlaveID>
+      <Description>Port 0   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port8>
+    <Port9>
+      <RingNo>1</RingNo>
+      <SlaveID>0x13</SlaveID>
+      <Description>Port 1   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port9>
+    <Port10>
+      <RingNo>1</RingNo>
+      <SlaveID>0x14</SlaveID>
+      <Description>Port 0   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port10>
+    <Port11>
+      <RingNo>1</RingNo>
+      <SlaveID>0x14</SlaveID>
+      <Description>Port 1   on  [ AMAX-5057 16 DO Module. ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port11>
+    <Port12>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port12>
+    <Port13>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port13>
+    <Port14>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Port 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port14>
+    <Port15>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Port 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port15>
+    <Port16>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Port 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port16>
+    <Port17>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Port 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port17>
+    <Port18>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Port 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port18>
+    <Port19>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Port 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port19>
+    <Port20>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Port 0   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port20>
+  </DO>
+  <DI>
+    <Port0>
+      <RingNo>1</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port0>
+    <Port1>
+      <RingNo>1</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port1>
+    <Port2>
+      <RingNo>1</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port2>
+    <Port3>
+      <RingNo>1</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port3>
+    <Port4>
+      <RingNo>1</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port4>
+    <Port5>
+      <RingNo>1</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port5>
+    <Port6>
+      <RingNo>1</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port6>
+    <Port7>
+      <RingNo>1</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port7>
+    <Port8>
+      <RingNo>1</RingNo>
+      <SlaveID>0x6</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port8>
+    <Port9>
+      <RingNo>1</RingNo>
+      <SlaveID>0x6</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port9>
+    <Port10>
+      <RingNo>1</RingNo>
+      <SlaveID>0x7</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port10>
+    <Port11>
+      <RingNo>1</RingNo>
+      <SlaveID>0x7</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port11>
+    <Port12>
+      <RingNo>1</RingNo>
+      <SlaveID>0x8</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port12>
+    <Port13>
+      <RingNo>1</RingNo>
+      <SlaveID>0x8</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port13>
+    <Port14>
+      <RingNo>1</RingNo>
+      <SlaveID>0x9</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port14>
+    <Port15>
+      <RingNo>1</RingNo>
+      <SlaveID>0x9</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port15>
+    <Port16>
+      <RingNo>1</RingNo>
+      <SlaveID>0xA</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port16>
+    <Port17>
+      <RingNo>1</RingNo>
+      <SlaveID>0xA</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port17>
+    <Port18>
+      <RingNo>1</RingNo>
+      <SlaveID>0xB</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port18>
+    <Port19>
+      <RingNo>1</RingNo>
+      <SlaveID>0xB</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port19>
+    <Port20>
+      <RingNo>1</RingNo>
+      <SlaveID>0x0</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port20>
+    <Port21>
+      <RingNo>1</RingNo>
+      <SlaveID>0x0</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port21>
+    <Port22>
+      <RingNo>1</RingNo>
+      <SlaveID>0x16</SlaveID>
+      <Description>Port 0   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port22>
+    <Port23>
+      <RingNo>1</RingNo>
+      <SlaveID>0x16</SlaveID>
+      <Description>Port 1   on  [ AMAX-5052 16 DI Module.  ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port23>
+    <Port24>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port24>
+    <Port25>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port25>
+    <Port26>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Port 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port26>
+    <Port27>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Port 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port27>
+    <Port28>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Port 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port28>
+    <Port29>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Port 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port29>
+    <Port30>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Port 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port30>
+    <Port31>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Port 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port31>
+    <Port32>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Port 0   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port32>
+    <Port33>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 0   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port33>
+    <Port34>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 1   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port34>
+    <Port35>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 2   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Port35>
+    <Port36>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 3   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Port36>
+    <Port37>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 4   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Port37>
+    <Port38>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 5   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Port38>
+    <Port39>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 6   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Port39>
+    <Port40>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 7   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Port40>
+    <Port41>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 8   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Port41>
+    <Port42>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 9   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Port42>
+    <Port43>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 10   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Port43>
+    <Port44>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 11   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Port44>
+    <Port45>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 12   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Port45>
+    <Port46>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 13   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Port46>
+    <Port47>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 14   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Port47>
+    <Port48>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 15   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Port48>
+    <Port49>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 16   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>16</ByteOffset>
+    </Port49>
+    <Port50>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 17   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>17</ByteOffset>
+    </Port50>
+    <Port51>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 18   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>18</ByteOffset>
+    </Port51>
+    <Port52>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 19   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>19</ByteOffset>
+    </Port52>
+    <Port53>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 20   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>20</ByteOffset>
+    </Port53>
+    <Port54>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 21   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>21</ByteOffset>
+    </Port54>
+    <Port55>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 22   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>22</ByteOffset>
+    </Port55>
+    <Port56>
+      <RingNo>1</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Port 23   on  [ AMAX-5074 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>23</ByteOffset>
+    </Port56>
+    <Port57>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 0   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Port57>
+    <Port58>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 1   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Port58>
+    <Port59>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 2   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Port59>
+    <Port60>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 3   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Port60>
+    <Port61>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 4   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Port61>
+    <Port62>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 5   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Port62>
+    <Port63>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 6   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Port63>
+    <Port64>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 7   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Port64>
+    <Port65>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 8   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Port65>
+    <Port66>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 9   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Port66>
+    <Port67>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 10   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Port67>
+    <Port68>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 11   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Port68>
+    <Port69>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 12   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Port69>
+    <Port70>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 13   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Port70>
+    <Port71>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 14   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Port71>
+    <Port72>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 15   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Port72>
+    <Port73>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 16   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>16</ByteOffset>
+    </Port73>
+    <Port74>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 17   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>17</ByteOffset>
+    </Port74>
+    <Port75>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 18   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>18</ByteOffset>
+    </Port75>
+    <Port76>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 19   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>19</ByteOffset>
+    </Port76>
+    <Port77>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 20   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>20</ByteOffset>
+    </Port77>
+    <Port78>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 21   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>21</ByteOffset>
+    </Port78>
+    <Port79>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 22   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>22</ByteOffset>
+    </Port79>
+    <Port80>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 23   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>23</ByteOffset>
+    </Port80>
+    <Port81>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 24   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>24</ByteOffset>
+    </Port81>
+    <Port82>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 25   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>25</ByteOffset>
+    </Port82>
+    <Port83>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 26   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>26</ByteOffset>
+    </Port83>
+    <Port84>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 27   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>27</ByteOffset>
+    </Port84>
+    <Port85>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 28   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>28</ByteOffset>
+    </Port85>
+    <Port86>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 29   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>29</ByteOffset>
+    </Port86>
+    <Port87>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 30   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>30</ByteOffset>
+    </Port87>
+    <Port88>
+      <RingNo>1</RingNo>
+      <SlaveID>0xC</SlaveID>
+      <Description>Port 31   on  [ AMAX-5001 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>31</ByteOffset>
+    </Port88>
+  </DI>
+  <Input>
+    <Input0>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Input0>
+    <Input1>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Input1>
+    <Input2>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Input2>
+    <Input3>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Input3>
+    <Input4>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Input4>
+    <Input5>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Input5>
+    <Input6>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Input6>
+    <Input7>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Input7>
+    <Input8>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 8   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Input8>
+    <Input9>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 9   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Input9>
+    <Input10>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 10   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Input10>
+    <Input11>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 11   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Input11>
+    <Input12>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 12   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Input12>
+    <Input13>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 13   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Input13>
+    <Input14>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 14   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Input14>
+    <Input15>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 15   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Input15>
+    <Input16>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 16   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>16</ByteOffset>
+    </Input16>
+    <Input17>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 17   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>17</ByteOffset>
+    </Input17>
+    <Input18>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 18   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>18</ByteOffset>
+    </Input18>
+    <Input19>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 19   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>19</ByteOffset>
+    </Input19>
+    <Input20>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 20   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>20</ByteOffset>
+    </Input20>
+    <Input21>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 21   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>21</ByteOffset>
+    </Input21>
+    <Input22>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 22   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>22</ByteOffset>
+    </Input22>
+    <Input23>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 23   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>23</ByteOffset>
+    </Input23>
+    <Input24>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 24   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>24</ByteOffset>
+    </Input24>
+    <Input25>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 25   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>25</ByteOffset>
+    </Input25>
+    <Input26>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 26   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>26</ByteOffset>
+    </Input26>
+    <Input27>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 27   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>27</ByteOffset>
+    </Input27>
+    <Input28>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 28   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>28</ByteOffset>
+    </Input28>
+    <Input29>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 29   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>29</ByteOffset>
+    </Input29>
+    <Input30>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 30   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>30</ByteOffset>
+    </Input30>
+    <Input31>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 31   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>31</ByteOffset>
+    </Input31>
+    <Input32>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Input32>
+    <Input33>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Input33>
+    <Input34>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Input34>
+    <Input35>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Input35>
+    <Input36>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Input36>
+    <Input37>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Input37>
+    <Input38>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Input38>
+    <Input39>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Input39>
+    <Input40>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 8   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Input40>
+    <Input41>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 9   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Input41>
+    <Input42>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 10   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Input42>
+    <Input43>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 11   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Input43>
+    <Input44>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 12   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Input44>
+    <Input45>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 13   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Input45>
+    <Input46>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 14   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Input46>
+    <Input47>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 15   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Input47>
+    <Input48>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 16   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>16</ByteOffset>
+    </Input48>
+    <Input49>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 17   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>17</ByteOffset>
+    </Input49>
+    <Input50>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 18   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>18</ByteOffset>
+    </Input50>
+    <Input51>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 19   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>19</ByteOffset>
+    </Input51>
+    <Input52>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 20   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>20</ByteOffset>
+    </Input52>
+    <Input53>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 21   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>21</ByteOffset>
+    </Input53>
+    <Input54>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 22   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>22</ByteOffset>
+    </Input54>
+    <Input55>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 23   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>23</ByteOffset>
+    </Input55>
+    <Input56>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 24   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>24</ByteOffset>
+    </Input56>
+    <Input57>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 25   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>25</ByteOffset>
+    </Input57>
+    <Input58>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 26   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>26</ByteOffset>
+    </Input58>
+    <Input59>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 27   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>27</ByteOffset>
+    </Input59>
+    <Input60>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 28   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>28</ByteOffset>
+    </Input60>
+    <Input61>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 29   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>29</ByteOffset>
+    </Input61>
+    <Input62>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 30   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>30</ByteOffset>
+    </Input62>
+    <Input63>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 31   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>31</ByteOffset>
+    </Input63>
+    <Input64>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Input64>
+    <Input65>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Input65>
+    <Input66>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Input66>
+    <Input67>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Input67>
+    <Input68>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Input68>
+    <Input69>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Input69>
+    <Input70>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Input70>
+    <Input71>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Input71>
+    <Input72>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 8   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Input72>
+    <Input73>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 9   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Input73>
+    <Input74>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 10   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Input74>
+    <Input75>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 11   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Input75>
+    <Input76>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 12   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Input76>
+    <Input77>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 13   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Input77>
+    <Input78>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 14   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Input78>
+    <Input79>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 15   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Input79>
+    <Input80>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 16   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>16</ByteOffset>
+    </Input80>
+    <Input81>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 17   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>17</ByteOffset>
+    </Input81>
+    <Input82>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 18   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>18</ByteOffset>
+    </Input82>
+    <Input83>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 19   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>19</ByteOffset>
+    </Input83>
+    <Input84>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 20   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>20</ByteOffset>
+    </Input84>
+    <Input85>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 21   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>21</ByteOffset>
+    </Input85>
+    <Input86>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 22   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>22</ByteOffset>
+    </Input86>
+    <Input87>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 23   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>23</ByteOffset>
+    </Input87>
+    <Input88>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 24   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>24</ByteOffset>
+    </Input88>
+    <Input89>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 25   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>25</ByteOffset>
+    </Input89>
+    <Input90>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 26   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>26</ByteOffset>
+    </Input90>
+    <Input91>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 27   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>27</ByteOffset>
+    </Input91>
+    <Input92>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 28   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>28</ByteOffset>
+    </Input92>
+    <Input93>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 29   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>29</ByteOffset>
+    </Input93>
+    <Input94>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 30   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>30</ByteOffset>
+    </Input94>
+    <Input95>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 31   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>31</ByteOffset>
+    </Input95>
+    <Input96>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Input96>
+    <Input97>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Input97>
+    <Input98>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Input98>
+    <Input99>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Input99>
+    <Input100>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Input100>
+    <Input101>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Input101>
+    <Input102>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Input102>
+    <Input103>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Input103>
+    <Input104>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 8   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Input104>
+    <Input105>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 9   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Input105>
+    <Input106>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 10   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Input106>
+    <Input107>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 11   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Input107>
+    <Input108>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 12   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Input108>
+    <Input109>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 13   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Input109>
+    <Input110>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 14   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Input110>
+    <Input111>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 15   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Input111>
+    <Input112>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 16   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>16</ByteOffset>
+    </Input112>
+    <Input113>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 17   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>17</ByteOffset>
+    </Input113>
+    <Input114>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 18   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>18</ByteOffset>
+    </Input114>
+    <Input115>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 19   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>19</ByteOffset>
+    </Input115>
+    <Input116>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 20   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>20</ByteOffset>
+    </Input116>
+    <Input117>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 21   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>21</ByteOffset>
+    </Input117>
+    <Input118>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 22   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>22</ByteOffset>
+    </Input118>
+    <Input119>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 23   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>23</ByteOffset>
+    </Input119>
+    <Input120>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 24   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>24</ByteOffset>
+    </Input120>
+    <Input121>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 25   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>25</ByteOffset>
+    </Input121>
+    <Input122>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 26   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>26</ByteOffset>
+    </Input122>
+    <Input123>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 27   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>27</ByteOffset>
+    </Input123>
+    <Input124>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 28   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>28</ByteOffset>
+    </Input124>
+    <Input125>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 29   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>29</ByteOffset>
+    </Input125>
+    <Input126>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 30   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>30</ByteOffset>
+    </Input126>
+    <Input127>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 31   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>31</ByteOffset>
+    </Input127>
+    <Input128>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Input128>
+    <Input129>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Input129>
+    <Input130>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Input130>
+    <Input131>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Input131>
+    <Input132>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Input132>
+    <Input133>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Input133>
+    <Input134>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Input134>
+    <Input135>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Input135>
+    <Input136>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 8   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Input136>
+    <Input137>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 9   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Input137>
+    <Input138>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 10   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Input138>
+    <Input139>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 11   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Input139>
+    <Input140>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 12   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Input140>
+    <Input141>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 13   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Input141>
+    <Input142>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 14   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Input142>
+    <Input143>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 15   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Input143>
+  </Input>
+  <Output>
+    <Output0>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Output0>
+    <Output1>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Output1>
+    <Output2>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Output2>
+    <Output3>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Output3>
+    <Output4>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Output4>
+    <Output5>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Output5>
+    <Output6>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Output6>
+    <Output7>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Output7>
+    <Output8>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 8   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Output8>
+    <Output9>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 9   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Output9>
+    <Output10>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 10   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Output10>
+    <Output11>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 11   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Output11>
+    <Output12>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 12   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Output12>
+    <Output13>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 13   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Output13>
+    <Output14>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 14   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Output14>
+    <Output15>
+      <RingNo>0</RingNo>
+      <SlaveID>0x1</SlaveID>
+      <Description>Offset 15   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Output15>
+    <Output16>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Output16>
+    <Output17>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Output17>
+    <Output18>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Output18>
+    <Output19>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Output19>
+    <Output20>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Output20>
+    <Output21>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Output21>
+    <Output22>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Output22>
+    <Output23>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Output23>
+    <Output24>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 8   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Output24>
+    <Output25>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 9   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Output25>
+    <Output26>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 10   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Output26>
+    <Output27>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 11   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Output27>
+    <Output28>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 12   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Output28>
+    <Output29>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 13   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Output29>
+    <Output30>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 14   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Output30>
+    <Output31>
+      <RingNo>0</RingNo>
+      <SlaveID>0x2</SlaveID>
+      <Description>Offset 15   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Output31>
+    <Output32>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Output32>
+    <Output33>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Output33>
+    <Output34>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Output34>
+    <Output35>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Output35>
+    <Output36>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Output36>
+    <Output37>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Output37>
+    <Output38>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Output38>
+    <Output39>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Output39>
+    <Output40>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 8   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Output40>
+    <Output41>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 9   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Output41>
+    <Output42>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 10   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Output42>
+    <Output43>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 11   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Output43>
+    <Output44>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 12   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Output44>
+    <Output45>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 13   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Output45>
+    <Output46>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 14   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Output46>
+    <Output47>
+      <RingNo>0</RingNo>
+      <SlaveID>0x3</SlaveID>
+      <Description>Offset 15   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Output47>
+    <Output48>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Output48>
+    <Output49>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Output49>
+    <Output50>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Output50>
+    <Output51>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Output51>
+    <Output52>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Output52>
+    <Output53>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Output53>
+    <Output54>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Output54>
+    <Output55>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Output55>
+    <Output56>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 8   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>8</ByteOffset>
+    </Output56>
+    <Output57>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 9   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>9</ByteOffset>
+    </Output57>
+    <Output58>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 10   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>10</ByteOffset>
+    </Output58>
+    <Output59>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 11   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>11</ByteOffset>
+    </Output59>
+    <Output60>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 12   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>12</ByteOffset>
+    </Output60>
+    <Output61>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 13   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>13</ByteOffset>
+    </Output61>
+    <Output62>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 14   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>14</ByteOffset>
+    </Output62>
+    <Output63>
+      <RingNo>0</RingNo>
+      <SlaveID>0x4</SlaveID>
+      <Description>Offset 15   on  [ AMAX-3285IO ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>15</ByteOffset>
+    </Output63>
+    <Output64>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 0   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>0</ByteOffset>
+    </Output64>
+    <Output65>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 1   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>1</ByteOffset>
+    </Output65>
+    <Output66>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 2   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>2</ByteOffset>
+    </Output66>
+    <Output67>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 3   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>3</ByteOffset>
+    </Output67>
+    <Output68>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 4   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>4</ByteOffset>
+    </Output68>
+    <Output69>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 5   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>5</ByteOffset>
+    </Output69>
+    <Output70>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 6   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>6</ByteOffset>
+    </Output70>
+    <Output71>
+      <RingNo>0</RingNo>
+      <SlaveID>0x5</SlaveID>
+      <Description>Offset 7   on  [ AMAX-3245 ]</Description>
+      <Slot>SLOT_UNKNOWN</Slot>
+      <ByteOffset>7</ByteOffset>
+    </Output71>
+  </Output>
+</PCIE1203L>

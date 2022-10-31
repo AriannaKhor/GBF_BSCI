@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="UIModule.DataMarkers.CircularSlotView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UIModule.DataMarkers.Resources"
+             xmlns:helpers="clr-namespace:UIModule.DataMarkers.Helpers"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             Visibility="{Binding IsVisible, Mode=OneWay, Converter={StaticResource trueToVisible}}"
+             helpers:SizeObserver.Observe="True" 
+             helpers:SizeObserver.ObservedHeight ="{Binding Height, Mode=OneWayToSource}"
+             helpers:SizeObserver.ObservedWidth ="{Binding Width, Mode=OneWayToSource}"
+             mc:Ignorable="d" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="False"
+             d:DesignHeight="60" d:DesignWidth="60">
+
+    <UserControl.Resources>
+        <helpers:SlotSizeConverter x:Key="SizeConverter"/>
+        <helpers:SlotIdConverter x:Key="IdConverter"/>
+    </UserControl.Resources>
+    
+    <ContentControl>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="{Binding OuterRadius, Converter={StaticResource SizeConverter}}"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="{Binding OuterRadius, Converter={StaticResource SizeConverter}}"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="1" Grid.Column="1">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding RotateSlotNamePositionCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    
+                    <Border CornerRadius="100" BorderThickness="1" BorderBrush="Black" Background="White" Visibility="{Binding SimpleVisibility}" >
+                        <ItemsControl ItemsSource="{Binding BaseStationCollection}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <local:CirclePanel x:Name="Cpanel" OuterRadius="{Binding OuterRadius}" InnerRadius="{Binding InnerRadius}" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:IconStatus StationName="{Binding StationName}" StationType="{Binding StationType}" Result="{Binding StationResult}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+
+                    <Ellipse x:Name="UnitStatus" Stroke="Gray" StrokeThickness="1" Fill="{Binding SlotColor}" >
+                        <Ellipse.Style>
+                            <Style TargetType="Ellipse">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SimpleVisibility}" Value="Visible">
+                                        <Setter Property="Width" Value="{Binding UnitStatusSize}"/>
+                                        <Setter Property="Height" Value="{Binding UnitStatusSize}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding SimpleVisibility}" Value="Collapsed">
+                                        <Setter Property="Width" Value="35"/>
+                                        <Setter Property="Height" Value="35"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Ellipse.Style>
+                        <Ellipse.ToolTip>
+                            <StackPanel>
+                                <Label x:Name="IDLabel" Content="{Binding UnitID}" ContentStringFormat="Unit ID: {0}"/>
+                                <Label x:Name="StatusLabel" Content="{Binding UnitStatus}" ContentStringFormat="Status : {0}"/>
+                            </StackPanel>
+                        </Ellipse.ToolTip>
+                    </Ellipse>
+                    <local:OutlinedTextBlock x:Name="ID" FontWeight="DemiBold" FontSize="10" Text="{Binding SlotIndicator, Converter={StaticResource IdConverter}}" StrokeThickness="2" Stroke="DarkSlateGray"
+                                     VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" IsHitTestVisible="False" />
+                </Grid>
+
+                <local:OutlinedTextBlock Text="{Binding SlotName}" Fill="Black" Stroke="LightGray" StrokeThickness="2.5" FontSize="10" Margin="5,5,5,5" TextWrapping="Wrap">
+                    <local:OutlinedTextBlock.Style>
+                        <Style TargetType="local:OutlinedTextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SlotNamePos}" Value="Bottom">
+                                    <Setter Property="Grid.Row" Value="2" />
+                                    <Setter Property="Grid.Column" Value="1" />
+                                    <Setter Property="VerticalAlignment" Value="Top" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SlotNamePos}" Value="Left">
+                                    <Setter Property="Grid.Row" Value="1" />
+                                    <Setter Property="Grid.Column" Value="0" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="HorizontalAlignment" Value="right" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SlotNamePos}" Value="Top">
+                                    <Setter Property="Grid.Row" Value="0" />
+                                    <Setter Property="Grid.Column" Value="1" />
+                                    <Setter Property="VerticalAlignment" Value="Bottom" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SlotNamePos}" Value="Right">
+                                    <Setter Property="Grid.Row" Value="1" />
+                                    <Setter Property="Grid.Column" Value="2" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="HorizontalAlignment" Value="Left" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </local:OutlinedTextBlock.Style>
+                </local:OutlinedTextBlock>
+            </Grid>
+            
+        </StackPanel>
+
+    </ContentControl>
+</UserControl>

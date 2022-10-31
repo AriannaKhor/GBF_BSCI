@@ -1,0 +1,38 @@
+﻿using GreatechApp.Core.Modal;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace DialogManager.WarningMsg
+{
+    /// <summary>
+    /// Interaction logic for WarningMessageView.xaml
+    /// </summary>
+    public partial class WarningMessageView : Window
+    {
+        public WarningMessageView()
+        {
+            InitializeComponent();
+        }
+
+        public void AddWarning(AlarmParameter warningParameter)
+        {
+            ((WarningMessageViewModel)this.DataContext).AddWarning(warningParameter);
+        }
+
+        public void RemoveWarning(AlarmParameter warningParameter)
+        {
+            ((WarningMessageViewModel)this.DataContext).RemoveWarning(warningParameter);
+        }
+    }
+}

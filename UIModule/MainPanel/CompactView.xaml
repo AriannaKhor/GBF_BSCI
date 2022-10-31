@@ -1,0 +1,709 @@
+﻿<UserControl x:Class="UIModule.MainPanel.CompactView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:s="clr-namespace:GreatechApp.Core.Command;assembly=GreatechApp.Core"
+             xmlns:core="clr-namespace:GreatechApp.Core;assembly=GreatechApp.Core"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:mahApp="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+             d:DesignHeight="985" d:DesignWidth="1720">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/GreatechApp.Core;component/Resources/Controls/ExpanderStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Storyboard x:Key="tcpipStoryBoardOpen">
+                <DoubleAnimation Storyboard.TargetProperty="Width" AutoReverse="False"
+                                         From="0" To="150" Duration="0:0:0.40"/>
+            </Storyboard>
+
+            <Style TargetType="{x:Type GroupBox}">
+                <Setter Property="Foreground" Value="#152c46"/>
+                <Setter Property="BorderBrush" Value="#152c46"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="Foreground" Value="#152c46"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+
+            <Style x:Key="ImageHover" TargetType="{x:Type Image}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Opacity" Value="0.7" />
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="False">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border CornerRadius="2"  
+            BorderBrush="{DynamicResource GridLineBrush}" 
+            BorderThickness="1">
+        <Grid Background="#152c46">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="110"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition MaxHeight="30"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Panel.ZIndex="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MinWidth="150" MaxWidth="200"/>
+                    <ColumnDefinition Width="*" MinWidth="200"/>
+                    <ColumnDefinition Width="*" MinWidth="115" MaxWidth="250"/>
+                    <ColumnDefinition Width="*" MaxWidth="100"/>
+                    <ColumnDefinition Width="80" />
+                </Grid.ColumnDefinitions>
+
+                <!--Logo-->
+                <Border Grid.Column="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="47*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+
+                        <Image Grid.Row="0" MaxWidth="122" MinWidth="80" Stretch="Uniform" Source="/GreatechApp.Core;component/Icon/Logo.png" Grid.ColumnSpan="2" Margin="0,0,0,20.4" Grid.RowSpan="2"/>
+
+                        <!--DateTime-->
+                        <TextBlock Grid.Row="1" FontWeight="DemiBold" Foreground="White" Margin="2,0,0,4.4" MaxWidth="150" TextWrapping="WrapWithOverflow" FontSize="14" TextAlignment="Center" Grid.ColumnSpan="2">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}  {1}">
+                                    <Binding Path="SysDate" />
+                                    <Binding Path="SysTime" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Grid>
+                </Border>
+
+                <!--Machine Status-->
+                <Border Grid.Column="1" Margin="3,0,0,2.5">
+                    <GroupBox Header="{Binding Path=MachineStatus, Source={StaticResource StringTableODP}}" Margin="0,0,10.2,0" Foreground="White">
+                        <Grid Grid.Column="0" HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition MinWidth="25" MaxWidth="32"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--Equip Status-->
+                            <Image Grid.Column="0" Source="{Binding EquipStateIcon, Mode=OneWay}" MinWidth="25" MaxWidth="32"/>
+                            <TextBlock Grid.Column="1" Text="{Binding EquipStatusWithCulture, Mode=OneWay}" Margin="2,0,0,0" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" FontWeight="DemiBold" FontSize="20"/>
+                        </Grid>
+                    </GroupBox>
+                </Border>
+
+                <!--Machine Mode-->
+                <Border Grid.Column="2" Margin="2.8,0,9.8,2.4">
+                    <GroupBox Header="{Binding Path=MachineMode, Source={StaticResource StringTableODP}}" IsEnabled="{Binding CanAccess}" Foreground="White">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=AutoMode, Source={StaticResource StringTableODP}}" VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow" Margin="5,0"/>
+                            <mahApp:ToggleSwitch Grid.Row="0" Grid.Column="1" MaxWidth="75" IsOn="{Binding IsAutoMode}" IsEnabled="{Binding IsAllowAutoMode}" Foreground="White" OnContent="{Binding Path=On, Source={StaticResource StringTableODP}}" OffContent="{Binding Path=Off, Source={StaticResource StringTableODP}}" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Path=DryRun, Source={StaticResource StringTableODP}}" VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow" Margin="5,0"/>
+                            <mahApp:ToggleSwitch Grid.Row="1" Grid.Column="1" MaxWidth="75" IsOn="{Binding IsDryRun}" IsEnabled="{Binding IsAllowDryRun}" Foreground="White" OnContent="{Binding Path=On, Source={StaticResource StringTableODP}}" OffContent="{Binding Path=Off, Source={StaticResource StringTableODP}}" />
+                        </Grid>
+                    </GroupBox>
+                </Border>
+
+                <!--TCP/IP Status-->
+                <Border Grid.Column="3" Margin="3,0,0,2.5" IsEnabled="{Binding CanAccess}">
+                    <GroupBox x:Name="TCPSection" Header="{Binding Path=TCPIP, Source={StaticResource StringTableODP}}" IsEnabled="{Binding CanAccess}" Foreground="White" Background="Transparent">
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image Source="{Binding TCPIPStateIcon, Mode=OneWay}" Width="45" Height="45" Style="{StaticResource ImageHover}"/>
+                            <TextBlock Name="TCPStatus" Text="{Binding TCPIPStatusWithCulture}" HorizontalAlignment="Center" FontSize="10" Margin="2,0,0,0" Foreground="White"/>
+                        </StackPanel>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseMove">
+                                <prism:InvokeCommandAction Command="{Binding TCPIPListCommand}" CommandParameter="Open"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding ReconnectAllTCP}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </GroupBox>
+                </Border>
+                <Canvas x:Name="TCPPopup" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Visibility="{Binding Path=IsTCPIPListOpen, Converter={StaticResource trueToVisible}}"
+                        HorizontalAlignment="Right" >
+                    <Grid MaxHeight="500">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseMove">
+                                <prism:InvokeCommandAction Command="{Binding TCPIPListCommand}" CommandParameter="Open"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeave">
+                                <prism:InvokeCommandAction Command="{Binding TCPIPListCommand}" CommandParameter="Close"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Grid.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsTCPIPListOpen}" Value="true">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource tcpipStoryBoardOpen}"/>
+                                        </DataTrigger.EnterActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                            <ItemsControl x:Name="m_itemsControl" ItemsSource="{Binding TCPCollection}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="Gray" BorderThickness="1,0.5" CornerRadius="5" Background="AntiqueWhite">
+                                            <Grid VerticalAlignment="Center" HorizontalAlignment="Right" Margin="2,3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" Content="{Binding TCPName}" Foreground="Black" FontSize="10" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Image Grid.Column="1" Source="{Binding TCPImageSource}" Height="35" HorizontalAlignment="Right" Margin="15,0"/>
+                                                <Image Grid.Column="1" Source="{Binding Image}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" Margin="15,0"/>
+
+                                            </Grid>
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <i:InvokeCommandAction Command="{Binding Path=DataContext.ReconnectTCP, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"
+                                                                                   CommandParameter="{Binding}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Canvas>
+
+                <!--User Login-->
+                <Border Grid.Column="4">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Grid Margin="0,0,0,5">
+                            <Image Width="40" Height="40" Name="LoginBtn" Visibility="{Binding IsLogin}" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/Login.png" Style="{StaticResource ImageHover}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <prism:InvokeCommandAction Command="{Binding LoginDialogCommand}" CommandParameter="Login" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                            <Image Width="40" Height="40"  Name="LogoutBtn" Visibility="{Binding IsLogout}" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/LogOut.png" ToolTip="{Binding UserInfo, Mode=OneWay}" Style="{StaticResource ImageHover}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <prism:InvokeCommandAction Command="{Binding OperationCommand}" CommandParameter="Logout" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                        </Grid>
+                        <TextBlock Text="{Binding LoginStatusWithCulture}" Foreground="White" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Height="2" Fill="White" Margin="0,5,0,0"/>
+            <Grid Grid.Row="2" Panel.ZIndex="0" Background="AliceBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Bypass View-->
+                <Expander Name="BypassExpander" Grid.Column="0" Template="{StaticResource StretchyExpanderToRight}" MaxWidth="300" IsExpanded="{Binding IsBypassExpand}" OverridesDefaultStyle="True">
+                    <Expander.Header>
+                        <Grid>
+                            <Label Content="{Binding Path=BypassStation, Source={StaticResource StringTableODP}}" Foreground="#152c46">
+                                <Label.LayoutTransform>
+                                    <RotateTransform Angle="90"/>
+                                </Label.LayoutTransform>
+                            </Label>
+                        </Grid>
+                    </Expander.Header>
+                    <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.BypassRegion}"/>
+                </Expander>
+
+                <Grid Grid.Column="1" Margin="0,0,0.4,0.4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" MaxWidth="270"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!--Machine Performance-->
+                        <GroupBox Header="{Binding Path=MachinePerf, Source={StaticResource StringTableODP}}" Grid.Row="0" Margin="10,10,9.2,9.4" BorderBrush="#152c46">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="15" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="15" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" MinWidth="31"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--Equip Cycle Time-->
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=CycleTime, Source={StaticResource StringTableODP}}" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="15"/>
+                                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Label  FontSize="14" Content="{Binding CycleTime, Mode=OneWay}" FontWeight="Bold"/>
+                                        <Label  FontSize="14" Content="{Binding Path=s, Source={StaticResource StringTableODP}}" FontWeight="Bold" HorizontalContentAlignment="Right"/>
+                                    </StackPanel>
+
+                                    <!--Equip UPH-->
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Path=UPH, Source={StaticResource StringTableODP}}" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" FontSize="15"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UPH, Mode=OneWay}" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                    <!--Total Input-->
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Path=TotalInput, Source={StaticResource StringTableODP}}" VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding TotalInput, Mode=OneWay}" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--Total Output-->
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding Path=TotalOutput, Source={StaticResource StringTableODP}}" VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding TotalOutput, Mode=OneWay}" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--Throughput-->
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding Path=Throughput, Source={StaticResource StringTableODP}}" x:Name="lblThroughput" ToolTip="{Binding Path=ThroughputMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding Throughput}" x:Name="lblThroughputResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--StopPages-->
+                                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{Binding Path=StopPages, Source={StaticResource StringTableODP}}" x:Name="lblStopPages" ToolTip="{Binding Path=StopPagesMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding StopPages}" x:Name="lblStoppagesResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                </Grid>
+
+                                <Rectangle Grid.Column="2" HorizontalAlignment="Stretch" Width="1" Margin="3,4" Fill="#152c46"/>
+
+                                <Grid Grid.Column="3">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" MinWidth="31" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--StartTime-->
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=StartTime, Source={StaticResource StringTableODP}}" x:Name="lblStartTime" ToolTip="{Binding Path=StartTimeMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontSize="14" Text="{Binding ProdStartTime}" x:Name="lblStartTimeResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--ElapsedTime-->
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=ElapsedTime, Source={StaticResource StringTableODP}}" x:Name="lblElapsedTime" ToolTip="{Binding Path=ElapsedTimeMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" FontSize="14" Text="{Binding ProdElapsedTime}" x:Name="lblElapseTimeResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--DownTime-->
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Path=DownTime, Source={StaticResource StringTableODP}}" x:Name="lblDownTime" ToolTip="{Binding Path=DownTimeMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" FontSize="14" Text="{Binding DownTime}" x:Name="lblDownTimeResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--LotStartTime-->
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding Path=LotStartTime, Source={StaticResource StringTableODP}}" x:Name="lblLotStartTime" ToolTip="{Binding Path=LotStartTimeMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" FontSize="14" Text="{Binding LotStartTime}" x:Name="lblLotStartTimeResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--LotElapsedTime-->
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding Path=LotElapsedTime, Source={StaticResource StringTableODP}}" x:Name="lblLotElapsedTime" ToolTip="{Binding Path=LotElapsedTimeMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" FontSize="14" Text="{Binding LotElapsedTime}" x:Name="lblLotElapseTimeResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--LotFinishTime-->
+                                    <TextBlock Grid.Column="0" Grid.Row="5" Text="{Binding Path=LotFinishTime, Source={StaticResource StringTableODP}}" x:Name="lblLotFinishTime" ToolTip="{Binding Path=LotFinishTimeMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" FontSize="14" Text="{Binding LotFinishTime}" x:Name="lblFinishTimeResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                </Grid>
+
+                                <Rectangle Grid.Column="4" HorizontalAlignment="Stretch" Width="1" Margin="3,4" Fill="#152c46"/>
+
+                                <Grid Grid.Column="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" MinWidth="31" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--MTBA-->
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Path=MTBA, Source={StaticResource StringTableODP}}" x:Name="lblMTBA" ToolTip="{Binding Path=MTBAMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontSize="15" Text="{Binding MTBA}" x:Name="lblMTBAResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--MTTA-->
+                                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Path=MTTA, Source={StaticResource StringTableODP}}" x:Name="lblMTTA" ToolTip="{Binding Path=MTTAMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" FontSize="15" Text="{Binding MTTA}" x:Name="lblMTTTAResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--MTTR-->
+                                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Path=MTTR, Source={StaticResource StringTableODP}}" x:Name="lblMTTR" ToolTip="{Binding Path=MTTRMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" FontSize="15" Text="{Binding MTTR}" x:Name="lblMTTTRResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--MTBF-->
+                                    <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding Path=MTBF, Source={StaticResource StringTableODP}}" x:Name="lblMTBF" ToolTip="{Binding Path=MTBFMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" FontSize="15" Text="{Binding MTBF}" x:Name="lblMTBFResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+
+                                    <!--Yield-->
+                                    <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding Path=Yield, Source={StaticResource StringTableODP}}" x:Name="lblYield" ToolTip="{Binding Path=YieldMessage, Source={StaticResource StringTableODP}}"
+                                               VerticalAlignment="Center" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" FontSize="15" Text="{Binding OverallYield}" x:Name="lblYieldResult" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                </Grid>
+
+                            </Grid>
+                        </GroupBox>
+
+                        <!--OEE Chart-->
+                        <Border Grid.Row="1" Background="AliceBlue" CornerRadius="2" Margin="10,0,10,10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--OEE Gauge Chart-->
+                                <GroupBox Grid.Row="0" Grid.Column="0" Foreground="Black" Header="{Binding Path=OEEGaugeChart, Source={StaticResource StringTableODP}}" ToolTip="{Binding Path=OEEToolTip, Source={StaticResource StringTableODP}}" BorderBrush="DarkSlateGray" BorderThickness="2.5">
+                                    <Border BorderBrush="Black" BorderThickness="0" Background="AliceBlue">
+                                        <lvc:Gauge  Uses360Mode="True"
+                                                FromColor="White"
+                                                ToColor="MediumBlue"
+                                                From="0"
+                                                To="100"
+                                                LabelsVisibility="Visible"
+                                                Value="{Binding OEE}"
+                                                Height="120"
+                                                Width="130">
+                                            <lvc:Gauge.GaugeRenderTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform Angle="90"/>
+                                                    <ScaleTransform ScaleX="-1"/>
+                                                </TransformGroup>
+                                            </lvc:Gauge.GaugeRenderTransform>
+                                        </lvc:Gauge>
+                                    </Border>
+                                </GroupBox>
+
+                                <!--Availability Chart-->
+                                <GroupBox Grid.Row="0" Grid.Column="1" Foreground="Black" Header="{Binding Path=Availability, Source={StaticResource StringTableODP}}" ToolTip="{Binding Path=AvailabilityToolTip, Source={StaticResource StringTableODP}}">
+                                    <Border BorderBrush="Black" BorderThickness="0" Background="AliceBlue">
+                                        <lvc:Gauge Uses360Mode="True"
+                                               FromColor="White"
+                                               ToColor="Green"
+                                               From="0"
+                                               To="100"
+                                               LabelsVisibility="Visible"
+                                               Value="{Binding Availability}"
+                                               Height="120"
+                                               Width="130">
+                                            <lvc:Gauge.GaugeRenderTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform Angle="90"/>
+                                                    <ScaleTransform ScaleX="-1"/>
+                                                </TransformGroup>
+                                            </lvc:Gauge.GaugeRenderTransform>
+                                        </lvc:Gauge>
+                                    </Border>
+                                </GroupBox>
+
+                                <!--Performance Chart-->
+                                <GroupBox Grid.Row="0" Grid.Column="2" Foreground="Black" Header="{Binding Path=Performance, Source={StaticResource StringTableODP}}" ToolTip="{Binding Path=PerformanceToolTip, Source={StaticResource StringTableODP}}">
+                                    <Border BorderBrush="Black" BorderThickness="0" Background="AliceBlue">
+                                        <lvc:Gauge Uses360Mode="True"
+                                               FromColor="White"
+                                               ToColor="MediumVioletRed"
+                                               From="0"
+                                               To="100"
+                                               Value="{Binding Performance}"
+                                               Height="120"
+                                               Width="130">
+                                            <lvc:Gauge.GaugeRenderTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform Angle="90"/>
+                                                    <ScaleTransform ScaleX="-1"/>
+                                                </TransformGroup>
+                                            </lvc:Gauge.GaugeRenderTransform>
+                                        </lvc:Gauge>
+                                    </Border>
+                                </GroupBox>
+
+                                <!--Quality Chart-->
+                                <GroupBox Grid.Row="0" Grid.Column="3" Foreground="Black" Header="{Binding Path=Quality, Source={StaticResource StringTableODP}}" ToolTip="{Binding Path=QualityToolTip, Source={StaticResource StringTableODP}}">
+                                    <Border BorderBrush="Black" BorderThickness="0" Background="AliceBlue">
+                                        <lvc:Gauge Uses360Mode="True"
+                                               FromColor="White"
+                                               ToColor="Yellow"
+                                               From="0"
+                                               To="100"
+                                               Value="{Binding Quality}"
+                                               Height="120"
+                                               Width="130">
+                                            <lvc:Gauge.GaugeRenderTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform Angle="90"/>
+                                                    <ScaleTransform ScaleX="-1"/>
+                                                </TransformGroup>
+                                            </lvc:Gauge.GaugeRenderTransform>
+                                        </lvc:Gauge>
+                                    </Border>
+                                </GroupBox>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <!--Machine Operation-->
+                    <GroupBox Grid.Column="1" Header="{Binding Path=MachineOperation, Source={StaticResource StringTableODP}}" IsEnabled="{Binding CanAccess}" Margin="5.8,10,10.2,9.6">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!--Init-->
+                            <Button Width="90" Height="90" Grid.Row="0" Command="{Binding InitCommand}" CommandParameter="Init" IsEnabled="{Binding IsAllowInit}" >
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsAllowInit}" Value="true">
+                                                <Setter Property="Opacity" Value="1.0"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsAllowInit}" Value="false">
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                            </DataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="true" />
+                                                    <Condition Binding="{Binding IsAllowInit}" Value="true"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Opacity" Value="0.7" />
+                                            </MultiDataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="false" />
+                                                    <Condition Binding="{Binding IsAllowInit}" Value="true"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Opacity" Value="1.0" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                            <Grid>
+                                                <Image Source="/GreatechApp.Core;component/Icon/B_ON.png" Stretch="Fill" Width="90" Height="90"/>
+                                                <Label Content="{Binding Path=Init, Source={StaticResource StringTableODP}}" FontSize="18" Foreground="White" FontWeight="Bold" Margin="0,0,0,3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <!--Start-->
+                            <Button Width="90" Height="90" Grid.Row="1" Command="{x:Static s:ApplicationCommands.OperationCommand}" CommandParameter="Start" IsEnabled="{Binding IsAllowStart}">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsAllowStart}" Value="true">
+                                                <Setter Property="Opacity" Value="1.0"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsAllowStart}" Value="false">
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                            </DataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="true" />
+                                                    <Condition Binding="{Binding IsAllowStart}" Value="true"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Opacity" Value="0.7" />
+                                            </MultiDataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="false" />
+                                                    <Condition Binding="{Binding IsAllowStart}" Value="true"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Opacity" Value="1.0" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                            <Grid>
+                                                <Image Source="/GreatechApp.Core;component/Icon/G_ON.png" Stretch="Fill" Width="90" Height="90"/>
+                                                <Label Content="{Binding Path=Start, Source={StaticResource StringTableODP}}" FontSize="18" Foreground="White" FontWeight="Bold" Margin="0,0,0,3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <!--Stop-->
+                            <Button Width="90" Height="90" Grid.Row="2" Command="{x:Static s:ApplicationCommands.OperationCommand}" CommandParameter="Stop" IsEnabled="{Binding IsAllowStop}">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsAllowStop}" Value="true">
+                                                <Setter Property="Opacity" Value="1.0"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsAllowStop}" Value="false">
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                            </DataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="true" />
+                                                    <Condition Binding="{Binding IsAllowStop}" Value="true"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Opacity" Value="0.7" />
+                                            </MultiDataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="false" />
+                                                    <Condition Binding="{Binding IsAllowStop}" Value="true"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Opacity" Value="1.0" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                            <Grid>
+                                                <Image Source="/GreatechApp.Core;component/Icon/R_ON.png"  Stretch="Fill" Width="90" Height="90"/>
+                                                <Label Content="{Binding Path=Stop, Source={StaticResource StringTableODP}}" FontSize="18" Foreground="White" FontWeight="Bold" Margin="0,0,0,3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+
+                <!--Init State-->
+                <GroupBox Grid.Column="2" Header="{Binding Path=InitState, Source={StaticResource StringTableODP}}" FontSize="15" FontStyle="Normal" BorderThickness="1" BorderBrush="Black" Visibility="{Binding ShowInitState}" >
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid Grid.Column="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="14*" />
+                                <ColumnDefinition Width="25*" />
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <ListBox Background="#FFEAEAEA" Grid.Column="0" ItemsSource="{Binding SeqCollection, Mode=TwoWay}" IsHitTestVisible="False">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image Grid.Column="0" Source="{Binding StateIcon}" HorizontalAlignment="Left" Margin="1,1,1,0"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding SeqName}" VerticalAlignment="Center" Margin="10,1,1,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                    </ScrollViewer>
+                </GroupBox>
+
+                <!-- Lot Entry -->
+                <Expander Name="LotEntryExpander" Grid.Column="3" Template="{StaticResource StretchyExpanderToLeft}" MaxWidth="300" IsExpanded="{Binding IsLotEntryExpand}" OverridesDefaultStyle="True">
+                    <Expander.Header >
+                        <Label Content="{Binding Path=LotEntry, Source={StaticResource StringTableODP}}" Foreground="#152c46">
+                            <Label.LayoutTransform>
+                                <RotateTransform Angle="-270"/>
+                            </Label.LayoutTransform>
+                        </Label>
+                    </Expander.Header>
+                    <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.LotEntryRegion}"/>
+                </Expander>
+
+            </Grid>
+            <Rectangle Grid.Row="3" HorizontalAlignment="Stretch" Height="2.5" Fill="White" Margin="0,0,0,0"/>
+
+            <Grid Grid.Row="4">
+                <Label Content="{Binding Path=AlarmMsg}" Foreground="White"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

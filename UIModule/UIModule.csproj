@@ -1,0 +1,610 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{055E37BC-E4E3-4D3A-8E74-AD3E71EB27AF}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UIModule</RootNamespace>
+    <AssemblyName>UIModule</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Simulation|AnyCPU'">
+    <OutputPath>bin\Simulation\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SIMULATION</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <XamlDebuggingInformation>True</XamlDebuggingInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Simulation|x64'">
+    <OutputPath>bin\x64\Simulation\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <XamlDebuggingInformation>True</XamlDebuggingInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Simulation|x86'">
+    <OutputPath>bin\x86\Simulation\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <XamlDebuggingInformation>True</XamlDebuggingInformation>
+    <DefineConstants>TRACE;DEBUG;SIMULATION</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Remote Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Remote Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Remote Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Remote Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Remote Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Remote Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Remote Release|AnyCPU'">
+    <OutputPath>bin\Remote Release\</OutputPath>
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Remote Release|x64'">
+    <OutputPath>bin\x64\Remote Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Remote Release|x86'">
+    <OutputPath>bin\x86\Remote Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Cognex.DataMan.SDK.PC">
+      <HintPath>..\..\VisionEvaluation\Lib\Cognex.DataMan.SDK.PC.dll</HintPath>
+    </Reference>
+    <Reference Include="Cognex.DataMan.SDK.Utils.PC">
+      <HintPath>..\..\VisionEvaluation\Lib\Cognex.DataMan.SDK.Utils.PC.dll</HintPath>
+    </Reference>
+    <Reference Include="Cognex.InSight, Version=6.1.28.1, Culture=neutral, PublicKeyToken=6b9774afddb09935, processorArchitecture=MSIL" />
+    <Reference Include="GEMPro">
+      <HintPath>..\..\..\..\..\..\..\MInt Service\Lib\GEMPro.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataMarkers\Adorners\DoubleFormatConverter.cs" />
+    <Compile Include="DataMarkers\Adorners\ResizeAdorner.cs" />
+    <Compile Include="DataMarkers\Adorners\ResizeChrome.cs" />
+    <Compile Include="DataMarkers\Adorners\RubberbandAdorner.cs" />
+    <Compile Include="DataMarkers\DiagramDesigner\AncestorLocator.cs" />
+    <Compile Include="DataMarkers\DiagramDesigner\DesignerCanvas.cs" />
+    <Compile Include="DataMarkers\DiagramDesigner\DesignerItem.cs" />
+    <Compile Include="DataMarkers\DiagramDesigner\IDesignerItem.cs" />
+    <Compile Include="DataMarkers\DiagramDesigner\MoveThumb.cs" />
+    <Compile Include="DataMarkers\DiagramDesigner\ResizeDecorator.cs" />
+    <Compile Include="DataMarkers\DiagramDesigner\ResizeThumb.cs" />
+    <Compile Include="DataMarkers\Helpers\CenterOnPoint.cs" />
+    <Compile Include="DataMarkers\Helpers\SizeObserver.cs" />
+    <Compile Include="DataMarkers\Helpers\SlotIdConverter.cs" />
+    <Compile Include="DataMarkers\Helpers\SlotSizeConverter.cs" />
+    <Compile Include="DataMarkers\Interfaces\IMachineData.cs" />
+    <Compile Include="DataMarkers\Interfaces\IMarkerSlot.cs" />
+    <Compile Include="DataMarkers\Resources\CirclePanel.cs" />
+    <Compile Include="DataMarkers\Resources\IconStatus.xaml.cs">
+      <DependentUpon>IconStatus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataMarkers\Resources\OutlinedTextBlock.cs" />
+    <Compile Include="DataMarkers\BaseDataMarkerViewModel.cs" />
+    <Compile Include="DataMarkers\BaseMarkerSlotViewModel.cs" />
+    <Compile Include="DataMarkers\CircularDataMarkerViewModel.cs" />
+    <Compile Include="DataMarkers\LinearDataMarkerViewModel.cs" />
+    <Compile Include="DataMarkers\SlotViewModel.cs" />
+    <Compile Include="DataMarkers\TrayDataMarkerViewModel.cs" />
+    <Compile Include="DataMarkers\TraySlotViewModel.cs" />
+    <Compile Include="DataMarkers\CircularDataMarkerView.xaml.cs">
+      <DependentUpon>CircularDataMarkerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataMarkers\LinearDataMarkerView.xaml.cs">
+      <DependentUpon>LinearDataMarkerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataMarkers\LinearSlotView.xaml.cs">
+      <DependentUpon>LinearSlotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataMarkers\CircularSlotView.xaml.cs">
+      <DependentUpon>CircularSlotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataMarkers\TrayDataMarkerView.xaml.cs">
+      <DependentUpon>TrayDataMarkerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataMarkers\TraySlotView.xaml.cs">
+      <DependentUpon>TraySlotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPanel\BaseUIViewModel.cs" />
+    <Compile Include="MainPanel\BypassViewModel.cs" />
+    <Compile Include="MainPanel\CompactView.xaml.cs">
+      <DependentUpon>CompactView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPanel\CompactViewModel.cs" />
+    <Compile Include="MainPanel\EquipmentViewModel.cs" />
+    <Compile Include="MainPanel\EStopView.xaml.cs">
+      <DependentUpon>EStopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPanel\EStopViewModel.cs" />
+    <Compile Include="MainPanel\HomeViewModel.cs" />
+    <Compile Include="MainPanel\SeqStatusViewModel.cs" />
+    <Compile Include="MainPanel\ToolbarViewModel.cs" />
+    <Compile Include="MainPanel\BypassView.xaml.cs">
+      <DependentUpon>BypassView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPanel\EquipmentView.xaml.cs">
+      <DependentUpon>EquipmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPanel\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPanel\SeqStatusView.xaml.cs">
+      <DependentUpon>SeqStatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPanel\Toolbar.xaml.cs">
+      <DependentUpon>Toolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\AlarmView.xaml.cs">
+      <DependentUpon>AlarmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\AlarmViewModel.cs" />
+    <Compile Include="StandardViews\IOView.xaml.cs">
+      <DependentUpon>IOView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\IOViewModel.cs" />
+    <Compile Include="StandardViews\MotorView.xaml.cs">
+      <DependentUpon>MotorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\MotorViewModel.cs" />
+    <Compile Include="StandardViews\SecsGemSettingsView.xaml.cs">
+      <DependentUpon>SecsGemSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\SecsGemSettingsViewModel.cs" />
+    <Compile Include="StandardViews\SerialPortView.xaml.cs">
+      <DependentUpon>SerialPortView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\SerialPortViewModel.cs" />
+    <Compile Include="StandardViews\Services\OEECalculation.cs" />
+    <Compile Include="StandardViews\Services\TowerLight.cs" />
+    <Compile Include="StandardViews\AboutViewModel.cs" />
+    <Compile Include="StandardViews\ErrorAnalysisViewModel.cs" />
+    <Compile Include="StandardViews\LifeCycleViewModel.cs" />
+    <Compile Include="MainPanel\LotEntryViewModel.cs" />
+    <Compile Include="StandardViews\LotHistoryViewModel.cs" />
+    <Compile Include="StandardViews\ModulePerformanceViewModel.cs" />
+    <Compile Include="StandardViews\OEEAnalysisViewModel.cs" />
+    <Compile Include="StandardViews\OEELiveViewModel.cs" />
+    <Compile Include="StandardViews\OEEMainViewModel.cs" />
+    <Compile Include="StandardViews\MachinePerformanceViewModel.cs" />
+    <Compile Include="StandardViews\OEESettingViewModel.cs" />
+    <Compile Include="RecipeViews\ProductRecipeViewModel.cs" />
+    <Compile Include="RecipeViews\RecipeViewModel.cs" />
+    <Compile Include="StandardViews\SeqParameterViewModel.cs" />
+    <Compile Include="StandardViews\SettingViewModel.cs" />
+    <Compile Include="StandardViews\TCPIPView.xaml.cs">
+      <DependentUpon>TCPIPView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\TCPIPViewModel.cs" />
+    <Compile Include="StandardViews\TowerLightViewModel.cs" />
+    <Compile Include="StandardViews\UserViewModel.cs" />
+    <Compile Include="StandardViews\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\ErrorAnalysisView.xaml.cs">
+      <DependentUpon>ErrorAnalysisView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\LifeCycleView.xaml.cs">
+      <DependentUpon>LifeCycleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPanel\LotEntryView.xaml.cs">
+      <DependentUpon>LotEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\LotHistoryView.xaml.cs">
+      <DependentUpon>LotHistoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\MachinePerformanceView.xaml.cs">
+      <DependentUpon>MachinePerformanceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\ModulePerformanceView.xaml.cs">
+      <DependentUpon>ModulePerformanceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\OEEAnalysisView.xaml.cs">
+      <DependentUpon>OEEAnalysisView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\OEELiveView.xaml.cs">
+      <DependentUpon>OEELiveView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\OEEMainView.xaml.cs">
+      <DependentUpon>OEEMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\OEESettingView.xaml.cs">
+      <DependentUpon>OEESettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RecipeViews\ProductRecipeView.xaml.cs">
+      <DependentUpon>ProductRecipeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RecipeViews\RecipeView.xaml.cs">
+      <DependentUpon>RecipeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\SeqParameterView.xaml.cs">
+      <DependentUpon>SeqParameterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\TowerLightView.xaml.cs">
+      <DependentUpon>TowerLightView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StationViews\BaseSeqViewModel.cs" />
+    <Compile Include="StationViews\SampleSeqViewModel.cs" />
+    <Compile Include="StationViews\SampleSeqView.xaml.cs">
+      <DependentUpon>SampleSeqView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIModuleModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>6.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Extended.Wpf.Toolkit">
+      <Version>4.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="LiveCharts">
+      <Version>0.9.7</Version>
+    </PackageReference>
+    <PackageReference Include="LiveCharts.Wpf">
+      <Version>0.9.7</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro">
+      <Version>2.4.9</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Expression.Drawing">
+      <Version>3.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Core">
+      <Version>8.1.97</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Unity">
+      <Version>8.1.97</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+    <PackageReference Include="protobuf-net">
+      <Version>3.0.101</Version>
+    </PackageReference>
+    <PackageReference Include="protobuf-net.Core">
+      <Version>3.0.101</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DataMarkers\Resources\DesignerItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataMarkers\Resources\IconStatus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataMarkers\Resources\ResizeChrome.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataMarkers\CircularDataMarkerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataMarkers\LinearDataMarkerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataMarkers\LinearSlotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataMarkers\CircularSlotView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataMarkers\TrayDataMarkerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataMarkers\TraySlotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPanel\BypassView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPanel\CompactView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPanel\EquipmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPanel\EStopView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPanel\Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPanel\SeqStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPanel\Toolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\AlarmView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\IOView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\MotorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\AboutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StandardViews\ErrorAnalysisView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\LifeCycleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPanel\LotEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\LotHistoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StandardViews\MachinePerformanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\ModulePerformanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\OEEAnalysisView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\OEELiveView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\OEEMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\OEESettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RecipeViews\ProductRecipeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RecipeViews\RecipeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\SecsGemSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\SeqParameterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\SerialPortView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StandardViews\SettingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StandardViews\TCPIPView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StandardViews\TowerLightView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StandardViews\UserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StationViews\SampleSeqView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ConfigManager\ConfigManager.csproj">
+      <Project>{269c8c91-cf4b-4366-a16d-d344e93ee571}</Project>
+      <Name>ConfigManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataManager\DataManager.csproj">
+      <Project>{d5f48820-9ac2-4fe9-902f-300a314c8dc4}</Project>
+      <Name>DataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBManager\DBManager.csproj">
+      <Project>{3e5fc9af-bf25-46e8-a232-55965df15850}</Project>
+      <Name>DBManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DialogManager\DialogManager.csproj">
+      <Project>{a1e535d6-89d2-4805-9109-c57f46a5a72c}</Project>
+      <Name>DialogManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreatechApp.Core\GreatechApp.Core.csproj">
+      <Project>{836015ae-5049-4b39-801f-a363aea3c537}</Project>
+      <Name>GreatechApp.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreatechApp.Services\GreatechApp.Services.csproj">
+      <Project>{44a83060-d371-48ef-b996-28b57f098002}</Project>
+      <Name>GreatechApp.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InterlockManager\InterlockManager.csproj">
+      <Project>{0485848d-de0a-4b86-9f59-c413fd3e8750}</Project>
+      <Name>InterlockManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IOManager\IOManager.csproj">
+      <Project>{f9180ee7-9889-4e7e-8edb-052a2777fc37}</Project>
+      <Name>IOManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MotionManager\MotionManager.csproj">
+      <Project>{75eca981-3d09-4c0a-95e8-e505923370d2}</Project>
+      <Name>MotionManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SecsGemManager\SecsGemManager.csproj">
+      <Project>{E1E42E08-F89B-4399-A6CE-20B3D009E030}</Project>
+      <Name>SecsGemManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sequence\Sequence.csproj">
+      <Project>{46658b31-1e7b-4975-93b6-d8b75d00bcfa}</Project>
+      <Name>Sequence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TCPIPManager\TCPIPManager.csproj">
+      <Project>{ffab358d-9e76-4c94-9fe3-eff9b3f56e0a}</Project>
+      <Name>TCPIPManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

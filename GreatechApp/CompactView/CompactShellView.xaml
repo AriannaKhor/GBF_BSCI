@@ -1,0 +1,15 @@
+﻿<Window x:Class="GreatechApp.CompactView.CompactShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GreatechApp.CompactView"
+        xmlns:core="clr-namespace:GreatechApp.Core;assembly=GreatechApp.Core"
+        xmlns:prism="http://prismlibrary.com/"
+        mc:Ignorable="d"
+        Title="{Binding Title}" Height="1080" Width="1920" MinWidth="900" WindowStartupLocation="CenterOwner" WindowState="Maximized" WindowStyle="ThreeDBorderWindow">
+
+    <Grid>
+        <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.CompactRegion}" Panel.ZIndex="0"/>
+    </Grid>
+</Window>

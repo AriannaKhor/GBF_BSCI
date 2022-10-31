@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="UIModule.DataMarkers.LinearSlotView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UIModule.DataMarkers.Resources"
+             xmlns:helpers="clr-namespace:UIModule.DataMarkers.Helpers"
+             Visibility="{Binding IsVisible, Mode=OneWay, Converter={StaticResource trueToVisible}}"
+             helpers:SizeObserver.Observe="True" 
+             helpers:SizeObserver.ObservedHeight ="{Binding Height, Mode=OneWayToSource}"
+             helpers:SizeObserver.ObservedWidth ="{Binding Width, Mode=OneWayToSource}"
+             mc:Ignorable="d" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="False"
+             d:DesignHeight="60" d:DesignWidth="60">
+
+    <UserControl.Resources>
+        <helpers:SlotIdConverter x:Key="IdConverter"/>
+    </UserControl.Resources>
+    
+    <ContentControl>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid>
+                <Border CornerRadius="10" BorderThickness="1" BorderBrush="Black" Background="White" Visibility="{Binding SimpleVisibility}">
+                    <ItemsControl ItemsSource="{Binding BaseStationCollection}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <local:CirclePanel x:Name="Cpanel" OuterRadius="{Binding OuterRadius}" InnerRadius="{Binding InnerRadius}" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:IconStatus StationName="{Binding StationName}" StationType="{Binding StationType}" Result="{Binding StationResult}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+
+                <Border x:Name="UnitStatus"  CornerRadius="5" BorderThickness="1" BorderBrush="Gray" Background="{Binding SlotColor}">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SimpleVisibility}" Value="Visible">
+                                    <Setter Property="Width" Value="{Binding UnitStatusSize}"/>
+                                    <Setter Property="Height" Value="{Binding UnitStatusSize}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding SimpleVisibility}" Value="Collapsed">
+                                    <Setter Property="Width" Value="30"/>
+                                    <Setter Property="Height" Value="30"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <Border.ToolTip>
+                        <StackPanel>
+                            <Label x:Name="IDLabel" Content="{Binding UnitID}" ContentStringFormat="Unit ID: {0}"/>
+                            <Label x:Name="StatusLabel" Content="{Binding UnitStatus}" ContentStringFormat="Status : {0}"/>
+                        </StackPanel>
+                    </Border.ToolTip>
+                </Border>
+                <local:OutlinedTextBlock x:Name="ID" FontWeight="DemiBold" FontSize="10" Text="{Binding SlotIndex, Converter={StaticResource IdConverter}}" StrokeThickness="2" Stroke="DarkSlateGray"
+                                            VerticalAlignment="Center" HorizontalAlignment="Center" Fill="White" IsHitTestVisible="False" />
+            </Grid>
+            <local:OutlinedTextBlock Text="{Binding SlotName}" Fill="Black" Stroke="LightGray" StrokeThickness="2.5" FontSize="10" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </ContentControl>
+</UserControl>

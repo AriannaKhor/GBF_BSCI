@@ -1,0 +1,544 @@
+﻿<UserControl x:Class="UIModule.MainPanel.Toolbar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:GreatechApp.Core.Resources;assembly=GreatechApp.Core"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:s="clr-namespace:GreatechApp.Core.Command;assembly=GreatechApp.Core"
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+             xmlns:mahApp="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="1920">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Storyboard x:Key="expendDown">
+                <DoubleAnimation Storyboard.TargetProperty="Height" AutoReverse="False"
+                                         From="0" To="70" Duration="0:0:0.20"/>
+            </Storyboard>
+            <Storyboard x:Key="tcpipStoryBoardOpen">
+                <DoubleAnimation Storyboard.TargetProperty="Width" AutoReverse="False"
+                                         From="0" To="150" Duration="0:0:0.40"/>
+            </Storyboard>
+
+            <Style TargetType="{x:Type GroupBox}">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="13"/>
+            </Style>
+
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style>
+
+            <Style x:Key="ImageHover" TargetType="{x:Type Image}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Opacity" Value="0.7" />
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="False">
+                        <Setter Property="Opacity" Value="1" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border CornerRadius="2"  
+            BorderBrush="{DynamicResource GridLineBrush}" 
+            BorderThickness="1">
+        <Grid Background="#152c46">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="100" MaxWidth="150"/> 
+                <ColumnDefinition Width="*" MinWidth="45" MaxWidth="70"/>
+                <ColumnDefinition Width="*" MinWidth="45" MaxWidth="70"/>
+                <ColumnDefinition Width="*" MaxWidth="200"/>
+                <ColumnDefinition Width="*" MinWidth="210"/>
+                <ColumnDefinition Width="*" MaxWidth="200"/>
+                <ColumnDefinition Width="100" MaxWidth="500"/>
+                <ColumnDefinition Width="*" MaxWidth="200"/>
+                <ColumnDefinition Width="80" />
+            </Grid.ColumnDefinitions>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeave">
+                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="Menu" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <!--Logo-->
+            <Border Grid.Column="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <Image Grid.Row="0" MaxWidth="122" MinWidth="80" Stretch="Uniform" Source="/GreatechApp.Core;component/Icon/Logo.png"/>
+
+                    <!--DateTime-->
+                    <TextBlock Grid.Row="1" FontWeight="DemiBold" Foreground="White" Margin="2,0,0,5" MaxWidth="130" TextWrapping="WrapWithOverflow" TextAlignment="Center">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0}  {1}">
+                                <Binding Path="SysDate" />
+                                <Binding Path="SysTime" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </Grid>
+            </Border>
+
+            <!--Home-->
+            <Border Grid.Column="1" IsEnabled="{Binding CanAccess}">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <Image MinWidth="25" MaxWidth="50" Name="Home" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/Home.png" Style="{StaticResource ImageHover}"/>
+                    <TextBlock Text="{Binding Path=HomePage, Source={StaticResource StringTableODP}}" TextAlignment="Center" Foreground="White" Margin="0 2"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="Home" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </StackPanel>
+            </Border>
+
+            <!--Menu-->
+            <Border Grid.Column="2" IsEnabled="{Binding CanAccess}">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <Image MinWidth="25" MaxWidth="50" Name="Menu" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/Menu.png" Style="{StaticResource ImageHover}"/>
+                    <TextBlock Text="{Binding Path=Menu, Source={StaticResource StringTableODP}}" TextAlignment="Center" Foreground="White" Margin="0 2"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <prism:InvokeCommandAction Command="{Binding RaiseMenuCommand}" CommandParameter="Menu" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </StackPanel>
+            </Border>
+
+            <!--Machine Status-->
+            <Border Grid.Column="3" IsEnabled="{Binding CanAccess}">
+                <GroupBox Header="Machine State" Background="Transparent" IsEnabled="{Binding CanAccess}">
+                    <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="{Binding EquipStateIcon, Mode=OneWay}" MinWidth="25" MaxWidth="32"/>
+                        <TextBlock Text="{Binding EquipStatusWithCulture, Mode=OneWay}" Margin="2,0,0,0" VerticalAlignment="Center" TextWrapping="WrapWithOverflow" FontWeight="DemiBold" FontSize="20"/>
+                    </WrapPanel>
+                </GroupBox>
+            </Border>
+
+            <!--Machine Operation-->
+            <Border Grid.Column="5" Margin="3,0,0,2.5">
+                <GroupBox Header="{Binding Path=MachineOperation, Source={StaticResource StringTableODP}}" IsEnabled="{Binding CanAccess}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--Start-->
+                        <Button Width="50" Height="50" Command="{x:Static s:ApplicationCommands.OperationCommand}" CommandParameter="Start" IsEnabled="{Binding IsAllowStart}">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsAllowStart}" Value="true">
+                                            <Setter Property="Opacity" Value="1.0"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsAllowStart}" Value="false">
+                                            <Setter Property="Opacity" Value="0.5"/>
+                                        </DataTrigger>
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="true" />
+                                                <Condition Binding="{Binding IsAllowStart}" Value="true"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Opacity" Value="0.7" />
+                                        </MultiDataTrigger>
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="false" />
+                                                <Condition Binding="{Binding IsAllowStart}" Value="true"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Opacity" Value="1.0" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        <Grid>
+                                            <Image Source="/GreatechApp.Core;component/Icon/G_ON.png" Width="50" Height="50"/>
+                                            <Label Content="{Binding Path=Start, Source={StaticResource StringTableODP}}" FontSize="13" Foreground="White" FontWeight="Bold" Margin="0,0,0,3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+
+                        <!--Stop-->
+                        <Button Width="50" Height="50" Grid.Column="1" Command="{x:Static s:ApplicationCommands.OperationCommand}" CommandParameter="Stop" IsEnabled="{Binding IsAllowStop}">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsAllowStop}" Value="true">
+                                            <Setter Property="Opacity" Value="1.0"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsAllowStop}" Value="false">
+                                            <Setter Property="Opacity" Value="0.5"/>
+                                        </DataTrigger>
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="true" />
+                                                <Condition Binding="{Binding IsAllowStop}" Value="true"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Opacity" Value="0.7" />
+                                        </MultiDataTrigger>
+
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="false" />
+                                                <Condition Binding="{Binding IsAllowStop}" Value="true"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Opacity" Value="1.0" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        <Grid>
+                                            <Image Source="/GreatechApp.Core;component/Icon/R_ON.png" Width="50" Height="50"/>
+                                            <Label Content="{Binding Path=Stop, Source={StaticResource StringTableODP}}" FontSize="13" Foreground="White" FontWeight="Bold" Margin="0,0,0,3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </GroupBox>
+            </Border>
+
+            <!--TCP/IP Status-->
+            <Border  Grid.Column="6" Margin="3,0,0,2.5" IsEnabled="{Binding CanAccess}">
+                <GroupBox x:Name="TCPSection" Header="{Binding Path=TCPIP, Source={StaticResource StringTableODP}}" IsEnabled="{Binding CanAccess}" Background="Transparent">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="{Binding TCPIPStateIcon, Mode=OneWay}" Width="45" Height="45" Style="{StaticResource ImageHover}"/>
+                        <TextBlock Name="TCPStatus" Text="{Binding TCPIPStatusWithCulture}" HorizontalAlignment="Center" FontSize="10" Margin="2,0,0,0" Foreground="White"/>
+                    </StackPanel>
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseMove">
+                            <prism:InvokeCommandAction Command="{Binding TCPIPListCommand}" CommandParameter="Open"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding ReconnectAllTCP}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </GroupBox>
+            </Border>
+
+            <Canvas x:Name="TCPPopup" Grid.Row="1" Grid.Column="6" Visibility="{Binding Path=IsTCPIPListOpen, Converter={StaticResource trueToVisible}}"
+                    HorizontalAlignment="Left" >
+                <Grid MaxHeight="500">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseMove">
+                            <prism:InvokeCommandAction Command="{Binding TCPIPListCommand}" CommandParameter="Open"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <prism:InvokeCommandAction Command="{Binding TCPIPListCommand}" CommandParameter="Close"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Grid.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsTCPIPListOpen}" Value="true">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard Storyboard="{StaticResource tcpipStoryBoardOpen}"/>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <ItemsControl x:Name="m_itemsControl" ItemsSource="{Binding TCPCollection}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="Gray" BorderThickness="1,0.5" CornerRadius="5" Background="AntiqueWhite">
+                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="10"/>
+                                                <ColumnDefinition Width="45"/>
+
+
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Content="{Binding TCPName}" Foreground="Black" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                            <Image Grid.Column="2" Source="{Binding TCPImageSource}" Height="35" HorizontalAlignment="Right" VerticalAlignment="Center"  />
+                                            <Image Grid.Column="2" Source="{Binding Image}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="15" />
+
+                                        </Grid>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.ReconnectTCP, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"
+                                                                               CommandParameter="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Canvas>
+
+            <!--User Info-->
+            <Border Grid.Column="7">
+                <GroupBox Header="User Info"  Background="Transparent" IsEnabled="{Binding CanAccess}">
+                    <StackPanel VerticalAlignment="Center">
+                        <WrapPanel>
+                            <Label Content="User ID:" FontSize="16" FontWeight="DemiBold" Margin="10"/>
+                            <TextBlock Text="{Binding UserId}" FontSize="14" VerticalAlignment="Center"/>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Content="User Level:" FontSize="16" FontWeight="DemiBold" Margin="10"/>
+                            <TextBlock Text="{Binding UserLvl}" FontSize="14" VerticalAlignment="Center"/>
+                        </WrapPanel>
+                    </StackPanel>
+                </GroupBox>
+            </Border>
+
+            <!--User Login-->
+            <Border Grid.Column="8">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Grid Margin="0,0,0,5">
+                        <Image Width="40" Height="40" Name="LoginBtn" Visibility="{Binding IsLogin}" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/Login.png" Style="{StaticResource ImageHover}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding LoginDialogCommand}" CommandParameter="Login" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Image>
+                        <Image Width="40" Height="40"  Name="LogoutBtn" Visibility="{Binding IsLogout}" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/LogOut.png" ToolTip="{Binding UserInfo, Mode=OneWay}" Style="{StaticResource ImageHover}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding OperationCommand}" CommandParameter="Logout" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Image>
+                    </Grid>
+                    <TextBlock Text="{Binding LoginStatusWithCulture}" Foreground="White" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!--Sub Menu-->
+            <Canvas Grid.Row="1" Grid.Column="1" Visibility="{Binding MenuVisibility}">
+                <Border BorderBrush="Black" BorderThickness="1.5">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeave">
+                            <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="Menu" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Grid Background="#1c374f">
+                        <Grid.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MenuVisibility}" Value="Visible">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource expendDown}"/>
+                                        </DataTrigger.EnterActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!--Lot Entry-->
+                        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Width="38" Height="38" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/LOTEntry.png" ToolTip="{Binding Path=LotHistory, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
+                            <Label Content="{Binding Path=LotHistory, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="LotHistoryView" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </StackPanel>
+
+                        <Rectangle Grid.Column="1" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+
+                        <!--IO-->
+                        <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/IO list.png" ToolTip="{Binding Path=InputOutput, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
+                            <Label Content="{Binding Path=IO, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="IOView" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </StackPanel>
+
+                        <Rectangle Grid.Column="3" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+
+                        <!--Recipes-->
+                        <StackPanel Grid.Column="4" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/Recipe.png" ToolTip="{Binding Path=Recipe, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
+                            <Label Content="{Binding Path=Recipe, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="RecipeView" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </StackPanel>
+
+                        <Rectangle Grid.Column="5" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+
+                        <!--TCP/IP-->
+                        <StackPanel Grid.Column="6" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/tcpip.png" ToolTip="{Binding Path=TCPIP, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
+                            <Label Content="{Binding Path=TCPIP, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="TCPIPView" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </StackPanel>
+
+                        <Rectangle Grid.Column="7" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+
+                        <!--Serial Port-->
+                        <StackPanel Grid.Column="8" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/SerialPort.png" ToolTip="{Binding Path=SerialPort, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
+                            <Label Content="{Binding Path=SerialPort, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="SerialPortView" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </StackPanel>
+
+                        <Rectangle Grid.Column="9" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+
+                        <!--Alarm Config-->
+                        <StackPanel Grid.Column="10" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/AlarmConfig.png" ToolTip="{Binding Path=AlarmCfg, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
+                            <Label Content="{Binding Path=AlarmCfg, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="AlarmView" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </StackPanel>
+
+                        <Rectangle Grid.Column="11" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+
+                        <!--Setting-->
+                        <StackPanel Grid.Column="12" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/Setting.png" ToolTip="{Binding Path=Setting, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
+                            <Label Content="{Binding Path=Setting, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="SettingView" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </StackPanel>
+
+                        <Rectangle Grid.Column="13" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+
+
+                        <!--User-->
+                        <StackPanel Grid.Column="14" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/User.png" ToolTip="{Binding Path=UserAccount, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
+                            <Label Content="{Binding Path=UserAccount, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="UserView" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </StackPanel>
+
+                        <Rectangle Grid.Column="15" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+
+                        <!--About-->
+                        <StackPanel Grid.Column="16" Orientation="Vertical" VerticalAlignment="Center">
+                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/About.png" ToolTip="{Binding Path=About, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
+                            <Label Content="{Binding Path=About, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="AboutView" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Canvas>
+        </Grid>
+    </Border>
+</UserControl>
