@@ -137,6 +137,28 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cognex.DataMan.CogNamer.PC">
+      <HintPath>..\Lib\Cognex.DataMan.CogNamer.PC.dll</HintPath>
+    </Reference>
+    <Reference Include="Cognex.DataMan.SDK.Discovery.PC">
+      <HintPath>..\Lib\Cognex.DataMan.SDK.Discovery.PC.dll</HintPath>
+    </Reference>
+    <Reference Include="Cognex.DataMan.SDK.PC, Version=5.6.3.126, Culture=neutral, PublicKeyToken=9f98866f2a3a2e78, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cognex.DataMan.SDK.PC.dll</HintPath>
+    </Reference>
+    <Reference Include="Cognex.DataMan.SDK.Utils.PC, Version=5.6.3.122, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cognex.DataMan.SDK.Utils.PC.dll</HintPath>
+    </Reference>
+    <Reference Include="Cognex.InSight, Version=6.1.28.1, Culture=neutral, PublicKeyToken=6b9774afddb09935, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cognex.InSight.dll</HintPath>
+    </Reference>
+    <Reference Include="Cognex.InSight.Controls.Display, Version=6.1.28.1, Culture=neutral, PublicKeyToken=6b9774afddb09935, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Cognex.InSight.Controls.Display.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -155,6 +177,7 @@
   <ItemGroup>
     <Compile Include="BaseSocket.cs" />
     <Compile Include="ClientSocket.cs" />
+    <Compile Include="CodeReader.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Enums\Output.cs" />
     <Compile Include="EventArgs\ConnectionStateChangedEventArgs.cs" />
@@ -169,6 +192,7 @@
     <Compile Include="EventHandler\ServerAcceptedEventHandler.cs" />
     <Compile Include="Infrastructure\Metadata.cs" />
     <Compile Include="Infrastructure\SupportMethod.cs" />
+    <Compile Include="InSightVision.cs" />
     <Compile Include="ITCPIP.cs" />
     <Compile Include="ServerSocket.cs" />
     <Compile Include="TCPIPBase.cs" />

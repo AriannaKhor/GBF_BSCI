@@ -13,6 +13,7 @@
         SampleSeq4 = 4,
         SampleSeq5 = 5,
         BarcodeScanner = 6,
+        CountingScaleSeq = 7,
     }
 
     public enum MachineOperationType
@@ -24,6 +25,7 @@
         InitDone,
         InitFail,
         ProcStart,
+        ProcFail,
         ProcSkip,
         ProcAbort,
         ProcReady,

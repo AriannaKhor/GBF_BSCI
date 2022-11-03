@@ -42,9 +42,11 @@ namespace UIModule.MainPanel
         #region Variable
         private bool allowVisResultchg = false;
         private bool VisionDone = false;
+        private bool VisionFail = false;
         private bool CodeReaderDone = false;
         private string topvisIp;
         private IPAddress codereaderIp;
+        public static startMachineSeq m_seqNum = startMachineSeq.EOS;
         private IEnumerable<IMachineData> m_IMachineDataCollection;
         private const string MarkerLayoutFile = @"..\AppData\MarkerLayout.dat";
         private static object m_SynMarker = new object();
@@ -55,6 +57,7 @@ namespace UIModule.MainPanel
         protected DispatcherTimer tmrVisionResult;
         protected DispatcherTimer tmrScanIOSnapImage;
         protected DispatcherTimer tmrCodeReaderRead;
+        CTimer m_timeOut = new CTimer();
         private InSightDisplayControl formVis;
         private CvsInSight m_InsightV1 = new CvsInSight();
         private DataManSystem m_CodeReader = null;
@@ -417,7 +420,57 @@ namespace UIModule.MainPanel
             ConnectCodeReader();
             VisionDone = false;
             CodeReaderDone = false;
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
+            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+
+            if (CanAccess)
+            {
+                m_Events.GetEvent<OpenLotEntryView>().Publish(true);
+            }
+
+            //StartOperation Thread
+            Thread StartLot_Operation = new Thread(StartMachineSeq);
+            StartLot_Operation.Start();
+        }
+
+        //Sequence 
+        private void StartMachineSeq()
+        {
+            try
+            {
+                switch (m_seqNum)
+                {
+                    case startMachineSeq.TrgVision:
+
+                        if (!VisionDone)
+                        {
+                            TriggerVisCapture();
+                            m_timeOut.Time_Out = 2f;
+                            m_seqNum = startMachineSeq.GetVisResultTimeOut;
+                        }
+                        break;
+
+                    case startMachineSeq.GetVisResultTimeOut:
+
+                        if (m_timeOut.TimeOut())
+                        {
+                            m_seqNum = startMachineSeq.TrgVision;
+                        }
+                        else
+                        {
+                            m_seqNum = startMachineSeq.TrgCodeReader;
+                        }
+                        break;
+
+                    case startMachineSeq.TrgCodeReader:
+
+
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MachineBase.ShowMessage(ex);
+            }
         }
         #endregion
 
@@ -445,7 +498,6 @@ namespace UIModule.MainPanel
             {
                 if (Global.LotInitialBatchNo == null)
                 {
-                    m_Events.GetEvent<OpenLotEntryView>().Publish(true);
                     m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                 }
                 else
@@ -454,7 +506,7 @@ namespace UIModule.MainPanel
                     m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
                 }
 
-            }else if (VisInspectResult == resultstatus.Pass.ToString())
+            }else if (VisInspectResult == resultstatus.Fail.ToString())
             {
                 m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
 
@@ -530,6 +582,7 @@ namespace UIModule.MainPanel
                         if (VisProductWrgOrientation != "0.000")
                         {
                             VisInspectResult = resultstatus.Fail.ToString();
+                            VisionFail = true;
                         }
                         else
                         {
@@ -590,18 +643,13 @@ namespace UIModule.MainPanel
             {
                 case "Start":
                     m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
-                    if (!VisionDone)
-                    {
-                        TriggerVisCapture();
-                    }
-                    else if (!CodeReaderDone)
-                    {
-                        formCodeReader.Show();
-                        tmrCodeReaderRead.Start();
-                    }
-                
-                    //m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
+                    m_seqNum = startMachineSeq.TrgVision;
                    
+                    //else if (!CodeReaderDone)
+                    //{
+                    //    formCodeReader.Show();
+                    //    tmrCodeReaderRead.Start();
+                    //}
                     break;
 
                 case "Stop":
@@ -1104,6 +1152,15 @@ namespace UIModule.MainPanel
             PendingResult,
             Pass,
             Fail,
+        }
+
+        public enum startMachineSeq
+        {
+            EOS,
+            TrgVision,
+            TrgCodeReader,
+            GetVisResultTimeOut,
+            GetCodeReaderResultTimeOut,
         }
 
         #endregion

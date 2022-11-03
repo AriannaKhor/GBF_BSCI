@@ -38,6 +38,9 @@ namespace GreatechApp.Core.Variable
         public static string LotOperatorID;
         public static string LotRecipe;
 
+        //InsightVision
+        public static string VisionConnStatus;
+
         //Code Reader Result
         public static string CurrentContainerNum;
         public static int CurrentBatchQuantity;

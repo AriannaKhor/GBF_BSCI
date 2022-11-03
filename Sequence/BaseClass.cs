@@ -197,6 +197,7 @@ namespace Sequence
             internal bool InitSuccess;
             internal bool InitFail;
             internal bool ProcStart;
+            internal bool ProcFail;
             internal bool ProcSkip;
             internal bool ProcAbort;
             internal bool ProcReady;

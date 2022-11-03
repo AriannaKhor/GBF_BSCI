@@ -174,6 +174,7 @@
     <Compile Include="Framework\TestEventArg.cs" />
     <Compile Include="IDelegateSeq.cs" />
     <Compile Include="MachineSeq\BarcodeScanner.cs" />
+    <Compile Include="MachineSeq\CountingScaleSeq.cs" />
     <Compile Include="MachineSeq\SampleSeq.cs" />
     <Compile Include="MachineSeq\SampleSeq2.cs" />
     <Compile Include="MachineSeq\SampleSeq3.cs" />

@@ -354,10 +354,9 @@ namespace UIModule.MainPanel
             {
                 if (m_InsightV1.State == CvsInSightState.Online || Global.CodeReaderConnStatus == ConnectionState.Connected.ToString())
                 {
-                    IsAllowStart = true;
+                    IsAllowStart = false;
                     IsAllowStop = false;
                 }
-               
             }
         }
 
@@ -367,23 +366,6 @@ namespace UIModule.MainPanel
             IsAllowStop = false;
         }
 
-        //public void CheckSSRButtonAvail()
-        //{
-        //    if (IsAllowStart || IsAllowStop)
-        //    {
-        //        // start monitoring button activity
-        //        tmrButtonMonitor.Start();
-        //    }
-        //    else
-        //    {
-        //        // stop monitoring button activity
-        //        tmrButtonMonitor.Stop();
-        //    }
-
-        //    // Turn ON/OFF hardware SSR button LED
-        //    m_IO.WriteBit(StartButtonIndic, IsAllowStart);
-        //    m_IO.WriteBit(StopButtonIndic, IsAllowStop);
-        //}
         #endregion
 
         #region Event
@@ -443,27 +425,6 @@ namespace UIModule.MainPanel
                     break;
             }
         }
-   
-        //public void tmrButtonMonitor_Tick(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (IsAllowStart && m_IO.ReadBit(StartButton))
-        //        {
-        //            StartOperation();
-        //        }
-        //        else if (IsAllowStop && m_IO.ReadBit(StopButton))
-        //        {
-        //            StopOperation();
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        tmrButtonMonitor.Stop();
-        //        MessageBox.Show(ex.Message, ex.Source);
-        //    }
-        //}
 
         private void m_tmrTCPMonitor_Tick(object sender, EventArgs e)
         {
