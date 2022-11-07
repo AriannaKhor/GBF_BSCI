@@ -83,16 +83,18 @@ namespace Sequence.MachineSeq
                             break;
                         case SN.TriggerVis:
                             //Call Vision Class Method 
-                           
+                            InsightVision.TriggerVisCapture();
+                            m_SeqNum = SN.WaitVisionResult;
                             break;
                         case SN.WaitVisionResult:
-                            if (m_SeqFlag.ProcComp) //gotten from VisInspectResultPass published event
+                            if (m_SeqFlag.ProcCont) //gotten from VisInspectResultPass published event
                             {
-                                m_SeqFlag.ProcComp = false;
+                                m_SeqFlag.ProcCont = false;
                                 m_SeqNum = SN.TriggerCodeReader;
                             }
                             else if (m_SeqFlag.ProcFail) //Gotten from CodeReaderSeqFail published event
                             {
+                                m_SeqFlag.ProcFail = false;
                                 m_TmrDelay.Time_Out = 5f;
                                 m_SeqNum = SN.RetryGetVisionResult;
                             }
@@ -104,18 +106,24 @@ namespace Sequence.MachineSeq
                             }
                             break;
                         case SN.TriggerCodeReader:
-                           
+                            CodeReader.TriggerCodeReader();
                             break;
                         case SN.WaitCodeReaderResult:
-                            if (m_SeqFlag.ProcComp) //gotten from VisInspectResultPass published event
+                            if (m_SeqFlag.ProcCont) //gotten from CodeReaderResultPass published event
                             {
-                                m_SeqFlag.ProcComp = false;
+                                m_SeqFlag.ProcCont  = false;
                                 m_SeqNum = SN.TriggerVis;
                             }
-                            else if (m_SeqFlag.ProcFail || m_TmrDelay.TimeOut())
+                            else if (m_SeqFlag.ProcFail)
                             {
+                                m_SeqFlag.ProcFail = false;
                                 m_TmrDelay.Time_Out = 5f;
                                 m_SeqNum = SN.RetryGetCodeReaderResult;
+                            }
+                            else if (m_SeqFlag.EndLotComp)
+                            {
+                                m_SeqFlag.EndLotComp = false;
+                                m_SeqNum = SN.EOS;
                             }
                             break;
                         case SN.RetryGetCodeReaderResult:
@@ -156,18 +164,17 @@ namespace Sequence.MachineSeq
                 {
                     switch (sequence.MachineOpr)
                     {
-                        case MachineOperationType.ProcStart:
-
-                            break;
-
-                        case MachineOperationType.ProcComp:
-                            m_SeqFlag.ProcComp = true;
+                        case MachineOperationType.ProcCont:
+                            m_SeqFlag.ProcCont = true;
                             break;
 
                         case MachineOperationType.ProcFail:
                             m_SeqFlag.ProcFail = true;
                             break;
 
+                        case MachineOperationType.EndLotComp:
+                            m_SeqFlag.EndLotComp = true;
+                            break;
                     }
                 }
 

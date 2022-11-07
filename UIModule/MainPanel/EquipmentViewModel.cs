@@ -41,8 +41,6 @@ namespace UIModule.MainPanel
     {
         #region Variable
         private bool allowVisResultchg = false;
-        private bool VisionDone = false;
-        private bool VisionFail = false;
         private bool CodeReaderDone = false;
         private string topvisIp;
         private IPAddress codereaderIp;
@@ -334,33 +332,13 @@ namespace UIModule.MainPanel
 
             m_EventAggregator.GetEvent<DatalogEntity>().Subscribe(OnDatalogEntity);
             m_EventAggregator.GetEvent<ResultlogEntity>().Subscribe(OnResultlogEntity);
-            m_EventAggregator.GetEvent<CountingScaleOperation>().Subscribe(OnCountingScaleOperation);
             m_Events.GetEvent<FormCloseConnection>().Subscribe(OnFormCloseConnection);
+            m_Events.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
+            m_Events.GetEvent<OnCodeReaderConnectedEvent>().Subscribe(OnCodeReaderConnected);//
+            m_Events.GetEvent<OnCodeReaderDisconnectedEvent>().Subscribe(OnCodeReaderDisconnected);//
+            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Subscribe(OnCodeReaderEndResult);//
 
-            // Configure Vision timer object //To Pop Up need 3 seconds
-            tmrScanIOEnableLive = new DispatcherTimer();
-            tmrScanIOEnableLive.Tick += new EventHandler(tmrScanIOEnableLive_Tick);
-            tmrScanIOEnableLive.Interval = new TimeSpan(0, 0, 0,3,0); 
-            tmrScanIOEnableLive.IsEnabled = false;
 
-            // Configure Vision timer object //To Enable Live 0.5 seconds
-            tmrScanIOLiveAcquire = new DispatcherTimer();
-            tmrScanIOLiveAcquire.Tick += new EventHandler(tmrScanIOLiveAcquire_Tick);
-            tmrScanIOLiveAcquire.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            tmrScanIOLiveAcquire.IsEnabled = false;
-
-            //Configure Vision timer object
-            tmrVisionResult = new DispatcherTimer();
-            tmrVisionResult.Tick += new EventHandler(tmrVisionResult_Tick);
-            tmrVisionResult.Interval = new TimeSpan(0, 0, 0, 5, 0);
-
-            // Configure CodeReader timer object
-            tmrCodeReaderRead = new DispatcherTimer();
-            tmrCodeReaderRead.Tick += new EventHandler(tmrCodeReaderRead_Tick);
-            tmrCodeReaderRead.Interval = new TimeSpan(0, 0, 0, 5, 0);
-
-            m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
-            m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
             m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineStateChange);
 
             //Button Command
@@ -416,9 +394,8 @@ namespace UIModule.MainPanel
             tray.BuildDataMarker("InputTray", SQID.BarcodeScanner, 14, 25);
             MachineDataCollection.Add(tray);
 
-            ConnectVision();
-            ConnectCodeReader();
-            VisionDone = false;
+            m_Events.GetEvent<RequestVisionConnectionEvent>().Publish();
+            m_Events.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
             CodeReaderDone = false;
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
 
@@ -427,50 +404,6 @@ namespace UIModule.MainPanel
                 m_Events.GetEvent<OpenLotEntryView>().Publish(true);
             }
 
-            //StartOperation Thread
-            Thread StartLot_Operation = new Thread(StartMachineSeq);
-            StartLot_Operation.Start();
-        }
-
-        //Sequence 
-        private void StartMachineSeq()
-        {
-            try
-            {
-                switch (m_seqNum)
-                {
-                    case startMachineSeq.TrgVision:
-
-                        if (!VisionDone)
-                        {
-                            TriggerVisCapture();
-                            m_timeOut.Time_Out = 2f;
-                            m_seqNum = startMachineSeq.GetVisResultTimeOut;
-                        }
-                        break;
-
-                    case startMachineSeq.GetVisResultTimeOut:
-
-                        if (m_timeOut.TimeOut())
-                        {
-                            m_seqNum = startMachineSeq.TrgVision;
-                        }
-                        else
-                        {
-                            m_seqNum = startMachineSeq.TrgCodeReader;
-                        }
-                        break;
-
-                    case startMachineSeq.TrgCodeReader:
-
-
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                MachineBase.ShowMessage(ex);
-            }
         }
         #endregion
 
@@ -484,7 +417,6 @@ namespace UIModule.MainPanel
         {
             if (stateType == MachineStateType.Lot_Ended)
             {
-                VisionDone = false;
                 CodeReaderDone = false;
             }
         }
@@ -492,8 +424,6 @@ namespace UIModule.MainPanel
         #region Vision
         public void OnFormCloseConnection()
         {
-            ConnectVision();
-
             if(VisInspectResult == resultstatus.Pass.ToString())
             {
                 if (Global.LotInitialBatchNo == null)
@@ -520,162 +450,30 @@ namespace UIModule.MainPanel
             }
 
         }
-        private void tmrScanIOEnableLive_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                formVis.EnableLive();
-                tmrScanIOLiveAcquire.Start();
-                tmrScanIOEnableLive.Stop();
-            }
-            catch (Exception ex)
-            {
-                MachineBase.ShowMessage(ex);
-            }
-        }
-
-        private void tmrScanIOLiveAcquire_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                formVis.LiveAcquire();
-                tmrScanIOLiveAcquire.Stop();
-            }
-            catch (Exception ex)
-            {
-                MachineBase.ShowMessage(ex);
-            }
-        }
-
-        private void tmrVisionResult_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                allowVisResultchg = false;
-            }
-            catch (Exception ex)
-            {
-                MachineBase.ShowMessage(ex);
-            }
-        }
-
-
-        private void InsightV1_ResultsChanged(object sender, EventArgs e)
-        {
-            try
-            {   
-                if (allowVisResultchg)
-                {
-                    allowVisResultchg = false;
-                    CvsCell cellResult1 = m_InsightV1.Results.Cells["D91"]; 
-                    CvsCell cellResult2 = m_InsightV1.Results.Cells["D79"]; 
-                    CvsCell cellResult3 = m_InsightV1.Results.Cells["D67"]; 
-
-                    if (!string.IsNullOrEmpty(cellResult1.Text) && cellResult1.Text.ToUpper() != "NULL" && cellResult1.Text.ToUpper() != "ERR" &&
-                                !string.IsNullOrEmpty(cellResult2.Text) && cellResult2.Text.ToUpper() != "NULL" && cellResult2.Text.ToUpper() != "ERR" &&
-                                !string.IsNullOrEmpty(cellResult3.Text) && cellResult3.Text.ToUpper() != "NULL" && cellResult3.Text.ToUpper() != "ERR")
-                    {
-                        VisProductQuantity = float.Parse(cellResult1.Text);
-                        VisProductCrtOrientation = cellResult2.Text;
-                        VisProductWrgOrientation = cellResult3.Text;
-
-                        if (VisProductWrgOrientation != "0.000")
-                        {
-                            VisInspectResult = resultstatus.Fail.ToString();
-                            VisionFail = true;
-                        }
-                        else
-                        {
-                            VisInspectResult = resultstatus.Pass.ToString();
-                            EnableCodeReader = true;
-                            VisionDone = true;
-                            CodeReaderDone = false;
-                        }
-                    }
-                    tmrVisionResult.Stop();
-                    m_InsightV1.AcceptUpdate(); // Tell the sensor that the application is ready for new results.
-
-                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = Title, MsgType = LogMsgType.Info, MsgText = " Product Quantity result:" + " " + VisProductQuantity });
-                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = Title, MsgType = LogMsgType.Info, MsgText = " Product Correct Orientation result:" + " " + VisProductCrtOrientation });
-                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = Title, MsgType = LogMsgType.Info, MsgText = " Product Wrong Orientation Result:" + " " + VisProductWrgOrientation });
-                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = Title, MsgType = LogMsgType.Info, MsgText = " Overall Result:" + " " + VisInspectResult });
-                    SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, VisInspectResult + ":" + VisProductQuantity + "," + VisProductCrtOrientation + "," + VisProductWrgOrientation));
-                }
-            }
-            catch (Exception ex)
-            {
-                MachineBase.ShowMessage(ex);
-            }
-        }
-
-        private void InsightV1_StateChanged(object sender, EventArgs e)
-        {
-            switch (m_InsightV1.State)
-            {
-                case CvsInSightState.Offline:
-                    VisConnectionStatus(true, false, true, "Connected Successfully in Offline mode...");
-                    Console.WriteLine("The sensor is offline.");
-                    break;
-                case CvsInSightState.Online:
-                    VisConnectionStatus(true, false, true, "Connected");
-                    Console.WriteLine("The sensor is online.");
-                    break;
-                case CvsInSightState.NotConnected:
-                    VisConnectionStatus(false, true, false, "Disconnected");
-                    Console.WriteLine("The sensor is not connected.");
-                    break;
-            }
-            m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = Title, MsgType = LogMsgType.Info, MsgText = " Vision connection state:" + " " + m_InsightV1.State.ToString() });
-        }
-
+     
         #endregion
 
         #region Code Reader
-
-        private void tmrCodeReaderRead_Tick(object sender, EventArgs e)
-        {
-            formCodeReader.TriggerCodeReader();
-        }
-
-        private void OnCountingScaleOperation(string onCountingScaleOperation)
-        {
-            switch (onCountingScaleOperation)
-            {
-                case "Start":
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
-                    m_seqNum = startMachineSeq.TrgVision;
-                   
-                    //else if (!CodeReaderDone)
-                    //{
-                    //    formCodeReader.Show();
-                    //    tmrCodeReaderRead.Start();
-                    //}
-                    break;
-
-                case "Stop":
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
-                    tmrCodeReaderRead.Stop();
-                    break;
-            }
-        }
-
-        private void Results_ComplexResultCompleted(object sender, ComplexResult complexResult)
-        {
-            tmrCodeReaderRead.Stop();
-            string returnedresult = formCodeReader.ShowResult(complexResult);
-            AnalyseResult(returnedresult);
-        }
-
-        private void OnSystemConnected(object sender, EventArgs args)
+        //New Can Be Use
+        private void OnCodeReaderConnected()
         {
             Global.CodeReaderConnStatus = ConnectionState.Connected.ToString();
             CdStatusFG = System.Windows.Media.Brushes.GreenYellow;
         }
-
-        private void OnSystemDisconnected(object sender, EventArgs args)
+        //New Can Be Use
+        private void OnCodeReaderDisconnected()
         {
             Global.CodeReaderConnStatus = ConnectionState.Disconnected.ToString();
-            CdStatusFG = System.Windows.Media.Brushes.DeepSkyBlue;
+            CdStatusFG = System.Windows.Media.Brushes.OrangeRed;
+        }
+        //New Can Be Use
+        private void OnCodeReaderEndResult()
+        {
+            ViewCurrentBatchNumber = Global.CurrentBatchNum;
+            ViewCurrentContainerNumber = Global.CurrentContainerNum;
+            ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
+            ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
+            ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
         }
         #endregion
 
@@ -764,141 +562,28 @@ namespace UIModule.MainPanel
         #region Method
 
         #region Vision
-        public void ConnectVision()
+     //New Can Be Use
+        public void OnVisionConnection()
         {
-            try
-            {
-                SystemConfig sysCfg = SystemConfig.Open(@"..\Config Section\General\System.Config");
-                topvisIp = sysCfg.NetworkDevices[0].IPAddress;
-                m_InsightV1.Connect(topvisIp, "admin", "", true, false);// Determine the state of the sensor
-                m_InsightV1.SoftOnline = true;
-                switch (m_InsightV1.State)
-                {
-                    case CvsInSightState.Offline:
-                        VisConnectionStatus(true, false, true, "Connected Successfully in Offline mode...");
-                        Console.WriteLine("The sensor is offline.");
-                        break;
-                    case CvsInSightState.Online:
-                        VisConnectionStatus(true, false, true, "Connected");
-                        Console.WriteLine("The sensor is online.");
-                        break;
-                    case CvsInSightState.NotConnected:
-                        VisConnectionStatus(false, true, false, "Disconnected");
-                        Console.WriteLine("The sensor is not connected.");
-                        break;
-                }
-            }
-            catch (CvsInSightLockedException ex)
-            {
-                // The sensor has been software-locked, preventing a connection.
-                // Display a message and consume the exception.
-                Console.WriteLine("The sensor is currently locked.");
-                VisConnectionStatus(false, true, false, "Disconnected");
-                MachineBase.ShowMessage(ex);
-            }
-
-            catch (CvsSensorAlreadyConnectedException ex)
-            {
-                // Someone is already connected to this sensor.
-                // Display a message and consume the exception.
-                Console.WriteLine("A user currently has an open connection to the sensor.");
-                VisConnectionStatus(false, true, false, "Disconnected");
-                MachineBase.ShowMessage(ex);
-            }
-
-            catch (CvsInvalidLogonException ex)
-            {
-                // If we receive an invalid logon, then we can look at the IsInvalidUsername property 
-                // to find out more about the exception.
-                if (ex.IsInvalidUsername)
-                {
-                    Console.WriteLine("Invalid Username");
-                    MachineBase.ShowMessage(ex);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Password");
-                    VisConnectionStatus(false, true, false, "Disconnected");
-                    MachineBase.ShowMessage(ex);
-                }
-            }
-
-            catch (CvsNetworkException ex)
-            {
-                // Unable to successfully connect to the sensor.
-                // Display a message and consume the exception.
-                Console.WriteLine("A network error occurred while connecting to the sensor: " + ex.Message);
-                VisConnectionStatus(false, true, false, "Disconnected");
-                MachineBase.ShowMessage(ex);
-            }
-
-            catch (Exception ex)
-            {
-                // Consume any other exception that may occur
-                Console.WriteLine("Error: " + ex.Message);
-                VisConnectionStatus(false, true, false, "Disconnected");
-                MachineBase.ShowMessage(ex);
-            }
-
-        }
-
-        public void VisConnectionStatus(bool visConnection, bool canConnect, bool canDisconnect, string status)
-        {
-            VisionConnStatus = status;
-            if (visConnection == true)
+            VisionConnStatus = Global.VisionConnStatus;
+            if (Global.VisConnection == true)
             {
                 StatusFG = System.Windows.Media.Brushes.GreenYellow;
             }
             else
             {
                 StatusFG = System.Windows.Media.Brushes.Red;
-
             }
         }
-
+        //New Can Be Use
         private void VisOperation(string Command)
         {
             try
             {
                 if (Command == "Trigger Vision Live")
                 {
-                    VisionLive();
+                    m_Events.GetEvent<RequestVisionLiveViewEvent>().Publish();
                 }
-            }
-            catch (Exception ex)
-            {
-                MachineBase.ShowMessage(ex);
-            }
-        }
-
-        public void VisionLive()
-        {
-            try
-            {
-                formVis = new InSightDisplayControl(topvisIp, m_Events);
-                formVis.Show();
-                tmrScanIOEnableLive.Start();
-
-            }
-            catch (Exception ex)
-            {
-                MachineBase.ShowMessage(ex);
-            }
-        }
-
-        public void TriggerVisCapture()
-        {
-            try
-            {
-                m_InsightV1.ManualAcquire(); // Request a new acquisition to generate new results // capture Image *remember to check in-sight whether the spread sheet view is set to "Manual"
-                allowVisResultchg = true;
-                formVis = new InSightDisplayControl(topvisIp, m_Events);
-                formVis.ShowDialog();
-                ConnectVision();
-                formVis.EnableShowImage();
-                tmrVisionResult.Start();
-
-
             }
             catch (Exception ex)
             {
@@ -909,131 +594,7 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Code Reader
-        public void ConnectCodeReader()
-        {
-            try
-            {
-                SystemConfig sysCfg = SystemConfig.Open(@"..\Config Section\General\System.Config");
-                codereaderIp = IPAddress.Parse(sysCfg.NetworkDevices[1].IPAddress);
-
-                EthSystemConnector myConn = new EthSystemConnector(codereaderIp);
-
-                myConn.UserName = "admin";
-                myConn.Password = "";
-
-                m_CodeReaderconnector = myConn;
-
-                m_CodeReader = new DataManSystem(m_CodeReaderconnector);
-
-                m_CodeReader.DefaultTimeout = 5000;
-
-                // Subscribe to events that are signalled when the system is connected / disconnected.
-                m_CodeReader.SystemConnected += new SystemConnectedHandler(OnSystemConnected);
-                m_CodeReader.SystemDisconnected += new SystemDisconnectedHandler(OnSystemDisconnected);
-            
-                // Subscribe to events that are signalled when the device sends auto-responses.
-                ResultTypes requested_result_types = ResultTypes.ReadXml | ResultTypes.Image | ResultTypes.ImageGraphics;
-                m_CodeReaderResults = new ResultCollector(m_CodeReader, requested_result_types);
-                m_CodeReaderResults.ComplexResultCompleted += Results_ComplexResultCompleted;
-                m_CodeReader.SetKeepAliveOptions(true, 3000, 1000);
-               // m_CodeReader.Connect();
-            }
-            catch (Exception ex)
-            {
-                Global.CodeReaderConnStatus = ConnectionState.Disconnected.ToString();
-                CdStatusFG = System.Windows.Media.Brushes.OrangeRed;
-                MachineBase.ShowMessage(ex);
-            }
-        }
-
-        public void AnalyseResult(string returnedresult)
-        {
-            string[] splitedresult = returnedresult.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-            bool checkresult = false;
-            if (splitedresult.Length == 5)
-            {
-                Global.CurrentContainerNum = splitedresult[0];
-                Global.CurrentBatchQuantity = Int32.Parse(splitedresult[1]);
-                Global.CurrentMatl = Int32.Parse(splitedresult[2]);
-                Global.CurrentBatchNum = splitedresult[3];
-                Global.CurrentBoxQuantity = Int32.Parse( splitedresult[4]);
-
-                if(Global.CurrentBatchNum == Global.LotInitialBatchNo)
-                {
-                    string Container = ContainerCollection.Where(key=>key == Global.CurrentContainerNum).FirstOrDefault();
-                 
-                    if (Container == null)
-                    {
-                        ContainerCollection.Add(Global.CurrentContainerNum);
-
-                        if (Global.CurrentBoxQuantity == VisProductQuantity)
-                        {
-                            Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
-
-                            if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
-                            {
-                                MachineBase.ShowMessage("Current Total Batch Quantity Does Not Match Total Batch Quantity Entered", MachineBase.MessageIcon.Error);
-                                CodeReaderResult = resultstatus.Fail.ToString();
-                                tmrCodeReaderRead.Start();
-                                checkresult = false;
-
-                            }
-                            else
-                            {
-                                checkresult = true;
-                                CodeReaderResult = resultstatus.Pass.ToString();
-                            }
-                        }
-                        else
-                        {
-                            MachineBase.ShowMessage("Current Box Quantity Does Not Match Vision Result", MachineBase.MessageIcon.Error);
-                            tmrCodeReaderRead.Start();
-                            CodeReaderResult = resultstatus.Fail.ToString();
-                            checkresult = false;
-                        }
-                    }
-                    else
-                    {
-                        MachineBase.ShowMessage("Container Number already Exist", MachineBase.MessageIcon.Error);
-                        tmrCodeReaderRead.Start();
-                        CodeReaderResult = resultstatus.Fail.ToString();
-                        checkresult = false;
-                    }
-                }
-                else
-                {
-                    MachineBase.ShowMessage("Batch Number does not match", MachineBase.MessageIcon.Error);
-                    tmrCodeReaderRead.Start();
-                    CodeReaderResult = resultstatus.Fail.ToString();
-                    checkresult = false;
-                }
-            }
-            else
-            {
-                MachineBase.ShowMessage("Missing Result", MachineBase.MessageIcon.Error);
-                tmrCodeReaderRead.Start();
-                CodeReaderResult = resultstatus.Fail.ToString();
-                checkresult = false;
-            }
-
-            if (checkresult)
-            {
-                ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
-                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                CodeReaderDone = true;
-                VisionDone = false; 
-                
-            }
-            SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :"+ CodeReaderResult + ":" + VisProductQuantity));
-            SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :" + CodeReaderResult + ":" + ViewCurrentContainerNumber));
-            SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :" + CodeReaderResult + ":" + ViewCurrentBatchTotalQuantity));
-            SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :" + CodeReaderResult + ":" + ViewAccumulateCurrentTotalBatchQuantity));
-            SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :" + CodeReaderResult + ":" + ViewCurrentBoxQuantity));
-        }
-
+     
         #endregion
 
         #region Log

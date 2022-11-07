@@ -26,21 +26,6 @@ namespace GreatechApp.Services.Utilities
 		private SynchronizationContext _syncContext = null;
 		private object _currentResultInfoSyncLock = new object();
 
-
-		public void TriggerCodeReader()
-        {
-			try
-			{
-				m_codereader.SendCommand("TRIGGER ON");
-				Thread.Sleep(2000);
-				m_codereader.SendCommand("TRIGGER OFF");
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Failed to send TRIGGER ON/OFF commands: " + ex.ToString());
-			}
-		}
-
 		private string GetReadStringFromResultXml(string resultXml)
 		{
 			try

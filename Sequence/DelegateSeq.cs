@@ -34,6 +34,8 @@ namespace Sequence
         private IBaseMotion m_BaseMotion;
         private IEventAggregator m_EventAggregator;
         private ITCPIP m_TCPIP;
+        private IInsightVision   m_InsightVision;
+        private ICodeReader m_CodeReader;
         private ISerialPort m_SerialPort;
         private IError m_Error;
         private SystemConfig m_SysConfig;
@@ -44,10 +46,12 @@ namespace Sequence
 
         Dictionary<SQID, BaseClass> m_BaseSeq;
 
-        public DelegateSeq(IEventAggregator eventAggregator, IError error, IBaseMotion motion, IBaseIO io, SystemConfig sysconfig, ITCPIP tcpip, ISerialPort serialPort, IShowDialog showDialog, CultureResources cultureResources)
+        public DelegateSeq(IEventAggregator eventAggregator, IError error, IBaseMotion motion, IBaseIO io, SystemConfig sysconfig, ITCPIP tcpip,IInsightVision insightvision,ICodeReader codereader, ISerialPort serialPort, IShowDialog showDialog, CultureResources cultureResources)
         {
             m_EventAggregator = eventAggregator;
             m_TCPIP = tcpip;
+            m_InsightVision = insightvision;
+            m_CodeReader = codereader;
             m_SerialPort = serialPort;
             m_BaseMotion = motion;
             m_Error = error;
@@ -71,6 +75,7 @@ namespace Sequence
                 { SQID.SampleSeq4, new SampleSeq4(MarkerType.LinearDataMarker,3,6) },
                 { SQID.SampleSeq5, new SampleSeq5(MarkerType.CircularDataMarker,3,13) },
                 { SQID.BarcodeScanner, new BarcodeScanner(350) },
+                { SQID.CountingScaleSeq, new CountingScaleSeq() },
             };
 
             CoreSeqNum = CoreSeqList.Count;
@@ -109,6 +114,8 @@ namespace Sequence
                 seq.BaseData = new BaseData(seq.MarkerType, seqName, seq.SlotNum, m_EventAggregator);
                 seq.SysCfgs = m_SysConfig;
                 seq.TCPIP = m_TCPIP;
+                seq.InsightVision = m_InsightVision;
+                seq.CodeReader = m_CodeReader;
                 seq.SerialPort = m_SerialPort;
                 seq.ShowDialog = ShowDialog;
                 seq.CultureResources = m_CultureResources;
@@ -180,17 +187,17 @@ namespace Sequence
 
         private void OnSeqEndLotComplted(SequenceEvent sequence)
         {
-            lock (m_SyncInit)
-            {
-                EndLotCompletedCount++;
+            //lock (m_SyncInit)
+            //{
+            //    EndLotCompletedCount++;
 
-                // Set Based on project requirement
-                if (EndLotCompletedCount == 11)
-                {
+            //    // Set Based on project requirement
+            //    if (EndLotCompletedCount == 11)
+            //    {
                     m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Lot_Ended);
-                    EndLotCompletedCount = 0;
-                }
-            }
+                    //EndLotCompletedCount = 0;
+                //}
+            //}
         }
 
         private void OnMachineStateChange(MachineStateType state)

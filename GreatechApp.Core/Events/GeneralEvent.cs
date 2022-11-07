@@ -7,11 +7,46 @@
     using System.Collections.Generic;
     using System.Windows.Media;
 
-
-    public class CountingScaleOperation : PubSubEvent<string>
+    
+    public class OnCodeReaderEndResultEvent : PubSubEvent
     {
 
     }
+    public class OnCodeReaderDisconnectedEvent : PubSubEvent
+    {
+
+    }
+    public class OnCodeReaderConnectedEvent : PubSubEvent
+    {
+
+    }
+    public class RequestCodeReaderConnectionEvent : PubSubEvent
+    {
+
+    }
+    public class RequestVisionLiveViewEvent: PubSubEvent
+    {
+
+    }
+
+    public class RequestVisionConnectionEvent : PubSubEvent
+    {
+
+    }
+    public class VisionConnectionEvent : PubSubEvent
+    {
+
+    }
+
+    public class EnableCodeReaderEvent : PubSubEvent<bool>
+    {
+
+    }
+
+    public class TopVisionResultEvent : PubSubEvent
+    {
+    }
+       
     public class GetLiveImage : PubSubEvent
     {
 

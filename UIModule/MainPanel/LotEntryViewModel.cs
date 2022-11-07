@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using TCPIPManager;
-using static UIModule.MainPanel.EquipmentViewModel;
+//using static UIModule.MainPanel.EquipmentViewModel;
 
 namespace UIModule.MainPanel
 {
@@ -173,14 +173,12 @@ namespace UIModule.MainPanel
                         Global.MachineStatus = MachineStateType.Ending_Lot;
 
                         // Send EndLot event to the sequence that required
-                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.SampleSeq, MachineOpr = MachineOperationType.BeginEndLot });
+                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
 
                         m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Lot_Ended);
                         LotCodeResult = resultstatus.Pass.ToString();
-                        m_EventAggregator.GetEvent<ResultlogEntity>().Publish(new ResultlogEntity() { MsgType = LogMsgType.Info, MsgText = LotCodeResult });
-                        m_EventAggregator.GetEvent<CountingScaleOperation>().Publish("Stop");
-                      
+                        m_EventAggregator.GetEvent<ResultlogEntity>().Publish(new ResultlogEntity() { MsgType = LogMsgType.Info, MsgText = LotCodeResult });                      
                     }
                 }
                 else

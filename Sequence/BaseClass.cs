@@ -109,12 +109,15 @@ namespace Sequence
 
         public ITCPIP TCPIP;
 
+        public IInsightVision InsightVision;
+
+        public ICodeReader CodeReader;
+
         public ISerialPort SerialPort;
 
         public IShowDialog ShowDialog;
 
         public IBaseData BaseData;
-
 
 #if MOXA
         public IMoxaIO IO;

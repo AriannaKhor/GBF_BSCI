@@ -626,13 +626,14 @@ namespace UIModule.MainPanel
 
         private void StartOperation()
         {
-            m_EventAggregator.GetEvent<CountingScaleOperation>().Publish("Start");
-
+            IsAllowStart = false;
+            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
         }
 
         private void StopOperation()
         {
-            m_EventAggregator.GetEvent<CountingScaleOperation>().Publish("Stop");
+            IsAllowStop = false;
+            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
         }
 
         #endregion

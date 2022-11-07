@@ -40,6 +40,11 @@ namespace GreatechApp.Core.Variable
 
         //InsightVision
         public static string VisionConnStatus;
+        public static bool VisConnection;
+        public static float VisProductQuantity;
+        public static string VisProductCrtOrientation;
+        public static string VisProductWrgOrientation;
+        public static string VisInspectResult = resultstatus.PendingResult.ToString();
 
         //Code Reader Result
         public static string CurrentContainerNum;
@@ -49,6 +54,7 @@ namespace GreatechApp.Core.Variable
         public static int CurrentBoxQuantity;
         public static int AccumulateCurrentBatchQuantity;
         public static string CodeReaderConnStatus;
+        public static string CodeReaderResult = resultstatus.PendingResult.ToString();
 
         //Recipe Parameter
         public static int MotionLoopCount;

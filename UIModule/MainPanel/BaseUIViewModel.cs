@@ -31,6 +31,8 @@ namespace UIModule.MainPanel
         public IDelegateSeq m_DelegateSeq;
         public ISQLOperation m_SQLOperation;
         public ITCPIP m_TCPIP;
+        public IInsightVision m_InsightVision;
+        public ICodeReader m_CodeReader;
         public IBaseMotion m_Motion;
         public IShowDialog m_ShowDialog;
         public IBaseIO m_IO;
@@ -49,6 +51,8 @@ namespace UIModule.MainPanel
             m_EventAggregator = (IEventAggregator)ContainerLocator.Container.Resolve(typeof(IEventAggregator));
             m_DelegateSeq = (IDelegateSeq)ContainerLocator.Container.Resolve(typeof(IDelegateSeq));
             m_TCPIP = (ITCPIP)ContainerLocator.Container.Resolve(typeof(ITCPIP));
+            m_InsightVision = (IInsightVision)ContainerLocator.Container.Resolve(typeof(IInsightVision));
+            m_CodeReader = (ICodeReader)ContainerLocator.Container.Resolve(typeof(ICodeReader));
             m_IO = (IBaseIO)ContainerLocator.Container.Resolve(typeof(IBaseIO));
             m_Motion = (IBaseMotion)ContainerLocator.Container.Resolve(typeof(IBaseMotion));
             m_SecsGem = (ISecsGem)ContainerLocator.Container.Resolve(typeof(ISecsGem));

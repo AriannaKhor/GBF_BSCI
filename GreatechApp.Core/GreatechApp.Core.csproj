@@ -203,6 +203,7 @@
     <Compile Include="Cultures\StringTableResource.cs" />
     <Compile Include="Enums\ACL.cs" />
     <Compile Include="Enums\AdvanTechPCI.cs" />
+    <Compile Include="Enums\Cognex.cs" />
     <Compile Include="Enums\MachineEnum.cs" />
     <Compile Include="Enums\IOList.cs" />
     <Compile Include="Enums\LogMsgType.cs" />

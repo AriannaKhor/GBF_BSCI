@@ -27,6 +27,8 @@ namespace GreatechApp.CompactView
 
         IShowDialog ShowDialog;
         ITCPIP TCPIP;
+        IInsightVision InsightVision;
+        ICodeReader CodeReader;
         ISerialPort Serial;
         IBaseIO IO;
         IBaseMotion Motion;
@@ -38,6 +40,8 @@ namespace GreatechApp.CompactView
         {
             ShowDialog = container.Resolve<IShowDialog>();
             TCPIP = container.Resolve<ITCPIP>();
+            InsightVision = container.Resolve<IInsightVision>();
+            CodeReader = container.Resolve<ICodeReader>();
             Serial = container.Resolve<ISerialPort>();
             IO = container.Resolve<IBaseIO>();
             Motion = container.Resolve<IBaseMotion>();
