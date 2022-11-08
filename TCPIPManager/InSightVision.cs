@@ -280,9 +280,9 @@ namespace TCPIPManager
                 if (allowVisResultchg)
                 {
                     allowVisResultchg = false;
-                    CvsCell cellResult1 = m_InsightV1.Results.Cells["D91"];
-                    CvsCell cellResult2 = m_InsightV1.Results.Cells["D79"];
-                    CvsCell cellResult3 = m_InsightV1.Results.Cells["D67"];
+                    CvsCell cellResult1 = m_InsightV1.Results.Cells["D20"];
+                    CvsCell cellResult2 = m_InsightV1.Results.Cells["D21"];
+                    CvsCell cellResult3 = m_InsightV1.Results.Cells["D22"];
 
                     if (!string.IsNullOrEmpty(cellResult1.Text) && cellResult1.Text.ToUpper() != "NULL" && cellResult1.Text.ToUpper() != "ERR" &&
                                 !string.IsNullOrEmpty(cellResult2.Text) && cellResult2.Text.ToUpper() != "NULL" && cellResult2.Text.ToUpper() != "ERR" &&
