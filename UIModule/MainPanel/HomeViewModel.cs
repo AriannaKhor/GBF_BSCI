@@ -59,7 +59,7 @@ namespace UIModule.MainPanel
             ShowInitState = Visibility.Collapsed;
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(UpdateMachineOperation);
             m_EventAggregator.GetEvent<MachineState>().Subscribe(UpdateMachineState);
-            m_EventAggregator.GetEvent<OpenLotEntryView>().Subscribe(OpenLotEntry);
+            //m_EventAggregator.GetEvent<OpenLotEntryView>().Subscribe(OpenLotEntry);
 
             // Add machine seq into init status colection except core seq
             SeqCollection = new ObservableCollection<InitStatus>();
@@ -69,10 +69,10 @@ namespace UIModule.MainPanel
             }
         }
 
-        private void OpenLotEntry(bool canOpenLotEntryView)
-        {
-            IsLotEntryExpand = canOpenLotEntryView;
-        }
+        //private void OpenLotEntry(bool canOpenLotEntryView)
+        //{
+        //    IsLotEntryExpand = canOpenLotEntryView;
+        //}
 
         #endregion
 
@@ -102,17 +102,6 @@ namespace UIModule.MainPanel
                 {
                     switch (stateType)
                     {
-                        case MachineStateType.Initializing:
-                            SeqCollection.ToList().ForEach(key => key.StateIcon = GrayIcon);
-                            ShowInitState = Visibility.Visible;
-                            IsLotEntryExpand = false;
-                            break;
-
-                        case MachineStateType.Init_Done:
-                            ShowInitState = Visibility.Visible;
-                            IsLotEntryExpand = true;
-                            break;
-
                         case MachineStateType.Running:
                             ShowInitState = Visibility.Collapsed;
                             IsLotEntryExpand = false;
@@ -123,6 +112,7 @@ namespace UIModule.MainPanel
                             break;
 
                         case MachineStateType.Stopped:
+                            IsLotEntryExpand = true;
                             break;
 
                         case MachineStateType.Warning:
@@ -145,12 +135,7 @@ namespace UIModule.MainPanel
                             break;
 
                         case MachineStateType.Idle:
-                            break;
-
-                        case MachineStateType.InitFail:
-                            break;
-
-                        case MachineStateType.ReInit:
+                            IsLotEntryExpand = true;
                             break;
 
                         case MachineStateType.CriticalAlarm:

@@ -24,6 +24,7 @@ namespace TCPIPManager
     public class CodeReader :ICodeReader
     {
         #region Variable
+        private bool canContAnalyse = false;
         public SystemConfig m_SystemConfig;
         private IPAddress codereaderIp;
         private CodeReaderDisplayControl formCodeReader;
@@ -74,7 +75,7 @@ namespace TCPIPManager
                 m_CodeReaderResults = new ResultCollector(m_CodeReader, requested_result_types);
                 m_CodeReaderResults.ComplexResultCompleted += Results_ComplexResultCompleted;
                 m_CodeReader.SetKeepAliveOptions(true, 3000, 1000);
-                // m_CodeReader.Connect();
+                // m_CodeReader.Connect(); -- Uncomment it when connected with the code reader
             }
             catch (Exception ex)
             {
@@ -98,28 +99,31 @@ namespace TCPIPManager
                 {
                     Global.LotInitialTotalBatchQuantity = Global.CurrentBatchQuantity;
                 }
-                else if (Global.CurrentBatchNum == Global.LotInitialBatchNo)
+              
+                if (Global.CurrentBatchNum == Global.LotInitialBatchNo)
                 {
                     string Container = m_ContainerCollection.Where(key => key == Global.CurrentContainerNum).FirstOrDefault();
-
+                
                     if (Container == null)
                     {
                         m_ContainerCollection.Add(Global.CurrentContainerNum);
-
+                
                         if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
                         {
                             Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
-
+                
                             if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                             {
                                 MachineBase.ShowMessage("Current Total Batch Quantity Does Not Match Total Batch Quantity Entered", MachineBase.MessageIcon.Error);
                                 Global.CodeReaderResult = resultstatus.Fail.ToString();
                                 checkresult = false;
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
                             }
                             else
                             {
                                 checkresult = true;
                                 Global.CodeReaderResult = resultstatus.Pass.ToString();
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
                             }
                         }
                         else
@@ -127,6 +131,7 @@ namespace TCPIPManager
                             MachineBase.ShowMessage("Current Box Quantity Does Not Match Vision Result", MachineBase.MessageIcon.Error);
                             Global.CodeReaderResult = resultstatus.Fail.ToString();
                             checkresult = false;
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
                         }
                     }
                     else
@@ -134,6 +139,7 @@ namespace TCPIPManager
                         MachineBase.ShowMessage("Container Number already Exist", MachineBase.MessageIcon.Error);
                         Global.CodeReaderResult = resultstatus.Fail.ToString();
                         checkresult = false;
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
                     }
                 }
                 else
@@ -141,6 +147,7 @@ namespace TCPIPManager
                     MachineBase.ShowMessage("Batch Number does not match", MachineBase.MessageIcon.Error); ;
                     Global.CodeReaderResult = resultstatus.Fail.ToString();
                     checkresult = false;
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
                 }
             }
             else
@@ -148,16 +155,17 @@ namespace TCPIPManager
                 MachineBase.ShowMessage("Missing Result", MachineBase.MessageIcon.Error);
                 Global.CodeReaderResult = resultstatus.Fail.ToString();
                 checkresult = false;
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
             }
 
             if (checkresult)
             {
+                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.VisProductQuantity));
+                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentContainerNum));
+                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentBatchQuantity));
+                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.AccumulateCurrentBatchQuantity));
+                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentBoxQuantity));
                 m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :" + Global.CodeReaderResult + ":" + Global.VisProductQuantity));
-                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentContainerNum));
-                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentBatchQuantity));
-                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :" + Global.CodeReaderResult + ":" + Global.AccumulateCurrentBatchQuantity));
-                m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, "Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentBoxQuantity));
             }
         }
         public void TriggerCodeReader()

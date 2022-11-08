@@ -154,9 +154,9 @@ namespace TCPIPManager
             {
                 m_InsightV1.ManualAcquire(); // Request a new acquisition to generate new results // capture Image *remember to check in-sight whether the spread sheet view is set to "Manual"
                 allowVisResultchg = true;
-                //formVis = new InSightDisplayControl(m_topvisIp, m_Events);
-                //formVis.ShowDialog();
-                //formVis.EnableShowImage();
+                formVis = new InSightDisplayControl(m_topvisIp, m_Events);
+                formVis.ShowDialog();
+                formVis.EnableShowImage();
 
             }
             catch (Exception ex)
@@ -306,14 +306,13 @@ namespace TCPIPManager
                         }
                     }
                     m_InsightV1.AcceptUpdate(); // Tell the sensor that the application is ready for new results.
-                    m_Events.GetEvent<TopVisionResultEvent>().Publish();
                     m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Quantity result:" + " " + Global.VisProductQuantity });
                     m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Correct Orientation result:" + " " + Global.VisProductCrtOrientation });
                     m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Wrong Orientation Result:" + " " + Global.VisProductWrgOrientation });
                     m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Overall Result:" + " " + Global.VisInspectResult });
-                    m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, Global.VisInspectResult + ":" + Global.VisProductQuantity + "," + Global.VisProductCrtOrientation + "," + Global.VisProductWrgOrientation));
+                    m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info," Vision Result :" + Global.VisInspectResult + "<" +"Total Quantity per box :"+ Global.VisProductQuantity + ", Correct Orientation :" + Global.VisProductCrtOrientation + ", Wrong Orientation" + Global.VisProductWrgOrientation +">"));
+                    m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
                 }
-               
             }
             catch (Exception ex)
             {

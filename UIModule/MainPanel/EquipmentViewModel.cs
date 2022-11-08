@@ -40,31 +40,12 @@ namespace UIModule.MainPanel
 	public class EquipmentViewModel : BaseUIViewModel
     {
         #region Variable
-        private bool allowVisResultchg = false;
-        private bool CodeReaderDone = false;
-        private string topvisIp;
-        private IPAddress codereaderIp;
-        public static startMachineSeq m_seqNum = startMachineSeq.EOS;
         private IEnumerable<IMachineData> m_IMachineDataCollection;
         private const string MarkerLayoutFile = @"..\AppData\MarkerLayout.dat";
         private static object m_SynMarker = new object();
         private static object m_SynDesignItem = new object();
         private static object m_SyncLog = new object();
-        protected DispatcherTimer tmrScanIOEnableLive;
-        protected DispatcherTimer tmrScanIOLiveAcquire;
-        protected DispatcherTimer tmrVisionResult;
-        protected DispatcherTimer tmrScanIOSnapImage;
-        protected DispatcherTimer tmrCodeReaderRead;
         CTimer m_timeOut = new CTimer();
-        private InSightDisplayControl formVis;
-        private CvsInSight m_InsightV1 = new CvsInSight();
-        private DataManSystem m_CodeReader = null;
-        private ResultCollector m_CodeReaderResults;
-        private object _currentResultInfoSyncLock = new object();
-        private CodeReaderDisplayControl formCodeReader = new CodeReaderDisplayControl();
-        private IBaseIO m_IO;
-        private ISystemConnector m_CodeReaderconnector = null;
-        private readonly IEventAggregator m_Events;
 
         public DelegateCommand<string> NavigationCommand { get; set; }
         public DelegateCommand<string> TriggerVisCmd { get; private set; }
@@ -177,27 +158,6 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_TriggerLiveVis, value); }
         }
 
-        private string m_TriggerVis = "Trigger Vision";
-        public string TriggerVis
-        {
-            get { return m_TriggerVis; }
-            set { SetProperty(ref m_TriggerVis, value); }
-        }
-
-        private string m_TriggerLiveCR = "Trigger Code Reader Live ";
-        public string TriggerLiveCR
-        {
-            get { return m_TriggerLiveCR; }
-            set { SetProperty(ref m_TriggerLiveCR, value); }
-        }
-
-        private bool m_EnableCodeReader = false;
-        public bool EnableCodeReader
-        {
-            get { return m_EnableCodeReader; }
-            set { SetProperty(ref m_EnableCodeReader, value); }
-        }
-
         private ObservableCollection<IMachineData> m_MachineDataCollection;
         public ObservableCollection<IMachineData> MachineDataCollection
         {
@@ -307,14 +267,11 @@ namespace UIModule.MainPanel
             get { return m_IsEquipViewLoaded; }
             set { SetProperty(ref m_IsEquipViewLoaded, value); }
         }
-         
         #endregion
 
         #region Constructor
         public EquipmentViewModel(IEventAggregator eventAggregator)
         {
-            m_Events = eventAggregator;
-
             m_IMachineDataCollection = ContainerLocator.Container.Resolve<Func<IEnumerable<IMachineData>>>()();
 
             TabPageHeader = GetStringTableValue("Equipment");
@@ -332,14 +289,11 @@ namespace UIModule.MainPanel
 
             m_EventAggregator.GetEvent<DatalogEntity>().Subscribe(OnDatalogEntity);
             m_EventAggregator.GetEvent<ResultlogEntity>().Subscribe(OnResultlogEntity);
-            m_Events.GetEvent<FormCloseConnection>().Subscribe(OnFormCloseConnection);
-            m_Events.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
-            m_Events.GetEvent<OnCodeReaderConnectedEvent>().Subscribe(OnCodeReaderConnected);//
-            m_Events.GetEvent<OnCodeReaderDisconnectedEvent>().Subscribe(OnCodeReaderDisconnected);//
-            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Subscribe(OnCodeReaderEndResult);//
-
-
-            m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineStateChange);
+            m_EventAggregator.GetEvent<TopVisionResultEvent>().Subscribe(OnTopVisionResult);//
+            m_EventAggregator.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
+            m_EventAggregator.GetEvent<OnCodeReaderConnectedEvent>().Subscribe(OnCodeReaderConnected);//
+            m_EventAggregator.GetEvent<OnCodeReaderDisconnectedEvent>().Subscribe(OnCodeReaderDisconnected);//
+            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Subscribe(OnCodeReaderEndResult);//
 
             //Button Command
             NavigationCommand = new DelegateCommand<string>(OnNavigation);
@@ -394,16 +348,14 @@ namespace UIModule.MainPanel
             tray.BuildDataMarker("InputTray", SQID.BarcodeScanner, 14, 25);
             MachineDataCollection.Add(tray);
 
-            m_Events.GetEvent<RequestVisionConnectionEvent>().Publish();
-            m_Events.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
-            CodeReaderDone = false;
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+            m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
+            m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
+            //m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
 
             if (CanAccess)
             {
-                m_Events.GetEvent<OpenLotEntryView>().Publish(true);
+                m_EventAggregator.GetEvent<OpenLotEntryView>().Publish(true);
             }
-
         }
         #endregion
 
@@ -413,44 +365,14 @@ namespace UIModule.MainPanel
             TabPageHeader = GetStringTableValue("Equipment");
         }
 
-        private void OnMachineStateChange(MachineStateType stateType)
-        {
-            if (stateType == MachineStateType.Lot_Ended)
-            {
-                CodeReaderDone = false;
-            }
-        }
-
         #region Vision
-        public void OnFormCloseConnection()
+        private void OnTopVisionResult()
         {
-            if(VisInspectResult == resultstatus.Pass.ToString())
-            {
-                if (Global.LotInitialBatchNo == null)
-                {
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
-                }
-                else
-                {
-                    m_Events.GetEvent<OpenLotEntryView>().Publish(false);
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
-                }
-
-            }else if (VisInspectResult == resultstatus.Fail.ToString())
-            {
-                m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-
-                ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Error, "Top Vision Fail", ButtonResult.OK);
-
-                if (dialogResult == ButtonResult.OK)
-                {
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
-                }
-                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = Title, MsgType = LogMsgType.Info, MsgText = " Top Vision Fail result:" });
-            }
-
+            VisInspectResult = Global.VisInspectResult;
+            VisProductQuantity = Global.VisProductQuantity;
+            VisProductCrtOrientation = Global.VisProductCrtOrientation;
+            VisProductWrgOrientation = Global.VisProductWrgOrientation;
         }
-     
         #endregion
 
         #region Code Reader
@@ -469,6 +391,7 @@ namespace UIModule.MainPanel
         //New Can Be Use
         private void OnCodeReaderEndResult()
         {
+            CodeReaderResult = Global.CodeReaderResult;
             ViewCurrentBatchNumber = Global.CurrentBatchNum;
             ViewCurrentContainerNumber = Global.CurrentContainerNum;
             ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
@@ -582,7 +505,7 @@ namespace UIModule.MainPanel
             {
                 if (Command == "Trigger Vision Live")
                 {
-                    m_Events.GetEvent<RequestVisionLiveViewEvent>().Publish();
+                    m_EventAggregator.GetEvent<RequestVisionLiveViewEvent>().Publish();
                 }
             }
             catch (Exception ex)
@@ -708,22 +631,7 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Enum 
-        public enum resultstatus
-        {
-            PendingResult,
-            Pass,
-            Fail,
-        }
-
-        public enum startMachineSeq
-        {
-            EOS,
-            TrgVision,
-            TrgCodeReader,
-            GetVisResultTimeOut,
-            GetCodeReaderResultTimeOut,
-        }
-
+   
         #endregion
     }
 }

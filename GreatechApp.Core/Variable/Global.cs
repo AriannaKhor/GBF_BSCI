@@ -65,7 +65,7 @@ namespace GreatechApp.Core.Variable
         public static bool SeqStatusScanOn = false;
 
         // Machine Status
-        public static MachineStateType MachineStatus = MachineStateType.Ready;
+        public static MachineStateType MachineStatus = MachineStateType.Idle;
 
         //Secs Gem
         public static bool OnSecsGem;

@@ -298,8 +298,7 @@ namespace UIModule.MainPanel
 
             EquipStateIcon = GrayIcon;
             EquipStatus = "Idle";
-            OnMachineStateChange(Global.MachineStatus);
-
+            m_EventAggregator.GetEvent<MachineState>().Publish(Global.MachineStatus);
         }
 
 

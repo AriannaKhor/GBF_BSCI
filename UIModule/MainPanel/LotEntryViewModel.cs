@@ -95,6 +95,8 @@ namespace UIModule.MainPanel
             LotCommand = new DelegateCommand<string>(Lotoperation);
 
             RefreshRecipes();
+
+            OnUpdateMachineState(Global.MachineStatus);
         }
         #endregion
 
@@ -120,16 +122,15 @@ namespace UIModule.MainPanel
                         Global.LotOperatorID = OperatorID;
                         Global.LotInitialTotalBatchQuantity = TotalBatchQuantity;
                         Global.LotRecipe = SelectedRecipe.Product_Name.ToString();
-                     
+                        //m_EventAggregator.GetEvent<OpenLotEntryView>().Publish(false);
+
 
                         if (!m_SQLOperation.InsertNewLot(LotID, OperatorID, TotalBatchQuantity.ToString(), SelectedRecipe.Product_Name.ToString(), DateTime.Now))
                         {
                             m_ShowDialog.Show(DialogIcon.Error, GetDialogTableValue("FailInsertLot"));
                             return;
                         }
-
                         m_EventAggregator.GetEvent<RefreshTotalInputOutput>().Publish();
-
                         // Trigger all modules to do house keeping
                         ApplicationCommands.OperationCommand.Execute("Submit_Lot");
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
@@ -146,7 +147,7 @@ namespace UIModule.MainPanel
                     }
                     else if (string.IsNullOrEmpty(TotalBatchQuantity.ToString()))
                     {
-                        ErrorMsg = GetDialogTableValue("TotalBatchQuantityEmpty");
+                        ErrorMsg = GetDialogTableValue("TotalBatchQuantityEmpty"); // See whether it's perform manually or not (If using code reader then this have to be taken out 
                     }
                     else if (string.IsNullOrEmpty(OperatorID))
                     {
@@ -171,6 +172,7 @@ namespace UIModule.MainPanel
                         m_EventAggregator.GetEvent<EndLotOperation>().Publish();
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ending_Lot);
                         Global.MachineStatus = MachineStateType.Ending_Lot;
+                        //m_EventAggregator.GetEvent<OpenLotEntryView>().Publish(false);
 
                         // Send EndLot event to the sequence that required
                         m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });

@@ -249,7 +249,6 @@ namespace GreatechApp.Services.Utilities
         private void InSightDisplayControl_FormClosing(object sender, FormClosingEventArgs e)
         {
             cvsInSightDisplay1.Edit.LiveAcquire.Activated = false;
-            m_Events.GetEvent<FormCloseConnection>().Publish();
             timer1.Stop();
         }
 
