@@ -192,11 +192,11 @@ namespace UIModule.MainPanel
         #region Hardware SSR Button
         private DispatcherTimer tmrButtonMonitor;
 
-        private int StartButton = (int)IN.DI0104_Input5; // Assign Start Button Input
-        private int StopButton = (int)IN.DI0105_Input6; // Assign Stop Button Input
+        //private int StartButton = (int)IN.DI0104_Input5; // Assign Start Button Input
+        //private int StopButton = (int)IN.DI0105_Input6; // Assign Stop Button Input
 
-        private int StartButtonIndic = (int)OUT.DO0104_Output5; // Assign Start button indicator output
-        private int StopButtonIndic = (int)OUT.DO0105_Output6; // Assign stop button indicator output
+        //private int StartButtonIndic = (int)OUT.DO0104_Output5; // Assign Start button indicator output
+        //private int StopButtonIndic = (int)OUT.DO0105_Output6; // Assign stop button indicator output
         #endregion
 
         #region System Clock
@@ -630,8 +630,8 @@ namespace UIModule.MainPanel
             }
 
             // Turn ON/OFF hardware SSR button LED
-            m_IO.WriteBit(StartButtonIndic, IsAllowStart);
-            m_IO.WriteBit(StopButtonIndic, IsAllowStop);
+           // m_IO.WriteBit(StartButtonIndic, IsAllowStart);
+            //m_IO.WriteBit(StopButtonIndic, IsAllowStop);
         }
         #endregion
 

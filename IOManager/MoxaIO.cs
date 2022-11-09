@@ -284,7 +284,7 @@ namespace IOManager
             try
             {
                 int ret = 0;
-                //ret = MXIO.E1K_DO_Writes(DO_hConnection[slot], bit, 0, dwSetDOValue);
+                ret = MXIO.E1K_DO_Writes(DO_hConnection[slot], bit, 0, dwSetDOValue); //Send Output to MOXA
 
                 if (ret != MXIO.MXIO_OK)
                 {

@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DO0100_RedTowerLight" xml:space="preserve">
-    <value>O0100 | Output Value 1</value>
+    <value>O0100 | Red Tower Light</value>
   </data>
   <data name="DO0101_AmberTowerLight" xml:space="preserve">
-    <value>O0101 | Output Value 2</value>
+    <value>O0101 | Amber Tower Light</value>
   </data>
   <data name="DO0102_GreenTowerLight" xml:space="preserve">
-    <value>O0102 | Output Value 3</value>
+    <value>O0102 | Green Tower Light</value>
   </data>
   <data name="DO0103_Buzzer" xml:space="preserve">
-    <value>O0103 | Output Value 4</value>
+    <value>O0103 | Buzzer   </value>
   </data>
   <data name="DO0104_Output5" xml:space="preserve">
     <value>O0104 | Output Value 5</value>

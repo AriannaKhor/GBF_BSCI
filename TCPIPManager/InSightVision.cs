@@ -152,8 +152,8 @@ namespace TCPIPManager
         {
             try
             {
-                formVis = new InSightDisplayControl(m_topvisIp, m_Events);
-                formVis.Show();
+                //formVis = new InSightDisplayControl(m_topvisIp, m_Events);
+                //formVis.Show();
                 m_InsightV1.ManualAcquire(); // Request a new acquisition to generate new results // capture Image *remember to check in-sight whether the spread sheet view is set to "Manual"
                 allowVisResultchg = true;
             }

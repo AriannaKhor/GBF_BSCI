@@ -61,7 +61,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O0100 | Output Value 1.
+        ///   Looks up a localized string similar to O0100 | Red Tower Light.
         /// </summary>
         public static string DO0100_RedTowerLight {
             get {
@@ -70,7 +70,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O0101 | Output Value 2.
+        ///   Looks up a localized string similar to O0101 | Amber Tower Light.
         /// </summary>
         public static string DO0101_AmberTowerLight {
             get {
@@ -79,7 +79,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O0102 | Output Value 3.
+        ///   Looks up a localized string similar to O0102 | Green Tower Light.
         /// </summary>
         public static string DO0102_GreenTowerLight {
             get {
@@ -88,7 +88,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O0103 | Output Value 4.
+        ///   Looks up a localized string similar to O0103 | Buzzer   .
         /// </summary>
         public static string DO0103_Buzzer {
             get {

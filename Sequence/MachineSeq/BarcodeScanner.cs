@@ -516,43 +516,43 @@ namespace Sequence.MachineSeq
         #region IO
         internal override void IOMapping()
         {
-            switch (SeqName)
-            {
-                // In case ONE class with MULTIPLE module
-                // assign IO into switch case individually
-                case SQID.SampleSeq:
-                    // IO Mapping will assign all inputs and outputs of Sample Seq into IO view & Setup View
-                    // FIRST, Assign Vacuum IO to list, vaccum pairing and assign into Seq input and output list
-                    // Example:
-                    AssignVacuumIO("Vacuum 1", IN.DI0104_Input5, IN.DI0107_Input8, OUT.DO0107_Output8, OUT.DO0108_Output9); // Vacuum with both Vacuum, Purge, Vacuum on successful sensor, and vacuum picked up succeesful sensor
-                    AssignVacuumIO("Vacuum 2", null, IN.DI0107_Input8, OUT.DO0107_Output8, OUT.DO0108_Output9); // Only vacuum, purge and picked up sensor installed
-                    AssignVacuumIO("Vacuum 3", null, null, OUT.DO0107_Output8, OUT.DO0108_Output9); // No vacuum sensor installed 
+            //switch (SeqName)
+            //{
+            //    // In case ONE class with MULTIPLE module
+            //    // assign IO into switch case individually
+            //    case SQID.SampleSeq:
+            //        // IO Mapping will assign all inputs and outputs of Sample Seq into IO view & Setup View
+            //        // FIRST, Assign Vacuum IO to list, vaccum pairing and assign into Seq input and output list
+            //        // Example:
+            //        AssignVacuumIO("Vacuum 1", IN.DI0104_Input5, IN.DI0107_Input8, OUT.DO0107_Output8, OUT.DO0108_Output9); // Vacuum with both Vacuum, Purge, Vacuum on successful sensor, and vacuum picked up succeesful sensor
+            //        AssignVacuumIO("Vacuum 2", null, IN.DI0107_Input8, OUT.DO0107_Output8, OUT.DO0108_Output9); // Only vacuum, purge and picked up sensor installed
+            //        AssignVacuumIO("Vacuum 3", null, null, OUT.DO0107_Output8, OUT.DO0108_Output9); // No vacuum sensor installed 
 
-                    // NEXT, assign cylinder IO to list
-                    // Cylinder pairing and assign into Seq input and output list
-                    // Example:
-                    AssignCylinderIO("Test Gripper 1", null, null, null, null, OUT.DO0109_Test_GripperWork, null); // Single solenoid cylinder (set null to IO for rest)
-                    AssignCylinderIO("Test Gripper 2", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest); // Double solenoid cylinder
-                    AssignCylinderIO("Test Gripper 3", IN.DI0109_Test_IsGripperWork, null, IN.DI0110_Test_IsGripperRest, null, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
-                    AssignCylinderIO("Test Gripper 4", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
-                    AssignCylinderIO("Test Gripper 5", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
-                    AssignCylinderIO("Test Gripper 6", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
-                    AssignCylinderIO("Test Gripper 7", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        // NEXT, assign cylinder IO to list
+            //        // Cylinder pairing and assign into Seq input and output list
+            //        // Example:
+            //        AssignCylinderIO("Test Gripper 1", null, null, null, null, OUT.DO0109_Test_GripperWork, null); // Single solenoid cylinder (set null to IO for rest)
+            //        AssignCylinderIO("Test Gripper 2", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest); // Double solenoid cylinder
+            //        AssignCylinderIO("Test Gripper 3", IN.DI0109_Test_IsGripperWork, null, IN.DI0110_Test_IsGripperRest, null, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        AssignCylinderIO("Test Gripper 4", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        AssignCylinderIO("Test Gripper 5", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        AssignCylinderIO("Test Gripper 6", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        AssignCylinderIO("Test Gripper 7", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
 
-                    // LASTLY, assign OTHER general IO to list
-                    // Input
-                    AssignIO(IN.DI0103_Input4);
-                    AssignIO(IN.DI0108_Input9);
+            //        // LASTLY, assign OTHER general IO to list
+            //        // Input
+            //        AssignIO(IN.DI0103_Input4);
+            //        AssignIO(IN.DI0108_Input9);
 
-                    //Output
-                    AssignIO(OUT.DO0104_Output5);
-                    AssignIO(OUT.DO0105_Output6);
-                    AssignIO(OUT.DO0106_Output7);
-                    AssignIO(OUT.DO0107_Output8);
-                    break;
+            //        //Output
+            //        AssignIO(OUT.DO0104_Output5);
+            //        AssignIO(OUT.DO0105_Output6);
+            //        AssignIO(OUT.DO0106_Output7);
+            //        AssignIO(OUT.DO0107_Output8);
+            //        break;
 
 
-            }
+            //}
         }
         #endregion
 

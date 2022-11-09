@@ -547,25 +547,25 @@ namespace Sequence.MachineSeq
         #region IO
         internal override void IOMapping()
         {
-            switch (SeqName)
-            {
-                // In case ONE class with MULTIPLE module
-                // assign IO into switch case individually
-                case SQID.SampleSeq2:
-                    AssignIO(IN.DI0105_Input6);
-                    AssignIO(IN.DI0106_Input7);
+            //switch (SeqName)
+            //{
+            //    // In case ONE class with MULTIPLE module
+            //    // assign IO into switch case individually
+            //    case SQID.SampleSeq2:
+            //        AssignIO(IN.DI0105_Input6);
+            //        AssignIO(IN.DI0106_Input7);
 
 
-                    AssignIO(OUT.DO0105_Output6);
-                    AssignIO(OUT.DO0106_Output7);
+            //        AssignIO(OUT.DO0105_Output6);
+            //        AssignIO(OUT.DO0106_Output7);
 
-                    //AssignIO(IN.DI0105_Input6, INList.DI0105_Input6);
-                    //AssignIO(IN.DI0106_Input7, INList.DI0106_Input7);
+            //        //AssignIO(IN.DI0105_Input6, INList.DI0105_Input6);
+            //        //AssignIO(IN.DI0106_Input7, INList.DI0106_Input7);
 
-                    //AssignIO(OUT.DO0105_Output6, OUTList.DO0105_Output6);
-                    //AssignIO(OUT.DO0106_Output7, OUTList.DO0106_Output7);
-                    break;
-            }
+            //        //AssignIO(OUT.DO0105_Output6, OUTList.DO0105_Output6);
+            //        //AssignIO(OUT.DO0106_Output7, OUTList.DO0106_Output7);
+            //        break;
+            //}
         }
         #endregion
 

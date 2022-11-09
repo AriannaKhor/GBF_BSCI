@@ -109,8 +109,8 @@ namespace DialogManager.ErrorMsg
 
         public DelegateCommand<string> OperationCommand { get; private set; }
 
-        private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
-        private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
+        //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
+        //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
 
         #endregion
 
@@ -124,9 +124,9 @@ namespace DialogManager.ErrorMsg
 
             OperationCommand = new DelegateCommand<string>(OperationMethod);
             AlarmDetail = new AlarmParameter();
-            m_TmrButtonMonitor = new DispatcherTimer();
-            m_TmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            m_TmrButtonMonitor.Tick += m_TmrButtonMonitor_Tick;
+            //m_TmrButtonMonitor = new DispatcherTimer();
+            //m_TmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 300);
+            //m_TmrButtonMonitor.Tick += m_TmrButtonMonitor_Tick;
         }
 
         #endregion
@@ -176,28 +176,28 @@ namespace DialogManager.ErrorMsg
         {
             m_TmrButtonMonitor.Stop();
             // Turn off Reset Button LED
-            m_IO.WriteBit(ResetButtonIndic, false);
+            //m_IO.WriteBit(ResetButtonIndic, false);
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
         #endregion
 
         #region Event
-        private void m_TmrButtonMonitor_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                if (m_IO.ReadBit(ResetButton))
-                {
-                    m_TmrButtonMonitor.Stop();
-                    Reset();
-                }
-            }
-            catch (Exception ex)
-            {
-                m_TmrButtonMonitor.Stop();
-                MessageBox.Show(ex.Message, ex.Source);
-            }
-        }
+        //private void m_TmrButtonMonitor_Tick(object sender, EventArgs e)
+        ////{
+        ////    try
+        ////    {
+        ////        if (m_IO.ReadBit(ResetButton))
+        ////        {
+        ////            m_TmrButtonMonitor.Stop();
+        ////            Reset();
+        ////        }
+        ////    }
+        ////    catch (Exception ex)
+        ////    {
+        ////        m_TmrButtonMonitor.Stop();
+        ////        MessageBox.Show(ex.Message, ex.Source);
+        ////    }
+        //}
         #endregion
 
         #region Properties
@@ -219,7 +219,7 @@ namespace DialogManager.ErrorMsg
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
             // Turn on Reset Button LED
-            m_IO.WriteBit(ResetButtonIndic, true);
+            //m_IO.WriteBit(ResetButtonIndic, true);
 
             string[] split = parameters.GetValue<string>("message").Split(';');
 

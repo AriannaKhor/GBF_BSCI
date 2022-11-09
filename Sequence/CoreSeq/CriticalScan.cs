@@ -54,77 +54,77 @@ namespace Sequence.CoreSeq
             {
                 lock (m_SyncSN)
                 {
-                    switch (m_SeqNum)
-                    {
-                        case SN.Begin:
-                            // when any critical error get triggered, stop all process and force user to reintialize the machine
-                            //m_SeqNum = SN.CheckEStop;
-                            m_SeqNum = SN.EOS;
-                            break;
+                    //switch (m_SeqNum)
+                    //{
+       //                 case SN.Begin:
+       //                     // when any critical error get triggered, stop all process and force user to reintialize the machine
+       //                     //m_SeqNum = SN.CheckEStop;
+       //                     m_SeqNum = SN.EOS;
+       //                     break;
 
-                        case SN.CheckEStop:
-							// NC Sensor
-							if (ReadBitF(IN.DI0100_E_StopBtn, INVERT, false))
-							{
-                                // Raise Error 
-                                m_ErrorDetected = (int)ErrorCode.E_Stop;
-								// Goto Error Routine
-								m_SeqNum = SN.CriticalAbort;
-							}
-							else
-							{
-								m_SeqNum = SN.CheckAirPressure;
-							}
-							break;
+       //                 case SN.CheckEStop:
+							//// NC Sensor
+							//if (ReadBitF(IN.DI0100_E_StopBtn, INVERT, false))
+							//{
+       //                         // Raise Error 
+       //                         m_ErrorDetected = (int)ErrorCode.E_Stop;
+							//	// Goto Error Routine
+							//	m_SeqNum = SN.CriticalAbort;
+							//}
+							//else
+							//{
+							//	m_SeqNum = SN.CheckAirPressure;
+							//}
+							//break;
 
-                        case SN.CheckAirPressure:
-                            if (SysCfgs.Machine.SafetyScan && !ReadBitT(IN.DI0101_AirPressure, false))
-                            {
-                                // Raise Error 
-                                m_ErrorDetected = (int)ErrorCode.Air_Pressure;
-                                // Goto Error Routine
-                                m_SeqNum = SN.CriticalAbort;
-                            }
-                            else
-                            {
-                                m_SeqNum = SN.CheckVacuum;
-                            }
-                            break;
+       //                 case SN.CheckAirPressure:
+       //                     ////if (SysCfgs.Machine.SafetyScan && !ReadBitT(IN.DI0101_AirPressure, false))
+       //                     //{
+       //                     //    // Raise Error 
+       //                     //    m_ErrorDetected = (int)ErrorCode.Air_Pressure;
+       //                     //    // Goto Error Routine
+       //                     //    m_SeqNum = SN.CriticalAbort;
+       //                     //}
+       //                     else
+       //                     {
+       //                         m_SeqNum = SN.CheckVacuum;
+       //                     }
+       //                     break;
 
-                        case SN.CheckVacuum:
-                            if (SysCfgs.Machine.SafetyScan && !ReadBitT(IN.DI0102_Vacuum) && !Global.DryRun)
-                            {
-                                // Raise Error 
-                                m_ErrorDetected = (int)ErrorCode.No_Vacuum;
-                                // Goto Error Routine
-                                m_SeqNum = SN.CriticalAbort;
-                            }
-                            else
-                            {
-                                //m_SeqNum = SN.CheckEStop;
-                                m_SeqNum = SN.CheckAirPressure;
-                            }
-                            break;
+       //                 case SN.CheckVacuum:
+       //                     ////if (SysCfgs.Machine.SafetyScan && !ReadBitT(IN.DI0102_Vacuum) && !Global.DryRun)
+       //                     //{
+       //                     //    // Raise Error 
+       //                     //    m_ErrorDetected = (int)ErrorCode.No_Vacuum;
+       //                     //    // Goto Error Routine
+       //                     //    m_SeqNum = SN.CriticalAbort;
+       //                     //}
+       //                     else
+       //                     {
+       //                         //m_SeqNum = SN.CheckEStop;
+       //                         m_SeqNum = SN.CheckAirPressure;
+       //                     }
+       //                     break;
 
-                        case SN.CriticalAbort:
-                            Global.MachineStatus = MachineStateType.CriticalAlarm;
+       //                 case SN.CriticalAbort:
+       //                     Global.MachineStatus = MachineStateType.CriticalAlarm;
 
-                            // Kill all module's sequence
-                            for (int i = 1; i < Enum.GetValues(typeof(SQID)).Length - 1; i++)
-                            {
-                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = (SQID)i, MachineOpr = MachineOperationType.KillSeq });
-                            }
-                            Publisher.GetEvent<MachineState>().Publish(MachineStateType.CriticalAlarm);
+       //                     // Kill all module's sequence
+       //                     for (int i = 1; i < Enum.GetValues(typeof(SQID)).Length - 1; i++)
+       //                     {
+       //                         Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = (SQID)i, MachineOpr = MachineOperationType.KillSeq });
+       //                     }
+       //                     Publisher.GetEvent<MachineState>().Publish(MachineStateType.CriticalAlarm);
 
-                            if (m_ErrorDetected != -1)
-                            {
-                                RaiseError(m_ErrorDetected);
-                                m_ErrorDetected = -1;
-                            }
+       //                     if (m_ErrorDetected != -1)
+       //                     {
+       //                         RaiseError(m_ErrorDetected);
+       //                         m_ErrorDetected = -1;
+       //                     }
 
-                            m_SeqNum = SN.EOS;
-                            break;
-                    }
+       //                     m_SeqNum = SN.EOS;
+       //                     break;
+       //             }
 
                     SeqNum = m_SeqNum.ToString();
                     CheckLiveSeqStart();
@@ -207,8 +207,8 @@ namespace Sequence.CoreSeq
         internal override void IOMapping()
         {
             AssignIO(IN.DI0100_E_StopBtn);
-            AssignIO(IN.DI0101_AirPressure);
-            AssignIO(IN.DI0102_Vacuum);
+            //AssignIO(IN.DI0101_AirPressure);
+            //AssignIO(IN.DI0102_Vacuum);
 
             AssignIO(OUT.DO0100_RedTowerLight);
             AssignIO(OUT.DO0101_AmberTowerLight);

@@ -75,7 +75,7 @@ namespace TCPIPManager
                 m_CodeReaderResults = new ResultCollector(m_CodeReader, requested_result_types);
                 m_CodeReaderResults.ComplexResultCompleted += Results_ComplexResultCompleted;
                 m_CodeReader.SetKeepAliveOptions(true, 3000, 1000);
-                m_CodeReader.Connect(); // Uncomment it when connected with the code reader
+                //m_CodeReader.Connect(); // Uncomment it when connected with the code reader
             }
             catch (Exception ex)
             {

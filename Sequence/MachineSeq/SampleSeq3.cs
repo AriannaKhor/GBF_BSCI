@@ -240,281 +240,281 @@ namespace Sequence.MachineSeq
             {
                 if (Monitor.TryEnter(m_SyncSN))
                 {
-                    switch (m_SeqNum)
-                    {
-                        #region Running Routine
-                        case SN.Begin:
-                            if (!Global.SeqStop)
-                            {
-                                if (m_SeqFlag.ItemGiven)
-                                {
-                                    m_SeqFlag.ItemGiven = false;
-                                    //m_SeqNum = SN.PickandLoadData;
+//                    switch (m_SeqNum)
+//                    {
+//                        #region Running Routine
+//                        case SN.Begin:
+//                            if (!Global.SeqStop)
+//                            {
+//                                if (m_SeqFlag.ItemGiven)
+//                                {
+//                                    m_SeqFlag.ItemGiven = false;
+//                                    //m_SeqNum = SN.PickandLoadData;
 
-                                    m_SeqNum = SN.EOS;
-                                }
-                            }
-                            break;
+//                                    m_SeqNum = SN.EOS;
+//                                }
+//                            }
+//                            break;
 
-                        case SN.PickandLoadData:
-                            if (!Global.SeqStop)
-                            {
-                                // get the unit data from pre module through event pub-sub
-                                // BaseData.ModuleSlots[0].UnitData = UnitDataReceived;
+//                        case SN.PickandLoadData:
+//                            if (!Global.SeqStop)
+//                            {
+//                                // get the unit data from pre module through event pub-sub
+//                                // BaseData.ModuleSlots[0].UnitData = UnitDataReceived;
 
-                                BaseData.SetUnitID(0, $"Test{m_Count}");
-                                m_SeqNum = SN.EvalTopVisionResult;
-                            }
-                            break;
+//                                BaseData.SetUnitID(0, $"Test{m_Count}");
+//                                m_SeqNum = SN.EvalTopVisionResult;
+//                            }
+//                            break;
 
-                        case SN.EvalTopVisionResult:
-                            if (!Global.SeqStop)
-                            {
-                                // Inspection
-                                // set the inspection result to station
-                                Wait(0.5);
+//                        case SN.EvalTopVisionResult:
+//                            if (!Global.SeqStop)
+//                            {
+//                                // Inspection
+//                                // set the inspection result to station
+//                                Wait(0.5);
 
-#if SIMULATION
-                                if (BaseData.ModuleSlots[(int)Slot_Pos.TopVision].IsPresent)
-                                {
-                                    StationResult stationResult = m_Count % 2 == 0 ? StationResult.Pass : StationResult.Fail;
-                                    BaseData.SetStationResult((int)Slot_Pos.TopVision, TestStation.TopVision, stationResult);
-                                }
-#endif
-                                m_SeqNum = SN.EvalBottomVisionResult;
-                            }
-                            break;
+//#if SIMULATION
+//                                if (BaseData.ModuleSlots[(int)Slot_Pos.TopVision].IsPresent)
+//                                {
+//                                    StationResult stationResult = m_Count % 2 == 0 ? StationResult.Pass : StationResult.Fail;
+//                                    BaseData.SetStationResult((int)Slot_Pos.TopVision, TestStation.TopVision, stationResult);
+//                                }
+//#endif
+//                                m_SeqNum = SN.EvalBottomVisionResult;
+//                            }
+//                            break;
 
-                        case SN.EvalBottomVisionResult:
-                            if (!Global.SeqStop)
-                            {
-                                // Inspection
-                                // set the inspection result to station
-                                Wait(0.5);
+//                        case SN.EvalBottomVisionResult:
+//                            if (!Global.SeqStop)
+//                            {
+//                                // Inspection
+//                                // set the inspection result to station
+//                                Wait(0.5);
 
-#if SIMULATION
-                                if (BaseData.ModuleSlots[(int)Slot_Pos.BottomVision].IsPresent)
-                                {
-                                    StationResult stationResult = m_Count % 2 == 0 ? StationResult.Pass : StationResult.Fail;
-                                    BaseData.SetStationResult((int)Slot_Pos.BottomVision, TestStation.BottomVision, stationResult);
-                                }
-#endif
-                                m_SeqNum = SN.TransferData;
-                            }
-                            break;
+//#if SIMULATION
+//                                if (BaseData.ModuleSlots[(int)Slot_Pos.BottomVision].IsPresent)
+//                                {
+//                                    StationResult stationResult = m_Count % 2 == 0 ? StationResult.Pass : StationResult.Fail;
+//                                    BaseData.SetStationResult((int)Slot_Pos.BottomVision, TestStation.BottomVision, stationResult);
+//                                }
+//#endif
+//                                m_SeqNum = SN.TransferData;
+//                            }
+//                            break;
 
-                        case SN.TransferData:
-                            if (!Global.SeqStop)
-                            {
-                                if (BaseData.ModuleSlots[(int)Slot_Pos.Out].IsPresent)
-                                {
-                                    BaseData.TransferData(SQID.SampleSeq4);
-                                }
-                                m_SeqNum = SN.RotateMotor;
-                            }
-                            break;
+//                        case SN.TransferData:
+//                            if (!Global.SeqStop)
+//                            {
+//                                if (BaseData.ModuleSlots[(int)Slot_Pos.Out].IsPresent)
+//                                {
+//                                    BaseData.TransferData(SQID.SampleSeq4);
+//                                }
+//                                m_SeqNum = SN.RotateMotor;
+//                            }
+//                            break;
 
-                        case SN.RotateMotor:
-                            if (!Global.SeqStop)
-                            {
-                                // Rotate the module
-                                // transfer unit data in memory for every module motion
-                                Wait(0.5);
-                                BaseData.Shift();
-                                m_SeqNum = SN.LoopBack;
-                            }
-                            break;
+//                        case SN.RotateMotor:
+//                            if (!Global.SeqStop)
+//                            {
+//                                // Rotate the module
+//                                // transfer unit data in memory for every module motion
+//                                Wait(0.5);
+//                                BaseData.Shift();
+//                                m_SeqNum = SN.LoopBack;
+//                            }
+//                            break;
 
-                        case SN.LoopBack:
-                            m_Count++;
-                            m_SeqNum = SN.Begin;
-                            break;
-                        #endregion
+//                        case SN.LoopBack:
+//                            m_Count++;
+//                            m_SeqNum = SN.Begin;
+//                            break;
+//                        #endregion
 
-                        #region Intermediate Recovery
-                        case SN.IM_MoveMotorXHome:
-                            m_HMStatus[(int)MotAxis.AxisX] = 0;
-                            m_SeqHM[(int)MotAxis.AxisX] = SN_HM.ResetMtrAlarm;
-                            m_SeqNum = SN.IM_WaitMtrXHome;
-                            break;
+//                        #region Intermediate Recovery
+//                        case SN.IM_MoveMotorXHome:
+//                            m_HMStatus[(int)MotAxis.AxisX] = 0;
+//                            m_SeqHM[(int)MotAxis.AxisX] = SN_HM.ResetMtrAlarm;
+//                            m_SeqNum = SN.IM_WaitMtrXHome;
+//                            break;
 
-                        case SN.IM_WaitMtrXHome:
-                            if (m_HMStatus[(int)MotAxis.AxisX] == HM_SUCCESS)
-                            {
-                                m_SeqNum = m_SeqRsm[(int)RSM.IntM];
-                            }
-                            else if (m_HMStatus[(int)MotAxis.AxisX] == HM_FAIL)
-                            {
-                                Motion.StopServo(m_AxisModel.MotCfgs[(int)MotAxis.AxisX].Axis.CardID, m_AxisModel.MotCfgs[(int)MotAxis.AxisX].Axis.AxisID);
-                                m_SeqRsm[(int)RSM.Err] = SN.IM_MoveMotorXHome;
-                                RaiseError((int)MtrErr((int)MotAxis.AxisX));
-                                m_SeqNum = SN.ErrorRoutine;
-                            }
-                            break;
-                        #endregion
+//                        case SN.IM_WaitMtrXHome:
+//                            if (m_HMStatus[(int)MotAxis.AxisX] == HM_SUCCESS)
+//                            {
+//                                m_SeqNum = m_SeqRsm[(int)RSM.IntM];
+//                            }
+//                            else if (m_HMStatus[(int)MotAxis.AxisX] == HM_FAIL)
+//                            {
+//                                Motion.StopServo(m_AxisModel.MotCfgs[(int)MotAxis.AxisX].Axis.CardID, m_AxisModel.MotCfgs[(int)MotAxis.AxisX].Axis.AxisID);
+//                                m_SeqRsm[(int)RSM.Err] = SN.IM_MoveMotorXHome;
+//                                RaiseError((int)MtrErr((int)MotAxis.AxisX));
+//                                m_SeqNum = SN.ErrorRoutine;
+//                            }
+//                            break;
+//                        #endregion
 
-                        #region Initilization Routine
-                        case SN.IBegin:
-                            InitData();
-                            m_SeqFlag.InitSuccess = false;
-                            //m_SeqNum = SN.IMoveLifterRest;
-                            m_SeqNum = SN.ISuccess;
-                            break;
+//                        #region Initilization Routine
+//                        case SN.IBegin:
+//                            InitData();
+//                            m_SeqFlag.InitSuccess = false;
+//                            //m_SeqNum = SN.IMoveLifterRest;
+//                            m_SeqNum = SN.ISuccess;
+//                            break;
 
-                        case SN.IMoveLifterRest:
-                            WriteBit(OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest, true);
-                            m_TmrErr.Time_Out = GetErrTimeOut((int)ERR_T.Gripper);
-                            m_SeqNum = SN.IWaitLifterRest;
-                            break;
+//                        case SN.IMoveLifterRest:
+//                            WriteBit(OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest, true);
+//                            m_TmrErr.Time_Out = GetErrTimeOut((int)ERR_T.Gripper);
+//                            m_SeqNum = SN.IWaitLifterRest;
+//                            break;
 
-                        case SN.IWaitLifterRest:
-                            if (!ReadBitF(IN.DI0109_Test_IsGripperWork) && ReadBitT(IN.DI0110_Test_IsGripperRest))
-                            {
-                                m_SeqNum = SN.ISuccess;
-                            }
-                            else if (m_TmrErr.TimeOut())
-                            {
-                                // Raise Error 
-                                RaiseError((int)ErrorCode.test);
-                                m_SeqNum = SN.IEnd;
-                            }
-                            break;
+//                        case SN.IWaitLifterRest:
+//                            if (!ReadBitF(IN.DI0109_Test_IsGripperWork) && ReadBitT(IN.DI0110_Test_IsGripperRest))
+//                            {
+//                                m_SeqNum = SN.ISuccess;
+//                            }
+//                            else if (m_TmrErr.TimeOut())
+//                            {
+//                                // Raise Error 
+//                                RaiseError((int)ErrorCode.test);
+//                                m_SeqNum = SN.IEnd;
+//                            }
+//                            break;
 
-                        case SN.IMoveMotorXHome:
-                            m_HMStatus[(int)MotAxis.AxisX] = 0;
-                            m_SeqHM[(int)MotAxis.AxisX] = SN_HM.ResetMtrAlarm;
-                            m_SeqNum = SN.IWaitMotorXHome;
-                            break;
+//                        case SN.IMoveMotorXHome:
+//                            m_HMStatus[(int)MotAxis.AxisX] = 0;
+//                            m_SeqHM[(int)MotAxis.AxisX] = SN_HM.ResetMtrAlarm;
+//                            m_SeqNum = SN.IWaitMotorXHome;
+//                            break;
 
-                        case SN.IWaitMotorXHome:
-                            if (m_HMStatus[(int)MotAxis.AxisX] == HM_SUCCESS)
-                            {
-                                m_SeqNum = SN.IMoveMotorYHome;
-                            }
-                            else if (m_HMStatus[(int)MotAxis.AxisX] == HM_FAIL)
-                            {
-                                Motion.StopServo(m_AxisModel.MotCfgs[(int)MotAxis.AxisX].Axis.CardID, m_AxisModel.MotCfgs[(int)MotAxis.AxisX].Axis.AxisID);
-                                m_SeqHM[(int)MotAxis.AxisX] = SN_HM.EOS;
-                                m_SeqNum = SN.IEnd;
-                            }
-                            break;
+//                        case SN.IWaitMotorXHome:
+//                            if (m_HMStatus[(int)MotAxis.AxisX] == HM_SUCCESS)
+//                            {
+//                                m_SeqNum = SN.IMoveMotorYHome;
+//                            }
+//                            else if (m_HMStatus[(int)MotAxis.AxisX] == HM_FAIL)
+//                            {
+//                                Motion.StopServo(m_AxisModel.MotCfgs[(int)MotAxis.AxisX].Axis.CardID, m_AxisModel.MotCfgs[(int)MotAxis.AxisX].Axis.AxisID);
+//                                m_SeqHM[(int)MotAxis.AxisX] = SN_HM.EOS;
+//                                m_SeqNum = SN.IEnd;
+//                            }
+//                            break;
 
-                        case SN.IMoveMotorYHome:
-                            m_HMStatus[(int)MotAxis.AxisX] = 0;
-                            m_SeqHM[(int)MotAxis.AxisX] = SN_HM.ResetMtrAlarm;
-                            m_SeqNum = SN.IWaitMotorYHome;
-                            break;
+//                        case SN.IMoveMotorYHome:
+//                            m_HMStatus[(int)MotAxis.AxisX] = 0;
+//                            m_SeqHM[(int)MotAxis.AxisX] = SN_HM.ResetMtrAlarm;
+//                            m_SeqNum = SN.IWaitMotorYHome;
+//                            break;
 
-                        case SN.IWaitMotorYHome:
-                            if (m_HMStatus[(int)MotAxis.AxisX] == HM_SUCCESS)
-                            {
-                                m_SeqNum = SN.ISuccess;
-                            }
-                            else if (m_HMStatus[(int)MotAxis.AxisX] == HM_FAIL)
-                            {
-                                Motion.StopServo(m_AxisModel.MotCfgs[(int)MotAxis.AxisY].Axis.CardID, m_AxisModel.MotCfgs[(int)MotAxis.AxisY].Axis.AxisID);
-                                m_SeqHM[(int)MotAxis.AxisY] = SN_HM.EOS;
-                                m_SeqNum = SN.IEnd;
-                            }
-                            break;
+//                        case SN.IWaitMotorYHome:
+//                            if (m_HMStatus[(int)MotAxis.AxisX] == HM_SUCCESS)
+//                            {
+//                                m_SeqNum = SN.ISuccess;
+//                            }
+//                            else if (m_HMStatus[(int)MotAxis.AxisX] == HM_FAIL)
+//                            {
+//                                Motion.StopServo(m_AxisModel.MotCfgs[(int)MotAxis.AxisY].Axis.CardID, m_AxisModel.MotCfgs[(int)MotAxis.AxisY].Axis.AxisID);
+//                                m_SeqHM[(int)MotAxis.AxisY] = SN_HM.EOS;
+//                                m_SeqNum = SN.IEnd;
+//                            }
+//                            break;
 
-                        case SN.ISuccess:
-                            {
-                                m_SeqRsm[(int)RSM.Src] = SN.NONE;
-                                m_SeqRsm[(int)RSM.Err] = SN.NONE;
+//                        case SN.ISuccess:
+//                            {
+//                                m_SeqRsm[(int)RSM.Src] = SN.NONE;
+//                                m_SeqRsm[(int)RSM.Err] = SN.NONE;
 
-                                m_SeqFlag.InitSuccess = true;
-                                m_SeqNum = SN.IEnd;
-                            }
-                            break;
+//                                m_SeqFlag.InitSuccess = true;
+//                                m_SeqNum = SN.IEnd;
+//                            }
+//                            break;
 
-                        case SN.IEnd:
-                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = this.SeqName, MachineOpr = MachineOperationType.InitDone, InitSuccess = m_SeqFlag.InitSuccess });
-                            m_SeqNum = SN.EOS;
-                            break;
+//                        case SN.IEnd:
+//                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = this.SeqName, MachineOpr = MachineOperationType.InitDone, InitSuccess = m_SeqFlag.InitSuccess });
+//                            m_SeqNum = SN.EOS;
+//                            break;
 
-                        #endregion
+//                        #endregion
 
-                        #region Stop Routine
-                        case SN.StopRoutine:
-                            if (Global.MachineStatus != MachineStateType.Stopped && Global.MachineStatus != MachineStateType.Error)
-                            {
-                                Global.MachineStatus = MachineStateType.Stopped;
-                                Publisher.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
-                                Global.SeqStop = true;
-                            }
-                            m_SeqNum = SN.WaitResumeStop;
-                            break;
+//                        #region Stop Routine
+//                        case SN.StopRoutine:
+//                            if (Global.MachineStatus != MachineStateType.Stopped && Global.MachineStatus != MachineStateType.Error)
+//                            {
+//                                Global.MachineStatus = MachineStateType.Stopped;
+//                                Publisher.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
+//                                Global.SeqStop = true;
+//                            }
+//                            m_SeqNum = SN.WaitResumeStop;
+//                            break;
 
-                        case SN.WaitResumeStop:
-                            if (!Global.SeqStop && Global.MachineStatus == MachineStateType.Running || Global.MachineStatus == MachineStateType.Ending_Lot)
-                            {
-                                m_SeqNum = m_SeqRsm[(int)RSM.Stop];
-                                m_SeqRsm[(int)RSM.Stop] = SN.NONE;
-                            }
-                            break;
-                        #endregion
+//                        case SN.WaitResumeStop:
+//                            if (!Global.SeqStop && Global.MachineStatus == MachineStateType.Running || Global.MachineStatus == MachineStateType.Ending_Lot)
+//                            {
+//                                m_SeqNum = m_SeqRsm[(int)RSM.Stop];
+//                                m_SeqRsm[(int)RSM.Stop] = SN.NONE;
+//                            }
+//                            break;
+//                        #endregion
 
-                        #region Error Routine
-                        case SN.ErrorRoutine:
-                            m_SeqNum = SN.WaitResumeError;
-                            break;
+//                        #region Error Routine
+//                        case SN.ErrorRoutine:
+//                            m_SeqNum = SN.WaitResumeError;
+//                            break;
 
-                        case SN.WaitResumeError:
-                            if (Global.MachineStatus == MachineStateType.Running)
-                            {
-                                m_SeqNum = Global.SkipRetest.Find(x => x.AlarmModule == SeqName).IsSkipRetest ? m_SeqRsm[(int)RSM.Skip] : m_SeqRsm[(int)RSM.Err];
-                                m_SeqRsm[(int)RSM.Err] = SN.NONE;
-                                m_SeqRsm[(int)RSM.Skip] = SN.NONE;
-                                Global.SkipRetest.RemoveAll(x => x.AlarmModule == SeqName);
-                            }
-                            break;
+//                        case SN.WaitResumeError:
+//                            if (Global.MachineStatus == MachineStateType.Running)
+//                            {
+//                                m_SeqNum = Global.SkipRetest.Find(x => x.AlarmModule == SeqName).IsSkipRetest ? m_SeqRsm[(int)RSM.Skip] : m_SeqRsm[(int)RSM.Err];
+//                                m_SeqRsm[(int)RSM.Err] = SN.NONE;
+//                                m_SeqRsm[(int)RSM.Skip] = SN.NONE;
+//                                Global.SkipRetest.RemoveAll(x => x.AlarmModule == SeqName);
+//                            }
+//                            break;
 
-                        #endregion
+//                        #endregion
 
-                        #region Sequence Interlock Check
-                        case SN.IL_ShuttleSafeToMove:
-                            m_LocalVar.SeqIntLFailIDs.Clear();
-                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.SampleSeq2, MachineOpr = MachineOperationType.SeqIntLChk });
-                            m_SeqNum = SN.IL_WaitSeqIntLChk;
-                            break;
+//                        #region Sequence Interlock Check
+//                        case SN.IL_ShuttleSafeToMove:
+//                            m_LocalVar.SeqIntLFailIDs.Clear();
+//                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.SampleSeq2, MachineOpr = MachineOperationType.SeqIntLChk });
+//                            m_SeqNum = SN.IL_WaitSeqIntLChk;
+//                            break;
 
-                        case SN.IL_WaitSeqIntLChk:
-                            if (m_LocalVar.SeqIntLCompCnt == GetCounterValue((int)Counter.SeqIntLSync))
-                            {
-                                m_LocalVar.SeqIntLCompCnt = 0;
-                                // 1. SampleSeq2
-                                // All Module complete interlock checking
-                                m_SeqNum = SN.IL_EvalIntLResult;
-                            }
-                            break;
+//                        case SN.IL_WaitSeqIntLChk:
+//                            if (m_LocalVar.SeqIntLCompCnt == GetCounterValue((int)Counter.SeqIntLSync))
+//                            {
+//                                m_LocalVar.SeqIntLCompCnt = 0;
+//                                // 1. SampleSeq2
+//                                // All Module complete interlock checking
+//                                m_SeqNum = SN.IL_EvalIntLResult;
+//                            }
+//                            break;
 
-                        case SN.IL_EvalIntLResult:
-                            if (IsPassSeqIntL())
-                            {
-                                m_SeqNum = m_SeqRsm[(int)RSM.IntL];
-                                m_SeqRsm[(int)RSM.IntL] = SN.NONE;
-                            }
-                            else
-                            {
-                                m_SeqRsm[(int)RSM.Err] = SN.IL_ShuttleSafeToMove;
-                                m_SeqNum = SN.ErrorRoutine;
-                            }
-                            break;
-                        #endregion
+//                        case SN.IL_EvalIntLResult:
+//                            if (IsPassSeqIntL())
+//                            {
+//                                m_SeqNum = m_SeqRsm[(int)RSM.IntL];
+//                                m_SeqRsm[(int)RSM.IntL] = SN.NONE;
+//                            }
+//                            else
+//                            {
+//                                m_SeqRsm[(int)RSM.Err] = SN.IL_ShuttleSafeToMove;
+//                                m_SeqNum = SN.ErrorRoutine;
+//                            }
+//                            break;
+//                        #endregion
 
-                        case SN.ForceEOS:
-#if MOTION
-                                for (int i = 0; i < m_AxisModel.NumOfAxis; i++)
-                                {
-                                    m_SeqHM[i] = SN_HM.EOS;
-                                    Motion.StopServo(m_AxisModel.MotCfgs[i].Axis.CardID, m_AxisModel.MotCfgs[i].Axis.AxisID);
-                                }
-#endif
-                            m_SeqNum = SN.EOS;
-                            break;
+//                        case SN.ForceEOS:
+//#if MOTION
+//                                for (int i = 0; i < m_AxisModel.NumOfAxis; i++)
+//                                {
+//                                    m_SeqHM[i] = SN_HM.EOS;
+//                                    Motion.StopServo(m_AxisModel.MotCfgs[i].Axis.CardID, m_AxisModel.MotCfgs[i].Axis.AxisID);
+//                                }
+//#endif
+//                            m_SeqNum = SN.EOS;
+//                            break;
 
-                    }
+//                    }
 
                     CheckTestRunSN();
                     SeqNum = m_SeqNum.ToString();
@@ -709,43 +709,43 @@ namespace Sequence.MachineSeq
         #region IO
         internal override void IOMapping()
         {
-            switch (SeqName)
-            {
-                // In case ONE class with MULTIPLE module
-                // assign IO into switch case individually
-                case SQID.SampleSeq:
-                    // IO Mapping will assign all inputs and outputs of Sample Seq into IO view & Setup View
-                    // FIRST, Assign Vacuum IO to list, vaccum pairing and assign into Seq input and output list
-                    // Example:
-                    AssignVacuumIO("Vacuum 1", IN.DI0104_Input5, IN.DI0107_Input8, OUT.DO0107_Output8, OUT.DO0108_Output9); // Vacuum with both Vacuum, Purge, Vacuum on successful sensor, and vacuum picked up succeesful sensor
-                    AssignVacuumIO("Vacuum 2", null, IN.DI0107_Input8, OUT.DO0107_Output8, OUT.DO0108_Output9); // Only vacuum, purge and picked up sensor installed
-                    AssignVacuumIO("Vacuum 3", null, null, OUT.DO0107_Output8, OUT.DO0108_Output9); // No vacuum sensor installed 
+            //switch (SeqName)
+            //{
+            //    // In case ONE class with MULTIPLE module
+            //    // assign IO into switch case individually
+            //    case SQID.SampleSeq:
+            //        // IO Mapping will assign all inputs and outputs of Sample Seq into IO view & Setup View
+            //        // FIRST, Assign Vacuum IO to list, vaccum pairing and assign into Seq input and output list
+            //        // Example:
+            //        AssignVacuumIO("Vacuum 1", IN.DI0104_Input5, IN.DI0107_Input8, OUT.DO0107_Output8, OUT.DO0108_Output9); // Vacuum with both Vacuum, Purge, Vacuum on successful sensor, and vacuum picked up succeesful sensor
+            //        AssignVacuumIO("Vacuum 2", null, IN.DI0107_Input8, OUT.DO0107_Output8, OUT.DO0108_Output9); // Only vacuum, purge and picked up sensor installed
+            //        AssignVacuumIO("Vacuum 3", null, null, OUT.DO0107_Output8, OUT.DO0108_Output9); // No vacuum sensor installed 
 
-                    // NEXT, assign cylinder IO to list
-                    // Cylinder pairing and assign into Seq input and output list
-                    // Example:
-                    AssignCylinderIO("Test Gripper 1", null, null, null, null, OUT.DO0109_Test_GripperWork, null); // Single solenoid cylinder (set null to IO for rest)
-                    AssignCylinderIO("Test Gripper 2", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest); // Double solenoid cylinder
-                    AssignCylinderIO("Test Gripper 3", IN.DI0109_Test_IsGripperWork, null, IN.DI0110_Test_IsGripperRest, null, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
-                    AssignCylinderIO("Test Gripper 4", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
-                    AssignCylinderIO("Test Gripper 5", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
-                    AssignCylinderIO("Test Gripper 6", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
-                    AssignCylinderIO("Test Gripper 7", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        // NEXT, assign cylinder IO to list
+            //        // Cylinder pairing and assign into Seq input and output list
+            //        // Example:
+            //        AssignCylinderIO("Test Gripper 1", null, null, null, null, OUT.DO0109_Test_GripperWork, null); // Single solenoid cylinder (set null to IO for rest)
+            //        AssignCylinderIO("Test Gripper 2", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest); // Double solenoid cylinder
+            //        AssignCylinderIO("Test Gripper 3", IN.DI0109_Test_IsGripperWork, null, IN.DI0110_Test_IsGripperRest, null, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        AssignCylinderIO("Test Gripper 4", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        AssignCylinderIO("Test Gripper 5", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        AssignCylinderIO("Test Gripper 6", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
+            //        AssignCylinderIO("Test Gripper 7", IN.DI0109_Test_IsGripperWork, IN.DI0106_Input7, IN.DI0110_Test_IsGripperRest, IN.DI0105_Input6, OUT.DO0109_Test_GripperWork, OUT.DO0110_Test_GripperRest);
 
-                    // LASTLY, assign OTHER general IO to list
-                    // Input
-                    AssignIO(IN.DI0103_Input4);
-                    AssignIO(IN.DI0108_Input9);
+            //        // LASTLY, assign OTHER general IO to list
+            //        // Input
+            //        AssignIO(IN.DI0103_Input4);
+            //        AssignIO(IN.DI0108_Input9);
 
-                    //Output
-                    AssignIO(OUT.DO0104_Output5);
-                    AssignIO(OUT.DO0105_Output6);
-                    AssignIO(OUT.DO0106_Output7);
-                    AssignIO(OUT.DO0107_Output8);
-                    break;
+            //        //Output
+            //        AssignIO(OUT.DO0104_Output5);
+            //        AssignIO(OUT.DO0105_Output6);
+            //        AssignIO(OUT.DO0106_Output7);
+            //        AssignIO(OUT.DO0107_Output8);
+            //        break;
 
 
-            }
+            //}
         }
         #endregion
 
