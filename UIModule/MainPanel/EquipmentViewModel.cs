@@ -73,6 +73,13 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_VisionConnStatus, value); }
         }
 
+        private string m_CodeReaderConnStatus;
+        public string CodeReaderConnStatus
+        {
+            get { return m_CodeReaderConnStatus; }
+            set { SetProperty(ref m_CodeReaderConnStatus, value); }
+        }
+
         private string m_SelectedVisRcp;
         public string SelectedVisRcp
         {
@@ -350,7 +357,6 @@ namespace UIModule.MainPanel
 
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
-            //m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
 
             if (CanAccess)
             {
@@ -381,12 +387,14 @@ namespace UIModule.MainPanel
         {
             Global.CodeReaderConnStatus = ConnectionState.Connected.ToString();
             CdStatusFG = System.Windows.Media.Brushes.GreenYellow;
+            CodeReaderConnStatus = Global.CodeReaderConnStatus;
         }
         //New Can Be Use
         private void OnCodeReaderDisconnected()
         {
             Global.CodeReaderConnStatus = ConnectionState.Disconnected.ToString();
             CdStatusFG = System.Windows.Media.Brushes.OrangeRed;
+            CodeReaderConnStatus = Global.CodeReaderConnStatus;
         }
         //New Can Be Use
         private void OnCodeReaderEndResult()
