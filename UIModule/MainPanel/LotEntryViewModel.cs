@@ -172,10 +172,9 @@ namespace UIModule.MainPanel
                         m_EventAggregator.GetEvent<EndLotOperation>().Publish();
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ending_Lot);
                         Global.MachineStatus = MachineStateType.Ending_Lot;
-                        //m_EventAggregator.GetEvent<OpenLotEntryView>().Publish(false);
 
                         // Send EndLot event to the sequence that required
-                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
+                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp});
 
                         m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Lot_Ended);

@@ -45,4 +45,13 @@
         ExtTestRunAbort,
         ExtTestRunComp,
     }
+
+    public enum ErrorCode
+    {
+        MissingResult,
+        BatchNotMatch,
+        BoxQtyNotMatch,
+        ExceedTotalBatchQty,
+    }
+   
 }

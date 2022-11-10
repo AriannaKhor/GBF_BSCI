@@ -97,7 +97,6 @@ namespace TCPIPManager
         public void AnalyseResult(string returnedresult)
         {
             string[] splitedresult = returnedresult.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-            bool checkresult = false;
             if (splitedresult.Length == 5)
             {
                 Global.CurrentContainerNum = splitedresult[0];
@@ -116,58 +115,50 @@ namespace TCPIPManager
                 {
                     string Container = m_ContainerCollection.Where(key => key == Global.CurrentContainerNum).FirstOrDefault();
                 
-                    if (Container == null)
+                    if (Container == null || Global.CodeReaderRetry)
                     {
-                        m_ContainerCollection.Add(Global.CurrentContainerNum);
-                
+                        if (!Global.CodeReaderRetry)
+                        {
+                            m_ContainerCollection.Add(Global.CurrentContainerNum);
+                        }
+
                         if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
                         {
                             Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
                 
                             if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                             {
-                                MachineBase.ShowMessage("Current Total Batch Quantity Does Not Match Total Batch Quantity Entered", MachineBase.MessageIcon.Error);
                                 Global.CodeReaderResult = resultstatus.Fail.ToString();
-                                checkresult = false;
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
                             }
                             else
                             {
-                                checkresult = true;
                                 Global.CodeReaderResult = resultstatus.Pass.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont});
                             }
                         }
                         else
                         {
-                            MachineBase.ShowMessage("Current Box Quantity Does Not Match Vision Result", MachineBase.MessageIcon.Error);
                             Global.CodeReaderResult = resultstatus.Fail.ToString();
-                            checkresult = false;
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
                         }
                     }
                     else
                     {
-                        MachineBase.ShowMessage("Container Number already Exist", MachineBase.MessageIcon.Error);
                         Global.CodeReaderResult = resultstatus.Fail.ToString();
-                        checkresult = false;
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ContainerNumberExist" });
                     }
                 }
                 else
                 {
-                    MachineBase.ShowMessage("Batch Number does not match", MachineBase.MessageIcon.Error); ;
                     Global.CodeReaderResult = resultstatus.Fail.ToString();
-                    checkresult = false;
-                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BatchNotMatch" });
                 }
             }
             else
             {
-                MachineBase.ShowMessage("Missing Result", MachineBase.MessageIcon.Error);
                 Global.CodeReaderResult = resultstatus.Fail.ToString();
-                checkresult = false;
-                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "MissingResult" });
             }
 
             m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.VisProductQuantity));

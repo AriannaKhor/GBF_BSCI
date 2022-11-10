@@ -11,5 +11,7 @@ namespace GreatechApp.Core.Events
         public bool InitSuccess { get; set; }
         public EventArgs EvArgs { get; set; }
         public bool SeqIntLSuccess { get; set; }
+        public string FailType { get; set; }
+
     }
 }

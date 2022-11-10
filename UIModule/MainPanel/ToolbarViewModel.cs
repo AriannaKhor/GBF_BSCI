@@ -625,12 +625,14 @@ namespace UIModule.MainPanel
 
         private void StartOperation()
         {
+            Global.SeqStop = false;
             IsAllowStart = false;
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
         }
 
         private void StopOperation()
         {
+            Global.SeqStop = true;
             IsAllowStop = false;
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
         }

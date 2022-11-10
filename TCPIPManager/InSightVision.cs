@@ -298,7 +298,7 @@ namespace TCPIPManager
                             if (Global.VisProductWrgOrientation != "0.000")
                             {
                                 Global.VisInspectResult = resultstatus.Fail.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "WrongOrientation" });
                             }
                             else
                             {
@@ -311,7 +311,7 @@ namespace TCPIPManager
                         else
                         {
                             Global.VisInspectResult = resultstatus.Fail.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "VisionOverallResultRejected" });
                         }
 
                     }

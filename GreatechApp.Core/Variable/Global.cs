@@ -56,6 +56,7 @@ namespace GreatechApp.Core.Variable
         public static int AccumulateCurrentBatchQuantity;
         public static string CodeReaderConnStatus;
         public static string CodeReaderResult = resultstatus.PendingResult.ToString();
+        public static bool CodeReaderRetry;
 
         //Recipe Parameter
         public static int MotionLoopCount;
