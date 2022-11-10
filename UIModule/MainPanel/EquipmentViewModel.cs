@@ -252,14 +252,6 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_TopVisRecipeList, value); }
         }
 
-        private ObservableCollection<string> m_ContainerCollection;
-        public ObservableCollection<string> ContainerCollection
-        {
-            get { return m_ContainerCollection; }
-            set
-            { SetProperty(ref m_ContainerCollection, value); }
-        }
-
         private Visibility m_IsAllowEditMarker;
 
         public Visibility IsAllowEditMarker

@@ -233,7 +233,7 @@ namespace UIModule.MainPanel
                     {
                         case MachineStateType.Running:
                             IsAllowStartLot = false;
-                            IsAllowEndLot = true;
+                            IsAllowEndLot = false;
                             break;
 
                         case MachineStateType.Stopped:

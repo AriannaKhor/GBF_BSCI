@@ -16,6 +16,7 @@ namespace Sequence.MachineSeq
         private SN m_SeqNum;
         private SN m_PrevSeqNum;
         private SN[] m_SeqRsm = new SN[Total_RSM];
+        private int m_CodeReaderLoopCount = 0;
         #endregion
 
         #region Enum
@@ -95,6 +96,8 @@ namespace Sequence.MachineSeq
                             else if (m_SeqFlag.ProcFail) //Gotten from CodeReaderSeqFail published event
                             {
                                 m_SeqFlag.ProcFail = false;
+
+
                                 m_TmrDelay.Time_Out = 5f;
                                 m_SeqNum = SN.RetryGetVisionResult;
                             }
@@ -106,7 +109,18 @@ namespace Sequence.MachineSeq
                             }
                             break;
                         case SN.TriggerCodeReader:
-                            CodeReader.TriggerCodeReader();
+                            
+                            if (m_CodeReaderLoopCount < 3) // put inside config 
+                            {
+                                CodeReader.TriggerCodeReader();
+                                m_CodeReaderLoopCount++;
+                                m_SeqNum = SN.WaitCodeReaderResult;
+                            }
+                            else
+                            {
+                                m_CodeReaderLoopCount = 0;
+                                m_SeqNum = SN.EOS;
+                            }
                             break;
                         case SN.WaitCodeReaderResult:
                             if (m_SeqFlag.ProcCont) //gotten from CodeReaderResultPass published event
@@ -169,6 +183,7 @@ namespace Sequence.MachineSeq
                             break;
 
                         case MachineOperationType.ProcFail:
+
                             m_SeqFlag.ProcFail = true;
                             break;
 

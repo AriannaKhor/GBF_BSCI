@@ -281,27 +281,39 @@ namespace TCPIPManager
                     CvsCell cellResult1 = m_InsightV1.Results.Cells["D20"];
                     CvsCell cellResult2 = m_InsightV1.Results.Cells["D21"];
                     CvsCell cellResult3 = m_InsightV1.Results.Cells["D22"];
+                    CvsCell cellResult4 = m_InsightV1.Results.Cells["I23"];
 
                     if (!string.IsNullOrEmpty(cellResult1.Text) && cellResult1.Text.ToUpper() != "NULL" && cellResult1.Text.ToUpper() != "ERR" &&
                                 !string.IsNullOrEmpty(cellResult2.Text) && cellResult2.Text.ToUpper() != "NULL" && cellResult2.Text.ToUpper() != "ERR" &&
-                                !string.IsNullOrEmpty(cellResult3.Text) && cellResult3.Text.ToUpper() != "NULL" && cellResult3.Text.ToUpper() != "ERR")
+                                !string.IsNullOrEmpty(cellResult3.Text) && cellResult3.Text.ToUpper() != "NULL" && cellResult3.Text.ToUpper() != "ERR" && 
+                                !string.IsNullOrEmpty(cellResult4.Text) && cellResult4.Text.ToUpper() != "NULL" && cellResult4.Text.ToUpper() != "ERR")
                     {
                         Global.VisProductQuantity = float.Parse(cellResult1.Text);
                         Global.VisProductCrtOrientation = cellResult2.Text;
                         Global.VisProductWrgOrientation = cellResult3.Text;
+                        Global.VisOverallResult = cellResult4.Text;
 
-                        if (Global.VisProductWrgOrientation != "0.000")
+                        if (Global.VisOverallResult == "OK")
                         {
-                            Global.VisInspectResult = resultstatus.Fail.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail});
+                            if (Global.VisProductWrgOrientation != "0.000")
+                            {
+                                Global.VisInspectResult = resultstatus.Fail.ToString();
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
+                            }
+                            else
+                            {
+                                Global.VisInspectResult = resultstatus.Pass.ToString();
+                                m_EnableCodeReader = true;
+                                m_Events.GetEvent<EnableCodeReaderEvent>().Publish(m_EnableCodeReader);
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
+                            }
                         }
                         else
                         {
-                            Global.VisInspectResult = resultstatus.Pass.ToString();
-                            m_EnableCodeReader = true;
-                            m_Events.GetEvent<EnableCodeReaderEvent>().Publish(m_EnableCodeReader);
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont});
+                            Global.VisInspectResult = resultstatus.Fail.ToString();
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail });
                         }
+
                     }
                     m_InsightV1.AcceptUpdate(); // Tell the sensor that the application is ready for new results.
                     m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Quantity result:" + " " + Global.VisProductQuantity });

@@ -44,12 +44,13 @@ namespace GreatechApp.Core.Variable
         public static float VisProductQuantity;
         public static string VisProductCrtOrientation;
         public static string VisProductWrgOrientation;
+        public static string VisOverallResult;
         public static string VisInspectResult = resultstatus.PendingResult.ToString();
 
         //Code Reader Result
         public static string CurrentContainerNum;
         public static int CurrentBatchQuantity;
-        public static int CurrentMatl;
+        public static string CurrentMatl;
         public static string CurrentBatchNum;
         public static int CurrentBoxQuantity;
         public static int AccumulateCurrentBatchQuantity;
