@@ -5,9 +5,18 @@
     using Prism.Events;
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Windows.Media;
+    using System.Windows.Media.Imaging;
 
-    
+    public class TopVisionImage : PubSubEvent<BitmapImage>
+    {
+
+    }
+    public class CodeReaderImage : PubSubEvent<BitmapImage>
+    {
+
+    }
     public class OnCodeReaderEndResultEvent : PubSubEvent
     {
 

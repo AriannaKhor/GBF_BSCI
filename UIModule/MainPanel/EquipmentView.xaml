@@ -50,7 +50,7 @@
 
                     <Label Grid.Row="1" Content="{Binding VisInspectResult}" Foreground="{Binding VisResultFG}" Background="{Binding VisResultBG}" FontWeight="DemiBold" FontSize="30" VerticalAlignment="Stretch"
                            HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
-                    <Image Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding VisImage}" Width ="{Binding Width, Mode=OneWayToSource}" />
+                    <Image Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding VisImage}" Width="Auto" Height="Auto" />
                     <Grid Grid.Row="5" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -98,7 +98,7 @@
                     </WrapPanel>
                     <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" FontWeight="DemiBold" FontSize="30"
                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
-                    <Image Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding CodeReaderImage}" Width="50" Height="50"/>
+                    <Image Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding CodeReaderImage}" Width="Auto" Height="Auto"/>
                     <Grid Grid.Row="5" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>

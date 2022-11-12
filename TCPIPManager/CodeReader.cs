@@ -13,12 +13,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using System.Xml;
 
 namespace TCPIPManager
@@ -80,7 +84,7 @@ namespace TCPIPManager
                 m_CodeReaderResults = new ResultCollector(m_CodeReader, requested_result_types);
                 m_CodeReaderResults.ComplexResultCompleted += Results_ComplexResultCompleted;
                 m_CodeReader.SetKeepAliveOptions(false, 3000, 1000);
-                m_CodeReader.Connect(); // Uncomment it when connected with the code reader
+                //m_CodeReader.Connect(); // Uncomment it when connected with the code reader
                 try
                 {
                     m_CodeReader.SetResultTypes(requested_result_types);
@@ -266,41 +270,57 @@ namespace TCPIPManager
             if (images.Count > 0)
             {
                 Image first_image = images[0];
-                //Image fitted_image = Gui.ResizeImageToBitmap(first_image, );
+                Bitmap fitted_image = ResizeImage(first_image, 50, 50); ;
+                BitmapImage converttobitmapimg = Bitmap2BitmapImage(fitted_image);
+                m_Events.GetEvent<CodeReaderImage>().Publish(converttobitmapimg);
+            }
+        }
+
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
             }
 
-
-            //if (images.Count > 0)
-            //{
-            //    Image first_image = images[0];
-
-            //    Size image_size = Gui.FitImageInControl(first_image.Size, picResultImage.Size);
-            //    Image fitted_image = Gui.ResizeImageToBitmap(first_image, image_size);
-
-            //    if (image_graphics.Count > 0)
-            //    {
-            //        using (Graphics g = Graphics.FromImage(fitted_image))
-            //        {
-            //            foreach (var graphics in image_graphics)
-            //            {
-            //                ResultGraphics rg = GraphicsResultParser.Parse(graphics, new Rectangle(0, 0, image_size.Width, image_size.Height));
-            //                ResultGraphicsRenderer.PaintResults(g, rg);
-            //            }
-            //        }
-            //    }
-
-            //    if (picResultImage.Image != null)
-            //    {
-            //        var image = picResultImage.Image;
-            //        picResultImage.Image = null;
-            //        image.Dispose();
-            //    }
-
-            //    picResultImage.Image = fitted_image;
-            //    picResultImage.Invalidate();
-            //}
+            return destImage;
         }
-    
+
+        private static BitmapImage Bitmap2BitmapImage(Bitmap bitmap)
+        {
+            IntPtr hBitmap = bitmap.GetHbitmap();
+            BitmapImage retval = null;
+
+            try
+            {
+                retval = (BitmapImage)Imaging.CreateBitmapSourceFromHBitmap(
+                         hBitmap,
+                         IntPtr.Zero,
+                         Int32Rect.Empty,
+                         BitmapSizeOptions.FromEmptyOptions());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return retval;
+        }
 
         #endregion
 

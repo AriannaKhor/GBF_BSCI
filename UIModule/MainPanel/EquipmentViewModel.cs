@@ -281,15 +281,6 @@ namespace UIModule.MainPanel
             get { return m_CodeReaderImage; }
             set { SetProperty(ref m_CodeReaderImage, value); }
         }
-
-
-        private double m_Width;
-        public double Width
-        {
-            get { return m_Width; }
-            set { SetProperty(ref m_Width, value); }
-        }
-
         #endregion
 
         #region Constructor
@@ -317,6 +308,8 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<OnCodeReaderConnectedEvent>().Subscribe(OnCodeReaderConnected);//
             m_EventAggregator.GetEvent<OnCodeReaderDisconnectedEvent>().Subscribe(OnCodeReaderDisconnected);//
             m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Subscribe(OnCodeReaderEndResult);//
+            m_EventAggregator.GetEvent<CodeReaderImage>().Subscribe(OnTopViisonImg);//
+            m_EventAggregator.GetEvent<CodeReaderImage>().Subscribe(OnCodeReaderImg);//
 
             //Button Command
             NavigationCommand = new DelegateCommand<string>(OnNavigation);
@@ -379,6 +372,7 @@ namespace UIModule.MainPanel
                 m_EventAggregator.GetEvent<OpenLotEntryView>().Publish(true);
             }
         }
+
         #endregion
 
         #region Event
@@ -394,6 +388,11 @@ namespace UIModule.MainPanel
             VisProductQuantity = Global.VisProductQuantity;
             VisProductCrtOrientation = Global.VisProductCrtOrientation;
             VisProductWrgOrientation = Global.VisProductWrgOrientation;
+        }
+
+        private void OnTopViisonImg(BitmapImage img)
+        {
+            VisImage = img;
         }
         #endregion
 
@@ -422,6 +421,12 @@ namespace UIModule.MainPanel
             ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
             ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
         }
+
+        private void OnCodeReaderImg(BitmapImage img)
+        {
+            CodeReaderImage = img;
+        }
+            
         #endregion
 
         private void OnNavigation(string page)

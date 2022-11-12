@@ -1,5 +1,6 @@
 ﻿using Cognex.InSight;
 using Cognex.InSight.Cell;
+using Cognex.InSight.Controls.Display;
 using ConfigManager;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
@@ -13,11 +14,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.Composition;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace TCPIPManager
@@ -36,9 +42,9 @@ namespace TCPIPManager
         protected DispatcherTimer tmrScanIOLiveAcquire;
         private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection;
         private CvsInSight m_InsightV1 = new CvsInSight();
+        private CvsInSightDisplay m_CvsInSightDisplay = new CvsInSightDisplay();
         private readonly IEventAggregator m_Events;
         #endregion
-
 
 
         #region Constructor
@@ -221,6 +227,52 @@ namespace TCPIPManager
                 }
             }
         }
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+        }
+
+        private static BitmapImage Bitmap2BitmapImage(Bitmap bitmap)
+        {
+            IntPtr hBitmap = bitmap.GetHbitmap();
+            BitmapImage retval = null;
+
+            try
+            {
+                retval = (BitmapImage)Imaging.CreateBitmapSourceFromHBitmap(
+                         hBitmap,
+                         IntPtr.Zero,
+                         Int32Rect.Empty,
+                         BitmapSizeOptions.FromEmptyOptions());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return retval;
+        }
+
         #endregion
 
         #region Event
@@ -322,6 +374,11 @@ namespace TCPIPManager
                     m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Overall Result:" + " " + Global.VisInspectResult });
                     m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info," Vision Result :" + Global.VisInspectResult + "<" +"Total Quantity per box :"+ Global.VisProductQuantity + ", Correct Orientation :" + Global.VisProductCrtOrientation + ", Wrong Orientation" + Global.VisProductWrgOrientation +">"));
                     m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
+                    m_CvsInSightDisplay.ShowImage = true;
+                    Bitmap fitted_image = m_CvsInSightDisplay.GetBitmap();
+                    BitmapImage converttobitmapimg = Bitmap2BitmapImage(fitted_image);
+                    m_Events.GetEvent<TopVisionImage>().Publish(converttobitmapimg);
+
                 }
             }
             catch (Exception ex)
