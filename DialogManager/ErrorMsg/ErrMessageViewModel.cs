@@ -146,7 +146,7 @@ namespace DialogManager.ErrorMsg
 
             Global.SkipRetest.Add(new ErrRecovery { AlarmModule = AlarmDetail.Module, IsSkipRetest = IsSkipRetest });
 
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Repairing);
+            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
             CloseDialog("");
         }
 

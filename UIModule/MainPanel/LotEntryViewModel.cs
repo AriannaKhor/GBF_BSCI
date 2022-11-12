@@ -179,7 +179,8 @@ namespace UIModule.MainPanel
                         m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Lot_Ended);
                         LotCodeResult = resultstatus.Pass.ToString();
-                        m_EventAggregator.GetEvent<ResultlogEntity>().Publish(new ResultlogEntity() { MsgType = LogMsgType.Info, MsgText = LotCodeResult });                      
+                        m_EventAggregator.GetEvent<ResultlogEntity>().Publish(new ResultlogEntity() { MsgType = LogMsgType.Info, MsgText = LotCodeResult });
+                        EmptyLotEntry();
                     }
                 }
                 else
@@ -195,7 +196,6 @@ namespace UIModule.MainPanel
                         m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = LotCodeResult });
                         m_EventAggregator.GetEvent<ResultlogEntity>().Publish(new ResultlogEntity() { MsgType = LogMsgType.Info, MsgText = LotCodeResult });
                     }
-
                 }
             }
         }
@@ -216,6 +216,13 @@ namespace UIModule.MainPanel
 
                     break;
             }
+        }
+
+        public void EmptyLotEntry()
+        {
+            LotID = string.Empty;
+            OperatorID = string.Empty;
+            TotalBatchQuantity = 0;
         }
         #endregion
 
