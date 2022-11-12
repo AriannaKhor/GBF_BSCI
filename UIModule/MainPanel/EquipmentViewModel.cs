@@ -30,6 +30,7 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using UIModule.DataMarkers;
 using UIModule.DataMarkers.DiagramDesigner;
@@ -266,6 +267,29 @@ namespace UIModule.MainPanel
             get { return m_IsEquipViewLoaded; }
             set { SetProperty(ref m_IsEquipViewLoaded, value); }
         }
+
+        private BitmapImage m_VisImage;
+        public BitmapImage VisImage
+        {
+            get { return m_VisImage; }
+            set { SetProperty(ref m_VisImage, value); }
+        }
+
+        private BitmapImage m_CodeReaderImage;
+        public BitmapImage CodeReaderImage
+        {
+            get { return m_CodeReaderImage; }
+            set { SetProperty(ref m_CodeReaderImage, value); }
+        }
+
+
+        private double m_Width;
+        public double Width
+        {
+            get { return m_Width; }
+            set { SetProperty(ref m_Width, value); }
+        }
+
         #endregion
 
         #region Constructor

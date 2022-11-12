@@ -23,7 +23,7 @@ using System.Xml;
 
 namespace TCPIPManager
 {
-    public class CodeReader :ICodeReader
+    public class CodeReader : ICodeReader
     {
         #region Variable
         private bool canContAnalyse = false;
@@ -47,7 +47,7 @@ namespace TCPIPManager
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
 
             m_Events.GetEvent<RequestCodeReaderConnectionEvent>().Subscribe(ConnectCodeReader);
-          
+
 
         }
         #endregion
@@ -110,11 +110,11 @@ namespace TCPIPManager
                 {
                     Global.LotInitialTotalBatchQuantity = Global.CurrentBatchQuantity;
                 }
-              
+
                 if (Global.CurrentBatchNum == Global.LotInitialBatchNo)
                 {
                     string Container = m_ContainerCollection.Where(key => key == Global.CurrentContainerNum).FirstOrDefault();
-                
+
                     if (Container == null || Global.CodeReaderRetry)
                     {
                         if (!Global.CodeReaderRetry)
@@ -125,7 +125,7 @@ namespace TCPIPManager
                         if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
                         {
                             Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
-                
+
                             if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                             {
                                 Global.CodeReaderResult = resultstatus.Fail.ToString();
@@ -134,7 +134,7 @@ namespace TCPIPManager
                             else
                             {
                                 Global.CodeReaderResult = resultstatus.Pass.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont});
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
                             }
                         }
                         else
@@ -167,7 +167,7 @@ namespace TCPIPManager
             m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.AccumulateCurrentBatchQuantity));
             m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentBoxQuantity));
             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-            
+
         }
         public void TriggerCodeReader()
         {
@@ -212,8 +212,9 @@ namespace TCPIPManager
                     return full_string_node.InnerText;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show("Failed to send TRIGGER ON/OFF commands: " + ex.ToString());
             }
 
             return "";
@@ -262,6 +263,13 @@ namespace TCPIPManager
 
             }
 
+            if (images.Count > 0)
+            {
+                Image first_image = images[0];
+                //Image fitted_image = Gui.ResizeImageToBitmap(first_image, );
+            }
+
+
             //if (images.Count > 0)
             //{
             //    Image first_image = images[0];
@@ -292,6 +300,7 @@ namespace TCPIPManager
             //    picResultImage.Invalidate();
             //}
         }
+    
 
         #endregion
 

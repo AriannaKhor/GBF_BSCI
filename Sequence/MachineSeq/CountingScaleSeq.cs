@@ -224,7 +224,6 @@ namespace Sequence.MachineSeq
                                 m_SeqRsm[(int)RSM.Err] = SN.NONE;
                             }
                             break;
-
                             #endregion
                     }
                 }
