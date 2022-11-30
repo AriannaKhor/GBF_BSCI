@@ -50,8 +50,8 @@
 
                     <Label Grid.Row="1" Content="{Binding VisInspectResult}" Foreground="{Binding VisResultFG}" Background="{Binding VisResultBG}" FontWeight="DemiBold" FontSize="30" VerticalAlignment="Stretch"
                            HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
-                    <Image Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding VisImage}" MaxHeight="250" Stretch="Uniform"/>
-                    <Grid Grid.Row="4" VerticalAlignment="Top">
+                    <Image Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding VisImage}" MaxHeight="500" Stretch="Uniform"/>
+                    <Grid Grid.Row="2" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -98,23 +98,23 @@
                     </WrapPanel>
                     <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" FontWeight="DemiBold" FontSize="30"
                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
-                    <Image Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding CodeReaderImage}" MaxHeight="250" Stretch="Uniform"/>
-                    <Grid Grid.Row="4" VerticalAlignment="Top">
+                    <Image Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding CodeReaderImage}" MaxHeight="250" Stretch="Uniform"/>
+                    <Grid Grid.Row="2" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <WrapPanel >
-                            <Label Content="{Binding Path=TotalBatchQuantity, Source={StaticResource StringTableODP}}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                        <WrapPanel Grid.Column="0">
+                            <Label Content="{Binding Path=TotalBatchQuantity, Source={StaticResource StringTableODP}}" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0 0 0"/>
                             <Label Content="{Binding ViewCurrentBatchTotalQuantity}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                         <WrapPanel Grid.Column="1">
-                            <Label Content="{Binding Path=TotalCurrentBatchQuantity, Source={StaticResource StringTableODP}}"  FontSize="14" VerticalAlignment="Center"  Margin="10"/>
+                            <Label Content="{Binding Path=TotalCurrentBatchQuantity, Source={StaticResource StringTableODP}}"  FontSize="14" VerticalAlignment="Center"  Margin="0 0 0 0"/>
                             <Label Content="{Binding ViewAccumulateCurrentTotalBatchQuantity}" Foreground="{Binding CurrentTotalBatchQuantityFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                         <WrapPanel Grid.Column="2">
-                            <Label Content="{Binding Path=TotalCurrentBoxQuantity, Source={StaticResource StringTableODP}}"  FontSize="14" VerticalAlignment="Center"  Margin="10"/>
+                            <Label Content="{Binding Path=TotalCurrentBoxQuantity, Source={StaticResource StringTableODP}}"  FontSize="14" VerticalAlignment="Center"  Margin="0 0 0 0"/>
                             <Label Content= "{Binding ViewCurrentBoxQuantity}" Foreground="{Binding CurrentQuantityFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                     </Grid>
