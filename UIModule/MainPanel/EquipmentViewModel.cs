@@ -308,7 +308,7 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<OnCodeReaderConnectedEvent>().Subscribe(OnCodeReaderConnected);//
             m_EventAggregator.GetEvent<OnCodeReaderDisconnectedEvent>().Subscribe(OnCodeReaderDisconnected);//
             m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Subscribe(OnCodeReaderEndResult);//
-            m_EventAggregator.GetEvent<CodeReaderImage>().Subscribe(OnTopViisonImg);//
+            m_EventAggregator.GetEvent<TopVisionImage>().Subscribe(OnTopVisionImg);//
             m_EventAggregator.GetEvent<CodeReaderImage>().Subscribe(OnCodeReaderImg);//
 
             //Button Command
@@ -390,7 +390,7 @@ namespace UIModule.MainPanel
             VisProductWrgOrientation = Global.VisProductWrgOrientation;
         }
 
-        private void OnTopViisonImg(BitmapImage img)
+        private void OnTopVisionImg(BitmapImage img)
         {
             VisImage = img;
         }
@@ -403,6 +403,7 @@ namespace UIModule.MainPanel
             Global.CodeReaderConnStatus = ConnectionState.Connected.ToString();
             CdStatusFG = System.Windows.Media.Brushes.GreenYellow;
             CodeReaderConnStatus = Global.CodeReaderConnStatus;
+
         }
         //New Can Be Use
         private void OnCodeReaderDisconnected()

@@ -43,15 +43,15 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <WrapPanel>
+                    <WrapPanel Grid.Row="0">
                         <Label Content="{Binding Path=Status, Source={StaticResource StringTableODP}}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" Margin="10"/>
                         <Label Content="{Binding VisionConnStatus}" Foreground="{Binding StatusFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     </WrapPanel>
 
                     <Label Grid.Row="1" Content="{Binding VisInspectResult}" Foreground="{Binding VisResultFG}" Background="{Binding VisResultBG}" FontWeight="DemiBold" FontSize="30" VerticalAlignment="Stretch"
                            HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
-                    <Image Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding VisImage}" Width="Auto" Height="Auto" />
-                    <Grid Grid.Row="5" VerticalAlignment="Top">
+                    <Image Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding VisImage}" MaxHeight="250" Stretch="Uniform"/>
+                    <Grid Grid.Row="4" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -71,8 +71,8 @@
                         </WrapPanel>
                     </Grid>
 
-                    <WrapPanel Grid.Row="6" HorizontalAlignment="Center"  VerticalAlignment="Center">
-                        <Button Content="{Binding TriggerLiveVis}" Command="{Binding TriggerVisCmd}" CommandParameter="Trigger Vision Live"  Height="50" Width="180" FontSize="16" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource NormalForegroundBrush}" Margin="0,50,70,0"/>
+                    <WrapPanel Grid.Row="5" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                        <Button Content="{Binding TriggerLiveVis}" Command="{Binding TriggerVisCmd}" CommandParameter="Trigger Vision Live"  Height="50" Width="180" FontSize="16" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource NormalForegroundBrush}" Margin="0,0,0,0"/>
                     </WrapPanel>
                 </Grid>
             </GroupBox>
@@ -85,10 +85,10 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
 
-                    <WrapPanel>
+                    <WrapPanel Grid.Row="0">
                         <Label Content="{Binding Path=Status, Source={StaticResource StringTableODP}}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" Margin="10"/>
                         <Label Content="{Binding CodeReaderConnStatus}" Foreground="{Binding CdStatusFG}" FontWeight="DemiBold" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         <Label Content="{Binding Path=Batch, Source={StaticResource StringTableODP}}" FontSize="14" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50,0,0,0"/>
@@ -98,8 +98,8 @@
                     </WrapPanel>
                     <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" FontWeight="DemiBold" FontSize="30"
                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
-                    <Image Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding CodeReaderImage}" Width="Auto" Height="Auto"/>
-                    <Grid Grid.Row="5" VerticalAlignment="Top">
+                    <Image Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding CodeReaderImage}" MaxHeight="250" Stretch="Uniform"/>
+                    <Grid Grid.Row="4" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>

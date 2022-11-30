@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -84,7 +85,10 @@ namespace TCPIPManager
                 m_CodeReaderResults = new ResultCollector(m_CodeReader, requested_result_types);
                 m_CodeReaderResults.ComplexResultCompleted += Results_ComplexResultCompleted;
                 m_CodeReader.SetKeepAliveOptions(false, 3000, 1000);
-                //m_CodeReader.Connect(); // Uncomment it when connected with the code reader
+                m_CodeReader.Connect(); // Uncomment it when connected with the code reader
+
+                ShowLiveView(m_CodeReader, m_Events);
+
                 try
                 {
                     m_CodeReader.SetResultTypes(requested_result_types);
@@ -263,16 +267,16 @@ namespace TCPIPManager
                             break;
                     }
                 }
+
+                if (images.Count > 0)
+                {
+                    Image first_image = images[0];
+                    Bitmap fitted_image = ResizeImage(first_image, 50, 50); ;
+                    BitmapImage converttobitmapimg = Bitmap2BitmapImage(fitted_image);
+                    m_Events.GetEvent<CodeReaderImage>().Publish(converttobitmapimg);
+                }
+
                 return read_result;
-
-            }
-
-            if (images.Count > 0)
-            {
-                Image first_image = images[0];
-                Bitmap fitted_image = ResizeImage(first_image, 50, 50); ;
-                BitmapImage converttobitmapimg = Bitmap2BitmapImage(fitted_image);
-                m_Events.GetEvent<CodeReaderImage>().Publish(converttobitmapimg);
             }
         }
 
@@ -320,6 +324,27 @@ namespace TCPIPManager
             }
 
             return retval;
+        }
+
+        public static void ShowLiveView(DataManSystem m_CodeReader, IEventAggregator m_Events)
+        {
+            m_CodeReader.SendCommand("SET LIVEIMG.MODE 2");
+
+            BitmapImage liveimage;
+            Image tempImage = m_CodeReader.GetLiveImage(Cognex.DataMan.SDK.ImageFormat.bitmap, ImageSize.Quarter, ImageQuality.Medium);
+            
+
+            Bitmap dImg = new Bitmap(tempImage);
+            MemoryStream ms = new MemoryStream();
+            dImg.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            BitmapImage bImg = new BitmapImage();
+            bImg.BeginInit();
+            bImg.StreamSource = new MemoryStream(ms.ToArray());
+            bImg.EndInit();
+
+            liveimage = bImg;
+
+            m_Events.GetEvent<CodeReaderImage>().Publish(liveimage);
         }
 
         #endregion

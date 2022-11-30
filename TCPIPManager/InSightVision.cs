@@ -88,8 +88,10 @@ namespace TCPIPManager
             {
                 SystemConfig sysCfg = SystemConfig.Open(@"..\Config Section\General\System.Config");
                 m_topvisIp = sysCfg.NetworkDevices[0].IPAddress;
-                m_InsightV1.Connect(m_topvisIp, "admin", "", true, false);// Determine the state of the sensor
+                m_CvsInSightDisplay.InSight = m_InsightV1;
+                m_CvsInSightDisplay.InSight.Connect(m_topvisIp, "admin", "", true, false);// Determine the state of the sensor
                 m_InsightV1.SoftOnline = true;
+
                 switch (m_InsightV1.State)
                 {
                     case CvsInSightState.Offline:
@@ -144,7 +146,6 @@ namespace TCPIPManager
                 VisConnectionStatus(false, true, false, "Disconnected");
                 MachineBase.ShowMessage(ex);
             }
-
         }
 
         public void VisConnectionStatus(bool visConnection, bool canConnect, bool canDisconnect, string status)
@@ -173,10 +174,28 @@ namespace TCPIPManager
         {
             try
             {
-                formVis = new InSightDisplayControl(m_topvisIp, m_Events);
-                formVis.Show();
+                //formVis = new InSightDisplayControl(m_topvisIp, m_Events);
+                //formVis.Show();
                 tmrScanIOEnableLive.Start();
 
+                //add implementation for trigger button here
+                BitmapImage VisionImage;
+                m_CvsInSightDisplay.ShowImage = true;
+                m_CvsInSightDisplay.ShowGraphics = true;
+                m_CvsInSightDisplay.Edit.ZoomImageToFit.Execute();
+                m_CvsInSightDisplay.Edit.ManualAcquire.Execute();
+
+                Bitmap dImg = m_CvsInSightDisplay.GetBitmap();
+                MemoryStream ms = new MemoryStream();
+                dImg.Save(ms, ImageFormat.Jpeg);
+                BitmapImage bImg = new BitmapImage();
+                bImg.BeginInit();
+                bImg.StreamSource = new MemoryStream(ms.ToArray());
+                bImg.EndInit();
+
+                VisionImage = bImg;
+
+                m_Events.GetEvent<TopVisionImage>().Publish(VisionImage);
             }
             catch (Exception ex)
             {
