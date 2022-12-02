@@ -70,6 +70,8 @@ namespace TCPIPManager
             m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(ConnectVision);
             m_Events.GetEvent<RequestVisionLiveViewEvent>().Subscribe(VisionLive);
 
+            m_Events.GetEvent<TopVisionResultEvent>().Subscribe(VisionLive);
+
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
 
@@ -163,6 +165,8 @@ namespace TCPIPManager
                 //formVis.Show();
                 m_InsightV1.ManualAcquire(); // Request a new acquisition to generate new results // capture Image *remember to check in-sight whether the spread sheet view is set to "Manual"
                 allowVisResultchg = true;
+
+                //VisionLive();
             }
             catch (Exception ex)
             {
@@ -176,7 +180,7 @@ namespace TCPIPManager
             {
                 //formVis = new InSightDisplayControl(m_topvisIp, m_Events);
                 //formVis.Show();
-                tmrScanIOEnableLive.Start();
+                //tmrScanIOEnableLive.Start();
 
                 //add implementation for trigger button here
                 BitmapImage VisionImage;
@@ -184,6 +188,8 @@ namespace TCPIPManager
                 m_CvsInSightDisplay.ShowGraphics = true;
                 m_CvsInSightDisplay.Edit.ZoomImageToFit.Execute();
                 m_CvsInSightDisplay.Edit.ManualAcquire.Execute();
+                //m_CvsInSightDisplay.Edit.LiveAcquire.Execute();
+                //m_CvsInSightDisplay.Edit.RepeatingTrigger.Execute();
 
                 Bitmap dImg = m_CvsInSightDisplay.GetBitmap();
                 MemoryStream ms = new MemoryStream();
@@ -393,11 +399,13 @@ namespace TCPIPManager
                     m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Overall Result:" + " " + Global.VisInspectResult });
                     m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info," Vision Result :" + Global.VisInspectResult + "<" +"Total Quantity per box :"+ Global.VisProductQuantity + ", Correct Orientation :" + Global.VisProductCrtOrientation + ", Wrong Orientation" + Global.VisProductWrgOrientation +">"));
                     m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
-                    m_CvsInSightDisplay.ShowImage = true;
-                    Bitmap fitted_image = m_CvsInSightDisplay.GetBitmap();
-                    BitmapImage converttobitmapimg = Bitmap2BitmapImage(fitted_image);
-                    m_Events.GetEvent<TopVisionImage>().Publish(converttobitmapimg);
+                    
+                    //m_CvsInSightDisplay.ShowImage = true;
+                    //Bitmap fitted_image = m_CvsInSightDisplay.GetBitmap();
+                    //BitmapImage converttobitmapimg = Bitmap2BitmapImage(fitted_image);
+                    //m_Events.GetEvent<TopVisionImage>().Publish(converttobitmapimg);
 
+                    VisionLive();
                 }
             }
             catch (Exception ex)

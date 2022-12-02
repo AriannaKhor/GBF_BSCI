@@ -174,7 +174,7 @@ namespace DialogManager.ErrorMsg
 
         protected virtual void CloseDialog(string parameter)
         {
-            m_TmrButtonMonitor.Stop();
+            //m_TmrButtonMonitor.Stop();
             // Turn off Reset Button LED
             //m_IO.WriteBit(ResetButtonIndic, false);
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
@@ -260,7 +260,7 @@ namespace DialogManager.ErrorMsg
             {
                 ResetVis = Visibility.Visible;
                 OkVis = Visibility.Collapsed;
-                m_TmrButtonMonitor.Start();
+                //m_TmrButtonMonitor.Start();
             }
             else
             {
