@@ -29,6 +29,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -38,7 +39,7 @@ using UIModule.DataMarkers.Interfaces;
 
 namespace UIModule.MainPanel
 {
-	public class EquipmentViewModel : BaseUIViewModel
+	public class OperatorViewModel : BaseUIViewModel
     {
         #region Variable
         private IEnumerable<IMachineData> m_IMachineDataCollection;
@@ -166,8 +167,6 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_TriggerLiveVis, value); }
         }
 
-   
-
         private ObservableCollection<IMachineData> m_MachineDataCollection;
         public ObservableCollection<IMachineData> MachineDataCollection
         {
@@ -263,15 +262,15 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_IsAllowEditMarker, value); }
         }
 
-        private Visibility m_IsAllowEquipment = Visibility.Collapsed;
 
-        public Visibility IsAllowEquipment
+        private Visibility m_IsAllowOperator = Visibility.Collapsed;
+
+        public Visibility IsAllowOperator
         {
-            get { return m_IsAllowEquipment; }
-            set { SetProperty(ref m_IsAllowEquipment, value); }
+            get { return m_IsAllowOperator; }
+            set { SetProperty(ref m_IsAllowOperator, value); }
         }
 
-    
         private bool m_IsEquipViewLoaded;
         public bool IsEquipViewLoaded
         {
@@ -295,11 +294,11 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Constructor
-        public EquipmentViewModel(IEventAggregator eventAggregator)
+        public OperatorViewModel(IEventAggregator eventAggregator)
         {
             m_IMachineDataCollection = ContainerLocator.Container.Resolve<Func<IEnumerable<IMachineData>>>()();
 
-            TabPageHeader = GetStringTableValue("Equipment");
+            TabPageHeader = GetStringTableValue("Operator");
 
             Assembly asm = Assembly.GetEntryAssembly();
             AssemblyName asmName = asm.GetName();
@@ -389,7 +388,7 @@ namespace UIModule.MainPanel
         #region Event
         public override void OnCultureChanged()
         {
-            TabPageHeader = GetStringTableValue("Equipment");
+            TabPageHeader = GetStringTableValue("Operator");
         }
 
         #region Vision
@@ -449,20 +448,20 @@ namespace UIModule.MainPanel
 
         public override void OnValidateLogin(bool IsAuthenticated)
         {
-            base.OnValidateLogin(IsAuthenticated);
-            // IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-            //IsAllowAccessEquipment = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin  && m_AuthService.CurrentUser.IsAuthenticated)
-            {
-                IsAllowEquipment = Visibility.Visible;
+         base.OnValidateLogin(IsAuthenticated);
+            //IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+            //IsAllowAccessOperator = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
 
+            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
+            {
+                IsAllowOperator = Visibility.Visible;
+                
             }
             else
             {
-                IsAllowEquipment = Visibility.Collapsed;
+                IsAllowOperator = Visibility.Collapsed;
 
             }
-
         }
 
         private void OnResultlogEntity(ResultlogEntity log)
@@ -666,10 +665,7 @@ namespace UIModule.MainPanel
 
         #region Others
 
-        public void OnDeactivate()
-        {
-            IsEquipViewLoaded = false;
-        }
+   
 
         public bool KeepAlive
         {

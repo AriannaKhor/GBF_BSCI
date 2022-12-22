@@ -515,6 +515,7 @@ namespace Sequence.MachineSeq
             Publisher.GetEvent<TCPIPMsg>().Subscribe(TCPMsgOperation, filter => filter.TCPDevice == NetworkDev.CodeReader);
         }
 
+
         internal override void SequenceOperation(SequenceEvent sequence)
         {
             lock (m_SyncEvent)
@@ -990,7 +991,7 @@ namespace Sequence.MachineSeq
             #region Project Specific 
             if (m_LocalVar.SeqIntLFailIDs.Count > 0)
             {
-                if (m_LocalVar.SeqIntLFailIDs.Contains((int)SQID.SampleSeq2))
+                if (m_LocalVar.SeqIntLFailIDs.Contains((int)SQID.CodeReaderSeq))
                 {
                     RaiseError((int)ErrorCode.CodeReaderConnectionFail);
                     isPassIntL = false;

@@ -1185,7 +1185,7 @@ Red    : Machine Down</value>
     <value>Reload the alarm records from the database</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>Reset</value>
+    <value>OK</value>
   </data>
   <data name="ResetAll" xml:space="preserve">
     <value>Reset All</value>
@@ -1353,7 +1353,7 @@ Red    : Machine Down</value>
     <value>Steady</value>
   </data>
   <data name="Stop" xml:space="preserve">
-    <value>Stop</value>
+    <value>End</value>
   </data>
   <data name="StopBit" xml:space="preserve">
     <value>Stop Bit</value>
@@ -1674,7 +1674,7 @@ Red    : Machine Down</value>
     <value>Correct Orientation :</value>
   </data>
   <data name="TotalBatchQuantity" xml:space="preserve">
-    <value>T.Batch Quantity :</value>
+    <value>Total Batch Quantity :</value>
   </data>
   <data name="TotalCurrentBatchQuantity" xml:space="preserve">
     <value>Total Current Batch Quantity :</value>
@@ -1690,5 +1690,8 @@ Red    : Machine Down</value>
   </data>
   <data name="Container" xml:space="preserve">
     <value>ContainerNo :</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>Operator</value>
   </data>
 </root>

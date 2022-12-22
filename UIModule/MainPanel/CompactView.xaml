@@ -686,7 +686,7 @@
                     </ScrollViewer>
                 </GroupBox>
 
-                <!-- Lot Entry -->
+                <!-- Lot Entry --><!--
                 <Expander Name="LotEntryExpander" Grid.Column="3" Template="{StaticResource StretchyExpanderToLeft}" MaxWidth="300" IsExpanded="{Binding IsLotEntryExpand}" OverridesDefaultStyle="True">
                     <Expander.Header >
                         <Label Content="{Binding Path=LotEntry, Source={StaticResource StringTableODP}}" Foreground="#152c46">
@@ -696,7 +696,7 @@
                         </Label>
                     </Expander.Header>
                     <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.LotEntryRegion}"/>
-                </Expander>
+                </Expander>-->
 
             </Grid>
             <Rectangle Grid.Row="3" HorizontalAlignment="Stretch" Height="2.5" Fill="White" Margin="0,0,0,0"/>

@@ -151,7 +151,7 @@
     </Reference>
     <Reference Include="Cognex.InSight, Version=6.1.28.1, Culture=neutral, PublicKeyToken=6b9774afddb09935, processorArchitecture=MSIL" />
     <Reference Include="GEMPro">
-      <HintPath>..\..\..\..\..\..\..\MInt Service\Lib\GEMPro.dll</HintPath>
+      <HintPath>..\GreatechApp.Net\Execution\GEMPro.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -223,6 +223,10 @@
       <DependentUpon>CompactView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPanel\CompactViewModel.cs" />
+    <Compile Include="MainPanel\OperatorView.xaml.cs">
+      <DependentUpon>OperatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPanel\OperatorViewModel.cs" />
     <Compile Include="MainPanel\EquipmentViewModel.cs" />
     <Compile Include="MainPanel\EStopView.xaml.cs">
       <DependentUpon>EStopView.xaml</DependentUpon>
@@ -435,6 +439,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPanel\CompactView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPanel\OperatorView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

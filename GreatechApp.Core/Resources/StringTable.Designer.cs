@@ -2970,6 +2970,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operator.
+        /// </summary>
+        public static string Operator {
+            get {
+                return ResourceManager.GetString("Operator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operator ID.
         /// </summary>
         public static string OperatorID {
@@ -3429,7 +3438,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reset.
+        ///   Looks up a localized string similar to OK.
         /// </summary>
         public static string Reset {
             get {
@@ -3951,7 +3960,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stop.
+        ///   Looks up a localized string similar to End.
         /// </summary>
         public static string Stop {
             get {
@@ -4311,7 +4320,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to T.Batch Quantity :.
+        ///   Looks up a localized string similar to Total Batch Quantity :.
         /// </summary>
         public static string TotalBatchQuantity {
             get {

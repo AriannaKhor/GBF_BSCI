@@ -12,7 +12,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <GroupBox BorderBrush="Gray" Header="{Binding Path=LotEntry, Source={StaticResource StringTableODP}}">
+    <!--<GroupBox BorderBrush="Gray" Header="{Binding Path=LotEntry, Source={StaticResource StringTableODP}}">
         <Grid Margin="0,10,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
@@ -43,12 +43,12 @@
             <Label Content="{Binding Path=Recipe, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} :" FontSize="13" Grid.Row="3" Grid.Column="0" />
             <ComboBox Height="26"  FontSize="14"  Grid.Row="3" Grid.Column="1" MinWidth="100" ItemsSource="{Binding Recipe}" SelectedItem="{Binding SelectedRecipe}" 
                               DisplayMemberPath="Product_Name"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" IsEnabled="{Binding IsAllowEnterInfo}">
-            </ComboBox>
+            </ComboBox>-->
 
-            <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Background="{DynamicResource NormalBackgroundBrush}" IsEnabled="{Binding IsAllowStartLot}" Content="{Binding Path=StartLot, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Command="{Binding LotCommand}" CommandParameter="StartLot" Style="{DynamicResource styGlassButton}" Width="80" Margin="5,10,10,0" HorizontalAlignment="Right" FontSize="12"  />
-                <Button Background="{DynamicResource NormalBackgroundBrush}" IsEnabled="{Binding IsAllowEndLot}" Content="{Binding Path=EndLot, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Command="{Binding LotCommand}" CommandParameter="EndLot" Style="{DynamicResource styGlassButton}" Width="80" Margin="0,10,5,0" HorizontalAlignment="Right" FontSize="12"  />
-            </StackPanel>
-        </Grid>
-    </GroupBox>
+    <!--<StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+        <Button Background="{DynamicResource NormalBackgroundBrush}" IsEnabled="{Binding IsAllowStartLot}" Content="{Binding Path=StartLot, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Command="{Binding LotCommand}" CommandParameter="StartLot" Style="{DynamicResource styGlassButton}" Width="80" Margin="5,10,10,0" HorizontalAlignment="Right" FontSize="12"  />
+        <Button Background="{DynamicResource NormalBackgroundBrush}" IsEnabled="{Binding IsAllowEndLot}" Content="{Binding Path=EndLot, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Command="{Binding LotCommand}" CommandParameter="EndLot" Style="{DynamicResource styGlassButton}" Width="80" Margin="0,10,5,0" HorizontalAlignment="Right" FontSize="12"  />
+    </StackPanel>-->
+    <!--</Grid>
+    </GroupBox>-->
 </UserControl>

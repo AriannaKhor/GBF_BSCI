@@ -36,8 +36,8 @@ namespace ConfigManager
             {
                 return;
             }
-            m_Config.Save(ConfigurationSaveMode.Full);
-            ConfigurationManager.RefreshSection(SectionName);
+           // m_Config.Save(ConfigurationSaveMode.Full);
+           // ConfigurationManager.RefreshSection(SectionName);
 
             string oEEXmlFile = @"..\Config Section\OEE\OEE.Config";
             string tempOEEXmlfile = @"..\Config Section\OEE\OEE_Temp.Config";

@@ -6,7 +6,7 @@ namespace InterlockManager.IO
     {
         public SampleSeqIOIntL()
         {
-            Provider = SQID.SampleSeq;
+            Provider = SQID.TopVisionSeq;
         }
 
         public override bool CheckIOInterlock(int ioNum, bool oState, bool isChildExist)

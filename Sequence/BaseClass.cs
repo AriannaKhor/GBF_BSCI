@@ -70,6 +70,12 @@ namespace Sequence
 
         public string SeqNum;
 
+        public bool checkOp = false;
+
+        public bool VisResume = false;
+
+        public bool NotFrmResume = false;
+
         public int TotalInput = 0;
 
         public int TotalOutput = 0;
@@ -219,6 +225,7 @@ namespace Sequence
             internal bool ExtTestRunBegin;
             internal bool ExtTestRunAbort;
             internal bool ExtTestRunComp;
+            internal bool ProcUpdate;
         }
 
         protected BaseFlag m_SeqFlag = new BaseFlag();
@@ -376,6 +383,11 @@ namespace Sequence
             m_SeqFlag.Bypass = state;
         }
 
+        public virtual void OperationChecking(bool checkopr)
+        {
+
+        }
+
         public virtual void OnRunSeq(object sender, EventArgs args)
         {
 
@@ -390,6 +402,7 @@ namespace Sequence
         {
 
         }
+
 
         public virtual void SubscribeTCPMessage()
         {
@@ -459,6 +472,12 @@ namespace Sequence
                 case MachineOperationType.ProcCont:
                     m_SeqFlag.ProcCont = true;
                     break;
+
+                case MachineOperationType.ProcUpdate:
+                    m_SeqFlag.ProcUpdate = true;
+                    break;
+
+             
 
                 case MachineOperationType.ProcBusy:
                     m_SeqFlag.ProcBusy = true;

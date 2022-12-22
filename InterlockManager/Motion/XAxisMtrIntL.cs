@@ -51,29 +51,29 @@ namespace InterlockManager.Motion
             MotionConfig mtrcfg = MotionConfig.Open(m_SystemConfig.MotCfgRef[(int)MotCFG.XAxis].Reference);
 
 
-            if (m_BaseMotion.AxisInMotion(mtrcfg.Axis.CardID, mtrcfg.Axis.AxisID))
-            {
-                m_IntLMsg.Append("- X Axis Lifter motor is moving.").AppendLine().
-                    Append("*** Please stop the motor. Please check motor busy signal from controller.").AppendLine();
-            }
+            //if (m_BaseMotion.AxisInMotion(mtrcfg.Axis.CardID, mtrcfg.Axis.AxisID))
+            //{
+            //    m_IntLMsg.Append("- X Axis Lifter motor is moving.").AppendLine().
+            //        Append("*** Please stop the motor. Please check motor busy signal from controller.").AppendLine();
+            //}
            
-            double safeDist = mtrcfg.Position[(int)SampleSeq.P_PRF.Pick].Point;
-            double min = safeDist - m_Tolerance;
-            double max = safeDist + m_Tolerance;
-            bool IsInRange = SupportMethod.IsInRange(curPnPLifterPos, min, max, false);
+            //double safeDist = mtrcfg.Position[(int)TopVisionSeq.P_PRF.Pick].Point;
+            //double min = safeDist - m_Tolerance;
+            //double max = safeDist + m_Tolerance;
+            //bool IsInRange = SupportMethod.IsInRange(curPnPLifterPos, min, max, false);
 
-            if (curPnPLifterPos < safeDist)
-            {
-                // no interlock needed if current position is lesser than safe Dist (toward -limit)
-            }
-            else
-            {
-                if (!IsInRange)
-                {
-                    m_IntLMsg.Append("- X Axis Lifter not at Up position.").AppendLine().
-                        Append("*** Please move X Axis to Up position.").AppendLine();
-                }
-            }
+            //if (curPnPLifterPos < safeDist)
+            //{
+            //    // no interlock needed if current position is lesser than safe Dist (toward -limit)
+            //}
+            //else
+            //{
+            //    if (!IsInRange)
+            //    {
+            //        m_IntLMsg.Append("- X Axis Lifter not at Up position.").AppendLine().
+            //            Append("*** Please move X Axis to Up position.").AppendLine();
+            //    }
+            //}
 
             return Finalize();
         }

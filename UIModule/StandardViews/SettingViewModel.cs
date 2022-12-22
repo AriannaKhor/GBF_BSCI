@@ -68,9 +68,7 @@
                 tabControlRegion = m_RegionManager.Regions[RegionNames.SettingTabControlRegion];
 
                 tabControlRegion.Add(m_ContainerProvider.Resolve<SeqParameterView>());
-                tabControlRegion.Add(m_ContainerProvider.Resolve<OEESettingView>());
                 tabControlRegion.Add(m_ContainerProvider.Resolve<TowerLightView>());
-                tabControlRegion.Add(m_ContainerProvider.Resolve<SecsGemSettingsView>());
             }
         }
         #endregion
@@ -83,6 +81,8 @@
                 if (m_AuthService.CheckAccess(ACL.Setting) && m_AuthService.CurrentUser.IsAuthenticated)
                 {
                     return true;
+
+
                 }
                 return false;
             }

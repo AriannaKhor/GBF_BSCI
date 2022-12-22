@@ -35,7 +35,7 @@ namespace UIModule.StationViews
         public SampleSeqViewModel()
         {
             Title = "Sample Seq";
-            CurrentSeq = SQID.SampleSeq;
+            CurrentSeq = SQID.TopVisionSeq;
             GetConfig(CurrentSeq);
 
             Init();

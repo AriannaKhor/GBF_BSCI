@@ -61,6 +61,7 @@ namespace GreatechApp.SplashScreen
             SysConfig = m_container.Resolve<SystemConfig>();
 
             Global.MachName = SysConfig.Machine.EquipName;
+            //Global.MachName = SysConfig.Machine.OperaName;
             Global.MachNo = int.Parse(SysConfig.Machine.MachineID);
 
             MachineName = Global.MachName;

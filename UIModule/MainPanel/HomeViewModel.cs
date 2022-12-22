@@ -1,4 +1,5 @@
 ﻿using ConfigManager;
+using GreatechApp.Core;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
 using GreatechApp.Core.Interface;
@@ -19,7 +20,27 @@ namespace UIModule.MainPanel
 {
     public class HomeViewModel : BaseUIViewModel
     {
+
         #region Variable
+
+        private Visibility m_IsAllowEquipment = Visibility.Collapsed;
+
+        public Visibility IsAllowEquipment
+        {
+            get { return m_IsAllowEquipment; }
+            set { SetProperty(ref m_IsAllowEquipment, value); }
+        }
+
+        private Visibility m_IsAllowOperator = Visibility.Collapsed;
+
+        public Visibility IsAllowOperator
+        {
+            get { return m_IsAllowOperator; }
+            set { SetProperty(ref m_IsAllowOperator, value); }
+        }
+
+        #endregion
+
         #region InitStatus
         public const string GrayIcon = "/GreatechApp.Core;component/Icon/GrayIcon.png";
         public const string GreenIcon = "/GreatechApp.Core;component/Icon/GreenIcon.png";
@@ -49,13 +70,12 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_IsLotEntryExpand, value); }
         }
         #endregion
-
-        #endregion
-
+       
         #region Constructor
 
         public HomeViewModel()
         {
+
             ShowInitState = Visibility.Collapsed;
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(UpdateMachineOperation);
             m_EventAggregator.GetEvent<MachineState>().Subscribe(UpdateMachineState);
@@ -69,14 +89,34 @@ namespace UIModule.MainPanel
             }
         }
 
-        //private void OpenLotEntry(bool canOpenLotEntryView)
+        //private Visibility m_TabOperator = Visibility.Collapsed;
+
+        //public Visibility TabOperator
         //{
-        //    IsLotEntryExpand = canOpenLotEntryView;
+        //    get { return m_TabOperator; }
+        //    set { SetProperty(ref m_TabOperator, value); }
         //}
+
+        //private Visibility m_TabAdmin = Visibility.Collapsed;
+
+        //public Visibility TabAdmin
+        //{
+        //    get { return m_TabAdmin; }
+        //    set { SetProperty(ref m_TabAdmin, value); }
+        //}
+
+      
+
+
+        private void OpenLotEntry(bool canOpenLotEntryView)
+        {
+            IsLotEntryExpand = canOpenLotEntryView;
+        }
 
         #endregion
 
         #region Event
+
         private void UpdateMachineOperation(SequenceEvent evArg)
         {
             lock (evArg)
@@ -93,6 +133,7 @@ namespace UIModule.MainPanel
                 }
             }
         }
+
 
         private void UpdateMachineState(MachineStateType stateType)
         {
@@ -152,9 +193,24 @@ namespace UIModule.MainPanel
         public override void OnValidateLogin(bool IsAuthenticated)
         {
             RaisePropertyChanged(nameof(CanAccess));
+            base.OnValidateLogin(IsAuthenticated);
+            //IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+            //IsAllowAccessOperator = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+
+            //if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
+            //{
+            //    IsAllowOperator = Visibility.Visible;
+
+            //}
+            //else
+            //{
+            //    IsAllowOperator = Visibility.Collapsed;
+
+            //}
+
         }
         #endregion
-
+               
         #region Method
 
         #endregion
@@ -167,6 +223,7 @@ namespace UIModule.MainPanel
                 if (m_AuthService.CurrentUser.IsAuthenticated)
                 {
                     return true;
+                    
                 }
                 return false;
             }

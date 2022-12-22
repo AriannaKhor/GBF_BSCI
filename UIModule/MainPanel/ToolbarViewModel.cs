@@ -27,7 +27,7 @@ namespace UIModule.MainPanel
     {
         private Thread EStopWinThread;
         private EStopView eStopView;
-        private CvsInSight m_InsightV1 = new CvsInSight();
+        //private CvsInSight m_InsightV1 = new CvsInSight();
       
 
         public const string GrayIcon = "/GreatechApp.Core;component/Icon/GrayIcon.png";
@@ -329,6 +329,12 @@ namespace UIModule.MainPanel
             IsAllowStop = false;
         }
 
+        public void AbleAllButton()
+        {
+            IsAllowStart = true;
+            IsAllowStop = true;
+        }
+
         public void ProductionMode()
         {
             IsAllowStart = false;
@@ -351,11 +357,12 @@ namespace UIModule.MainPanel
         {
             if (CanAccess)
             {
-                if (m_InsightV1.State == CvsInSightState.Online || Global.CodeReaderConnStatus == ConnectionState.Connected.ToString())
-                {
-                    IsAllowStart = false;
-                    IsAllowStop = false;
-                }
+                IsAllowStart = true;
+                //if (m_InsightV1.State == CvsInSightState.Online || Global.CodeReaderConnStatus == ConnectionState.Connected.ToString())
+                //{
+                //    IsAllowStart = true;
+                //    IsAllowStop = false;
+                //}
             }
         }
 
@@ -441,7 +448,7 @@ namespace UIModule.MainPanel
                 });
                 TCPIPStatus = TCPCollection.All(x => x.IsConnected) ? "Connected" : "Disconnected";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 
             }
@@ -451,6 +458,8 @@ namespace UIModule.MainPanel
         {
             if (IsAuthenticated)
             {
+                //AbleAllButton();
+                IdleMode();
                 CanAccess = true;
                 UserInfo = $"User ID : {m_CurrentUser.Username} {Environment.NewLine}User Level : {m_CurrentUser.UserLevel}";
                 UserId = m_CurrentUser.Username;
@@ -473,7 +482,19 @@ namespace UIModule.MainPanel
             {
                 CanAccess = false;
             }
+
+            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
+            {
+                CanAccess = false;
+
+            }
+            else
+            {
+                CanAccess = true;
+
+            }
         }
+
 
         private void SetupEStopWindow()
 		{
@@ -553,8 +574,14 @@ namespace UIModule.MainPanel
             if (Command == "Logout")
             {
                 DisableAllBtn();
+                CanAccess = false;
                 IsTCPIPListOpen = false;
                 LoginStatus = "Login";
+                UserInfo = $"User ID : {m_CurrentUser.Username} {Environment.NewLine}User Level : {m_CurrentUser.UserLevel}";
+                UserId = m_CurrentUser.Username;
+                UserLvl = m_CurrentUser.UserLevel.ToString();
+                UserId = " ";
+                UserLvl = " ";
                 IsLogin = Visibility.Visible;
                 IsLogout = Visibility.Collapsed;
                 if(EStopWinThread != null)
@@ -580,6 +607,39 @@ namespace UIModule.MainPanel
             else if (Command == "Stop")
             {
                 StopOperation();
+                if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
+                {
+                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
+
+                    if (dialogResult == ButtonResult.Yes)
+                    {
+                        m_EventAggregator.GetEvent<EndLotOperation>().Publish();
+                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ending_Lot);
+                        Global.MachineStatus = MachineStateType.Ending_Lot;
+
+                        // Send EndLot event to the sequence that required
+
+
+                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
+
+
+                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
+                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Lot_Ended);
+
+                    }
+                }
+                else
+                {
+                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
+
+                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Error, "Current Batch Quantity less than Lot Batch Quantity", ButtonResult.OK);
+
+                    if (dialogResult == ButtonResult.OK)
+                    {
+                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcStart });
+                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
+                    }
+                }
             }
         }
 
@@ -635,6 +695,8 @@ namespace UIModule.MainPanel
             Global.SeqStop = true;
             IsAllowStop = false;
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
+
+
         }
 
         #endregion

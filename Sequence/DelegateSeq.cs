@@ -69,8 +69,8 @@ namespace Sequence
             m_BaseSeq = new Dictionary<SQID, BaseClass>()
             {
                 { SQID.CriticalScan, new CriticalScan() },
-                { SQID.SampleSeq, new SampleSeq() },
-                { SQID.SampleSeq2, new SampleSeq2() },
+                { SQID.TopVisionSeq, new TopVisionSeq() },
+                { SQID.CodeReaderSeq, new CodeReaderSeq() },
                 { SQID.SampleSeq3, new SampleSeq3(MarkerType.CircularDataMarker,6,3) },
                 { SQID.SampleSeq4, new SampleSeq4(MarkerType.LinearDataMarker,3,6) },
                 { SQID.SampleSeq5, new SampleSeq5(MarkerType.CircularDataMarker,3,13) },
@@ -86,9 +86,9 @@ namespace Sequence
             IPollEngine.Start();
 
             /// Subscribe for TCP/IP
-            m_BaseSeq[SQID.SampleSeq].SubscribeTCPMessage();
+            m_BaseSeq[SQID.TopVisionSeq].SubscribeTCPMessage();
             /// Subscribe for SerialPort Event
-            m_BaseSeq[SQID.SampleSeq2].SubscribeSerialMessage();
+            m_BaseSeq[SQID.CodeReaderSeq].SubscribeSerialMessage();
 
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(OnSeqInitCompleted, filter => filter.MachineOpr == MachineOperationType.InitDone);
             m_EventAggregator.GetEvent<InitOperation>().Subscribe(OnInit);
@@ -96,6 +96,7 @@ namespace Sequence
 
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(OnSeqEndLotComplted, filter => filter.MachineOpr == MachineOperationType.EndLotComp);
             m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineStateChange);
+            m_EventAggregator.GetEvent<CheckOperation>().Subscribe(OnCheckOperation);
         }
 
         private void CreateSeqInstance()
@@ -220,6 +221,15 @@ namespace Sequence
             }
         }
 
+        private void OnCheckOperation(bool CheckOp)
+        {
+            foreach (KeyValuePair<SQID, BaseClass> baseSeq in m_BaseSeq)
+            {
+                baseSeq.Value.OperationChecking(CheckOp);
+            }
+            
+        }
+
         public string GetSeqNum(SQID seqName)
         {
             return m_BaseSeq.Where(x => x.Key == seqName).FirstOrDefault().Value.SeqNum;
@@ -307,7 +317,7 @@ namespace Sequence
         {
             get
             {
-                return m_BaseSeq.Where(x => x.Key == SQID.SampleSeq).FirstOrDefault().Value.TotalInput;
+                return m_BaseSeq.Where(x => x.Key == SQID.TopVisionSeq).FirstOrDefault().Value.TotalInput;
             }
         }
         int IDelegateSeq.TotalOutput

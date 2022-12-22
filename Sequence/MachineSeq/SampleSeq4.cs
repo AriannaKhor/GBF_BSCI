@@ -1004,7 +1004,7 @@ namespace Sequence.MachineSeq
             #region Project Specific 
             if (m_LocalVar.SeqIntLFailIDs.Count > 0)
             {
-                if (m_LocalVar.SeqIntLFailIDs.Contains((int)SQID.SampleSeq2))
+                if (m_LocalVar.SeqIntLFailIDs.Contains((int)SQID.CodeReaderSeq))
                 {
                     RaiseError((int)ErrorCode.CodeReaderConnectionFail);
                     isPassIntL = false;

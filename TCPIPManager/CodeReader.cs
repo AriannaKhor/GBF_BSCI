@@ -136,37 +136,34 @@ namespace TCPIPManager
 
                             if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                             {
-                                Global.CodeReaderResult = resultstatus.Fail.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
+                                Global.CodeReaderResult = resultstatus.NG.ToString();
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
                             }
                             else
                             {
-                                Global.CodeReaderResult = resultstatus.Pass.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
+                                Global.CodeReaderResult = resultstatus.OK.ToString();
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcCont });
                             }
+
                         }
                         else
                         {
-                            Global.CodeReaderResult = resultstatus.Fail.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
+                            Global.CodeReaderResult = resultstatus.NG.ToString();
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
                         }
                     }
-                    else
-                    {
-                        Global.CodeReaderResult = resultstatus.Fail.ToString();
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ContainerNumberExist" });
-                    }
+                  
                 }
                 else
                 {
-                    Global.CodeReaderResult = resultstatus.Fail.ToString();
-                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BatchNotMatch" });
+                    Global.CodeReaderResult = resultstatus.NG.ToString();
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BatchNotMatch" });
                 }
             }
             else
             {
-                Global.CodeReaderResult = resultstatus.Fail.ToString();
-                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "MissingResult" });
+                Global.CodeReaderResult = resultstatus.NG.ToString();
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "MissingResult" });
             }
 
             m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.VisProductQuantity));
@@ -174,6 +171,8 @@ namespace TCPIPManager
             m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentBatchQuantity));
             m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.AccumulateCurrentBatchQuantity));
             m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentBoxQuantity));
+
+            m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.VisInspectResult));
             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
 
         }
@@ -204,7 +203,7 @@ namespace TCPIPManager
                 if (full_string_node != null && m_CodeReader != null && m_CodeReader.State == Cognex.DataMan.SDK.ConnectionState.Connected)
                 {
                     XmlAttribute encoding = full_string_node.Attributes["encoding"];
-                    if (encoding != null && encoding.InnerText == "base64")
+                    if (encoding != null && encoding.InnerText == "base64") 
                     {
                         if (!string.IsNullOrEmpty(full_string_node.InnerText))
                         {

@@ -7,8 +7,8 @@
         CriticalScan = 0,
 
         // Machine Sequence
-        SampleSeq = 1,
-        SampleSeq2 = 2,
+        TopVisionSeq = 1,
+        CodeReaderSeq = 2,
         SampleSeq3 = 3,
         SampleSeq4 = 4,
         SampleSeq5 = 5,
@@ -44,6 +44,8 @@
         ExtTestRunBegin,
         ExtTestRunAbort,
         ExtTestRunComp,
+        ProcUpdate,
+        ProcStop,
     }
 
     public enum ErrorCode

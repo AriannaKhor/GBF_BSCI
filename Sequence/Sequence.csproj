@@ -175,8 +175,8 @@
     <Compile Include="IDelegateSeq.cs" />
     <Compile Include="MachineSeq\BarcodeScanner.cs" />
     <Compile Include="MachineSeq\CountingScaleSeq.cs" />
-    <Compile Include="MachineSeq\SampleSeq.cs" />
-    <Compile Include="MachineSeq\SampleSeq2.cs" />
+    <Compile Include="MachineSeq\TopVisionSeq.cs" />
+    <Compile Include="MachineSeq\CodeReaderSeq.cs" />
     <Compile Include="MachineSeq\SampleSeq3.cs" />
     <Compile Include="MachineSeq\SampleSeq4.cs" />
     <Compile Include="MachineSeq\SampleSeq5.cs" />

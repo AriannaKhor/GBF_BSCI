@@ -9,7 +9,8 @@ namespace GreatechApp.Core.Enums
     public enum resultstatus
     {
         PendingResult,
-        Pass,
-        Fail,
+        OK,
+        NG,
+        NoBoxDetected,
     }
 }

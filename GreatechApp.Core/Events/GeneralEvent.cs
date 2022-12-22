@@ -47,11 +47,6 @@
 
     }
 
-    public class EnableCodeReaderEvent : PubSubEvent<bool>
-    {
-
-    }
-
     public class TopVisionResultEvent : PubSubEvent
     {
     }
@@ -99,6 +94,11 @@
     }
 
     public class MachineState : PubSubEvent<MachineStateType>
+    {
+
+    }
+
+    public class CheckOperation: PubSubEvent<bool>
     {
 
     }

@@ -321,7 +321,7 @@ namespace Sequence.MachineSeq
                         #region Sequence Interlock Check
                         case SN.IL_ShuttleSafeToMove:
                             m_LocalVar.SeqIntLFailIDs.Clear();
-                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.SampleSeq2, MachineOpr = MachineOperationType.SeqIntLChk });
+                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.SeqIntLChk });
                             m_SeqNum = SN.IL_WaitSeqIntLChk;
                             break;
 
@@ -599,7 +599,8 @@ namespace Sequence.MachineSeq
         {
             switch (m_SeqHM[i])
             {
-                case SN_HM.ResetMtrAlarm:
+                case SN_HM.
+                MtrAlarm:
                     m_LmtOffsetCnt[i] = 0;
                     motcfg.Axis.IsHome = false;
                     ResetMtrAlarm(i, true);
@@ -841,7 +842,7 @@ namespace Sequence.MachineSeq
             #region Project Specific 
             if (m_LocalVar.SeqIntLFailIDs.Count > 0)
             {
-                if (m_LocalVar.SeqIntLFailIDs.Contains((int)SQID.SampleSeq2))
+                if (m_LocalVar.SeqIntLFailIDs.Contains((int)SQID.CodeReaderSeq))
                 {
                     RaiseError((int)ErrorCode.CodeReaderConnectionFail);
                     isPassIntL = false;

@@ -288,6 +288,13 @@ namespace ConfigManager
             get { return (string)this["EquipName"]; }
         }
 
+        //[ConfigurationProperty("OperaName", DefaultValue = "Put Machine Name Here", IsRequired = true)]
+        //public string OperaName
+        //{
+        //    set { this["OperaName"] = value; }
+        //    get { return (string)this["OperaName"]; }
+        //}
+
         [ConfigurationProperty("HardVer", DefaultValue = "1.0.0", IsRequired = true)]
         public string HardVer
         {
@@ -355,6 +362,22 @@ namespace ConfigManager
             set { this["IsCompactView"] = value; }
             get { return (bool)this["IsCompactView"]; }
         }
+
+        [ConfigurationProperty("IsEquipmentView", DefaultValue = false, IsRequired = true)]
+        public bool IsEquipmentView
+        {
+            set { this["IsEquipmentView"] = value; }
+            get { return (bool)this["IsEquipmentView"]; }
+        }
+
+        [ConfigurationProperty("IsOperatorView", DefaultValue = false, IsRequired = true)]
+        public bool IsOperatorView
+        {
+            set { this["IsOperatorView"] = value; }
+            get { return (bool)this["IsOperatorView"]; }
+        }
+
+        
 
         [ConfigurationProperty("SQLService", DefaultValue = "MSSQL$SQLEXPRESS", IsRequired = true)]
         public string SQLService

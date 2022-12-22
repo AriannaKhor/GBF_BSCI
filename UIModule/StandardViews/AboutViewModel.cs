@@ -145,6 +145,8 @@ namespace UIModule.StandardViews
             MachName = Global.MachName;
             SoftwareVersion = Global.SoftwareVersion;
             MachineModel = m_SystemConfig.Machine.EquipName;
+
+            //MachineModel = m_SystemConfig.Machine.OperaName;
             SerialNumber = m_SystemConfig.Machine.MachineID;
 
             Title = GetStringTableValue("About");

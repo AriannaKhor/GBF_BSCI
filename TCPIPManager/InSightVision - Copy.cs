@@ -1,6 +1,5 @@
 ﻿using Cognex.InSight;
 using Cognex.InSight.Cell;
-using Cognex.InSight.Graphic;
 using Cognex.InSight.Controls.Display;
 using ConfigManager;
 using GreatechApp.Core.Enums;
@@ -26,11 +25,10 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Threading;
 
 namespace TCPIPManager
 {
-    public class InSightVision : IInsightVision
+   public class InSightVision : IInsightVision
     {
         #region Variable
         private string m_topvisIp;
@@ -40,13 +38,14 @@ namespace TCPIPManager
         private static object m_SyncLog = new object();
         public SystemConfig m_SystemConfig;
         private InSightDisplayControl formVis;
-        //protected DispatcherTimer tmrScanIOEnableLive;
-        //protected DispatcherTimer tmrScanIOLiveAcquire;
+        protected DispatcherTimer tmrScanIOEnableLive;
+        protected DispatcherTimer tmrScanIOLiveAcquire;
         private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection;
         private CvsInSight m_InsightV1 = new CvsInSight();
         private CvsInSightDisplay m_CvsInSightDisplay = new CvsInSightDisplay();
         private readonly IEventAggregator m_Events;
         #endregion
+
 
         #region Constructor
         [ImportingConstructor]
@@ -56,22 +55,22 @@ namespace TCPIPManager
 
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
 
-            //// Configure Vision timer object //To Pop Up need 3 seconds
-            //tmrScanIOEnableLive = new DispatcherTimer();
-            //tmrScanIOEnableLive.Tick += new System.EventHandler(tmrScanIOEnableLive_Tick);
-            //tmrScanIOEnableLive.Interval = new TimeSpan(0, 0, 0, 3, 0);
-            //tmrScanIOEnableLive.IsEnabled = false;
+            // Configure Vision timer object //To Pop Up need 3 seconds
+            tmrScanIOEnableLive = new DispatcherTimer();
+            tmrScanIOEnableLive.Tick += new System.EventHandler(tmrScanIOEnableLive_Tick);
+            tmrScanIOEnableLive.Interval = new TimeSpan(0, 0, 0, 3, 0);
+            tmrScanIOEnableLive.IsEnabled = false;
 
-            //// Configure Vision timer object //To Enable Live 0.5 seconds
-            //tmrScanIOLiveAcquire = new DispatcherTimer();
-            //tmrScanIOLiveAcquire.Tick += new System.EventHandler(tmrScanIOLiveAcquire_Tick);
-            //tmrScanIOLiveAcquire.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            //tmrScanIOLiveAcquire.IsEnabled = false;
+            // Configure Vision timer object //To Enable Live 0.5 seconds
+            tmrScanIOLiveAcquire = new DispatcherTimer();
+            tmrScanIOLiveAcquire.Tick += new System.EventHandler(tmrScanIOLiveAcquire_Tick);
+            tmrScanIOLiveAcquire.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            tmrScanIOLiveAcquire.IsEnabled = false;
 
             m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(ConnectVision);
-            //m_Events.GetEvent<RequestVisionLiveViewEvent>().Subscribe(VisionLive);
+            m_Events.GetEvent<RequestVisionLiveViewEvent>().Subscribe(VisionLive);
 
-            //m_Events.GetEvent<TopVisionResultEvent>().Subscribe(VisionLive);
+            m_Events.GetEvent<TopVisionResultEvent>().Subscribe(VisionLive);
 
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
@@ -81,7 +80,7 @@ namespace TCPIPManager
             m_SoftwareResultCollection.CollectionChanged += this.OnSoftwareResultCollectionChanged;
         }
 
-
+        
         #endregion
 
         #region Method
@@ -91,9 +90,8 @@ namespace TCPIPManager
             {
                 SystemConfig sysCfg = SystemConfig.Open(@"..\Config Section\General\System.Config");
                 m_topvisIp = sysCfg.NetworkDevices[0].IPAddress;
-                //m_CvsInSightDisplay.InSight = m_InsightV1;
-                //m_CvsInSightDisplay.InSight.Connect(m_topvisIp, "admin", "", true, false);// Determine the state of the sensor
-                m_InsightV1.Connect(m_topvisIp, "admin", "", true, false);
+                m_CvsInSightDisplay.InSight = m_InsightV1;
+                m_CvsInSightDisplay.InSight.Connect(m_topvisIp, "admin", "", true, false);// Determine the state of the sensor
                 m_InsightV1.SoftOnline = true;
 
                 switch (m_InsightV1.State)
@@ -150,20 +148,6 @@ namespace TCPIPManager
                 VisConnectionStatus(false, true, false, "Disconnected");
                 MachineBase.ShowMessage(ex);
             }
-
-            //try
-            //{
-            //    if (m_CvsInSightDisplay.InvokeRequired)
-            //    {
-            //        m_CvsInSightDisplay.Invoke(new Action(ConnectVision));
-            //        return;
-            //    }
-            //    m_CvsInSightDisplay.InSight = m_InsightV1;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MachineBase.ShowMessage(ex);
-            //}
         }
 
         public void VisConnectionStatus(bool visConnection, bool canConnect, bool canDisconnect, string status)
@@ -171,7 +155,7 @@ namespace TCPIPManager
             Global.VisionConnStatus = status;
             Global.VisConnection = visConnection;
             m_Events.GetEvent<VisionConnectionEvent>().Publish();
-        }
+        } 
 
         public void TriggerVisCapture()
         {
@@ -179,11 +163,6 @@ namespace TCPIPManager
             {
                 //formVis = new InSightDisplayControl(m_topvisIp, m_Events);
                 //formVis.Show();
-                if (m_InsightV1.State == CvsInSightState.NotConnected)
-                {
-                    ConnectVision();
-                }
-                Thread.Sleep(500);
                 m_InsightV1.ManualAcquire(); // Request a new acquisition to generate new results // capture Image *remember to check in-sight whether the spread sheet view is set to "Manual"
                 allowVisResultchg = true;
 
@@ -195,7 +174,6 @@ namespace TCPIPManager
             }
         }
 
-
         public void VisionLive()
         {
             try
@@ -206,18 +184,14 @@ namespace TCPIPManager
 
                 //add implementation for trigger button here
                 BitmapImage VisionImage;
-                //m_CvsInSightDisplay.ShowImage = true;
-                //m_CvsInSightDisplay.ShowGraphics = true;
-                //m_CvsInSightDisplay.Edit.ZoomImageToFit.Execute();
-                //m_CvsInSightDisplay.Edit.ManualAcquire.Execute();
+                m_CvsInSightDisplay.ShowImage = true;
+                m_CvsInSightDisplay.ShowGraphics = true;
+                m_CvsInSightDisplay.Edit.ZoomImageToFit.Execute();
+                m_CvsInSightDisplay.Edit.ManualAcquire.Execute();
                 //m_CvsInSightDisplay.Edit.LiveAcquire.Execute();
-                // m_CvsInSightDisplay.Edit.RepeatingTrigger.Execute();
+               // m_CvsInSightDisplay.Edit.RepeatingTrigger.Execute();
 
-                CvsImage cvsImage = m_InsightV1.Results.GetImage(0);
-                CvsGraphicImage gimage = new CvsGraphicImage(cvsImage);
-
-
-                Bitmap dImg = cvsImage.ToBitmap();
+                Bitmap dImg = m_CvsInSightDisplay.GetBitmap();
                 MemoryStream ms = new MemoryStream();
                 dImg.Save(ms, ImageFormat.Jpeg);
                 BitmapImage bImg = new BitmapImage();
@@ -235,10 +209,6 @@ namespace TCPIPManager
                 MachineBase.ShowMessage(ex);
             }
         }
-
-
-
-
 
         private void WriteSoftwareResultLog(Datalog log)
         {
@@ -357,8 +327,8 @@ namespace TCPIPManager
             try
             {
                 formVis.EnableLive();
-                //tmrScanIOLiveAcquire.Start();
-                //tmrScanIOEnableLive.Stop();
+                tmrScanIOLiveAcquire.Start();
+                tmrScanIOEnableLive.Stop();
             }
             catch (Exception ex)
             {
@@ -371,7 +341,7 @@ namespace TCPIPManager
             try
             {
                 formVis.LiveAcquire();
-                //tmrScanIOLiveAcquire.Stop();
+                tmrScanIOLiveAcquire.Stop();
             }
             catch (Exception ex)
             {
@@ -382,7 +352,7 @@ namespace TCPIPManager
         private void InsightV1_ResultsChanged(object sender, System.EventArgs e)
         {
             try
-                {
+            {
                 if (allowVisResultchg)
                 {
                     allowVisResultchg = false;
@@ -393,49 +363,56 @@ namespace TCPIPManager
 
                     if (!string.IsNullOrEmpty(cellResult1.Text) && cellResult1.Text.ToUpper() != "NULL" && cellResult1.Text.ToUpper() != "ERR" &&
                                 !string.IsNullOrEmpty(cellResult2.Text) && cellResult2.Text.ToUpper() != "NULL" && cellResult2.Text.ToUpper() != "ERR" &&
-                                !string.IsNullOrEmpty(cellResult3.Text) && cellResult3.Text.ToUpper() != "NULL" && cellResult3.Text.ToUpper() != "ERR" &&
+                                !string.IsNullOrEmpty(cellResult3.Text) && cellResult3.Text.ToUpper() != "NULL" && cellResult3.Text.ToUpper() != "ERR" && 
                                 !string.IsNullOrEmpty(cellResult4.Text) && cellResult4.Text.ToUpper() != "NULL" && cellResult4.Text.ToUpper() != "ERR")
                     {
                         Global.VisProductQuantity = float.Parse(cellResult1.Text);
-                        Global.VisProductCrtOrientation = cellResult2.Text;
+                        Global.VisProductCrtOrientation = cellResult2.Text; 
                         Global.VisProductWrgOrientation = cellResult3.Text;
                         Global.VisOverallResult = cellResult4.Text;
 
                         if (Global.VisOverallResult == "OK")
                         {
-                            if (Global.VisProductQuantity == 0.000 && Global.VisProductCrtOrientation == "0.000" && Global.VisProductCrtOrientation == "0.000")
+                            if (Global.VisProductWrgOrientation != "0.000")
+                            {
+                                Global.VisInspectResult = resultstatus.NG.ToString();
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "WrongOrientation" });
+                            }
+                            else if(Global.VisProductQuantity == 0.000 && Global.VisProductCrtOrientation == "0.000" && Global.VisProductCrtOrientation == "0.000")
                             {
                                 Global.VisInspectResult = resultstatus.NoBoxDetected.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcCont });
                             }
                             else
                             {
                                 Global.VisInspectResult = resultstatus.OK.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcCont });
+                                m_EnableCodeReader = true;
+                                m_Events.GetEvent<EnableCodeReaderEvent>().Publish(m_EnableCodeReader);
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcCont });
                             }
                         }
+                     
+
                         else
                         {
                             Global.VisInspectResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "WrongOrientation" });
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "VisionOverallResultRejected" });
                         }
 
                     }
-
-                    VisionLive();
-                    //m_InsightV1.AcceptUpdate(); // Tell the sensor that the application is ready for new results.
-                    //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Quantity result:" + " " + Global.VisProductQuantity });
-                    //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Correct Orientation result:" + " " + Global.VisProductCrtOrientation });
-                    //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Wrong Orientation Result:" + " " + Global.VisProductWrgOrientation });
-                    //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Overall Result:" + " " + Global.VisInspectResult });
-                    //m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Vision Result :" + Global.VisInspectResult + "<" + "Total Quantity per box :" + Global.VisProductQuantity + ", Correct Orientation :" + Global.VisProductCrtOrientation + ", Wrong Orientation" + Global.VisProductWrgOrientation + ">"));
+                    m_InsightV1.AcceptUpdate(); // Tell the sensor that the application is ready for new results.
+                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Quantity result:" + " " + Global.VisProductQuantity });
+                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Correct Orientation result:" + " " + Global.VisProductCrtOrientation });
+                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Wrong Orientation Result:" + " " + Global.VisProductWrgOrientation });
+                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Overall Result:" + " " + Global.VisInspectResult });
+                    m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info," Vision Result :" + Global.VisInspectResult + "<" +"Total Quantity per box :"+ Global.VisProductQuantity + ", Correct Orientation :" + Global.VisProductCrtOrientation + ", Wrong Orientation" + Global.VisProductWrgOrientation +">"));
                     m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
-                    //m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcUpdate });
+                    
                     //m_CvsInSightDisplay.ShowImage = true;
                     //Bitmap fitted_image = m_CvsInSightDisplay.GetBitmap();
                     //BitmapImage converttobitmapimg = Bitmap2BitmapImage(fitted_image);
                     //m_Events.GetEvent<TopVisionImage>().Publish(converttobitmapimg);
 
+                    VisionLive();
                 }
             }
             catch (Exception ex)
@@ -460,7 +437,9 @@ namespace TCPIPManager
             }
             m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Vision connection state:" + " " + m_InsightV1.State.ToString() });
         }
-
+    
         #endregion
-    }
+
+
+   }
 }

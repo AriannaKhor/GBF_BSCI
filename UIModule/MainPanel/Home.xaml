@@ -36,15 +36,19 @@
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="VerticalContentAlignment" Value="Stretch" />
             </Style>
-            <Style TargetType="TabItem">
-                <Setter Property="Header" Value="{Binding DataContext.TabPageHeader}" />
+            <Style TargetType="TabItem" >
+                <Setter Property="Header"  Value="{Binding DataContext.TabPageHeader}" />
                 <Setter Property="FontSize" Value="14"/>
                 <Setter Property="Height" Value="30"/>
                 <Setter Property="Width" Value="120"/>
+                <Setter Property="Visibility" Value="Visible"/>
+                <Setter Property="Visibility" Value="{Binding CanAccess}"/>
             </Style>
+            
         </ResourceDictionary>
     </UserControl.Resources>
 
+    
     <Border BorderBrush="{DynamicResource GridLineBrush}" >
         <Grid>
             <Grid.ColumnDefinitions>
@@ -54,6 +58,12 @@
             </Grid.ColumnDefinitions>
 
             <TabControl prism:RegionManager.RegionName="HomeTabControlRegion"/>
+
+            <!--<StackPanel Grid.Row="5" >
+                <Grid>
+                    
+                </Grid>
+            </StackPanel>-->
 
             <!--Init State-->
             <GroupBox Grid.Column="1" Header="{Binding Path=InitState, Source={StaticResource StringTableODP}}" FontSize="15" FontStyle="Normal" BorderThickness="1" Background="White" BorderBrush="Black" Visibility="{Binding ShowInitState}" >
@@ -82,7 +92,7 @@
                 </ScrollViewer>
             </GroupBox>
 
-            <!-- Lot Entry -->
+            <!-- Lot Entry --><!--
             <Expander Name="LotEntryExpander" Grid.Column="2"  Template="{StaticResource StretchyExpanderToLeft}" MaxWidth="300" IsExpanded="{Binding IsLotEntryExpand}" OverridesDefaultStyle="True">
                 <Expander.Header>
                     <Label Content="{Binding Path=LotEntry, Source={StaticResource StringTableODP}}">
@@ -90,11 +100,11 @@
                             <RotateTransform Angle="-270"/>
                         </Label.LayoutTransform>
                     </Label>
-                </Expander.Header>
+                </Expander.Header>-->
 
-                <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.LotEntryRegion}"/>
+                <!--<ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.LotEntryRegion}"/>
                 
-            </Expander>
+            </Expander>-->
         </Grid>
     </Border>
 </UserControl>

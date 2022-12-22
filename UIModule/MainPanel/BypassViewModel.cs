@@ -129,12 +129,12 @@ namespace UIModule.MainPanel
 
                 case (int)BYP_IDX.CodeReader:
                     // Set the bypass flag to particular machine seq when triggerd
-                    m_DelegateSeq.BypassStation(SQID.SampleSeq, BypassCollection[(int)BYP_IDX.CodeReader].IsBypass);
+                    m_DelegateSeq.BypassStation(SQID.CodeReaderSeq, BypassCollection[(int)BYP_IDX.CodeReader].IsBypass);
                     break;
 
                 case (int)BYP_IDX.TopVision:
                     // Set the bypass flag to particular machine seq when triggerd
-                    m_DelegateSeq.BypassStation(SQID.SampleSeq2, BypassCollection[(int)BYP_IDX.TopVision].IsBypass);
+                    m_DelegateSeq.BypassStation(SQID.CodeReaderSeq, BypassCollection[(int)BYP_IDX.TopVision].IsBypass);
                     break;
             }
         }
@@ -145,8 +145,8 @@ namespace UIModule.MainPanel
         {
             // Update bypass flag to all machine seq
             Global.BypassDoor = BypassCollection[(int)BYP_IDX.Door].IsBypass;
-            m_DelegateSeq.BypassStation(SQID.SampleSeq, BypassCollection[(int)BYP_IDX.CodeReader].IsBypass);
-            m_DelegateSeq.BypassStation(SQID.SampleSeq2, BypassCollection[(int)BYP_IDX.TopVision].IsBypass);
+            m_DelegateSeq.BypassStation(SQID.CodeReaderSeq, BypassCollection[(int)BYP_IDX.CodeReader].IsBypass);
+            m_DelegateSeq.BypassStation(SQID.CodeReaderSeq, BypassCollection[(int)BYP_IDX.TopVision].IsBypass);
         }
 
         private void RefreshAllBypassEnabledState()

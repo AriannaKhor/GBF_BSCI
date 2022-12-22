@@ -123,7 +123,7 @@ namespace UIModule.MainPanel
             set
             {
                 SetProperty(ref m_IsAllowStart, value);
-                CheckSSRButtonAvail();
+                //CheckSSRButtonAvail();
             }
         }
 
@@ -134,7 +134,7 @@ namespace UIModule.MainPanel
             set
             {
                 SetProperty(ref m_IsAllowStop, value);
-                CheckSSRButtonAvail();
+               // CheckSSRButtonAvail();
             }
         }
 
@@ -190,7 +190,7 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Hardware SSR Button
-        private DispatcherTimer tmrButtonMonitor;
+        //private DispatcherTimer tmrButtonMonitor;
 
         //private int StartButton = (int)IN.DI0104_Input5; // Assign Start Button Input
         //private int StopButton = (int)IN.DI0105_Input6; // Assign Stop Button Input
@@ -488,10 +488,10 @@ namespace UIModule.MainPanel
 
             // TCP/IP Monitor
             CreateTCPCollection();
-            m_tmrTCPMonitor = new DispatcherTimer();
-            m_tmrTCPMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            m_tmrTCPMonitor.Tick += new EventHandler(m_tmrTCPMonitor_Tick);
-            m_tmrTCPMonitor.Start();
+            //m_tmrTCPMonitor = new DispatcherTimer();
+            //m_tmrTCPMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            //m_tmrTCPMonitor.Tick += new EventHandler(m_tmrTCPMonitor_Tick);
+            //m_tmrTCPMonitor.Start();
 
             IsTCPIPListOpen = false;
             DisableAllBtn();
@@ -621,12 +621,12 @@ namespace UIModule.MainPanel
             if (IsAllowStart || IsAllowStop)
             {
                 // start monitoring button activity
-                tmrButtonMonitor.Start();
+                //tmrButtonMonitor.Start();
             }
             else
             {
                 // stop monitoring button activity
-                tmrButtonMonitor.Stop();
+                //tmrButtonMonitor.Stop();
             }
 
             // Turn ON/OFF hardware SSR button LED

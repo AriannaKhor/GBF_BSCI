@@ -24,7 +24,7 @@ namespace DialogManager.ErrorMsg
         private readonly IBaseIO m_IO;
         private CultureResources m_CultureResources;
 
-        private DispatcherTimer m_TmrButtonMonitor;
+        //private DispatcherTimer m_TmrButtonMonitor;
 
         private BitmapImage m_Image;
         public BitmapImage Image
@@ -145,8 +145,8 @@ namespace DialogManager.ErrorMsg
             m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{m_CultureResources.GetStringValue("MachineError")}, {m_CultureResources.GetStringValue("Station")} : {AlarmDetail.Station}, {m_CultureResources.GetStringValue("Error")} : {AlarmDetail.Causes}" });
 
             Global.SkipRetest.Add(new ErrRecovery { AlarmModule = AlarmDetail.Module, IsSkipRetest = IsSkipRetest });
-
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
+            m_EventAggregator.GetEvent<CheckOperation>().Publish(true);
+            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
             CloseDialog("");
         }
 

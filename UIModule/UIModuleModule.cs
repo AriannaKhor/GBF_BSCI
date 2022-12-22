@@ -29,17 +29,27 @@ namespace UIModule
             regionManager.RegisterViewWithRegion(RegionNames.CompactRegion, typeof(CompactView));
             regionManager.RegisterViewWithRegion(RegionNames.CompactRegion, typeof(MachinePerformanceView));
 
-            if(!m_SystemConfig.General.IsCompactView)
-            {
-                //Home TabItem Region
-                IRegion tabControlRegion = regionManager.Regions[RegionNames.HomeTabControlRegion];
-                tabControlRegion.Add(containerProvider.Resolve<EquipmentView>());
-            }
+
+
+            //if (!m_SystemConfig.General.IsCompactView)
+            //{
+            //    //    ////Home TabItem Region
+            //    {
+
+
+                    IRegion tabControlRegion = regionManager.Regions[RegionNames.HomeTabControlRegion];
+
+                    tabControlRegion.Add(containerProvider.Resolve<EquipmentView>());
+                    tabControlRegion.Add(containerProvider.Resolve<OperatorView>());
+                      
+          //  }
 
             // Lot Entry Region
-            IRegion lotentryRegion = regionManager.Regions[RegionNames.LotEntryRegion];
-            lotentryRegion.Add(containerProvider.Resolve<LotEntryView>());
+            // IRegion lotentryRegion = regionManager.Regions[RegionNames.LotEntryRegion];
+            //lotentryRegion.Add(containerProvider.Resolve<LotEntryView>());
         }
+
+
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
@@ -56,7 +66,6 @@ namespace UIModule
             containerRegistry.RegisterForNavigation<OEEMainView>();
             containerRegistry.RegisterForNavigation<OEELiveView>();
             containerRegistry.RegisterForNavigation<OEEAnalysisView>();
-            containerRegistry.RegisterForNavigation<OEESettingView>();
             containerRegistry.RegisterForNavigation<ErrorAnalysisView>();
             containerRegistry.RegisterForNavigation<MachinePerformanceView>();
             containerRegistry.RegisterForNavigation<ModulePerformanceView>();
@@ -66,7 +75,9 @@ namespace UIModule
             containerRegistry.RegisterForNavigation<MotorView>();
             containerRegistry.RegisterForNavigation<TCPIPView>();
             containerRegistry.RegisterForNavigation<SerialPortView>();
-            containerRegistry.RegisterForNavigation<SecsGemSettingsView>();
+            //containerRegistry.RegisterForNavigation<OperatorView>();
+            //containerRegistry.RegisterForNavigation<EquipmentView>();
+
 
             //Dialog Views
             containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
