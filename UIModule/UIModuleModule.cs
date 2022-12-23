@@ -29,24 +29,10 @@ namespace UIModule
             regionManager.RegisterViewWithRegion(RegionNames.CompactRegion, typeof(CompactView));
             regionManager.RegisterViewWithRegion(RegionNames.CompactRegion, typeof(MachinePerformanceView));
 
+            IRegion tabControlRegion = regionManager.Regions[RegionNames.HomeTabControlRegion];
+            tabControlRegion.Add(containerProvider.Resolve<EquipmentView>());
+            tabControlRegion.Add(containerProvider.Resolve<OperatorView>());
 
-
-            //if (!m_SystemConfig.General.IsCompactView)
-            //{
-            //    //    ////Home TabItem Region
-            //    {
-
-
-                    IRegion tabControlRegion = regionManager.Regions[RegionNames.HomeTabControlRegion];
-
-                    tabControlRegion.Add(containerProvider.Resolve<EquipmentView>());
-                    tabControlRegion.Add(containerProvider.Resolve<OperatorView>());
-                      
-          //  }
-
-            // Lot Entry Region
-            // IRegion lotentryRegion = regionManager.Regions[RegionNames.LotEntryRegion];
-            //lotentryRegion.Add(containerProvider.Resolve<LotEntryView>());
         }
 
 
@@ -75,8 +61,6 @@ namespace UIModule
             containerRegistry.RegisterForNavigation<MotorView>();
             containerRegistry.RegisterForNavigation<TCPIPView>();
             containerRegistry.RegisterForNavigation<SerialPortView>();
-            //containerRegistry.RegisterForNavigation<OperatorView>();
-            //containerRegistry.RegisterForNavigation<EquipmentView>();
 
 
             //Dialog Views

@@ -154,6 +154,7 @@
     <Compile Include="Constant\MotCFG.cs" />
     <Compile Include="MotionConfig.cs" />
     <Compile Include="OEEConfig.cs" />
+    <Compile Include="ProductQtyConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SecsGemRecipeConfig.cs" />
     <Compile Include="SecsGemConfig.cs" />

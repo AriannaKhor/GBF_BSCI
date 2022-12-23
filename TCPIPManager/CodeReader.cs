@@ -34,7 +34,6 @@ namespace TCPIPManager
         private bool canContAnalyse = false;
         public SystemConfig m_SystemConfig;
         private IPAddress codereaderIp;
-        private CodeReaderDisplayControl formCodeReader = new CodeReaderDisplayControl();
         private DataManSystem m_CodeReader = null;
         private ResultCollector m_CodeReaderResults;
         private ISystemConnector m_CodeReaderconnector = null;

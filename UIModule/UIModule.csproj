@@ -262,6 +262,10 @@
       <DependentUpon>MotorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StandardViews\MotorViewModel.cs" />
+    <Compile Include="StandardViews\ProductQtyView.xaml.cs">
+      <DependentUpon>ProductQtyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StandardViews\ProductQtyViewModel.cs" />
     <Compile Include="StandardViews\SecsGemSettingsView.xaml.cs">
       <DependentUpon>SecsGemSettingsView.xaml</DependentUpon>
     </Compile>
@@ -527,6 +531,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RecipeViews\RecipeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StandardViews\ProductQtyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

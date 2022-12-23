@@ -1694,4 +1694,7 @@ Red    : Machine Down</value>
   <data name="Operator" xml:space="preserve">
     <value>Operator</value>
   </data>
+  <data name="ProductQuantity" xml:space="preserve">
+    <value>Product Quantity</value>
+  </data>
 </root>

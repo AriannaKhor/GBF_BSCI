@@ -300,18 +300,6 @@
     <Compile Include="UserServices\IAuthService.cs" />
     <Compile Include="Utilities\EnumBindingSourceExtension.cs" />
     <Compile Include="Utilities\EnumHelper.cs" />
-    <Compile Include="Utilities\CodeReaderDisplayControl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Utilities\CodeReaderDisplayControl.Designer.cs">
-      <DependentUpon>CodeReaderDisplayControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Utilities\InSightDisplayControl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Utilities\InSightDisplayControl.Designer.cs">
-      <DependentUpon>InSightDisplayControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utilities\InverseBooleanConverter.cs" />
     <Compile Include="Utilities\MachineBase.cs" />
     <Compile Include="Utilities\PerfInfo.cs" />
@@ -339,14 +327,6 @@
       <Project>{836015ae-5049-4b39-801f-a363aea3c537}</Project>
       <Name>GreatechApp.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Utilities\CodeReaderDisplayControl.resx">
-      <DependentUpon>CodeReaderDisplayControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\InSightDisplayControl.resx">
-      <DependentUpon>InSightDisplayControl.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

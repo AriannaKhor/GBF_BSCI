@@ -39,9 +39,6 @@ namespace TCPIPManager
         private bool allowVisResultchg = false;
         private static object m_SyncLog = new object();
         public SystemConfig m_SystemConfig;
-        private InSightDisplayControl formVis;
-        //protected DispatcherTimer tmrScanIOEnableLive;
-        //protected DispatcherTimer tmrScanIOLiveAcquire;
         private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection;
         private CvsInSight m_InsightV1 = new CvsInSight();
         private CvsInSightDisplay m_CvsInSightDisplay = new CvsInSightDisplay();
@@ -56,18 +53,6 @@ namespace TCPIPManager
 
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
 
-            //// Configure Vision timer object //To Pop Up need 3 seconds
-            //tmrScanIOEnableLive = new DispatcherTimer();
-            //tmrScanIOEnableLive.Tick += new System.EventHandler(tmrScanIOEnableLive_Tick);
-            //tmrScanIOEnableLive.Interval = new TimeSpan(0, 0, 0, 3, 0);
-            //tmrScanIOEnableLive.IsEnabled = false;
-
-            //// Configure Vision timer object //To Enable Live 0.5 seconds
-            //tmrScanIOLiveAcquire = new DispatcherTimer();
-            //tmrScanIOLiveAcquire.Tick += new System.EventHandler(tmrScanIOLiveAcquire_Tick);
-            //tmrScanIOLiveAcquire.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            //tmrScanIOLiveAcquire.IsEnabled = false;
-
             m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(ConnectVision);
             //m_Events.GetEvent<RequestVisionLiveViewEvent>().Subscribe(VisionLive);
 
@@ -80,8 +65,6 @@ namespace TCPIPManager
             m_SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
             m_SoftwareResultCollection.CollectionChanged += this.OnSoftwareResultCollectionChanged;
         }
-
-
         #endregion
 
         #region Method
@@ -350,32 +333,6 @@ namespace TCPIPManager
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.Source);
-            }
-        }
-        private void tmrScanIOEnableLive_Tick(object sender, System.EventArgs e) //the "EventArgs" need to use System.EventArgs else it will refer to the EventArgs under TCPIPManager which is not compatoble -------------------------------->>
-        {
-            try
-            {
-                formVis.EnableLive();
-                //tmrScanIOLiveAcquire.Start();
-                //tmrScanIOEnableLive.Stop();
-            }
-            catch (Exception ex)
-            {
-                MachineBase.ShowMessage(ex);
-            }
-        }
-
-        private void tmrScanIOLiveAcquire_Tick(object sender, System.EventArgs e)
-        {
-            try
-            {
-                formVis.LiveAcquire();
-                //tmrScanIOLiveAcquire.Stop();
-            }
-            catch (Exception ex)
-            {
-                MachineBase.ShowMessage(ex);
             }
         }
 

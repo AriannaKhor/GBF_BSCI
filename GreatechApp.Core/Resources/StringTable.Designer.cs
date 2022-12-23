@@ -3258,6 +3258,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product Quantity.
+        /// </summary>
+        public static string ProductQuantity {
+            get {
+                return ResourceManager.GetString("ProductQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product Recipe.
         /// </summary>
         public static string ProductRecipe {

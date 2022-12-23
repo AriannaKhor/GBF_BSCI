@@ -161,6 +161,13 @@ namespace ConfigManager
             get { return (CfgCollection)this["SeqCfg"]; }
         }
 
+        [ConfigurationProperty("PrdQtyLimitCfg")]
+        public CfgCollection PrdQtyLimitCfg
+        {
+            set { this["PrdQtyLimitCfg"] = value; }
+            get { return (CfgCollection)this["PrdQtyLimitCfg"]; }
+        }
+
         [ConfigurationProperty("MotCfg", IsRequired = false)]
         public CfgCollection MotCfgRef
         {

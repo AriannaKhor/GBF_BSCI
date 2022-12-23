@@ -238,6 +238,7 @@
     <Compile Include="Modal\ErrRecovery.cs" />
     <Compile Include="Modal\InitStatus.cs" />
     <Compile Include="Modal\IOList.cs" />
+    <Compile Include="Modal\ProductQuantityParameter.cs" />
     <Compile Include="Modal\SecsGem.cs" />
     <Compile Include="Modal\SerialPortParameter.cs" />
     <Compile Include="Modal\Slot.cs" />
