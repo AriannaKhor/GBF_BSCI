@@ -188,17 +188,7 @@ namespace Sequence
 
         private void OnSeqEndLotComplted(SequenceEvent sequence)
         {
-            //lock (m_SyncInit)
-            //{
-            //    EndLotCompletedCount++;
-
-            //    // Set Based on project requirement
-            //    if (EndLotCompletedCount == 11)
-            //    {
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Lot_Ended);
-                    //EndLotCompletedCount = 0;
-                //}
-            //}
+           m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
         }
 
         private void OnMachineStateChange(MachineStateType state)

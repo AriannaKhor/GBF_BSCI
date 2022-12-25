@@ -425,22 +425,6 @@
 
                         <Rectangle Grid.Column="3" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
 
-                        <!--Recipes--><!--
-                        <StackPanel Grid.Column="4" Orientation="Vertical" VerticalAlignment="Center">
-                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/Recipe.png" ToolTip="{Binding Path=Recipe, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
-                            <Label Content="{Binding Path=Recipe, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDown">
-                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="RecipeView" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseEnter">
-                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </StackPanel>--><!--
-
-                        <Rectangle Grid.Column="5" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>-->
-
                         <!--TCP/IP-->
                         <StackPanel Grid.Column="4" Orientation="Vertical" VerticalAlignment="Center">
                             <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/tcpip.png" ToolTip="{Binding Path=TCPIP, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>

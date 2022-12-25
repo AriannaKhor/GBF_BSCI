@@ -362,7 +362,6 @@ namespace UIModule.MainPanel
                 //{
                 //    IsAllowStart = true;
                 //    IsAllowStop = false;
-                //}
             }
         }
 
@@ -448,9 +447,9 @@ namespace UIModule.MainPanel
                 });
                 TCPIPStatus = TCPCollection.All(x => x.IsConnected) ? "Connected" : "Disconnected";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
+                MessageBox.Show(ex.Message, ex.Source);
             }
         }
 
@@ -458,8 +457,6 @@ namespace UIModule.MainPanel
         {
             if (IsAuthenticated)
             {
-                //AbleAllButton();
-                IdleMode();
                 CanAccess = true;
                 UserInfo = $"User ID : {m_CurrentUser.Username} {Environment.NewLine}User Level : {m_CurrentUser.UserLevel}";
                 UserId = m_CurrentUser.Username;
@@ -482,19 +479,7 @@ namespace UIModule.MainPanel
             {
                 CanAccess = false;
             }
-
-            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
-            {
-                CanAccess = false;
-
-            }
-            else
-            {
-                CanAccess = true;
-
-            }
         }
-
 
         private void SetupEStopWindow()
 		{
@@ -574,7 +559,6 @@ namespace UIModule.MainPanel
             if (Command == "Logout")
             {
                 DisableAllBtn();
-                CanAccess = false;
                 IsTCPIPListOpen = false;
                 LoginStatus = "Login";
                 UserInfo = $"User ID : {m_CurrentUser.Username} {Environment.NewLine}User Level : {m_CurrentUser.UserLevel}";
@@ -613,19 +597,9 @@ namespace UIModule.MainPanel
 
                     if (dialogResult == ButtonResult.Yes)
                     {
-                        m_EventAggregator.GetEvent<EndLotOperation>().Publish();
-                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ending_Lot);
-                        Global.MachineStatus = MachineStateType.Ending_Lot;
-
-                        // Send EndLot event to the sequence that required
-
-
                         m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-
-
                         m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
-                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Lot_Ended);
-
+                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                     }
                 }
                 else

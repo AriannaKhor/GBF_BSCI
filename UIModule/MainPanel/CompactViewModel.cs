@@ -592,15 +592,15 @@ namespace UIModule.MainPanel
 
         public void IdleMode()
         {
-            if (CanAccess)
-            {
+            //if (CanAccess)
+            //{
                 IsAllowInit = true;
                 IsAllowAutoMode = true;
                 IsAllowDryRun = true;
                 IsAllowStart = false;
                 IsAllowStop = false;
                 IsAllowReset = false;
-            }
+            //}
         }
 
         public void ReadyMode()
