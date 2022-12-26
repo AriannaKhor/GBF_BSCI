@@ -461,6 +461,8 @@ namespace UIModule.MainPanel
                 UserInfo = $"User ID : {m_CurrentUser.Username} {Environment.NewLine}User Level : {m_CurrentUser.UserLevel}";
                 UserId = m_CurrentUser.Username;
                 UserLvl = m_CurrentUser.UserLevel.ToString();
+                Global.UserId = UserId;
+                Global.UserLvl = UserLvl;
                 IsLogin = Visibility.Collapsed;
                 IsLogout = Visibility.Visible;
                 LoginStatus = "Logout";
@@ -611,7 +613,7 @@ namespace UIModule.MainPanel
                     if (dialogResult == ButtonResult.OK)
                     {
                         m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcStart });
-                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
+                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                     }
                 }
             }

@@ -57,7 +57,6 @@ namespace TCPIPManager
             //m_Events.GetEvent<RequestVisionLiveViewEvent>().Subscribe(VisionLive);
 
             //m_Events.GetEvent<TopVisionResultEvent>().Subscribe(VisionLive);
-
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
 
@@ -381,18 +380,12 @@ namespace TCPIPManager
 
                     VisionLive();
                     //m_InsightV1.AcceptUpdate(); // Tell the sensor that the application is ready for new results.
-                    //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Quantity result:" + " " + Global.VisProductQuantity });
+                    // m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Quantity result:" + " " + Global.VisProductQuantity });
                     //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Correct Orientation result:" + " " + Global.VisProductCrtOrientation });
                     //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Wrong Orientation Result:" + " " + Global.VisProductWrgOrientation });
                     //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Overall Result:" + " " + Global.VisInspectResult });
                     //m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Vision Result :" + Global.VisInspectResult + "<" + "Total Quantity per box :" + Global.VisProductQuantity + ", Correct Orientation :" + Global.VisProductCrtOrientation + ", Wrong Orientation" + Global.VisProductWrgOrientation + ">"));
                     m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
-                    //m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcUpdate });
-                    //m_CvsInSightDisplay.ShowImage = true;
-                    //Bitmap fitted_image = m_CvsInSightDisplay.GetBitmap();
-                    //BitmapImage converttobitmapimg = Bitmap2BitmapImage(fitted_image);
-                    //m_Events.GetEvent<TopVisionImage>().Publish(converttobitmapimg);
-
                 }
             }
             catch (Exception ex)

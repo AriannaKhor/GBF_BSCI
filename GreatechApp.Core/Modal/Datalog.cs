@@ -1,7 +1,9 @@
 ﻿using GreatechApp.Core.Enums;
+using GreatechApp.Core.Variable;
 using Prism.Mvvm;
 using System;
 using System.Globalization;
+
 
 namespace GreatechApp.Core.Modal
 {
@@ -23,4 +25,43 @@ namespace GreatechApp.Core.Modal
         public LogMsgType MsgType { get; set; }
         public string MsgText { get; set; }
     }
+
+    public class ResultsDatalog : BindableBase
+    {
+        public ResultsDatalog()
+        {
+            UserId = Global.UserId;
+            UserLvl = Global.UserLvl;
+            DateTime currentTime = DateTime.Now;
+            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+            dateFormat.ShortDatePattern = "dd-MM-yyyy";
+            Date = currentTime.ToString("d", dateFormat);
+            Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+            Timestamp = Date + " | " + Time;
+            TopVision = inspectiontype.TopVision.ToString();
+            VisCorrectOrient = Global.VisProductCrtOrientation;
+            VisWrongOrient = Global.VisProductWrgOrientation;
+            CodeReader = inspectiontype.CodeReader.ToString();
+            DecodeBatchQuantity = Global.CurrentBatchQuantity;
+            DecodeBoxQuantity = Global.CurrentBoxQuantity;
+            DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
+            DecodeResult = Global.OverallResult;
+
+        }
+        public string Date { get; set; }
+        public string Time { get; set; }
+        public string Timestamp { get; set; }
+        public string UserId { get; set; }
+        public string UserLvl { get; set; }
+        public string TopVision { get; set; }
+        public string CodeReader { get; set; }
+        public string VisCorrectOrient { get; set; }
+        public string VisWrongOrient { get; set; }
+        public int DecodeBatchQuantity { get; set; }
+        public int DecodeBoxQuantity { get; set; }
+        public int DecodeAccuQuantity { get; set; }
+        public string DecodeResult { get; set; }
+    }
+
+  
 }

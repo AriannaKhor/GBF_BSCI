@@ -57,7 +57,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <TabControl prism:RegionManager.RegionName="HomeTabControlRegion"/>
+            <UserControl prism:RegionManager.RegionName="HomeTabControlRegion"/>
 
             <!--<StackPanel Grid.Row="5" >
                 <Grid>

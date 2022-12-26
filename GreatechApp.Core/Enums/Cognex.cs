@@ -13,4 +13,10 @@ namespace GreatechApp.Core.Enums
         NG,
         NoBoxDetected,
     }
+
+    public enum inspectiontype
+    {
+        TopVision,
+        CodeReader,
+    }
 }

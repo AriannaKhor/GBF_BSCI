@@ -29,13 +29,10 @@ namespace UIModule
             regionManager.RegisterViewWithRegion(RegionNames.CompactRegion, typeof(CompactView));
             regionManager.RegisterViewWithRegion(RegionNames.CompactRegion, typeof(MachinePerformanceView));
 
-            IRegion tabControlRegion = regionManager.Regions[RegionNames.HomeTabControlRegion];
-            tabControlRegion.Add(containerProvider.Resolve<EquipmentView>());
-            tabControlRegion.Add(containerProvider.Resolve<OperatorView>());
-
+            IRegion homeRegion = regionManager.Regions[RegionNames.HomeTabControlRegion];
+            homeRegion.Add(containerProvider.Resolve<EquipmentView>(), "EquipmentView");
+            homeRegion.Add(containerProvider.Resolve<OperatorView>(), "OperatorView");
         }
-
-
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {

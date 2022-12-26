@@ -347,10 +347,6 @@ namespace UIModule.MainPanel
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachName")} : {m_SystemConfig.Machine.EquipName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
 
-            //Software Results Log
-            SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
-            SoftwareResultCollection.CollectionChanged += this.OnSoftwareResultCollectionChanged;
-
             MachineDataCollection = new ObservableCollection<IMachineData>();
             var Seq3 = m_IMachineDataCollection.FirstOrDefault(x => x.DataMarkerType == MarkerType.CircularDataMarker) as CircularDataMarkerViewModel;
             Seq3.BuildDataMarker("SampleSeq 3", SQID.SampleSeq3, UnitFlowDir.CW);
@@ -521,27 +517,6 @@ namespace UIModule.MainPanel
             });
         }
 
-        private void OnSoftwareResultCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            try
-            {
-                if (e.Action == NotifyCollectionChangedAction.Add)
-                {
-                    Datalog resultLog = e.NewItems[0] as Datalog;
-
-                    if (resultLog == null)
-                    {
-                        return;
-                    }
-                    WriteSoftwareResultLog(resultLog);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.Source);
-            }
-        }
-
         private void OnDatalogCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             try
@@ -603,51 +578,6 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Log
-        private void WriteSoftwareResultLog(Datalog log)
-        {
-            lock (m_SyncLog)
-            {
-                string executableName = System.IO.Path.GetDirectoryName(
-                         System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-                executableName = executableName.Replace("file:\\", string.Empty);
-                FileInfo executableFileInfo = new FileInfo(executableName);
-                string logDirectory = executableFileInfo.DirectoryName +
-                    m_SystemConfig.FolderPath.AppLog.Replace(@"..", string.Empty);
-                if (!Directory.Exists(logDirectory))
-                {
-                    // Create the station folder in AppData directory
-                    Directory.CreateDirectory(logDirectory);
-                }
-
-                // Write the log information to the file
-                FileStream fs = null;
-                StringBuilder fileName = new StringBuilder();
-                fileName.Append(m_SystemConfig.FolderPath.SoftwareResultLog).
-                    Append("Log[").Append(log.Date).Append("].log");
-                // Check whether this file exist.
-                // A new datalog file will be created for each day.
-                if (!File.Exists(fileName.ToString()))
-                {
-                    fs = new FileStream(fileName.ToString(), FileMode.Create, FileAccess.Write);
-                }
-                else
-                {
-                    fs = new FileStream(fileName.ToString(), FileMode.Append, FileAccess.Write);
-                }
-                using (StreamWriter logWriter = new StreamWriter(fs))
-                {
-                    StringBuilder logData = new StringBuilder();
-                    logData.Append(log.Date).Append(" | ").
-                        Append(log.Time).Append(" |").
-                        Append(log.MsgType).Append("| ").
-                        Append(log.MsgText);
-                    logWriter.WriteLine(logData.ToString());
-                    logWriter.Close();
-                }
-            }
-        }
-
-
         private void WriteLog(Datalog log)
         {
             lock(m_SyncLog)

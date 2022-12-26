@@ -22,7 +22,7 @@ namespace UIModule.MainPanel
     {
 
         #region Variable
-
+        private readonly IRegionManager m_regionManager;
         private Visibility m_IsAllowEquipment = Visibility.Collapsed;
 
         public Visibility IsAllowEquipment
@@ -73,8 +73,9 @@ namespace UIModule.MainPanel
        
         #region Constructor
 
-        public HomeViewModel()
+        public HomeViewModel(IRegionManager regionmanager)
         {
+            m_regionManager = regionmanager;
 
             ShowInitState = Visibility.Collapsed;
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(UpdateMachineOperation);
@@ -194,19 +195,15 @@ namespace UIModule.MainPanel
         {
             RaisePropertyChanged(nameof(CanAccess));
             base.OnValidateLogin(IsAuthenticated);
-            //IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-            //IsAllowAccessOperator = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
 
-            //if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
-            //{
-            //    IsAllowOperator = Visibility.Visible;
-
-            //}
-            //else
-            //{
-            //    IsAllowOperator = Visibility.Collapsed;
-
-            //}
+            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
+            {
+                m_regionManager.RequestNavigate("HomeTabControlRegion","OperatorView");
+            }
+            else
+            {
+                m_regionManager.RequestNavigate("HomeTabControlRegion", "EquipmentView");
+            }
 
         }
         #endregion
