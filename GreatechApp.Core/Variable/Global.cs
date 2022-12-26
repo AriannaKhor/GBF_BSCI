@@ -11,8 +11,12 @@ namespace GreatechApp.Core.Variable
         public static string MachName;
         public static int MachNo;
         public static string SoftwareVersion;
-        public static CultureInfo CurrentCulture; 
-       
+        public static CultureInfo CurrentCulture;
+
+        //UserInfo
+        public static string UserId;
+        public static string UserLvl;
+
         // Machine Operation
         public static bool AutoMode;
         public static bool DryRun;
@@ -56,7 +60,12 @@ namespace GreatechApp.Core.Variable
         public static int AccumulateCurrentBatchQuantity;
         public static string CodeReaderConnStatus;
         public static string CodeReaderResult = resultstatus.PendingResult.ToString();
-        public static bool CodeReaderRetry;
+        public static string OverallResult;
+
+        //Error 
+        public static string ErrorMsg;
+        public static string ErrorCaused;
+        public static string Remarks;
 
         //Recipe Parameter
         public static int MotionLoopCount;

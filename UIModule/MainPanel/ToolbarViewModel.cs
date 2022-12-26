@@ -457,6 +457,8 @@ namespace UIModule.MainPanel
                 UserInfo = $"User ID : {m_CurrentUser.Username} {Environment.NewLine}User Level : {m_CurrentUser.UserLevel}";
                 UserId = m_CurrentUser.Username;
                 UserLvl = m_CurrentUser.UserLevel.ToString();
+                Global.UserId = UserId;
+                Global.UserLvl = UserLvl;
                 IsLogin = Visibility.Collapsed;
                 IsLogout = Visibility.Visible;
                 LoginStatus = "Logout";

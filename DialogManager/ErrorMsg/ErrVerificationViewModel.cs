@@ -31,7 +31,12 @@ namespace DialogManager.ErrorMsg
         private CultureResources m_CultureResources;
         public IUser m_CurrentUser;
 
-        //private DispatcherTimer m_TmrButtonMonitor;
+        private string m_remarks;
+        public string remarks
+        {
+            get { return m_remarks; }
+            set { SetProperty(ref m_remarks, Global.Remarks = value); }
+        }
 
         private BitmapImage m_Image;
         public BitmapImage Image
@@ -134,11 +139,11 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_YesSituation, value); }
         }
 
-        private bool m_CanAccess=true;
-        public bool CanAccess
+        private bool m_btnYesEnable = false;
+        public bool btnYesEnable
         {
-            get { return m_CanAccess; }
-            set { SetProperty(ref m_CanAccess, value); }
+            get { return m_btnYesEnable; }
+            set { SetProperty(ref m_btnYesEnable, value); }
         }
 
         private Visibility m_NoSituation = Visibility.Collapsed;
@@ -154,7 +159,7 @@ namespace DialogManager.ErrorMsg
             get { return m_ErrMessage; }
             set { SetProperty(ref m_ErrMessage, value); }
         }
- 
+
         private bool m_IsSkipRetest;
         public bool IsSkipRetest
         {
@@ -180,6 +185,7 @@ namespace DialogManager.ErrorMsg
         private readonly IDialogService m_DialogService;
         //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
         //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
+        public DelegateCommand<object> VerificationCommand { get; private set; }
 
         #endregion
 
@@ -190,7 +196,10 @@ namespace DialogManager.ErrorMsg
             m_DialogService = dialogService;
             m_SQLOperation = sqlOperation;
             m_IO = baseIO;
+            m_CultureResources = cultureResources;
+            m_AuthService = authService;
 
+            VerificationCommand = new DelegateCommand<object>(VerificationMethod);
             m_CurrentUser = (DefaultUser)ContainerLocator.Container.Resolve(typeof(DefaultUser));
             m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
@@ -199,7 +208,30 @@ namespace DialogManager.ErrorMsg
             AlarmDetail = new AlarmParameter();
         }
 
+        private void VerificationMethod(object value)
+        {
+            var passwordBox = value as PasswordBox;
+            var password = passwordBox.Password;
+
+            if (m_AuthService.Authenticate(UserID, password))
+            {
+                var currentUserLevel = m_AuthService.CurrentUser.UserLevel;
+                if (currentUserLevel == ACL.UserLevel.Admin || currentUserLevel == ACL.UserLevel.Engineer || currentUserLevel == ACL.UserLevel.Technician)
+                {
+                    btnYesEnable = true;
+                }
+                else
+                {
+                    btnYesEnable = false;
+                }
+            }
+            else
+            {
+                ErrMessage = m_CultureResources.GetStringValue("InvalidLoginInfo");
+            }
+        }
         #endregion
+
 
 
         #region Method
@@ -248,6 +280,11 @@ namespace DialogManager.ErrorMsg
                     m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
                     RaiseEndLotPopup();
                 }
+                CloseDialog("");
+            }
+
+                m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{m_CultureResources.GetStringValue("MachineError")}, {m_CultureResources.GetStringValue("Station")} : {AlarmDetail.Station}, {m_CultureResources.GetStringValue("Error")} : {AlarmDetail.Causes}" });
+
                 CloseDialog("");
             }
 
