@@ -1,4 +1,5 @@
-﻿using GreatechApp.Core.Enums;
+﻿using CsvHelper.Configuration;
+using GreatechApp.Core.Enums;
 using GreatechApp.Core.Variable;
 using Prism.Mvvm;
 using System;
@@ -7,7 +8,7 @@ using System.Globalization;
 
 namespace GreatechApp.Core.Modal
 {
-    public class Datalog: BindableBase
+    public class Datalog : BindableBase
     {
         public Datalog(LogMsgType msgType, string descrip)
         {
@@ -39,6 +40,7 @@ namespace GreatechApp.Core.Modal
             Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
             Timestamp = Date + " | " + Time;
             TopVision = inspectiontype.TopVision.ToString();
+            VisTotalPrdQty = Global.VisProductQuantity;
             VisCorrectOrient = Global.VisProductCrtOrientation;
             VisWrongOrient = Global.VisProductWrgOrientation;
             CodeReader = inspectiontype.CodeReader.ToString();
@@ -46,11 +48,12 @@ namespace GreatechApp.Core.Modal
             DecodeBoxQuantity = Global.CurrentBoxQuantity;
             DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
             DecodeResult = Global.OverallResult;
-            ErrorMessage = Global.ErrorCaused;
+            VisErrorMessage = Global.VisErrorCaused;
+            CodeReaderErrorMessage = Global.CodeReaderErrorCaused;
             Remarks = Global.Remarks;
-            //ApprovedBy=
-            
-
+            ForceEndLotRemarks = Global.ForceEndLotRemarks;
+            ApprovedBy = Global.CurrentApprovalLevel;
+            ApprovedBy = Global.ForceEndLotCurrentApprovalLevel;
         }
         public string Date { get; set; }
         public string Time { get; set; }
@@ -59,6 +62,7 @@ namespace GreatechApp.Core.Modal
         public string UserLvl { get; set; }
         public string TopVision { get; set; }
         public string CodeReader { get; set; }
+        public float VisTotalPrdQty { get; set; }
         public string VisCorrectOrient { get; set; }
         public string VisWrongOrient { get; set; }
         public int DecodeBatchQuantity { get; set; }
@@ -66,9 +70,57 @@ namespace GreatechApp.Core.Modal
         public int DecodeAccuQuantity { get; set; }
         public string DecodeResult { get; set; }
         public string ErrorMessage { get; set; }
+        public string VisErrorMessage { get; set; }
+        public string CodeReaderErrorMessage { get; set; }
         public string Remarks { get; set; }
+        public string ForceEndLotRemarks { get; set; }
         public string ApprovedBy { get; set; }
-    }
+        public string ForceEndLotApprovedBy { get; set; }
 
-  
+        public void ClearAll()
+        {
+            UserId                  = string.Empty;
+            UserLvl                 = string.Empty;
+                                                  
+            TopVision               = string.Empty;
+            VisTotalPrdQty          = 0;
+            VisCorrectOrient        = string.Empty;
+            VisWrongOrient          = string.Empty;
+                                                  
+            CodeReader              = string.Empty;
+            DecodeBatchQuantity     = 0;
+            DecodeBoxQuantity       = 0;
+            DecodeAccuQuantity      = 0;
+            DecodeResult            = string.Empty;
+
+            ErrorMessage = string.Empty;
+            VisErrorMessage = string.Empty;
+            CodeReaderErrorMessage = string.Empty;
+            Remarks                 = string.Empty;
+            ApprovedBy              = string.Empty;
+        }
+
+        public sealed class ResultsDatalogMap : ClassMap<ResultsDatalog>
+        {
+            public ResultsDatalogMap()
+            {
+                Map(m => m.UserId).Name("User ID");
+                Map(m => m.UserLvl).Name("User Level");
+                Map(m => m.Timestamp).Name("Timestamp");
+                Map(m => m.TopVision).Name("Inspection Type");
+                Map(m => m.VisTotalPrdQty).Name("Total Quantity");
+                Map(m => m.VisCorrectOrient).Name("Correct Orientation");
+                Map(m => m.VisWrongOrient).Name("Wrong Orientation");
+                Map(m => m.CodeReader).Name("Inspection Type");
+                Map(m => m.DecodeBatchQuantity).Name("Decoded Batch Quantity");
+                Map(m => m.DecodeBoxQuantity).Name("Decoded Box Quantity");
+                Map(m => m.DecodeAccuQuantity).Name("Accumulated Batch Quantity");
+                Map(m => m.DecodeResult).Name("Overall Result");
+                Map(m => m.ErrorMessage).Name("Messages");
+                Map(m => m.Remarks).Name("Remarks");
+                Map(m => m.ApprovedBy).Name("Approved By");
+            }
+        }
+    }
 }
+

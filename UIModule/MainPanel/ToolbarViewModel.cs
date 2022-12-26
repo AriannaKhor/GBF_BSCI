@@ -1,9 +1,12 @@
 ﻿using Cognex.DataMan.SDK;
 using Cognex.InSight;
+using CsvHelper;
+using CsvHelper.Configuration;
 using GreatechApp.Core;
 using GreatechApp.Core.Command;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
+using GreatechApp.Core.Helpers;
 using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
 using Prism.Commands;
@@ -12,8 +15,10 @@ using SecsGemManager;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -249,6 +254,8 @@ namespace UIModule.MainPanel
         public DelegateCommand ReconnectAllTCP { get; set; }
         public DelegateCommand<string> ControlStateCheck { get; set; }
 
+        private static object m_SyncLog = new object();
+
         public event Action<string> EStopWindEvent;
 
         private readonly IDialogService m_DialogService;
@@ -280,11 +287,6 @@ namespace UIModule.MainPanel
             tmrSysClock.Tick += new EventHandler(tmrSysClock_Tick);
             tmrSysClock.Start();
 
-            //// Button Monitor
-            //tmrButtonMonitor = new DispatcherTimer();
-            //tmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            //tmrButtonMonitor.Tick += new EventHandler(tmrButtonMonitor_Tick);
-
             // TCP/IP Monitor
             CreateTCPCollection();
             m_tmrTCPMonitor = new DispatcherTimer();
@@ -300,7 +302,6 @@ namespace UIModule.MainPanel
             EquipStatus = "Idle";
             m_EventAggregator.GetEvent<MachineState>().Publish(Global.MachineStatus);
         }
-
 
         #region System Clock
         public string SysDate { get; private set; }
@@ -374,7 +375,6 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Event
-
         private void OnMachineStateChange(MachineStateType state)
         {
             switch (state)
@@ -602,6 +602,8 @@ namespace UIModule.MainPanel
                         m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
                         m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+
+
                     }
                 }
                 else
@@ -671,8 +673,6 @@ namespace UIModule.MainPanel
             Global.SeqStop = true;
             IsAllowStop = false;
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
-
-
         }
 
         #endregion

@@ -380,10 +380,6 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
 
-            if (CanAccess)
-            {
-                m_EventAggregator.GetEvent<OpenLotEntryView>().Publish(true);
-            }
         }
 
         #endregion

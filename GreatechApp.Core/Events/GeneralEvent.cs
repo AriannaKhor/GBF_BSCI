@@ -208,11 +208,11 @@
         public string DisplayView { get; set; }
     }
 
-    public class OpenLotEntryView : PubSubEvent<bool>
+    public class Resultlog : PubSubEvent<ResultsDatalog>
     {
 
     }
-  
+
     public class PerformanceEntity : PubSubEvent<PerformanceEntity>
     {
         public double UPH { get; set; }

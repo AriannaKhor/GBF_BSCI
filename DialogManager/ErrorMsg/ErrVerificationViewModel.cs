@@ -193,8 +193,8 @@ namespace DialogManager.ErrorMsg
 
             if (m_AuthService.Authenticate(UserID, password))
             {
-                var currentUserLevel = m_AuthService.CurrentUser.UserLevel;
-                if (currentUserLevel == ACL.UserLevel.Admin || currentUserLevel == ACL.UserLevel.Engineer || currentUserLevel == ACL.UserLevel.Technician)
+                var currentUserLevel = Global.CurrentApprovalLevel = m_AuthService.CurrentUser.UserLevel.ToString();
+                if (currentUserLevel == ACL.UserLevel.Admin.ToString() || currentUserLevel == ACL.UserLevel.Engineer.ToString() || currentUserLevel == ACL.UserLevel.Technician.ToString())
                 {
                     btnYesEnable = true;
                 }

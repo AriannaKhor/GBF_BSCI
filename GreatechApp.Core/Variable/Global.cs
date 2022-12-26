@@ -64,8 +64,12 @@ namespace GreatechApp.Core.Variable
 
         //Error 
         public static string ErrorMsg;
-        public static string ErrorCaused;
+        public static string VisErrorCaused = "N/A";
+        public static string CodeReaderErrorCaused = "N/A";
         public static string Remarks;
+        public static string ForceEndLotRemarks;
+        public static string CurrentApprovalLevel;
+        public static string ForceEndLotCurrentApprovalLevel;
 
         //Recipe Parameter
         public static int MotionLoopCount;

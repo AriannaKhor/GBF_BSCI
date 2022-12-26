@@ -320,7 +320,6 @@ namespace UIModule.MainPanel
             string buildTime = fi.LastWriteTime.ToShortTimeString();
 
             m_EventAggregator.GetEvent<DatalogEntity>().Subscribe(OnDatalogEntity);
-            m_EventAggregator.GetEvent<ResultlogEntity>().Subscribe(OnResultlogEntity);
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Subscribe(OnTopVisionResult);//
             m_EventAggregator.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
             m_EventAggregator.GetEvent<OnCodeReaderConnectedEvent>().Subscribe(OnCodeReaderConnected);//
@@ -384,11 +383,6 @@ namespace UIModule.MainPanel
 
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
-
-            if (CanAccess)
-            {
-                m_EventAggregator.GetEvent<OpenLotEntryView>().Publish(true);
-            }
         }
 
         #endregion

@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -41,6 +42,7 @@ namespace TCPIPManager
         private ObservableCollection<string> m_ContainerCollection = new ObservableCollection<string>();
         private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
         private object _currentResultInfoSyncLock = new object();
+        private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
         #endregion
 
         #region Constructor
@@ -51,8 +53,6 @@ namespace TCPIPManager
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
 
             m_Events.GetEvent<RequestCodeReaderConnectionEvent>().Subscribe(ConnectCodeReader);
-
-
         }
         #endregion
 
@@ -85,8 +85,6 @@ namespace TCPIPManager
                 m_CodeReaderResults.ComplexResultCompleted += Results_ComplexResultCompleted;
                 m_CodeReader.SetKeepAliveOptions(false, 3000, 1000);
                 m_CodeReader.Connect(); // Uncomment it when connected with the code reader
-
-                //ShowLiveView(m_CodeReader, m_Events);
 
                 try
                 {
@@ -150,15 +148,8 @@ namespace TCPIPManager
                 m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "MissingResult" });
             }
 
-            m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.VisProductQuantity));
-            m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentContainerNum));
-            m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentBatchQuantity));
-            m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.AccumulateCurrentBatchQuantity));
-            m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.CodeReaderResult + ":" + Global.CurrentBoxQuantity));
-
-            m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.VisInspectResult));
             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-
+         
         }
         public void TriggerCodeReader()
         {

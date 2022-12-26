@@ -1,8 +1,10 @@
 ﻿using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
+using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
 using Sequence.SeqEventArg;
 using System;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 
@@ -76,11 +78,15 @@ namespace Sequence.MachineSeq
 
 
         #endregion
+
         #region Constructor
         public CodeReaderSeq()
         {
             m_SeqNum = SN.EOS;
+
+            Publisher.GetEvent<Resultlog>().Subscribe(OnResultLog);
         }
+
         #endregion
 
 
@@ -114,6 +120,7 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.WaitCodeReaderResult:
+                            m_resultsDatalog.ClearAll();
                             if (m_SeqFlag.ProcCont)
                             {
                                 m_SeqFlag.ProcCont = false;
@@ -127,27 +134,37 @@ namespace Sequence.MachineSeq
                                 switch (m_FailType)
                                 {
                                     case "MissingResult":
-                                        RaiseError((int)ErrorCode.MissingResult);
+                                       Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.MissingResult);
                                         break;
 
                                     case "BatchNotMatch":
-                                        RaiseVerificationError((int)ErrorCode.BatchNotMatch);
+                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.BatchNotMatch);
                                         break;
 
                                     case "BoxQtyNotMatch":
-                                        RaiseError((int)ErrorCode.BoxQtyNotMatch);
+                                        Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.BoxQtyNotMatch);
                                         break;
 
                                     case "ExceedTotalBatchQty":
-                                        RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
+                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
                                         break;
                                 }
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
                                 m_SeqNum = SN.ErrorRoutine;
                             }
+                            m_resultsDatalog.UserId = Global.UserId;
+                            m_resultsDatalog.UserLvl = Global.UserLvl;
+                            DateTime currentTime = DateTime.Now;
+                            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                            dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                            m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
+                            m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
+                            m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
+                            m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
+                            m_resultsDatalog.DecodeResult = Global.CodeReaderResult;
+                            WriteSoftwareResultLog(m_resultsDatalog);
+                            m_resultsDatalog.ClearAll();
                             break;
-
-                     
 
                         #region Error Routine
                         case SN.ErrorRoutine:
@@ -184,9 +201,25 @@ namespace Sequence.MachineSeq
                 m_SeqNum = SN.EOS;
             }
         }
-        #endregion                  
+        #endregion
 
         #region Events
+
+        private void OnResultLog(ResultsDatalog obj)
+        {
+            if (m_resultsDatalog.UserId == string.Empty)
+            {
+                m_resultsDatalog.UserId = obj.UserId;
+                m_resultsDatalog.UserLvl = obj.UserLvl;
+                m_resultsDatalog.TopVision = obj.TopVision;
+                m_resultsDatalog.VisTotalPrdQty = obj.VisTotalPrdQty;
+                m_resultsDatalog.VisCorrectOrient = obj.VisCorrectOrient;
+                m_resultsDatalog.VisWrongOrient = obj.VisWrongOrient;
+                m_resultsDatalog.VisErrorMessage = obj.VisErrorMessage;
+            }
+         
+        }
+
         public override void SubscribeSeqEvent()
         {
             Publisher.GetEvent<MachineOperation>().Subscribe(SequenceOperation, filter => filter.TargetSeqName == SeqName);

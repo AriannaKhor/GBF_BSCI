@@ -4,6 +4,7 @@ using GreatechApp.Core.Events;
 using GreatechApp.Core.Variable;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 
@@ -24,6 +25,7 @@ namespace Sequence.MachineSeq
         private SN m_PrevSeqNum;
         private SN[] m_SeqRsm = new SN[Total_RSM];
         private string m_FailType;
+       
 
         // private int m_InsightVisionLoopCount = 0;
         #endregion
@@ -76,7 +78,6 @@ namespace Sequence.MachineSeq
 
         #endregion
 
-
         #region Constructor
         public TopVisionSeq()
         {
@@ -113,8 +114,11 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.WaitVisionResult:
+                            m_resultsDatalog.ClearAll();
+
                             if (m_SeqFlag.ProcCont)
                             {
+                                Global.VisErrorCaused = "N/A";
                                 m_SeqFlag.ProcCont = false;
                                 m_SeqNum = SN.TriggerVis;
                             }
@@ -125,12 +129,27 @@ namespace Sequence.MachineSeq
                                 switch (m_FailType)
                                 {
                                     case "WrongOrientation":
-                                        RaiseError((int)ErrorCode.WrongOrientation);
+                                        Global.VisErrorCaused = RaiseError((int)ErrorCode.WrongOrientation);
                                         break;
                                 }
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
                                 m_SeqNum = SN.ErrorRoutine;
                             }
+                            
+                            m_resultsDatalog.UserId = Global.UserId;
+                            m_resultsDatalog.UserLvl = Global.UserLvl;
+                            DateTime currentTime = DateTime.Now;
+                            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                            dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+                            m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
+                            m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
+                            m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
+                            m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
+                            m_resultsDatalog.VisErrorMessage = Global.VisErrorCaused;
+                            Publisher.GetEvent<Resultlog>().Publish(m_resultsDatalog);
                             break;
                         #endregion
 

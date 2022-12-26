@@ -24,5 +24,11 @@ namespace DialogManager.ErrorMsg
         {
             InitializeComponent();
         }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            UnMaskPass.Text = ((PasswordBox)sender).Password.ToString();
+        }
     }
 }
+ 

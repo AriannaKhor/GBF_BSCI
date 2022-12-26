@@ -27,6 +27,9 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Threading;
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
 
 namespace TCPIPManager
 {
@@ -37,11 +40,9 @@ namespace TCPIPManager
         private string m_Title = "Top Vision";
         private bool m_EnableCodeReader;
         private bool allowVisResultchg = false;
-        private static object m_SyncLog = new object();
         public SystemConfig m_SystemConfig;
-        private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection;
+        private FixedSizeObservableCollection<ResultsDatalog> m_SoftwareResultCollection;
         private CvsInSight m_InsightV1 = new CvsInSight();
-        private CvsInSightDisplay m_CvsInSightDisplay = new CvsInSightDisplay();
         private readonly IEventAggregator m_Events;
         #endregion
 
@@ -54,15 +55,8 @@ namespace TCPIPManager
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
 
             m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(ConnectVision);
-            //m_Events.GetEvent<RequestVisionLiveViewEvent>().Subscribe(VisionLive);
-
-            //m_Events.GetEvent<TopVisionResultEvent>().Subscribe(VisionLive);
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
-
-            //Software Results Log
-            m_SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
-            m_SoftwareResultCollection.CollectionChanged += this.OnSoftwareResultCollectionChanged;
         }
         #endregion
 
@@ -132,20 +126,6 @@ namespace TCPIPManager
                 VisConnectionStatus(false, true, false, "Disconnected");
                 MachineBase.ShowMessage(ex);
             }
-
-            //try
-            //{
-            //    if (m_CvsInSightDisplay.InvokeRequired)
-            //    {
-            //        m_CvsInSightDisplay.Invoke(new Action(ConnectVision));
-            //        return;
-            //    }
-            //    m_CvsInSightDisplay.InSight = m_InsightV1;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MachineBase.ShowMessage(ex);
-            //}
         }
 
         public void VisConnectionStatus(bool visConnection, bool canConnect, bool canDisconnect, string status)
@@ -182,23 +162,9 @@ namespace TCPIPManager
         {
             try
             {
-                //formVis = new InSightDisplayControl(m_topvisIp, m_Events);
-                //formVis.Show();
-                //tmrScanIOEnableLive.Start();
-
-                //add implementation for trigger button here
                 BitmapImage VisionImage;
-                //m_CvsInSightDisplay.ShowImage = true;
-                //m_CvsInSightDisplay.ShowGraphics = true;
-                //m_CvsInSightDisplay.Edit.ZoomImageToFit.Execute();
-                //m_CvsInSightDisplay.Edit.ManualAcquire.Execute();
-                //m_CvsInSightDisplay.Edit.LiveAcquire.Execute();
-                // m_CvsInSightDisplay.Edit.RepeatingTrigger.Execute();
-
                 CvsImage cvsImage = m_InsightV1.Results.GetImage(0);
                 CvsGraphicImage gimage = new CvsGraphicImage(cvsImage);
-
-
                 Bitmap dImg = cvsImage.ToBitmap();
                 MemoryStream ms = new MemoryStream();
                 dImg.Save(ms, ImageFormat.Jpeg);
@@ -218,53 +184,6 @@ namespace TCPIPManager
             }
         }
 
-
-
-
-
-        private void WriteSoftwareResultLog(Datalog log)
-        {
-            lock (m_SyncLog)
-            {
-                string executableName = System.IO.Path.GetDirectoryName(
-                         System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-                executableName = executableName.Replace("file:\\", string.Empty);
-                FileInfo executableFileInfo = new FileInfo(executableName);
-                string logDirectory = executableFileInfo.DirectoryName +
-                    m_SystemConfig.FolderPath.AppLog.Replace(@"..", string.Empty);
-                if (!Directory.Exists(logDirectory))
-                {
-                    // Create the station folder in AppData directory
-                    Directory.CreateDirectory(logDirectory);
-                }
-
-                // Write the log information to the file
-                FileStream fs = null;
-                StringBuilder fileName = new StringBuilder();
-                fileName.Append(m_SystemConfig.FolderPath.SoftwareResultLog).
-                    Append("Log[").Append(log.Date).Append("].log");
-                // Check whether this file exist.
-                // A new datalog file will be created for each day.
-                if (!File.Exists(fileName.ToString()))
-                {
-                    fs = new FileStream(fileName.ToString(), FileMode.Create, FileAccess.Write);
-                }
-                else
-                {
-                    fs = new FileStream(fileName.ToString(), FileMode.Append, FileAccess.Write);
-                }
-                using (StreamWriter logWriter = new StreamWriter(fs))
-                {
-                    StringBuilder logData = new StringBuilder();
-                    logData.Append(log.Date).Append(" | ").
-                        Append(log.Time).Append(" |").
-                        Append(log.MsgType).Append("| ").
-                        Append(log.MsgText);
-                    logWriter.WriteLine(logData.ToString());
-                    logWriter.Close();
-                }
-            }
-        }
         public static Bitmap ResizeImage(Image image, int width, int height)
         {
             var destRect = new Rectangle(0, 0, width, height);
@@ -314,31 +233,10 @@ namespace TCPIPManager
         #endregion
 
         #region Event
-        private void OnSoftwareResultCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            try
-            {
-                if (e.Action == NotifyCollectionChangedAction.Add)
-                {
-                    Datalog resultLog = e.NewItems[0] as Datalog;
-
-                    if (resultLog == null)
-                    {
-                        return;
-                    }
-                    WriteSoftwareResultLog(resultLog);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.Source);
-            }
-        }
-
         private void InsightV1_ResultsChanged(object sender, System.EventArgs e)
         {
             try
-                {
+            {
                 if (allowVisResultchg)
                 {
                     allowVisResultchg = false;
@@ -377,14 +275,7 @@ namespace TCPIPManager
                         }
 
                     }
-
                     VisionLive();
-                    //m_InsightV1.AcceptUpdate(); // Tell the sensor that the application is ready for new results.
-                    // m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Quantity result:" + " " + Global.VisProductQuantity });
-                    //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Correct Orientation result:" + " " + Global.VisProductCrtOrientation });
-                    //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Product Wrong Orientation Result:" + " " + Global.VisProductWrgOrientation });
-                    //m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Overall Result:" + " " + Global.VisInspectResult });
-                    //m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Vision Result :" + Global.VisInspectResult + "<" + "Total Quantity per box :" + Global.VisProductQuantity + ", Correct Orientation :" + Global.VisProductCrtOrientation + ", Wrong Orientation" + Global.VisProductWrgOrientation + ">"));
                     m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
                 }
             }

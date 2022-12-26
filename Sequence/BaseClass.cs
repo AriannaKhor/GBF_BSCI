@@ -6,12 +6,15 @@
 //#define ADLINK
 
 using ConfigManager;
+using CsvHelper;
+using CsvHelper.Configuration;
 using DataManager;
 using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
 using GreatechApp.Core.Interface;
 using GreatechApp.Core.Modal;
+using GreatechApp.Core.Variable;
 using GreatechApp.Services.Utilities;
 using IOManager;
 using MotionManager;
@@ -23,6 +26,8 @@ using Sequence.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -108,6 +113,10 @@ namespace Sequence
         public SystemConfig SysCfgs;
 
         public CultureResources CultureResources;
+
+        public ResultsDatalog m_resultsDatalog = new ResultsDatalog();
+
+        public static object m_SyncLog = new object();
 
         public IEventAggregator Publisher;
 
@@ -236,6 +245,56 @@ namespace Sequence
             m_TestEventArg.RunMode = TestEventArg.Run_Mode.None;
             m_TestEventComp = new bool[Enum.GetNames(typeof(TestEventArg.Run_Mode)).Length];
         }
+
+        #region Logging 
+        public void WriteSoftwareResultLog(ResultsDatalog log)
+        {
+            lock (m_SyncLog)
+            {
+                {
+                    //create log directory V2
+                    string date = DateTime.Now.ToString("dd-MM-yyyy");
+                    string filePath = $"{SysCfgs.FolderPath.SoftwareResultLog}Log[{date}]\\";
+                    if (!Directory.Exists(filePath))
+                        Directory.CreateDirectory(filePath);
+                    string filename = $"Batch {Global.CurrentBatchNum}.csv";
+
+                    var records = new List<ResultsDatalog>();
+
+                    //change the last three arguments from null to "messages", "remarks", and "approved by" properly
+                    records.Add(new ResultsDatalog());
+
+
+                    if (!File.Exists(filename.ToString()))
+                    {
+                        //create new .csv file and initialize the headers
+                        using (var writer = new StreamWriter(filename))
+                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        {
+                            csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+                            csv.WriteRecords(records);
+                        }
+                    }
+                    else
+                    {
+                        //append to .csv file
+                        var configList = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HasHeaderRecord = false
+                        };
+
+                        using (var stream = File.Open(filename, FileMode.Append))
+                        using (var writer = new StreamWriter(stream))
+                        using (var csv = new CsvWriter(writer, configList))
+                        {
+                            csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+                            csv.WriteRecords(records);
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
 
         #region Method
         public string GetStringTableValue(string key)
@@ -1334,11 +1393,11 @@ namespace Sequence
         /// </summary>
         /// <param name="ErrorCode"></param>
         #region Error Management
-        internal void RaiseError(int ErrorCode)
+        internal string RaiseError(int ErrorCode)
         {
             if (m_TestEventArg.RunMode == TestEventArg.Run_Mode.None)
             {
-                Error.RaiseError(ErrorCode, SeqName);
+                return Error.RaiseError(ErrorCode, SeqName);
             }
             else
             {
@@ -1347,14 +1406,15 @@ namespace Sequence
                 m_TestRunResult.result = false;
                 m_TestRunResult.ErrMsg = errorConfig.ErrTable[ErrorCode].Cause;
                 Publisher.GetEvent<TestRunResult>().Publish(m_TestRunResult);
+                return string.Empty;
             }
         }
 
-        internal void RaiseVerificationError(int ErrorCode)
+        internal string RaiseVerificationError(int ErrorCode)
         {
             if (m_TestEventArg.RunMode == TestEventArg.Run_Mode.None)
             {
-                Error.RaiseVerificationError(ErrorCode, SeqName);
+               return Error.RaiseVerificationError(ErrorCode, SeqName);
             }
             else
             {
@@ -1363,6 +1423,7 @@ namespace Sequence
                 m_TestRunResult.result = false;
                 m_TestRunResult.ErrMsg = errorConfig.ErrTable[ErrorCode].Cause;
                 Publisher.GetEvent<TestRunResult>().Publish(m_TestRunResult);
+                return string.Empty;
             }
         }
         /// <summary>

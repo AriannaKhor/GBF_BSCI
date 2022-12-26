@@ -92,7 +92,7 @@ namespace DialogManager
             }
         }
 
-        public void RaiseError(int ErrorCode, SQID seqName)
+        public string RaiseError(int ErrorCode, SQID seqName)
         {
             lock (m_SyncRaiseError)
             {
@@ -144,11 +144,17 @@ namespace DialogManager
                             });
                         }
                     }
+
+                    return Alarm.Causes;
+                }
+                else
+                {
+                    return string.Empty;
                 }
             }
         }
 
-        public void RaiseVerificationError(int ErrorCode, SQID seqName)
+        public string RaiseVerificationError(int ErrorCode, SQID seqName)
         {
             lock (m_SyncRaiseError)
             {
@@ -164,7 +170,7 @@ namespace DialogManager
                         Date = DateTime.Now,
                         ErrorCode = errorConfig.ErrTable[ErrorCode].Code,
                         Station = errorConfig.ErrTable[ErrorCode].Station,
-                        Causes = Global.ErrorCaused = errorConfig.ErrTable[ErrorCode].Cause,
+                        Causes = errorConfig.ErrTable[ErrorCode].Cause,
                         Recovery = errorConfig.ErrTable[ErrorCode].Recovery,
                         AlarmType = m_CultureResources.GetStringTable().GetKey(errorConfig.ErrTable[ErrorCode].AlarmType),
                         RetestDefault = errorConfig.ErrTable[ErrorCode].RetestDefault,
@@ -201,6 +207,11 @@ namespace DialogManager
                             });
                         }
                     }
+                    return Alarm.Causes;
+                }
+                else
+                {
+                    return string.Empty;
                 }
             }
         }
