@@ -1,6 +1,4 @@
-﻿using Cognex.DataMan.SDK;
-using Cognex.InSight;
-using GreatechApp.Core;
+﻿using GreatechApp.Core;
 using GreatechApp.Core.Command;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
@@ -8,18 +6,14 @@ using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
 using Prism.Commands;
 using Prism.Services.Dialogs;
-using SecsGemManager;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Threading;
-using UIModule.StandardViews;
 
 namespace UIModule.MainPanel
 {
@@ -238,6 +232,8 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_EquipStatusWithCulture, value); }
         }
         #endregion
+
+        public event Action<IDialogResult> RequestClose;
 
         public DelegateCommand<string> OperationCommand { get; set; }
         public DelegateCommand RaiseMenuCommand { get; set; }
@@ -605,15 +601,9 @@ namespace UIModule.MainPanel
                 else
                 {
                     m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-
-                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Error, "Current Batch Quantity less than Lot Batch Quantity", ButtonResult.OK);
-
-                    if (dialogResult == ButtonResult.OK)
-                    {
-                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcStart });
-                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
-                    }
+                    RaiseEndLotPopup();
                 }
+                CloseDialog("");
             }
         }
 
@@ -641,7 +631,27 @@ namespace UIModule.MainPanel
                 m_ShowDialog.Show(DialogIcon.Error, m_TCPIP.clientSockets[tcp.ID].Name + " " + GetDialogTableValue("FailReconnect"));
 
         }
+        void RaiseEndLotPopup()
+        {
+            m_DialogService.ShowDialog(DialogList.ForcedEndLotView.ToString(),
+                                      new DialogParameters($"message={""}"),
+                                      null);
+        }
 
+        protected virtual void CloseDialog(string parameter)
+        {
+            //m_TmrButtonMonitor.Stop();
+            // Turn off Reset Button LED
+            //m_IO.WriteBit(ResetButtonIndic, false);
+            RaiseRequestClose(new DialogResult(ButtonResult.OK));
+        }
+        #endregion
+
+        #region Properties
+        public virtual void RaiseRequestClose(IDialogResult dialogResult)
+        {
+            RequestClose?.Invoke(dialogResult);
+        }
         private void OnReconnectAllTCP()
         {
             foreach(TCPDisplay tcpip in TCPCollection)
@@ -669,10 +679,7 @@ namespace UIModule.MainPanel
             Global.SeqStop = true;
             IsAllowStop = false;
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
-
-
         }
-
         #endregion
     }
 }

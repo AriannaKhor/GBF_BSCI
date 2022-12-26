@@ -1,14 +1,17 @@
 ﻿using Cognex.DataMan.SDK;
 using Cognex.DataMan.SDK.Utils;
 using ConfigManager;
+using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
 using GreatechApp.Core.Helpers;
+using GreatechApp.Core.Interface;
 using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
 using GreatechApp.Services.Utilities;
 using Prism.Events;
 using Prism.Ioc;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,6 +44,9 @@ namespace TCPIPManager
         private ObservableCollection<string> m_ContainerCollection = new ObservableCollection<string>();
         private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
         private object _currentResultInfoSyncLock = new object();
+        public IShowDialog m_ShowDialog;
+        private CultureResources m_CultureResources;
+        public event Action<IDialogResult> RequestClose;
         #endregion
 
         #region Constructor
@@ -51,8 +57,8 @@ namespace TCPIPManager
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
 
             m_Events.GetEvent<RequestCodeReaderConnectionEvent>().Subscribe(ConnectCodeReader);
-
-
+            m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
+            m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
         }
         #endregion
 
@@ -118,31 +124,46 @@ namespace TCPIPManager
                 {
                     Global.LotInitialTotalBatchQuantity = Global.CurrentBatchQuantity;
                 }
-
-                if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
+                if (Global.CurrentBatchNum == Global.LotInitialBatchNo)
                 {
-                    Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
-                    // Exceed Total Batch Quantity
-                    if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
+                    if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
                     {
-                        Global.CodeReaderResult = resultstatus.NG.ToString();
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
+                        Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
+                        // Exceed Total Batch Quantity
+                        if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
+                        {
+                            Global.CodeReaderResult = resultstatus.NG.ToString();
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
+                        }
+                        //OK result
+                        else if (Global.CodeReaderResult == "OK")
+                        {
+                            Global.CodeReaderResult = resultstatus.OK.ToString();
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcCont });
+
+                            if (Global.VisOverallResult == "OK" && Global.CodeReaderResult == "OK")
+                            {
+                                Global.VisOverallResult = resultstatus.OK.ToString();
+                                ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK);
+                                CloseDialog("");
+                                ResetCounter();
+                            }
+                        }
                     }
-                    //OK result
+                    //Unequal Box Quantity
                     else
                     {
-                        Global.CodeReaderResult = resultstatus.OK.ToString();
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcCont });
+                        Global.CodeReaderResult = resultstatus.NG.ToString();
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
                     }
                 }
-                //Unequal Box Quantity
+                //Incorrect Batch No
                 else
                 {
                     Global.CodeReaderResult = resultstatus.NG.ToString();
-                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BatchNotMatch" });
                 }
             }
-
             //Missing Result
             else
             {
@@ -158,7 +179,6 @@ namespace TCPIPManager
 
             m_SoftwareResultCollection.Add(new Datalog(LogMsgType.Info, " Code Reader Result :" + Global.VisInspectResult));
             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-
         }
         public void TriggerCodeReader()
         {
@@ -209,6 +229,46 @@ namespace TCPIPManager
             }
 
             return "";
+        }
+
+        private void ResetCounter()
+        {
+            Global.CodeReaderProceedNewBox = true;
+            Global.TopVisionProceedNewBox = true;
+
+            #region Code Reader
+            Global.CurrentContainerNum = String.Empty;
+            Global.CurrentBatchQuantity = 0;
+            Global.CurrentBoxQuantity = 0;
+            Global.CurrentBatchNum = String.Empty;
+            #endregion
+
+            #region Top Vision
+            Global.VisProductQuantity = 0f;
+            Global.VisProductCrtOrientation = String.Empty;
+            Global.VisProductWrgOrientation = String.Empty;
+            #endregion
+
+            m_Events.GetEvent<TopVisionResultEvent>().Publish();
+            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+        }
+
+        public void CloseDialog(string parameter)
+        {
+            //m_TmrButtonMonitor.Stop();
+            // Turn off Reset Button LED
+            //m_IO.WriteBit(ResetButtonIndic, false);
+            RaiseRequestClose(new DialogResult(ButtonResult.OK));
+        }
+        public virtual void RaiseRequestClose(IDialogResult dialogResult)
+        {
+            RequestClose?.Invoke(dialogResult);
+        }
+
+
+        private string GetDialogTableValue(string key)
+        {
+            return m_CultureResources.GetDialogValue(key);
         }
 
         public string ShowResult(ComplexResult complexResult)

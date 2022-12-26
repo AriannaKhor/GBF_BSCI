@@ -6,6 +6,7 @@
         MessageView,
         ErrMessageView,
         ErrVerificationView,
+        ForcedEndLotView,
     }
 
     public enum DialogIcon

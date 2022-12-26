@@ -27,6 +27,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Threading;
+using Prism.Services.Dialogs;
 
 namespace TCPIPManager
 {
@@ -178,27 +179,14 @@ namespace TCPIPManager
             }
         }
 
-
         public void VisionLive()
         {
             try
             {
-                //formVis = new InSightDisplayControl(m_topvisIp, m_Events);
-                //formVis.Show();
-                //tmrScanIOEnableLive.Start();
-
                 //add implementation for trigger button here
                 BitmapImage VisionImage;
-                //m_CvsInSightDisplay.ShowImage = true;
-                //m_CvsInSightDisplay.ShowGraphics = true;
-                //m_CvsInSightDisplay.Edit.ZoomImageToFit.Execute();
-                //m_CvsInSightDisplay.Edit.ManualAcquire.Execute();
-                //m_CvsInSightDisplay.Edit.LiveAcquire.Execute();
-                // m_CvsInSightDisplay.Edit.RepeatingTrigger.Execute();
-
                 CvsImage cvsImage = m_InsightV1.Results.GetImage(0);
                 CvsGraphicImage gimage = new CvsGraphicImage(cvsImage);
-
 
                 Bitmap dImg = cvsImage.ToBitmap();
                 MemoryStream ms = new MemoryStream();
@@ -376,7 +364,6 @@ namespace TCPIPManager
                             Global.VisInspectResult = resultstatus.NG.ToString();
                             m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "WrongOrientation" });
                         }
-
                     }
 
                     VisionLive();

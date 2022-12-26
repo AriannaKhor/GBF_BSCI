@@ -68,6 +68,8 @@ namespace UIModule
             containerRegistry.RegisterDialog<MessageView, MessageViewModel>();
             containerRegistry.RegisterDialog<ErrMessageView, ErrMessageViewModel>();
             containerRegistry.RegisterDialog<ErrVerificationView, ErrVerificationViewModel>();
+            containerRegistry.RegisterDialog<ForcedEndLotView, ForcedEndLotViewModel>();
+
 
 
 

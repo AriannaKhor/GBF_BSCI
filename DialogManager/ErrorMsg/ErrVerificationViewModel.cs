@@ -15,6 +15,7 @@ using IOManager;
 using GreatechApp.Core.Cultures;
 using GreatechApp.Services.UserServices;
 using System.Windows.Controls;
+using Prism.Ioc;
 
 namespace DialogManager.ErrorMsg
 {
@@ -26,7 +27,9 @@ namespace DialogManager.ErrorMsg
         private readonly IEventAggregator m_EventAggregator;
         private readonly ISQLOperation m_SQLOperation;
         private readonly IBaseIO m_IO;
+        public IShowDialog m_ShowDialog;
         private CultureResources m_CultureResources;
+        public IUser m_CurrentUser;
 
         //private DispatcherTimer m_TmrButtonMonitor;
 
@@ -92,6 +95,16 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_title, value); }
         }
 
+        private bool m_IsAllowStop;
+        public bool IsAllowStop
+        {
+            get { return m_IsAllowStop; }
+            set
+            {
+                SetProperty(ref m_IsAllowStop, value);
+                //CheckSSRButtonAvail();
+            }
+        }
         private Visibility m_SkipTray = Visibility.Collapsed;
         public Visibility SkipTray
         {
@@ -121,7 +134,7 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_YesSituation, value); }
         }
 
-        private bool m_CanAccess = false;
+        private bool m_CanAccess=true;
         public bool CanAccess
         {
             get { return m_CanAccess; }
@@ -162,72 +175,32 @@ namespace DialogManager.ErrorMsg
         }
 
         public DelegateCommand<string> OperationCommand { get; private set; }
+        public DelegateCommand EndLotCommand { get; set; }
 
-        public DelegateCommand<object> VerifyCommand { get; private set; }
+        private readonly IDialogService m_DialogService;
         //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
         //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
 
         #endregion
 
         #region Constructor
-        public ErrVerificationViewModel(AuthService authService, IEventAggregator eventAggregator, ISQLOperation sqlOperation, IBaseIO baseIO, CultureResources cultureResources)
+        public ErrVerificationViewModel(IDialogService dialogService, IEventAggregator eventAggregator, AuthService authService, ISQLOperation sqlOperation, IBaseIO baseIO, CultureResources cultureResources)
         {
             m_EventAggregator = eventAggregator;
+            m_DialogService = dialogService;
             m_SQLOperation = sqlOperation;
             m_IO = baseIO;
-            m_CultureResources = cultureResources;
 
+            m_CurrentUser = (DefaultUser)ContainerLocator.Container.Resolve(typeof(DefaultUser));
+            m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
+            m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             OperationCommand = new DelegateCommand<string>(OperationMethod);
-          //  m_EventAggregator.GetEvent<ValidateLogin>().Subscribe(OnValidateLogin);
-            VerifyCommand = new DelegateCommand<object>(VerifyMethod);
+            EndLotCommand = new DelegateCommand(RaiseEndLotPopup);
             AlarmDetail = new AlarmParameter();
-            //m_TmrButtonMonitor = new DispatcherTimer();
-            //m_TmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            //m_TmrButtonMonitor.Tick += m_TmrButtonMonitor_Tick;
         }
 
         #endregion
 
-        //public virtual void OnValidateLogin(bool IsAuthenticated)
-        //{
-        //    if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
-        //    {
-        //        CanAccess = true;
-        //    }
-        //    else
-        //    {
-        //        CanAccess = false;
-        //    }
-        //    RaisePropertyChanged(nameof(CanAccess));
-        //}
-
-        private void VerifyMethod(object value)
-        {
-
-            if (UserID == "a" || UserID == "t" || UserID == "e")
-            {
-                CanAccess = true;
-                //Error = Visibility.Collapsed;
-            }
-            else
-            {
-                CanAccess = false;
-               // Error = Visibility.Visible;
-
-            }
-        }
-
-        //private void CheckTextboxes(object sender, EventArgs e)
-        //{
-        //    if (UserID == "a")
-        //    {
-        //        CanAccess = true;
-        //    }
-        //    else
-        //    {
-        //        CanAccess = false;
-        //    }
-        //}
 
         #region Method
         private void Reset()
@@ -250,53 +223,49 @@ namespace DialogManager.ErrorMsg
 
         private void OperationMethod(string Command)
         {
-            if (Command == "Reset")
+            if (Command == "Yes")
             {
                 Reset();
             }
-            else if (Command == "Ok")
+      
+            else if (Command == "No")
             {
-                DateTime Endtime = DateTime.Now;
-                TimeSpan Duration = Endtime - AlarmDetail.Date;
-
-                if (!string.IsNullOrEmpty(Global.LotInitialBatchNo))
+                //for endlot
+                StopOperation();
+                if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
                 {
-                    m_SQLOperation.AddErrorToDB(Endtime, AlarmDetail.Date, Environment.MachineName, AlarmDetail.Station, Global.LotInitialBatchNo, AlarmDetail.ErrorCode, AlarmDetail.AlarmType, AlarmDetail.Causes);
+                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
+
+                    if (dialogResult == ButtonResult.Yes)
+                    {
+                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
+                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
+                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                    }
                 }
-
-                m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{m_CultureResources.GetStringValue("MachineError")}, {m_CultureResources.GetStringValue("Station")} : {AlarmDetail.Station}, {m_CultureResources.GetStringValue("Error")} : {AlarmDetail.Causes}" });
-
+                else
+                {
+                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
+                    RaiseEndLotPopup();
+                }
                 CloseDialog("");
             }
-           
+
         }
 
+        private string GetStringTableValue(string key)
+        {
+            return m_CultureResources.GetStringValue(key);
+        }
+
+        private string GetDialogTableValue(string key)
+        {
+            return m_CultureResources.GetDialogValue(key);
+        }
         protected virtual void CloseDialog(string parameter)
         {
-            //m_TmrButtonMonitor.Stop();
-            // Turn off Reset Button LED
-            //m_IO.WriteBit(ResetButtonIndic, false);
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
-        #endregion
-
-        #region Event
-        //private void m_TmrButtonMonitor_Tick(object sender, EventArgs e)
-        ////{
-        ////    try
-        ////    {
-        ////        if (m_IO.ReadBit(ResetButton))
-        ////        {
-        ////            m_TmrButtonMonitor.Stop();
-        ////            Reset();
-        ////        }
-        ////    }
-        ////    catch (Exception ex)
-        ////    {
-        ////        m_TmrButtonMonitor.Stop();
-        ////        MessageBox.Show(ex.Message, ex.Source);
-        ////    }
-        //}
         #endregion
 
         #region Properties
@@ -315,11 +284,20 @@ namespace DialogManager.ErrorMsg
 
         }
 
+        void RaiseEndLotPopup()
+        {
+            m_DialogService.ShowDialog(DialogList.ForcedEndLotView.ToString(),
+                                      new DialogParameters($"message={""}"),
+                                      null);
+        }
+        private void StopOperation()
+        {
+            IsAllowStop = false;
+            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
+        }
+
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
-            // Turn on Reset Button LED
-            //m_IO.WriteBit(ResetButtonIndic, true);
-
             string[] split = parameters.GetValue<string>("message").Split(';');
 
             AlarmDetail.Module = (SQID)Enum.Parse(typeof(SQID), split[8]);
@@ -359,7 +337,6 @@ namespace DialogManager.ErrorMsg
             {
                 YesSituation = Visibility.Visible;
                 NoSituation = Visibility.Collapsed;
-                //m_TmrButtonMonitor.Start();
             }
             else
             {

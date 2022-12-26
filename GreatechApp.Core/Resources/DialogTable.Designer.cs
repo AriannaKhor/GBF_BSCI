@@ -584,11 +584,29 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proceed with new box.
+        /// </summary>
+        public static string OKResult {
+            get {
+                return ResourceManager.GetString("OKResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please Make Sure Operator ID is not Empty.
         /// </summary>
         public static string OperatorIDEmpty {
             get {
                 return ResourceManager.GetString("OperatorIDEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result Pass for Top Vision and Code Reader.
+        /// </summary>
+        public static string PassResult {
+            get {
+                return ResourceManager.GetString("PassResult", resourceCulture);
             }
         }
         
