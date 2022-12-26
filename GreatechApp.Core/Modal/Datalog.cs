@@ -46,6 +46,10 @@ namespace GreatechApp.Core.Modal
             DecodeBoxQuantity = Global.CurrentBoxQuantity;
             DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
             DecodeResult = Global.OverallResult;
+            ErrorMessage = Global.ErrorCaused;
+            Remarks = Global.Remarks;
+            //ApprovedBy=
+            
 
         }
         public string Date { get; set; }
@@ -61,6 +65,9 @@ namespace GreatechApp.Core.Modal
         public int DecodeBoxQuantity { get; set; }
         public int DecodeAccuQuantity { get; set; }
         public string DecodeResult { get; set; }
+        public string ErrorMessage { get; set; }
+        public string Remarks { get; set; }
+        public string ApprovedBy { get; set; }
     }
 
   

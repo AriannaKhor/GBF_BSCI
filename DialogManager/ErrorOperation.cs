@@ -164,13 +164,14 @@ namespace DialogManager
                         Date = DateTime.Now,
                         ErrorCode = errorConfig.ErrTable[ErrorCode].Code,
                         Station = errorConfig.ErrTable[ErrorCode].Station,
-                        Causes = errorConfig.ErrTable[ErrorCode].Cause,
+                        Causes = Global.ErrorCaused = errorConfig.ErrTable[ErrorCode].Cause,
                         Recovery = errorConfig.ErrTable[ErrorCode].Recovery,
                         AlarmType = m_CultureResources.GetStringTable().GetKey(errorConfig.ErrTable[ErrorCode].AlarmType),
                         RetestDefault = errorConfig.ErrTable[ErrorCode].RetestDefault,
                         RetestOption = errorConfig.ErrTable[ErrorCode].RetestOption,
                         IsStopPage = errorConfig.ErrTable[ErrorCode].IsStoppage,
                     };
+                   
                     // Add Error Detail
                     ErrorList.Add(Alarm);
 

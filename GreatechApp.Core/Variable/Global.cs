@@ -61,7 +61,11 @@ namespace GreatechApp.Core.Variable
         public static string CodeReaderConnStatus;
         public static string CodeReaderResult = resultstatus.PendingResult.ToString();
         public static string OverallResult;
+
+        //Error 
         public static string ErrorMsg;
+        public static string ErrorCaused;
+        public static string Remarks;
 
         //Recipe Parameter
         public static int MotionLoopCount;

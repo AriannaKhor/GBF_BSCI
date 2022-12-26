@@ -28,7 +28,12 @@ namespace DialogManager.ErrorMsg
         private readonly IBaseIO m_IO;
         private CultureResources m_CultureResources;
 
-        //private DispatcherTimer m_TmrButtonMonitor;
+        private string m_remarks;
+        public string remarks
+        {
+            get { return m_remarks; }
+            set { SetProperty(ref m_remarks, Global.Remarks = value); }
+        }
 
         private BitmapImage m_Image;
         public BitmapImage Image
@@ -121,11 +126,11 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_YesSituation, value); }
         }
 
-        private bool m_CanAccess = false;
-        public bool CanAccess
+        private bool m_btnYesEnable = false;
+        public bool btnYesEnable
         {
-            get { return m_CanAccess; }
-            set { SetProperty(ref m_CanAccess, value); }
+            get { return m_btnYesEnable; }
+            set { SetProperty(ref m_btnYesEnable, value); }
         }
 
         private Visibility m_NoSituation = Visibility.Collapsed;
@@ -141,7 +146,7 @@ namespace DialogManager.ErrorMsg
             get { return m_ErrMessage; }
             set { SetProperty(ref m_ErrMessage, value); }
         }
- 
+
         private bool m_IsSkipRetest;
         public bool IsSkipRetest
         {
@@ -163,9 +168,7 @@ namespace DialogManager.ErrorMsg
 
         public DelegateCommand<string> OperationCommand { get; private set; }
 
-        public DelegateCommand<object> VerifyCommand { get; private set; }
-        //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
-        //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
+        public DelegateCommand<object> VerificationCommand { get; private set; }
 
         #endregion
 
@@ -176,58 +179,38 @@ namespace DialogManager.ErrorMsg
             m_SQLOperation = sqlOperation;
             m_IO = baseIO;
             m_CultureResources = cultureResources;
+            m_AuthService = authService;
 
+            VerificationCommand = new DelegateCommand<object>(VerificationMethod);
             OperationCommand = new DelegateCommand<string>(OperationMethod);
-          //  m_EventAggregator.GetEvent<ValidateLogin>().Subscribe(OnValidateLogin);
-            VerifyCommand = new DelegateCommand<object>(VerifyMethod);
             AlarmDetail = new AlarmParameter();
-            //m_TmrButtonMonitor = new DispatcherTimer();
-            //m_TmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            //m_TmrButtonMonitor.Tick += m_TmrButtonMonitor_Tick;
         }
 
-        #endregion
-
-        //public virtual void OnValidateLogin(bool IsAuthenticated)
-        //{
-        //    if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
-        //    {
-        //        CanAccess = true;
-        //    }
-        //    else
-        //    {
-        //        CanAccess = false;
-        //    }
-        //    RaisePropertyChanged(nameof(CanAccess));
-        //}
-
-        private void VerifyMethod(object value)
+        private void VerificationMethod(object value)
         {
+            var passwordBox = value as PasswordBox;
+            var password = passwordBox.Password;
 
-            if (UserID == "a" || UserID == "t" || UserID == "e")
+            if (m_AuthService.Authenticate(UserID, password))
             {
-                CanAccess = true;
-                //Error = Visibility.Collapsed;
+                var currentUserLevel = m_AuthService.CurrentUser.UserLevel;
+                if (currentUserLevel == ACL.UserLevel.Admin || currentUserLevel == ACL.UserLevel.Engineer || currentUserLevel == ACL.UserLevel.Technician)
+                {
+                    btnYesEnable = true;
+                }
+                else
+                {
+                    btnYesEnable = false;
+                }
             }
             else
             {
-                CanAccess = false;
-               // Error = Visibility.Visible;
-
+                ErrMessage = m_CultureResources.GetStringValue("InvalidLoginInfo");
             }
         }
+        #endregion
 
-        //private void CheckTextboxes(object sender, EventArgs e)
-        //{
-        //    if (UserID == "a")
-        //    {
-        //        CanAccess = true;
-        //    }
-        //    else
-        //    {
-        //        CanAccess = false;
-        //    }
-        //}
+
 
         #region Method
         private void Reset()
@@ -268,7 +251,7 @@ namespace DialogManager.ErrorMsg
 
                 CloseDialog("");
             }
-           
+
         }
 
         protected virtual void CloseDialog(string parameter)

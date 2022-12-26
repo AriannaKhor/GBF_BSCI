@@ -148,10 +148,6 @@ namespace DialogManager.ErrorMsg
 
         public DelegateCommand<string> OperationCommand { get; private set; }
 
-        public DelegateCommand<object> VerifyCommand { get; private set; }
-        //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
-        //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
-
         #endregion
 
         #region Constructor
@@ -163,53 +159,10 @@ namespace DialogManager.ErrorMsg
             m_CultureResources = cultureResources;
 
             OperationCommand = new DelegateCommand<string>(OperationMethod);
-            //  m_EventAggregator.GetEvent<ValidateLogin>().Subscribe(OnValidateLogin);
-            VerifyCommand = new DelegateCommand<object>(VerifyMethod);
             AlarmDetail = new AlarmParameter();
-            //m_TmrButtonMonitor = new DispatcherTimer();
-            //m_TmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            //m_TmrButtonMonitor.Tick += m_TmrButtonMonitor_Tick;
         }
 
         #endregion
-
-        //public virtual void OnValidateLogin(bool IsAuthenticated)
-        //{
-        //    if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
-        //    {
-        //        CanAccess = true;
-        //    }
-        //    else
-        //    {
-        //        CanAccess = false;
-        //    }
-        //    RaisePropertyChanged(nameof(CanAccess));
-        //}
-
-        private void VerifyMethod(object value)
-        {
-
-            if (UserID == "a" || UserID == "t" || UserID == "e")
-            {
-                CanAccess = true;
-            }
-            else
-            {
-                CanAccess = false;
-            }
-        }
-
-        //private void CheckTextboxes(object sender, EventArgs e)
-        //{
-        //    if (UserID == "a")
-        //    {
-        //        CanAccess = true;
-        //    }
-        //    else
-        //    {
-        //        CanAccess = false;
-        //    }
-        //}
 
         #region Method
         private void Reset()
