@@ -7,5 +7,6 @@ namespace GreatechApp.Core.Interface
         SQID SeqName { get; set; }
         void RaiseError(int ErrorCode, SQID seqName);
         void CloseWarning(int ErrorCode, SQID SeqName);
+        void RaiseVerificationError(int ErrorCode, SQID SeqName);
     }
 }

@@ -182,6 +182,13 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_StatusFG, value); }
         }
 
+        private SolidColorBrush m_ProductQuantityFG = System.Windows.Media.Brushes.Black;
+        public SolidColorBrush ProductQuantityFG
+        {
+            get { return m_ProductQuantityFG; }
+            set { SetProperty(ref m_ProductQuantityFG, value); }
+        }
+
         private SolidColorBrush m_CdStatusFG;
         public SolidColorBrush CdStatusFG
         {
@@ -217,14 +224,14 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_CdResultBG, value); }
         }
 
-        private SolidColorBrush m_CorrectOrientationFG = System.Windows.Media.Brushes.Green;
+        private SolidColorBrush m_CorrectOrientationFG = System.Windows.Media.Brushes.Black;
         public SolidColorBrush CorrectOrientationFG
         {
             get { return m_CorrectOrientationFG; }
             set { SetProperty(ref m_CorrectOrientationFG, value); }
         }
 
-        private SolidColorBrush m_WrgOrientationFG = System.Windows.Media.Brushes.Red;
+        private SolidColorBrush m_WrgOrientationFG = System.Windows.Media.Brushes.Black;
         public SolidColorBrush WrgOrientationFG
         {
             get { return m_WrgOrientationFG; }
@@ -399,6 +406,21 @@ namespace UIModule.MainPanel
             VisProductQuantity = Global.VisProductQuantity;
             VisProductCrtOrientation = Global.VisProductCrtOrientation;
             VisProductWrgOrientation = Global.VisProductWrgOrientation;
+
+            if (Global.VisInspectResult == "OK")
+            {
+                VisResultBG = System.Windows.Media.Brushes.Green;
+                ProductQuantityFG = System.Windows.Media.Brushes.Green;
+                CorrectOrientationFG = System.Windows.Media.Brushes.Green;
+                WrgOrientationFG = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                VisResultBG = System.Windows.Media.Brushes.Red;
+                ProductQuantityFG = System.Windows.Media.Brushes.Red;
+                CorrectOrientationFG = System.Windows.Media.Brushes.Red;
+                WrgOrientationFG = System.Windows.Media.Brushes.Red;
+            }
         }
 
         private void OnTopVisionImg(BitmapImage img)
@@ -432,6 +454,15 @@ namespace UIModule.MainPanel
             ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
             ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
             ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+
+            if (Global.CodeReaderResult == "OK")
+            {
+                CdResultBG = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                CdResultBG = System.Windows.Media.Brushes.Red;
+            }
         }
 
         private void OnCodeReaderImg(BitmapImage img)

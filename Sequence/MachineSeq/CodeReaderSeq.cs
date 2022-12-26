@@ -14,13 +14,10 @@ namespace Sequence.MachineSeq
         public enum ErrorCode
         {
 
-            MissingResult,//2
-            BatchNotMatch,//3
-            ContainerNumberExist,//4
-            BoxQtyNotMatch,//5
-            ExceedTotalBatchQty,//6
-
-
+            MissingResult,//1
+            BatchNotMatch,//2
+            BoxQtyNotMatch,//3
+            ExceedTotalBatchQty,//4
         }
         #endregion
 
@@ -74,6 +71,7 @@ namespace Sequence.MachineSeq
             CodeReaderRepeat,
             EndLot,
             UpdateLog,
+            DelayTrigger,
         }
 
 
@@ -101,70 +99,69 @@ namespace Sequence.MachineSeq
                         case SN.BeginCodeReader:
                             m_SeqNum = SN.TriggerCodeReader;
                             break;
+
                         case SN.TriggerCodeReader:
+                            m_TmrDelay.Time_Out = 0.01f;
+                            m_SeqNum = SN.DelayTrigger;
+                            break;
+
+                        case SN.DelayTrigger:
+                            if (m_TmrDelay.TimeOut())
+                            {
                                 CodeReader.TriggerCodeReader();
                                 m_SeqNum = SN.WaitCodeReaderResult;
+                            }
                             break;
+
                         case SN.WaitCodeReaderResult:
                             if (m_SeqFlag.ProcCont)
                             {
                                 m_SeqFlag.ProcCont = false;
-                                Global.CodeReaderRetry = false;
+                                //Global.CodeReaderRetry = false;
                                 m_SeqNum = SN.TriggerCodeReader;
                             }
                             else if (m_SeqFlag.ProcFail)
                             {
                                 m_SeqFlag.ProcFail = false;
-                                m_CodeReaderLoopCount++;
-                                Global.CodeReaderRetry = true;
-                                Global.CurrentContainerNum = "";
-                                Global.CurrentBatchQuantity = 0;
-                                Global.CurrentMatl = "";
-                                Global.CurrentBoxQuantity = 0;
-                                if (m_CodeReaderLoopCount < 3) // put inside config 
+                    
+                                switch (m_FailType)
                                 {
-                                    m_TmrDelay.Time_Out = 2f;
-                                    m_SeqNum = SN.RetryGetCodeReaderResult;
+                                    case "MissingResult":
+                                        RaiseError((int)ErrorCode.MissingResult);
+                                        break;
+
+                                    case "BatchNotMatch":
+                                        RaiseVerificationError((int)ErrorCode.BatchNotMatch);
+                                        break;
+
+                                    case "BoxQtyNotMatch":
+                                        RaiseError((int)ErrorCode.BoxQtyNotMatch);
+                                        break;
+
+                                    case "ExceedTotalBatchQty":
+                                        RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
+                                        break;
                                 }
-                                else
-                                {
-                                    switch (m_FailType)
-                                    {
-                                        case "MissingResult":
-                                            RaiseError((int)ErrorCode.MissingResult);
-                                            break;
-
-                                        case "BatchNotMatch":
-                                            RaiseError((int)ErrorCode.BatchNotMatch);
-                                            break;
-
-                                        case "BoxQtyNotMatch":
-                                            RaiseError((int)ErrorCode.BoxQtyNotMatch);
-                                            break;
-
-                                        case "ExceedTotalBatchQty":
-                                            RaiseError((int)ErrorCode.ExceedTotalBatchQty);
-                                            break;
-                                    }
-
-                                    m_CodeReaderLoopCount = 0;
-                                    m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
-                                    m_SeqNum = SN.ErrorRoutine;
-                                }
+                                m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
+                                m_SeqNum = SN.ErrorRoutine;
                             }
                             break;
-                        case SN.RetryGetCodeReaderResult:
-                            if (m_TmrDelay.TimeOut())
-                            {
-                                m_SeqNum = SN.TriggerCodeReader;
-                            }
+
+                     
+
+                        #region Error Routine
+                        case SN.ErrorRoutine:
+                            m_SeqNum = SN.WaitResumeError;
                             break;
+                        #endregion
 
                         case SN.WaitResumeError:
                             if (Global.MachineStatus == MachineStateType.Running)
                             {
                                 m_SeqNum = m_SeqRsm[(int)RSM.Err];
                                 m_SeqRsm[(int)RSM.Err] = SN.NONE;
+                                m_TmrDelay.Time_Out = 0.01f;
+
                             }
                             break;
 

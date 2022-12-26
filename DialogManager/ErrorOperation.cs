@@ -148,6 +148,62 @@ namespace DialogManager
             }
         }
 
+        public void RaiseVerificationError(int ErrorCode, SQID seqName)
+        {
+            lock (m_SyncRaiseError)
+            {
+                // Load Error Library
+                ErrorConfig errorConfig = ErrorConfig.Open(m_SysConfig.SeqCfgRef[(int)seqName].ErrLibPath, m_SysConfig.SeqCfgRef[(int)seqName].ErrLib);
+
+                // Check repeat error raised
+                if (!ErrorList.Any(E => E.ErrorCode == errorConfig.ErrTable[ErrorCode].Code && E.Module == seqName))
+                {
+                    AlarmParameter Alarm = new AlarmParameter()
+                    {
+                        Module = seqName,
+                        Date = DateTime.Now,
+                        ErrorCode = errorConfig.ErrTable[ErrorCode].Code,
+                        Station = errorConfig.ErrTable[ErrorCode].Station,
+                        Causes = errorConfig.ErrTable[ErrorCode].Cause,
+                        Recovery = errorConfig.ErrTable[ErrorCode].Recovery,
+                        AlarmType = m_CultureResources.GetStringTable().GetKey(errorConfig.ErrTable[ErrorCode].AlarmType),
+                        RetestDefault = errorConfig.ErrTable[ErrorCode].RetestDefault,
+                        RetestOption = errorConfig.ErrTable[ErrorCode].RetestOption,
+                        IsStopPage = errorConfig.ErrTable[ErrorCode].IsStoppage,
+                    };
+                    // Add Error Detail
+                    ErrorList.Add(Alarm);
+
+                    if (Alarm.AlarmType.Equals("Error"))
+                    {
+                        if (!IsErrorPrompting)
+                        {
+                            IsErrorPrompting = true;
+                            PromptVerificationError();
+                        }
+                    }
+                    else if (Alarm.AlarmType.Equals("Warning"))
+                    {
+                        if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing && Global.MachineStatus != MachineStateType.InitFail)
+                        {
+                            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Warning);
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                if (!IsWarningPrompting)
+                                {
+                                    IsWarningPrompting = true;
+
+                                    warningMessageView = new WarningMessageView();
+                                    warningMessageView.Show();
+                                }
+                                warningMessageView.AddWarning(Alarm);
+                            });
+                        }
+                    }
+                }
+            }
+        }
+
         private void PromptError()
         {
             // If error raise from Critical Scan or Initializing, skip this
@@ -182,6 +238,38 @@ namespace DialogManager
         }
         #endregion
 
+        private void PromptVerificationError()
+        {
+            // If error raise from Critical Scan or Initializing, skip this
+            if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing && Global.MachineStatus != MachineStateType.InitFail)
+            {
+                // If alarm type is error, stop the machine
+                Global.MachineStatus = MachineStateType.Error;
+                Global.SeqStop = true;
+                m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
+            }
+
+            AlarmParameter alarm = ErrorList.Where(key => key.AlarmType.Equals("Error", StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+            ButtonResult buttonResult = showDialog.ErrorVerificationShow(alarm);
+            if (buttonResult == ButtonResult.OK)
+            {
+                ErrorList.Remove(alarm);
+            }
+
+            if (ErrorList.Where(key => key.AlarmType.Equals("Error", StringComparison.CurrentCultureIgnoreCase)).Count() == 0)
+            {
+                IsErrorPrompting = false;
+                if (Global.MachineStatus != MachineStateType.CriticalAlarm)
+                {
+                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Recovery);
+                }
+            }
+            else
+            {
+                PromptVerificationError();
+            }
+        }
         #region Event
         private void OnWarningMsgOperation(WarningMsgOperation alarm)
         {

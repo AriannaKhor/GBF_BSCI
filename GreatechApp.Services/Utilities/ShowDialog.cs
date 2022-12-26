@@ -170,6 +170,36 @@ namespace GreatechApp.Services.Utilities
         }
 
 
+
+        // Show ErrVerificationView for Error Detail
+        public ButtonResult ErrorVerificationShow(AlarmParameter Message)
+        {
+            ButtonResult buttonResult = ButtonResult.None;
+
+            string message = "";
+
+            // ErrorCode, Station, Causes, Recovery, AlarmType, RetestDefault, RetestOption
+            message += $"{Message.ErrorCode};";
+            message += $"{Message.Station};";
+            message += $"{Message.Causes.Split(':').LastOrDefault()};";
+            message += $"{Message.Recovery};";
+            message += $"{Message.AlarmType};";
+            message += $"{Message.RetestDefault};";
+            message += $"{Message.RetestOption};";
+            message += $"{Message.IsStopPage};";
+
+            message += Message.Module.ToString();
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                m_dialogService.ShowDialog(DialogList.ErrVerificationView.ToString(), new DialogParameters($"message={message}"), r =>
+                {
+                    buttonResult = r.Result;
+                });
+            });
+            return buttonResult;
+        }
+
         public void LoginShow(DialogList View)
         {
             Application.Current.Dispatcher.Invoke(() =>

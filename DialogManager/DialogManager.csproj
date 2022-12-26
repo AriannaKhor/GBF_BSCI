@@ -160,6 +160,14 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorMsg\ErrVerificationView.xaml.cs">
+      <DependentUpon>ErrVerificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorMsg\ErrVerificationViewModel.cs" />
+    <Compile Include="ErrorMsg\ForcedEndLotView.xaml.cs">
+      <DependentUpon>ForcedEndLotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorMsg\ForcedEndLotViewModel.cs" />
     <Compile Include="ErrorOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -199,6 +207,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="ErrorMsg\ErrMessageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ErrorMsg\ErrVerificationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ErrorMsg\ForcedEndLotView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

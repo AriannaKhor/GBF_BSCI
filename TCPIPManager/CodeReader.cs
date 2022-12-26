@@ -104,61 +104,46 @@ namespace TCPIPManager
         public void AnalyseResult(string returnedresult)
         {
             string[] splitedresult = returnedresult.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
             if (splitedresult.Length == 5)
             {
                 Global.CurrentContainerNum = splitedresult[0];
                 Global.CurrentBatchQuantity = Int32.Parse(splitedresult[1]);
                 Global.CurrentMatl = splitedresult[2];
                 Global.CurrentBoxQuantity = Int32.Parse(splitedresult[3]);
-
                 Global.CurrentBatchNum = splitedresult[4];
+
 
                 if (Global.LotInitialTotalBatchQuantity == 0)
                 {
                     Global.LotInitialTotalBatchQuantity = Global.CurrentBatchQuantity;
                 }
 
-                if (Global.CurrentBatchNum == Global.LotInitialBatchNo)
+                if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
                 {
-                    string Container = m_ContainerCollection.Where(key => key == Global.CurrentContainerNum).FirstOrDefault();
-
-                    if (Container == null || Global.CodeReaderRetry)
+                    Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
+                    // Exceed Total Batch Quantity
+                    if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                     {
-                        if (!Global.CodeReaderRetry)
-                        {
-                            m_ContainerCollection.Add(Global.CurrentContainerNum);
-                        }
-
-                        if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
-                        {
-                            Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
-
-                            if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
-                            {
-                                Global.CodeReaderResult = resultstatus.NG.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
-                            }
-                            else
-                            {
-                                Global.CodeReaderResult = resultstatus.OK.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcCont });
-                            }
-
-                        }
-                        else
-                        {
-                            Global.CodeReaderResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
-                        }
+                        Global.CodeReaderResult = resultstatus.NG.ToString();
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
                     }
-                  
+                    //OK result
+                    else
+                    {
+                        Global.CodeReaderResult = resultstatus.OK.ToString();
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcCont });
+                    }
                 }
+                //Unequal Box Quantity
                 else
                 {
                     Global.CodeReaderResult = resultstatus.NG.ToString();
-                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BatchNotMatch" });
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
                 }
             }
+
+            //Missing Result
             else
             {
                 Global.CodeReaderResult = resultstatus.NG.ToString();
@@ -202,7 +187,7 @@ namespace TCPIPManager
                 if (full_string_node != null && m_CodeReader != null && m_CodeReader.State == Cognex.DataMan.SDK.ConnectionState.Connected)
                 {
                     XmlAttribute encoding = full_string_node.Attributes["encoding"];
-                    if (encoding != null && encoding.InnerText == "base64") 
+                    if (encoding != null && encoding.InnerText == "base64")
                     {
                         if (!string.IsNullOrEmpty(full_string_node.InnerText))
                         {
@@ -345,7 +330,7 @@ namespace TCPIPManager
 
             BitmapImage liveimage;
             Image tempImage = m_CodeReader.GetLiveImage(Cognex.DataMan.SDK.ImageFormat.bitmap, ImageSize.Quarter, ImageQuality.Medium);
-            
+
 
             Bitmap dImg = new Bitmap(tempImage);
             MemoryStream ms = new MemoryStream();

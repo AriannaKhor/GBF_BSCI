@@ -188,6 +188,13 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_CdStatusFG, value); }
         }
 
+        private SolidColorBrush m_ProductQuantityFG = System.Windows.Media.Brushes.Black;
+        public SolidColorBrush ProductQuantityFG
+        {
+            get { return m_ProductQuantityFG; }
+            set { SetProperty(ref m_ProductQuantityFG, value); }
+        }
+
         private SolidColorBrush m_VisResultFG = System.Windows.Media.Brushes.Black;
         public SolidColorBrush VisResultFG
         {
@@ -376,6 +383,11 @@ namespace UIModule.MainPanel
 
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
+
+            if (CanAccess)
+            {
+                m_EventAggregator.GetEvent<OpenLotEntryView>().Publish(true);
+            }
         }
 
         #endregion
@@ -393,6 +405,21 @@ namespace UIModule.MainPanel
             VisProductQuantity = Global.VisProductQuantity;
             VisProductCrtOrientation = Global.VisProductCrtOrientation;
             VisProductWrgOrientation = Global.VisProductWrgOrientation;
+
+            if (Global.VisInspectResult == "OK")
+            {
+                VisResultBG = System.Windows.Media.Brushes.Green;
+                ProductQuantityFG = System.Windows.Media.Brushes.Green;
+                CorrectOrientationFG = System.Windows.Media.Brushes.Green;
+                WrgOrientationFG = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                VisResultBG = System.Windows.Media.Brushes.Red;
+                ProductQuantityFG = System.Windows.Media.Brushes.Red;
+                CorrectOrientationFG = System.Windows.Media.Brushes.Red;
+                WrgOrientationFG = System.Windows.Media.Brushes.Red;
+            }
         }
 
         private void OnTopVisionImg(BitmapImage img)
@@ -426,6 +453,14 @@ namespace UIModule.MainPanel
             ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
             ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
             ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+            if (Global.CodeReaderResult == "OK")
+            {
+                CdResultBG = System.Windows.Media.Brushes.Green;
+            }
+            else
+            {
+                CdResultBG = System.Windows.Media.Brushes.Red;
+            }
         }
 
         private void OnCodeReaderImg(BitmapImage img)

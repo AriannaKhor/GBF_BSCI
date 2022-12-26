@@ -13,12 +13,16 @@ using GreatechApp.Core.Events;
 using System.Windows.Threading;
 using IOManager;
 using GreatechApp.Core.Cultures;
+using GreatechApp.Services.UserServices;
+using System.Windows.Controls;
 
 namespace DialogManager.ErrorMsg
 {
-    public class ErrMessageViewModel : BindableBase, IDialogAware
+    public class ErrVerificationViewModel : BindableBase, IDialogAware
     {
         #region Variable
+
+        private AuthService m_AuthService;
         private readonly IEventAggregator m_EventAggregator;
         private readonly ISQLOperation m_SQLOperation;
         private readonly IBaseIO m_IO;
@@ -31,6 +35,34 @@ namespace DialogManager.ErrorMsg
         {
             get { return m_Image; }
             set { SetProperty(ref m_Image, value); }
+        }
+
+        private string m_UserID;
+        public string UserID
+        {
+            get { return m_UserID; }
+            set { SetProperty(ref m_UserID, value); }
+        }
+
+        private bool m_IsUserIDFocused;
+        public bool IsUserIDFocused
+        {
+            get { return m_IsUserIDFocused; }
+            set { SetProperty(ref m_IsUserIDFocused, value); }
+        }
+
+        private string m_Password;
+        public string Password
+        {
+            get { return m_Password; }
+            set { SetProperty(ref m_Password, value); }
+        }
+
+        private bool m_IsMaskPass;
+        public bool IsMaskPass
+        {
+            get { return m_IsMaskPass; }
+            set { SetProperty(ref m_IsMaskPass, value); }
         }
         private string m_ErrorMsg;
         public string ErrorMsg
@@ -67,6 +99,14 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_SkipTray, value); }
         }
 
+
+        private Visibility m_Error = Visibility.Collapsed;
+        public Visibility Error
+        {
+            get { return m_Error; }
+            set { SetProperty(ref m_Error, value); }
+        }
+
         private Visibility m_SkipRetestVis = Visibility.Collapsed;
         public Visibility SkipRetestVis
         {
@@ -74,20 +114,34 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_SkipRetestVis, value); }
         }
 
-        private Visibility m_ResetVis = Visibility.Collapsed;
-        public Visibility ResetVis
+        private Visibility m_YesSituation = Visibility.Collapsed;
+        public Visibility YesSituation
         {
-            get { return m_ResetVis; }
-            set { SetProperty(ref m_ResetVis, value); }
+            get { return m_YesSituation; }
+            set { SetProperty(ref m_YesSituation, value); }
         }
 
-        private Visibility m_OkVis = Visibility.Collapsed;
-        public Visibility OkVis
+        private bool m_CanAccess = false;
+        public bool CanAccess
         {
-            get { return m_OkVis; }
-            set { SetProperty(ref m_OkVis, value); }
+            get { return m_CanAccess; }
+            set { SetProperty(ref m_CanAccess, value); }
         }
 
+        private Visibility m_NoSituation = Visibility.Collapsed;
+        public Visibility NoSituation
+        {
+            get { return m_NoSituation; }
+            set { SetProperty(ref m_NoSituation, value); }
+        }
+
+        private string m_ErrMessage;
+        public string ErrMessage
+        {
+            get { return m_ErrMessage; }
+            set { SetProperty(ref m_ErrMessage, value); }
+        }
+ 
         private bool m_IsSkipRetest;
         public bool IsSkipRetest
         {
@@ -107,37 +161,16 @@ namespace DialogManager.ErrorMsg
             }
         }
 
-
-        private bool m_IsAllowStart;
-        public bool IsAllowStart
-        {
-            get { return m_IsAllowStart; }
-            set
-            {
-                SetProperty(ref m_IsAllowStart, value);
-                //CheckSSRButtonAvail();
-            }
-        }
-
-        private bool m_IsAllowStop;
-        public bool IsAllowStop
-        {
-            get { return m_IsAllowStop; }
-            set
-            {
-                SetProperty(ref m_IsAllowStop, value);
-                //CheckSSRButtonAvail();
-            }
-        }
         public DelegateCommand<string> OperationCommand { get; private set; }
 
+        public DelegateCommand<object> VerifyCommand { get; private set; }
         //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
         //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
 
         #endregion
 
         #region Constructor
-        public ErrMessageViewModel(IEventAggregator eventAggregator, ISQLOperation sqlOperation, IBaseIO baseIO, CultureResources cultureResources)
+        public ErrVerificationViewModel(AuthService authService, IEventAggregator eventAggregator, ISQLOperation sqlOperation, IBaseIO baseIO, CultureResources cultureResources)
         {
             m_EventAggregator = eventAggregator;
             m_SQLOperation = sqlOperation;
@@ -145,6 +178,8 @@ namespace DialogManager.ErrorMsg
             m_CultureResources = cultureResources;
 
             OperationCommand = new DelegateCommand<string>(OperationMethod);
+          //  m_EventAggregator.GetEvent<ValidateLogin>().Subscribe(OnValidateLogin);
+            VerifyCommand = new DelegateCommand<object>(VerifyMethod);
             AlarmDetail = new AlarmParameter();
             //m_TmrButtonMonitor = new DispatcherTimer();
             //m_TmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 300);
@@ -152,6 +187,47 @@ namespace DialogManager.ErrorMsg
         }
 
         #endregion
+
+        //public virtual void OnValidateLogin(bool IsAuthenticated)
+        //{
+        //    if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
+        //    {
+        //        CanAccess = true;
+        //    }
+        //    else
+        //    {
+        //        CanAccess = false;
+        //    }
+        //    RaisePropertyChanged(nameof(CanAccess));
+        //}
+
+        private void VerifyMethod(object value)
+        {
+
+            if (UserID == "a" || UserID == "t" || UserID == "e")
+            {
+                CanAccess = true;
+                //Error = Visibility.Collapsed;
+            }
+            else
+            {
+                CanAccess = false;
+               // Error = Visibility.Visible;
+
+            }
+        }
+
+        //private void CheckTextboxes(object sender, EventArgs e)
+        //{
+        //    if (UserID == "a")
+        //    {
+        //        CanAccess = true;
+        //    }
+        //    else
+        //    {
+        //        CanAccess = false;
+        //    }
+        //}
 
         #region Method
         private void Reset()
@@ -174,7 +250,7 @@ namespace DialogManager.ErrorMsg
 
         private void OperationMethod(string Command)
         {
-            if (Command == "OK")
+            if (Command == "Reset")
             {
                 Reset();
             }
@@ -192,32 +268,7 @@ namespace DialogManager.ErrorMsg
 
                 CloseDialog("");
             }
-            else if (Command == "EndLot")
-            {
-                StopOperation();
-                CloseDialog("");
-                //if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
-                //{
-
-                //    m_EventAggregator.GetEvent<EndLotOperation>().Publish();
-                //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ending_Lot);
-                //    Global.MachineStatus = MachineStateType.Ending_Lot;
-
-                //    // Send EndLot event to the sequence that required
-                //    m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
-                //    CloseDialog("");
-                //}
-                //else
-                //{
-                //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-                //    m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcStart });
-                //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
-                //    //publish forced end lot view
-                //    CloseDialog("");
-
-                //}
-            }
+           
         }
 
         protected virtual void CloseDialog(string parameter)
@@ -263,11 +314,6 @@ namespace DialogManager.ErrorMsg
         {
 
         }
-        private void StopOperation()
-        {
-            IsAllowStop = false;
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
-        }
 
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
@@ -311,18 +357,16 @@ namespace DialogManager.ErrorMsg
 
             if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing)
             {
-                ResetVis = Visibility.Visible;
-                OkVis = Visibility.Collapsed;
+                YesSituation = Visibility.Visible;
+                NoSituation = Visibility.Collapsed;
                 //m_TmrButtonMonitor.Start();
             }
             else
             {
-                ResetVis = Visibility.Collapsed;
-                OkVis = Visibility.Visible;
+                YesSituation = Visibility.Collapsed;
+                NoSituation = Visibility.Visible;
             }
         }
         #endregion
-
-
     }
 }

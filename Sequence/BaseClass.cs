@@ -1349,6 +1349,22 @@ namespace Sequence
                 Publisher.GetEvent<TestRunResult>().Publish(m_TestRunResult);
             }
         }
+
+        internal void RaiseVerificationError(int ErrorCode)
+        {
+            if (m_TestEventArg.RunMode == TestEventArg.Run_Mode.None)
+            {
+                Error.RaiseVerificationError(ErrorCode, SeqName);
+            }
+            else
+            {
+                ErrorConfig errorConfig = ErrorConfig.Open(SysCfgs.SeqCfgRef[(int)SeqName].ErrLibPath, SysCfgs.SeqCfgRef[(int)SeqName].ErrLib);
+                m_TestEventArg.RunMode = TestEventArg.Run_Mode.Stop;
+                m_TestRunResult.result = false;
+                m_TestRunResult.ErrMsg = errorConfig.ErrTable[ErrorCode].Cause;
+                Publisher.GetEvent<TestRunResult>().Publish(m_TestRunResult);
+            }
+        }
         /// <summary>
         /// This method shows a threading UI dialog box at center of screen, while the calling thread/ Seq Module will continue executing.
         /// </summary>
@@ -1357,6 +1373,12 @@ namespace Sequence
         {
             Error.RaiseError(ErrorCode, SeqName);
         }
+
+        internal void RaiseVerificationWarning(int ErrorCode)
+        {
+            Error.RaiseVerificationError(ErrorCode, SeqName);
+        }
+
 
         internal void CloseWarning(int ErrorCode)
         {

@@ -67,6 +67,9 @@ namespace UIModule
             containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
             containerRegistry.RegisterDialog<MessageView, MessageViewModel>();
             containerRegistry.RegisterDialog<ErrMessageView, ErrMessageViewModel>();
+            containerRegistry.RegisterDialog<ErrVerificationView, ErrVerificationViewModel>();
+
+
 
             // Recipe Views
             containerRegistry.RegisterForNavigation<RecipeView>();

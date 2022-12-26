@@ -52,7 +52,7 @@
                         <Label Content="{Binding VisionConnStatus}" Foreground="{Binding StatusFG}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     </WrapPanel>
 
-                    <Label Grid.Row="1" Content="{Binding VisInspectResult}" Foreground="{Binding VisResultFG}" Background="{Binding VisResultBG}" FontWeight="Bold" FontSize="30" VerticalAlignment="Stretch"
+                    <Label Grid.Row="1" Content="{Binding VisInspectResult}" Foreground="{Binding VisResultFG}" Background="{Binding VisResultBG}" Width="300" FontWeight="Bold" FontSize="30" VerticalAlignment="Stretch"
                            HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
                     <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Grid.RowDefinitions>
@@ -60,7 +60,7 @@
                         </Grid.RowDefinitions>
                         <WrapPanel >
                             <Label Content="{Binding Path=TotalQuantity, Source={StaticResource StringTableODP}}" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground ="Black" FontWeight="Bold"/>
-                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding StatusFG}" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding ProductQuantityFG}" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </WrapPanel>
                     </Grid>
 
@@ -102,7 +102,7 @@
                         <Label Content="{Binding CodeReaderConnStatus}" Foreground="{Binding CdStatusFG}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
                     </WrapPanel>
-                    <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" FontWeight="Bold" FontSize="30"
+                    <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" Width="300"  FontWeight="Bold" FontSize="30"
                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
                     <Grid Grid.Row="2" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
