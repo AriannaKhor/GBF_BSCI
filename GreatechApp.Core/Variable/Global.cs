@@ -84,5 +84,13 @@ namespace GreatechApp.Core.Variable
 
         //Secs Gem
         public static bool OnSecsGem;
+
+        //End Lot Flag
+        public static bool TopVisionEndLot = false;
+        public static bool CodeReaderEndLot = false;
+
+        //Proceed New Box Flag
+        public static bool TopVisionProceedNewBox = false;
+        public static bool CodeReaderProceedNewBox = false;
     }
 }

@@ -157,7 +157,6 @@ namespace TCPIPManager
             }
         }
 
-
         public void VisionLive()
         {
             try
@@ -165,6 +164,7 @@ namespace TCPIPManager
                 BitmapImage VisionImage;
                 CvsImage cvsImage = m_InsightV1.Results.GetImage(0);
                 CvsGraphicImage gimage = new CvsGraphicImage(cvsImage);
+
                 Bitmap dImg = cvsImage.ToBitmap();
                 MemoryStream ms = new MemoryStream();
                 dImg.Save(ms, ImageFormat.Jpeg);
@@ -273,7 +273,6 @@ namespace TCPIPManager
                             Global.VisInspectResult = resultstatus.NG.ToString();
                             m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "WrongOrientation" });
                         }
-
                     }
                     VisionLive();
                     m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result

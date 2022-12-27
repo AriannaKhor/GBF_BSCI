@@ -1,18 +1,19 @@
-﻿using Prism.Mvvm;
-using Prism.Services.Dialogs;
-using Prism.Commands;
-using System;
-using System.Windows;
+﻿using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Enums;
-using System.Windows.Media.Imaging;
-using Prism.Events;
+using GreatechApp.Core.Events;
 using GreatechApp.Core.Interface;
 using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
-using GreatechApp.Core.Events;
-using System.Windows.Threading;
+using GreatechApp.Services.UserServices;
 using IOManager;
-using GreatechApp.Core.Cultures;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Ioc;
+using Prism.Mvvm;
+using Prism.Services.Dialogs;
+using System;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace DialogManager.ErrorMsg
 {
@@ -22,7 +23,9 @@ namespace DialogManager.ErrorMsg
         private readonly IEventAggregator m_EventAggregator;
         private readonly ISQLOperation m_SQLOperation;
         private readonly IBaseIO m_IO;
+        public IShowDialog m_ShowDialog;
         private CultureResources m_CultureResources;
+        public IUser m_CurrentUser;
 
         //private DispatcherTimer m_TmrButtonMonitor;
 
@@ -130,27 +133,37 @@ namespace DialogManager.ErrorMsg
             }
         }
         public DelegateCommand<string> OperationCommand { get; private set; }
+        public DelegateCommand EndLotCommand { get; set; }
 
+        private readonly IDialogService m_DialogService;
         //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
         //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
 
         #endregion
 
         #region Constructor
-        public ErrMessageViewModel(IEventAggregator eventAggregator, ISQLOperation sqlOperation, IBaseIO baseIO, CultureResources cultureResources)
+        public ErrMessageViewModel(IDialogService dialogService, IEventAggregator eventAggregator, ISQLOperation sqlOperation, IBaseIO baseIO, CultureResources cultureResources)
         {
             m_EventAggregator = eventAggregator;
+            m_DialogService = dialogService;
             m_SQLOperation = sqlOperation;
             m_IO = baseIO;
-            m_CultureResources = cultureResources;
+            m_CurrentUser = (DefaultUser)ContainerLocator.Container.Resolve(typeof(DefaultUser));
+            m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
+            m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
 
             OperationCommand = new DelegateCommand<string>(OperationMethod);
+            EndLotCommand = new DelegateCommand(RaiseEndLotPopup);
             AlarmDetail = new AlarmParameter();
             //m_TmrButtonMonitor = new DispatcherTimer();
             //m_TmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 300);
             //m_TmrButtonMonitor.Tick += m_TmrButtonMonitor_Tick;
         }
 
+        #endregion
+
+        #region Access Implementation
+        public IUser CurrentUser { get; }
         #endregion
 
         #region Method
@@ -178,46 +191,45 @@ namespace DialogManager.ErrorMsg
             {
                 Reset();
             }
-            else if (Command == "Ok")
-            {
-                DateTime Endtime = DateTime.Now;
-                TimeSpan Duration = Endtime - AlarmDetail.Date;
-
-                if (!string.IsNullOrEmpty(Global.LotInitialBatchNo))
-                {
-                    m_SQLOperation.AddErrorToDB(Endtime, AlarmDetail.Date, Environment.MachineName, AlarmDetail.Station, Global.LotInitialBatchNo, AlarmDetail.ErrorCode, AlarmDetail.AlarmType, AlarmDetail.Causes);
-                }
-
-                m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{m_CultureResources.GetStringValue("MachineError")}, {m_CultureResources.GetStringValue("Station")} : {AlarmDetail.Station}, {m_CultureResources.GetStringValue("Error")} : {AlarmDetail.Causes}" });
-
-                CloseDialog("");
-            }
             else if (Command == "EndLot")
             {
                 StopOperation();
+                if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
+                {
+                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
+
+                    if (dialogResult == ButtonResult.Yes)
+                    {
+                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
+                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
+                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                    }
+                }
+                else
+                {
+                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
+                    RaiseEndLotPopup();
+                }
                 CloseDialog("");
-                //if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
-                //{
 
-                //    m_EventAggregator.GetEvent<EndLotOperation>().Publish();
-                //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ending_Lot);
-                //    Global.MachineStatus = MachineStateType.Ending_Lot;
-
-                //    // Send EndLot event to the sequence that required
-                //    m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
-                //    CloseDialog("");
-                //}
-                //else
-                //{
-                //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-                //    m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcStart });
-                //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Ready);
-                //    //publish forced end lot view
-                //    CloseDialog("");
-
-                //}
             }
+        }
+
+        private string GetStringTableValue(string key)
+        {
+            return m_CultureResources.GetStringValue(key);
+        }
+
+        private string GetDialogTableValue(string key)
+        {
+            return m_CultureResources.GetDialogValue(key);
+        }
+
+        void RaiseEndLotPopup()
+        {
+            m_DialogService.ShowDialog(DialogList.ForcedEndLotView.ToString(),
+                                      new DialogParameters($"message={""}"),
+                                      null);
         }
 
         protected virtual void CloseDialog(string parameter)
@@ -227,25 +239,6 @@ namespace DialogManager.ErrorMsg
             //m_IO.WriteBit(ResetButtonIndic, false);
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
-        #endregion
-
-        #region Event
-        //private void m_TmrButtonMonitor_Tick(object sender, EventArgs e)
-        ////{
-        ////    try
-        ////    {
-        ////        if (m_IO.ReadBit(ResetButton))
-        ////        {
-        ////            m_TmrButtonMonitor.Stop();
-        ////            Reset();
-        ////        }
-        ////    }
-        ////    catch (Exception ex)
-        ////    {
-        ////        m_TmrButtonMonitor.Stop();
-        ////        MessageBox.Show(ex.Message, ex.Source);
-        ////    }
-        //}
         #endregion
 
         #region Properties
