@@ -120,7 +120,6 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.WaitCodeReaderResult:
-                            m_resultsDatalog.ClearAll();
                             if (m_SeqFlag.ProcCont)
                             {
                                 m_SeqFlag.ProcCont = false;
