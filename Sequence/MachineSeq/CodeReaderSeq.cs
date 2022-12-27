@@ -2,6 +2,7 @@
 using GreatechApp.Core.Events;
 using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
+using Prism.Events;
 using Sequence.SeqEventArg;
 using System;
 using System.Globalization;
@@ -25,9 +26,7 @@ namespace Sequence.MachineSeq
 
         #region Variable
         private SN m_SeqNum;
-        private SN m_PrevSeqNum;
         private SN[] m_SeqRsm = new SN[Total_RSM];
-        private int m_CodeReaderLoopCount = 0;
         private string m_FailType;
         #endregion
 
@@ -83,15 +82,12 @@ namespace Sequence.MachineSeq
         public CodeReaderSeq()
         {
             m_SeqNum = SN.EOS;
-
-            Publisher.GetEvent<Resultlog>().Subscribe(OnResultLog);
         }
 
         #endregion
 
 
         #region Thread
-        private Sample2EventArg m_EventArg = new Sample2EventArg();
 
         public override void OnRunSeq(object sender, EventArgs args)
         {
@@ -151,16 +147,12 @@ namespace Sequence.MachineSeq
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
                                 m_SeqNum = SN.ErrorRoutine;
                             }
-                            m_resultsDatalog.UserId = Global.UserId;
-                            m_resultsDatalog.UserLvl = Global.UserLvl;
                             DateTime currentTime = DateTime.Now;
                             DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
                             dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                            m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
-                            m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
-                            m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
-                            m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
-                            m_resultsDatalog.DecodeResult = Global.CodeReaderResult;
+                            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
                             WriteSoftwareResultLog(m_resultsDatalog);
                             m_resultsDatalog.ClearAll();
                             break;
@@ -177,7 +169,6 @@ namespace Sequence.MachineSeq
                                 m_SeqNum = m_SeqRsm[(int)RSM.Err];
                                 m_SeqRsm[(int)RSM.Err] = SN.NONE;
                                 m_TmrDelay.Time_Out = 0.01f;
-
                             }
                             break;
 
@@ -203,22 +194,6 @@ namespace Sequence.MachineSeq
         #endregion
 
         #region Events
-
-        private void OnResultLog(ResultsDatalog obj)
-        {
-            if (m_resultsDatalog.UserId == string.Empty)
-            {
-                m_resultsDatalog.UserId = obj.UserId;
-                m_resultsDatalog.UserLvl = obj.UserLvl;
-                m_resultsDatalog.TopVision = obj.TopVision;
-                m_resultsDatalog.VisTotalPrdQty = obj.VisTotalPrdQty;
-                m_resultsDatalog.VisCorrectOrient = obj.VisCorrectOrient;
-                m_resultsDatalog.VisWrongOrient = obj.VisWrongOrient;
-                m_resultsDatalog.VisErrorMessage = obj.VisErrorMessage;
-            }
-         
-        }
-
         public override void SubscribeSeqEvent()
         {
             Publisher.GetEvent<MachineOperation>().Subscribe(SequenceOperation, filter => filter.TargetSeqName == SeqName);

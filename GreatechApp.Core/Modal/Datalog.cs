@@ -31,29 +31,29 @@ namespace GreatechApp.Core.Modal
     {
         public ResultsDatalog()
         {
-            UserId = Global.UserId;
-            UserLvl = Global.UserLvl;
-            DateTime currentTime = DateTime.Now;
-            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-            dateFormat.ShortDatePattern = "dd-MM-yyyy";
-            Date = currentTime.ToString("d", dateFormat);
-            Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-            Timestamp = Date + " | " + Time;
-            TopVision = inspectiontype.TopVision.ToString();
-            VisTotalPrdQty = Global.VisProductQuantity;
-            VisCorrectOrient = Global.VisProductCrtOrientation;
-            VisWrongOrient = Global.VisProductWrgOrientation;
-            CodeReader = inspectiontype.CodeReader.ToString();
-            DecodeBatchQuantity = Global.CurrentBatchQuantity;
-            DecodeBoxQuantity = Global.CurrentBoxQuantity;
-            DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
-            DecodeResult = Global.OverallResult;
-            VisErrorMessage = Global.VisErrorCaused;
-            CodeReaderErrorMessage = Global.CodeReaderErrorCaused;
-            Remarks = Global.Remarks;
-            ForceEndLotRemarks = Global.ForceEndLotRemarks;
-            ApprovedBy = Global.CurrentApprovalLevel;
-            ApprovedBy = Global.ForceEndLotCurrentApprovalLevel;
+            //UserId = Global.UserId;
+            //UserLvl = Global.UserLvl;
+            //DateTime currentTime = DateTime.Now;
+            //DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+            //dateFormat.ShortDatePattern = "dd-MM-yyyy";
+            //Date = currentTime.ToString("d", dateFormat);
+            //Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+            //Timestamp = Date + " | " + Time;
+            //TopVision = inspectiontype.TopVision.ToString();
+            //VisTotalPrdQty = Global.VisProductQuantity;
+            //VisCorrectOrient = Global.VisProductCrtOrientation;
+            //VisWrongOrient = Global.VisProductWrgOrientation;
+            //CodeReader = inspectiontype.CodeReader.ToString();
+            //DecodeBatchQuantity = Global.CurrentBatchQuantity;
+            //DecodeBoxQuantity = Global.CurrentBoxQuantity;
+            //DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
+            //DecodeResult = Global.OverallResult;
+            //VisErrorMessage = Global.VisErrorCaused;
+            //CodeReaderErrorMessage = Global.CodeReaderErrorCaused;
+            //Remarks = Global.Remarks;
+            //ForceEndLotRemarks = Global.ForceEndLotRemarks;
+            //ApprovedBy = Global.CurrentApprovalLevel;
+            //ApprovedBy = Global.ForceEndLotCurrentApprovalLevel;
         }
         public string Date { get; set; }
         public string Time { get; set; }

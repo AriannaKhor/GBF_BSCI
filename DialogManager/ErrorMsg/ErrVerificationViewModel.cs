@@ -232,8 +232,6 @@ namespace DialogManager.ErrorMsg
         }
         #endregion
 
-
-
         #region Method
         private void Reset()
         {
@@ -286,8 +284,6 @@ namespace DialogManager.ErrorMsg
                 m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{m_CultureResources.GetStringValue("MachineError")}, {m_CultureResources.GetStringValue("Station")} : {AlarmDetail.Station}, {m_CultureResources.GetStringValue("Error")} : {AlarmDetail.Causes}" });
 
                 CloseDialog("");
-            }
-
         }
 
         private string GetStringTableValue(string key)

@@ -135,21 +135,6 @@ namespace Sequence.MachineSeq
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
                                 m_SeqNum = SN.ErrorRoutine;
                             }
-                            
-                            m_resultsDatalog.UserId = Global.UserId;
-                            m_resultsDatalog.UserLvl = Global.UserLvl;
-                            DateTime currentTime = DateTime.Now;
-                            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                            dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                            m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
-                            m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
-                            m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
-                            m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
-                            m_resultsDatalog.VisErrorMessage = Global.VisErrorCaused;
-                            Publisher.GetEvent<Resultlog>().Publish(m_resultsDatalog);
                             break;
                         #endregion
 

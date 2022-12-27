@@ -249,9 +249,6 @@ namespace TCPIPManager
 
         public void CloseDialog(string parameter)
         {
-            //m_TmrButtonMonitor.Stop();
-            // Turn off Reset Button LED
-            //m_IO.WriteBit(ResetButtonIndic, false);
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
         public virtual void RaiseRequestClose(IDialogResult dialogResult)
