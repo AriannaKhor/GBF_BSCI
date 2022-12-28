@@ -257,36 +257,34 @@ namespace Sequence
             lock (m_SyncLog)
             {
                 {
-                    if (m_resultsDatalog.UserId == string.Empty)
-                    {
-                        m_resultsDatalog.UserId = Global.UserId;
-                        m_resultsDatalog.UserLvl = Global.UserLvl;
-                        DateTime currentTime = DateTime.Now;
-                        DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                        dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                        m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                        m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                        m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                        m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
-                        m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
-                        m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
-                        m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
-                        m_resultsDatalog.DecodeResult = Global.CodeReaderResult;
-                        m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
-                        m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
-                        m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
-                        m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
-                        m_resultsDatalog.ErrorMessage = null;
-                        m_resultsDatalog.Remarks = null;
-                        m_resultsDatalog.ApprovedBy = null;
-                    }
+                    m_resultsDatalog.UserId = Global.UserId;
+                    m_resultsDatalog.UserLvl = Global.UserLvl;
+                    DateTime currentTime = DateTime.Now;
+                    DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                    dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                    m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                    m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                    m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+                    m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
+                    m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
+                    m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
+                    m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
+                    m_resultsDatalog.DecodeResult = Global.CodeReaderResult;
+                    m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
+                    m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
+                    m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
+                    m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
+                    m_resultsDatalog.ErrorMessage = null;
+                    m_resultsDatalog.Remarks = null;
+                    m_resultsDatalog.ApprovedBy = null;
+
                     //create log directory V2
                     string date = DateTime.Now.ToString("dd-MM-yyyy");
                     string filePath = $"{SysCfgs.FolderPath.SoftwareResultLog}Log[{date}]\\";
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
-                    
-                    if(m_resultsDatalog.DecodeResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
+
+                    if (m_resultsDatalog.DecodeResult != null && m_resultsDatalog.VisTotalPrdQty != 0 && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
                     {
                         string filename = $"Batch {Global.CurrentBatchNum}.csv";
                         filename = filePath + filename;
@@ -294,7 +292,7 @@ namespace Sequence
                         var records = new List<ResultsDatalog>();
                         records.Add(m_resultsDatalog);
 
-                        if(tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
+                        if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
                         {
                             if (m_resultsDatalog.DecodeResult != "PendingResult" && Global.CurrentBatchNum != string.Empty)
                             {
@@ -832,9 +830,9 @@ namespace Sequence
                 IO.AssignOutput(SeqName, rest.Value);
 
             // Assign Cylinder Input into Seq InputList
-            if(workSns1 !=null)
+            if (workSns1 != null)
                 IO.AssignInput(SeqName, workSns1.Value);
-            if(restSns1 !=null)
+            if (restSns1 != null)
                 IO.AssignInput(SeqName, restSns1.Value);
             if (workSns2 != null)
                 IO.AssignInput(SeqName, workSns2.Value);
@@ -979,7 +977,7 @@ namespace Sequence
         protected virtual void WriteBit(object bit, bool oState, bool isUsingLocalEnum = false)
         {
 #if !SIMULATION
-            if(isUsingLocalEnum)
+            if (isUsingLocalEnum)
             {
                 IO.WriteBit((int)m_IOTbl[bit], oState);
             }
@@ -1458,7 +1456,7 @@ namespace Sequence
         {
             if (m_TestEventArg.RunMode == TestEventArg.Run_Mode.None)
             {
-               return Error.RaiseVerificationError(ErrorCode, SeqName);
+                return Error.RaiseVerificationError(ErrorCode, SeqName);
             }
             else
             {

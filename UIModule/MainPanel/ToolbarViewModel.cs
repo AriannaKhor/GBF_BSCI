@@ -253,8 +253,6 @@ namespace UIModule.MainPanel
         public DelegateCommand ReconnectAllTCP { get; set; }
         public DelegateCommand<string> ControlStateCheck { get; set; }
 
-        private static object m_SyncLog = new object();
-
         public event Action<string> EStopWindEvent;
 
         private readonly IDialogService m_DialogService;
@@ -601,8 +599,6 @@ namespace UIModule.MainPanel
                         m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
                         m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
-
-
                     }
                 }
                 else

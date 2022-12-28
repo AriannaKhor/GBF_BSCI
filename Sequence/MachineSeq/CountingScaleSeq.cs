@@ -51,7 +51,7 @@ namespace Sequence.MachineSeq
             WaitVisionResult,
             RetryVisionResult,
             WaitCodeReaderResult,
-
+            EndLot,
             //Error Routine
             ErrorRoutine,
             WaitResumeError,
@@ -152,14 +152,6 @@ namespace Sequence.MachineSeq
                                         Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
                                         break;
                                 }
-                                DateTime currentTime = DateTime.Now;
-                                DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                                dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                                m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                                m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                                m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                                WriteSoftwareResultLog(m_resultsDatalog);
-                                m_resultsDatalog.ClearAll();
 
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
                                 m_SeqNum = SN.ErrorRoutine;
@@ -169,7 +161,14 @@ namespace Sequence.MachineSeq
                                 m_SeqFlag.ProcCodeReaderCont = false;
                                 m_SeqNum = SN.Begin;
                             }
-                            
+                            DateTime currentTime = DateTime.Now;
+                            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                            dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+                            WriteSoftwareResultLog(m_resultsDatalog);
+                            m_resultsDatalog.ClearAll();
                             break;
                         #endregion
 

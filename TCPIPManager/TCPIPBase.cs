@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using TCPIPManager.Enums;
 using TCPIPManager.EventArgs;
 using TCPIPManager.EventHandler;
@@ -51,7 +52,7 @@ namespace TCPIPManager
                     TCPIPDataFormat receiverDataFormat = (TCPIPDataFormat)Enum.Parse(typeof(TCPIPDataFormat), device.ReceivedDataFormat);
                     socket.Connect(device.IPAddress, device.Port, senderDataFormat, receiverDataFormat);
                     clientSockets.Add(socket);
-
+                    Thread.Sleep(1000);
                     clientSockets[device.ID].Name = EnumHelper.GetDescription(((NetworkDev)(int)device.ID));
                     clientSockets[device.ID].ConnectionStateChanged += new ConnectionStateChangedEventHandler(OnClientSocket_StatusChanged);
                     clientSockets[device.ID].MessageReceived += new MessageReceivedEventHandler(OnClientSocket_MessageReceived);

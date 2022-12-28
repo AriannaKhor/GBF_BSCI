@@ -232,6 +232,7 @@ namespace DialogManager.ErrorMsg
             Global.CurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
+            Global.AccumulateCurrentBatchQuantity = 0;
             #endregion
 
             #region Top Vision

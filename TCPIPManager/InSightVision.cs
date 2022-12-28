@@ -41,7 +41,6 @@ namespace TCPIPManager
         private bool m_EnableCodeReader;
         private bool allowVisResultchg = false;
         public SystemConfig m_SystemConfig;
-        private FixedSizeObservableCollection<ResultsDatalog> m_SoftwareResultCollection;
         private CvsInSight m_InsightV1 = new CvsInSight();
         private readonly IEventAggregator m_Events;
         #endregion

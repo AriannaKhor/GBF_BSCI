@@ -506,16 +506,15 @@ namespace UIModule.MainPanel
                     #region Code Reader
                     ViewCurrentContainerNumber = Global.CurrentContainerNum;
                     ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                    ViewAccumulateCurrentTotalBatchQuantity = 0;
+                    ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
                     ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
                     ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                    CodeReaderResult = "";
+                    CodeReaderResult = resultstatus.PendingResult.ToString();
                     CodeReaderImage = null;
                     CdResultBG = System.Windows.Media.Brushes.Transparent;
                     #endregion
                 }
                 else
-
                 {
                     ViewCurrentContainerNumber = Global.CurrentContainerNum;
                     ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
