@@ -576,10 +576,6 @@ namespace Sequence
                     m_SeqFlag.ProcVisCont = true;
                     break;
 
-                case MachineOperationType.ProcUpdate:
-                    m_SeqFlag.ProcUpdate = true;
-                    break;
-
                 case MachineOperationType.ProcBusy:
                     m_SeqFlag.ProcBusy = true;
                     break;

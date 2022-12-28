@@ -96,7 +96,7 @@ namespace Sequence
 
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(OnSeqEndLotComplted, filter => filter.MachineOpr == MachineOperationType.EndLotComp);
             m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineStateChange);
-            m_EventAggregator.GetEvent<CheckOperation>().Subscribe(OnCheckOperation);
+           // m_EventAggregator.GetEvent<CheckOperation>().Subscribe(OnCheckOperation);
         }
 
         private void CreateSeqInstance()

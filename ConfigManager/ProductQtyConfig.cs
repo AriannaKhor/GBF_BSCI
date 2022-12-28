@@ -103,17 +103,17 @@ namespace ConfigManager
             }
 
             [ConfigurationProperty("MinQuantity")]
-            public string MinQuantity
+            public float MinQuantity
             {
                 set { this["MinQuantity"] = value; }
-                get { return (string)this["MinQuantity"]; }
+                get { return (float)this["MinQuantity"]; }
             }
 
             [ConfigurationProperty("MaxQuantity")]
-            public string MaxQuantity
+            public float MaxQuantity
             {
                 set { this["MaxQuantity"] = value; }
-                get { return (string)this["MaxQuantity"]; }
+                get { return (float)this["MaxQuantity"]; }
             }
         }
     }

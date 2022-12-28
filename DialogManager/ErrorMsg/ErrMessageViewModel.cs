@@ -169,17 +169,6 @@ namespace DialogManager.ErrorMsg
         #region Method
         private void Reset()
         {
-            DateTime Endtime = DateTime.Now;
-            TimeSpan Duration = Endtime - AlarmDetail.Date;
-
-            if (!string.IsNullOrEmpty(Global.LotInitialBatchNo))
-            {
-                m_SQLOperation.AddErrorToDB(Endtime, AlarmDetail.Date, Environment.MachineName, AlarmDetail.Station, Global.LotInitialBatchNo, AlarmDetail.ErrorCode, AlarmDetail.AlarmType, AlarmDetail.Causes);
-            }
-
-            m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{m_CultureResources.GetStringValue("MachineError")}, {m_CultureResources.GetStringValue("Station")} : {AlarmDetail.Station}, {m_CultureResources.GetStringValue("Error")} : {AlarmDetail.Causes}" });
-
-            Global.SkipRetest.Add(new ErrRecovery { AlarmModule = AlarmDetail.Module, IsSkipRetest = IsSkipRetest });
             m_EventAggregator.GetEvent<CheckOperation>().Publish(true);
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
             CloseDialog("");
@@ -193,7 +182,7 @@ namespace DialogManager.ErrorMsg
             }
             else if (Command == "EndLot")
             {
-                StopOperation();
+                CloseDialog("");
                 if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
                 {
                     ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
@@ -202,8 +191,14 @@ namespace DialogManager.ErrorMsg
                     {
                         Global.AccumulateCurrentBatchQuantity = Global.LotInitialTotalBatchQuantity = 0;
                         m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
+                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                        ResetCounter();
+                    }
+                    else if (dialogResult == ButtonResult.No)
+                    {
+                        Reset();
+                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
                     }
                 }
                 else
@@ -216,9 +211,25 @@ namespace DialogManager.ErrorMsg
             }
         }
 
-        private string GetStringTableValue(string key)
+        private void ResetCounter()
         {
-            return m_CultureResources.GetStringValue(key);
+            #region Code Reader
+            Global.CurrentContainerNum = String.Empty;
+            Global.CurrentBatchQuantity = 0;
+            Global.AccumulateCurrentBatchQuantity = 0;
+            Global.CurrentBoxQuantity = 0;
+            Global.CurrentBatchNum = String.Empty;
+            #endregion
+
+            #region Top Vision
+            Global.VisProductQuantity = 0f;
+            Global.VisProductCrtOrientation = String.Empty;
+            Global.VisProductWrgOrientation = String.Empty;
+            Global.TopVisionEndLot = true;
+            Global.CodeReaderEndLot = true;
+            m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
+            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+            #endregion
         }
 
         private string GetDialogTableValue(string key)
@@ -256,11 +267,6 @@ namespace DialogManager.ErrorMsg
         public virtual void OnDialogClosed()
         {
 
-        }
-        private void StopOperation()
-        {
-            IsAllowStop = false;
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
         }
 
         public virtual void OnDialogOpened(IDialogParameters parameters)

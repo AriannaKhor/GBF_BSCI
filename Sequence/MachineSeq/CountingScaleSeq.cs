@@ -26,6 +26,7 @@ namespace Sequence.MachineSeq
             ContainerNumberExist,//4
             BoxQtyNotMatch,//5
             ExceedTotalBatchQty,//6
+            ExceedUpperLimit, //7
 
 
         }
@@ -89,7 +90,6 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.WaitVisionResult:
-                            m_resultsDatalog.ClearAll();
                             if (m_SeqFlag.ProcVisCont)
                             {
                                 m_SeqFlag.ProcVisCont = false;
@@ -114,6 +114,9 @@ namespace Sequence.MachineSeq
                                 {
                                     case "WrongOrientation":
                                         Global.VisErrorCaused = RaiseError((int)ErrorCode.WrongOrientation);
+                                        break;
+                                    case "ExceedUpperLimit":
+                                        Global.VisErrorCaused = RaiseError((int)ErrorCode.ExceedUpperLimit);
                                         break;
                                 }
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
@@ -161,6 +164,10 @@ namespace Sequence.MachineSeq
                                 m_SeqFlag.ProcCodeReaderCont = false;
                                 m_SeqNum = SN.Begin;
                             }
+                            //else if (m_SeqFlag.EndLotComp)
+                            //{
+                            //    m_SeqNum = SN.EndLot;
+                            //}
                             DateTime currentTime = DateTime.Now;
                             DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
                             dateFormat.ShortDatePattern = "dd-MM-yyyy";
@@ -244,6 +251,9 @@ namespace Sequence.MachineSeq
                             m_SeqFlag.ProcCodeReaderFail = true;
                             m_FailType = sequence.FailType;
                             break;
+                        case MachineOperationType.ProcContErrRtn:
+                            m_SeqNum = SN.ErrorRoutine;
+                            break;
                     }
                 }
                 base.SequenceOperation(sequence);
@@ -252,10 +262,11 @@ namespace Sequence.MachineSeq
 
         public override void StartProduction()
         {
-            if (!checkOp)
-            {
-                m_SeqNum = SN.Begin;
-            }
+            //if (!checkOp)
+            //{
+            //    m_SeqNum = SN.Begin;
+            //}
+            m_SeqNum = SN.Begin;
 
         }
 
@@ -263,6 +274,7 @@ namespace Sequence.MachineSeq
         {
             if (checkopr)
             {
+                //checkopr = false;
                 checkOp = true;
             }
         }

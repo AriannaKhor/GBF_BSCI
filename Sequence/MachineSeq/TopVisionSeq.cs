@@ -26,8 +26,6 @@ namespace Sequence.MachineSeq
         private SN[] m_SeqRsm = new SN[Total_RSM];
         private string m_FailType;
 
-
-        // private int m_InsightVisionLoopCount = 0;
         #endregion
 
         #region Enum
@@ -107,9 +105,6 @@ namespace Sequence.MachineSeq
                             break;
                     }
                 }
-
-
-
                 base.SequenceOperation(sequence);
             }
         }

@@ -47,7 +47,7 @@
         ExtTestRunBegin,
         ExtTestRunAbort,
         ExtTestRunComp,
-        ProcUpdate,
+        ProcContErrRtn,
         ProcStop,
     }
 

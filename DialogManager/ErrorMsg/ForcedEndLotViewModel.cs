@@ -92,7 +92,6 @@ namespace DialogManager.ErrorMsg
             set
             {
                 SetProperty(ref m_IsAllowStop, value);
-                //CheckSSRButtonAvail();
             }
         }
 
@@ -117,11 +116,11 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_YesSituation, value); }
         }
 
-        private bool m_CanAccess = true;
-        public bool CanAccess
+        private bool m_btnYesEnable = false;
+        public bool btnYesEnable
         {
-            get { return m_CanAccess; }
-            set { SetProperty(ref m_CanAccess, value); }
+            get { return m_btnYesEnable; }
+            set { SetProperty(ref m_btnYesEnable, value); }
         }
 
         private Visibility m_NoSituation = Visibility.Collapsed;
@@ -160,10 +159,7 @@ namespace DialogManager.ErrorMsg
         public DelegateCommand<string> OperationCommand { get; private set; }
         public DelegateCommand<object> VerifyCommand { get; private set; }
         public DelegateCommand EndLotCommand { get; set; }
-
-        //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
-        //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
-
+        public DelegateCommand<object> VerificationCommand { get; private set; }
         #endregion
 
         #region Constructor
@@ -173,27 +169,41 @@ namespace DialogManager.ErrorMsg
             m_SQLOperation = sqlOperation;
             m_IO = baseIO;
             m_CultureResources = cultureResources;
-
+            m_AuthService = authService;
             OperationCommand = new DelegateCommand<string>(OperationMethod);
+            VerificationCommand = new DelegateCommand<object>(VerificationMethod);
             AlarmDetail = new AlarmParameter();
         }
 
+        private void VerificationMethod(object value)
+        {
+            var passwordBox = value as PasswordBox;
+            var password = passwordBox.Password;
+
+            if (m_AuthService.Authenticate(UserID, password))
+            {
+                var currentUserLevel = m_AuthService.CurrentUser.UserLevel;
+                if (currentUserLevel == ACL.UserLevel.Admin || currentUserLevel == ACL.UserLevel.Engineer || currentUserLevel == ACL.UserLevel.Technician)
+                {
+                    btnYesEnable = true;
+                    ErrMessage = "Valid Login";
+                }
+                else
+                {
+                    btnYesEnable = false;
+                    ErrMessage = m_CultureResources.GetStringValue("InvalidLoginInfo");
+                }
+            }
+            else
+            {
+                ErrMessage = m_CultureResources.GetStringValue("InvalidLoginInfo");
+            }
+        }
         #endregion
 
         #region Method
         private void Reset()
         {
-            DateTime Endtime = DateTime.Now;
-            TimeSpan Duration = Endtime - AlarmDetail.Date;
-
-            if (!string.IsNullOrEmpty(Global.LotInitialBatchNo))
-            {
-                m_SQLOperation.AddErrorToDB(Endtime, AlarmDetail.Date, Environment.MachineName, AlarmDetail.Station, Global.LotInitialBatchNo, AlarmDetail.ErrorCode, AlarmDetail.AlarmType, AlarmDetail.Causes);
-            }
-
-            m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{m_CultureResources.GetStringValue("MachineError")}, {m_CultureResources.GetStringValue("Station")} : {AlarmDetail.Station}, {m_CultureResources.GetStringValue("Error")} : {AlarmDetail.Causes}" });
-
-            Global.SkipRetest.Add(new ErrRecovery { AlarmModule = AlarmDetail.Module, IsSkipRetest = IsSkipRetest });
             m_EventAggregator.GetEvent<CheckOperation>().Publish(true);
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
             CloseDialog("");
@@ -203,25 +213,20 @@ namespace DialogManager.ErrorMsg
         {
             if (Command == "Yes")
             {
-                StopOperation();
-                Global.TopVisionEndLot = true;
-                Global.CodeReaderEndLot = true;
+                m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
+                m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
+                m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                 ResetCounter();
-                m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
-                m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             }
             else if (Command == "No")
             {
                 Reset();
+                m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
             }
             CloseDialog("");
         }
-
         protected virtual void CloseDialog(string parameter)
         {
-            //m_TmrButtonMonitor.Stop();
-            // Turn off Reset Button LED
-            //m_IO.WriteBit(ResetButtonIndic, false);
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
 
@@ -230,36 +235,21 @@ namespace DialogManager.ErrorMsg
             #region Code Reader
             Global.CurrentContainerNum = String.Empty;
             Global.CurrentBatchQuantity = 0;
+            Global.AccumulateCurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
-            Global.AccumulateCurrentBatchQuantity = 0;
             #endregion
 
             #region Top Vision
             Global.VisProductQuantity = 0f;
             Global.VisProductCrtOrientation = String.Empty;
             Global.VisProductWrgOrientation = String.Empty;
+            Global.TopVisionEndLot = true;
+            Global.CodeReaderEndLot = true;
+            m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
+            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             #endregion
         }
-        #endregion
-
-        #region Event
-        //private void m_TmrButtonMonitor_Tick(object sender, EventArgs e)
-        ////{
-        ////    try
-        ////    {
-        ////        if (m_IO.ReadBit(ResetButton))
-        ////        {
-        ////            m_TmrButtonMonitor.Stop();
-        ////            Reset();
-        ////        }
-        ////    }
-        ////    catch (Exception ex)
-        ////    {
-        ////        m_TmrButtonMonitor.Stop();
-        ////        MessageBox.Show(ex.Message, ex.Source);
-        ////    }
-        //}
         #endregion
 
         #region Properties
@@ -278,54 +268,12 @@ namespace DialogManager.ErrorMsg
 
         }
 
-        private void StopOperation()
-        {
-            IsAllowStop = false;
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
-        }
-
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
-            //    string[] split = parameters.GetValue<string>("message").Split(';');
-
-            //    AlarmDetail.Module = (SQID)Enum.Parse(typeof(SQID), split[8]);
-            //    AlarmDetail.Date = DateTime.Now;
-            //    AlarmDetail.ErrorCode = Convert.ToInt32(split[0]);
-            //    AlarmDetail.Station = split[1];
-            //    AlarmDetail.Causes = split[2];
-            //    AlarmDetail.Recovery = split[3];
-            //    AlarmDetail.AlarmType = split[4];
-            //    AlarmDetail.RetestDefault = Convert.ToBoolean(split[5]);
-            //    AlarmDetail.RetestOption = Convert.ToBoolean(split[6]);
-            //    AlarmDetail.IsStopPage = Convert.ToBoolean(split[7]);
-
-            //    Station = split[8];
-            //    ErrorMsg = split[2].Trim();
-            //    Action = split[3];
-
-            //if (Convert.ToBoolean(split[5]))
-            //{
-            //    IsSkipRetest = false;
-            //}
-            //else
-            //{
-            //    IsSkipRetest = true;
-            //}
-
-            //if (Convert.ToBoolean(split[6]))
-            //{
-            //    SkipRetestVis = Visibility.Visible;
-            //}
-            //else
-            //{
-            //    SkipRetestVis = Visibility.Collapsed;
-            //}
-
             if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing)
             {
                 YesSituation = Visibility.Visible;
                 NoSituation = Visibility.Collapsed;
-                //m_TmrButtonMonitor.Start();
             }
             else
             {

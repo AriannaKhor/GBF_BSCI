@@ -215,14 +215,16 @@ namespace DialogManager.ErrorMsg
 
             if (m_AuthService.Authenticate(UserID, password))
             {
-                var currentUserLevel = Global.CurrentApprovalLevel = m_AuthService.CurrentUser.UserLevel.ToString();
-                if (currentUserLevel == ACL.UserLevel.Admin.ToString() || currentUserLevel == ACL.UserLevel.Engineer.ToString() || currentUserLevel == ACL.UserLevel.Technician.ToString())
+                var currentUserLevel = m_AuthService.CurrentUser.UserLevel;
+                if (currentUserLevel == ACL.UserLevel.Admin || currentUserLevel == ACL.UserLevel.Engineer || currentUserLevel == ACL.UserLevel.Technician)
                 {
                     btnYesEnable = true;
+                    ErrMessage = "Valid Login";
                 }
                 else
                 {
                     btnYesEnable = false;
+                    ErrMessage = m_CultureResources.GetStringValue("InvalidLoginInfo");
                 }
             }
             else
@@ -235,17 +237,6 @@ namespace DialogManager.ErrorMsg
         #region Method
         private void Reset()
         {
-            DateTime Endtime = DateTime.Now;
-            TimeSpan Duration = Endtime - AlarmDetail.Date;
-
-            if (!string.IsNullOrEmpty(Global.LotInitialBatchNo))
-            {
-                m_SQLOperation.AddErrorToDB(Endtime, AlarmDetail.Date, Environment.MachineName, AlarmDetail.Station, Global.LotInitialBatchNo, AlarmDetail.ErrorCode, AlarmDetail.AlarmType, AlarmDetail.Causes);
-            }
-
-            m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{m_CultureResources.GetStringValue("MachineError")}, {m_CultureResources.GetStringValue("Station")} : {AlarmDetail.Station}, {m_CultureResources.GetStringValue("Error")} : {AlarmDetail.Causes}" });
-
-            Global.SkipRetest.Add(new ErrRecovery { AlarmModule = AlarmDetail.Module, IsSkipRetest = IsSkipRetest });
             m_EventAggregator.GetEvent<CheckOperation>().Publish(true);
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
             CloseDialog("");
@@ -256,46 +247,16 @@ namespace DialogManager.ErrorMsg
             if (Command == "Yes")
             {
                 Reset();
+                m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
             }
       
             else if (Command == "No")
             {
-                //for endlot
-                StopOperation();
-                if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
-                {
-                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
-
-                    if (dialogResult == ButtonResult.Yes)
-                    {
-                        Global.AccumulateCurrentBatchQuantity = Global.LotInitialTotalBatchQuantity = 0;
-                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
-                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
-                    }
-                }
-                else
-                {
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-                    RaiseEndLotPopup();
-                }
-                CloseDialog("");
+                RaiseEndLotPopup();
             }
-
-                m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{m_CultureResources.GetStringValue("MachineError")}, {m_CultureResources.GetStringValue("Station")} : {AlarmDetail.Station}, {m_CultureResources.GetStringValue("Error")} : {AlarmDetail.Causes}" });
-
-                CloseDialog("");
+            CloseDialog("");
         }
 
-        private string GetStringTableValue(string key)
-        {
-            return m_CultureResources.GetStringValue(key);
-        }
-
-        private string GetDialogTableValue(string key)
-        {
-            return m_CultureResources.GetDialogValue(key);
-        }
         protected virtual void CloseDialog(string parameter)
         {
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
@@ -324,12 +285,6 @@ namespace DialogManager.ErrorMsg
                                       new DialogParameters($"message={""}"),
                                       null);
         }
-        private void StopOperation()
-        {
-            IsAllowStop = false;
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
-        }
-
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
             string[] split = parameters.GetValue<string>("message").Split(';');
