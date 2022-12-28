@@ -38,44 +38,9 @@ namespace Sequence.MachineSeq
             BeginCodeReader,
 
             // Runnning Routine
-
-            TriggerVis,
             TriggerCodeReader,
             WaitCodeReaderResult,
-            RetryGetCodeReaderResult,
-
-            // Intermediate Recovery
-            IM_MoveMotorZHome,
-            IM_WaitMtrZHome,
-
-            //Initialization Routine
-            IBegin,
-            IMoveLifterRest,
-            IWaitLifterRest,
-            IMoveMotorXHome,
-            IWaitMotorXHome,
-            IMoveMotorYHome,
-            IWaitMotorYHome,
-            ISuccess,
-            IEnd,
-
-            //Error Routine
-            ErrorRoutine,
-            WaitResumeError,
-
-            // Stop Routine
-            StopRoutine,
-            WaitResumeStop,
-
-
-            ForceEOS,
-            CodeReaderRepeat,
-            EndLot,
-            UpdateLog,
-            DelayTrigger,
         }
-
-
         #endregion
 
         #region Constructor
@@ -103,77 +68,7 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.TriggerCodeReader:
-                            m_TmrDelay.Time_Out = 0.01f;
-                            m_SeqNum = SN.DelayTrigger;
-                            break;
-
-                        case SN.DelayTrigger:
-                            if (m_TmrDelay.TimeOut())
-                            {
-                                CodeReader.TriggerCodeReader();
-                                m_SeqNum = SN.WaitCodeReaderResult;
-                            }
-                            break;
-
-                        case SN.WaitCodeReaderResult:
-                            if (m_SeqFlag.ProcCont)
-                            {
-                                m_SeqFlag.ProcCont = false;
-                                //Global.CodeReaderRetry = false;
-                                m_SeqNum = SN.TriggerCodeReader;
-                            }
-                            else if (m_SeqFlag.ProcFail)
-                            {
-                                m_SeqFlag.ProcFail = false;
-                    
-                                switch (m_FailType)
-                                {
-                                    case "MissingResult":
-                                       Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.MissingResult);
-                                        break;
-
-                                    case "BatchNotMatch":
-                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.BatchNotMatch);
-                                        break;
-
-                                    case "BoxQtyNotMatch":
-                                        Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.BoxQtyNotMatch);
-                                        break;
-
-                                    case "ExceedTotalBatchQty":
-                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
-                                        break;
-                                }
-                                m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
-                                m_SeqNum = SN.ErrorRoutine;
-                            }
-                            DateTime currentTime = DateTime.Now;
-                            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                            dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                            WriteSoftwareResultLog(m_resultsDatalog);
-                            m_resultsDatalog.ClearAll();
-                            break;
-
-                        #region Error Routine
-                        case SN.ErrorRoutine:
-                            m_SeqNum = SN.WaitResumeError;
-                            break;
-                        #endregion
-
-                        case SN.WaitResumeError:
-                            if (Global.MachineStatus == MachineStateType.Running)
-                            {
-                                m_SeqNum = m_SeqRsm[(int)RSM.Err];
-                                m_SeqRsm[(int)RSM.Err] = SN.NONE;
-                                m_TmrDelay.Time_Out = 0.01f;
-                            }
-                            break;
-
-                        #region EndLot
-                        case SN.EndLot:
+                            CodeReader.TriggerCodeReader();
                             m_SeqNum = SN.EOS;
                             break;
                             #endregion
@@ -254,8 +149,4 @@ namespace Sequence.MachineSeq
         #endregion
     }
     #endregion
-
-
 }
-
-#endregion

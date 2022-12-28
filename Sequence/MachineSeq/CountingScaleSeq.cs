@@ -4,6 +4,7 @@ using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -102,12 +103,16 @@ namespace Sequence.MachineSeq
                     {
                         #region Running Routine
                         case SN.Begin:
+                            m_TmrDelay.Time_Out = 0.1f;
                             m_SeqNum = SN.TriggerVis;
                             break;
 
                         case SN.TriggerVis:
-                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcStart });
-                            m_SeqNum = SN.WaitVisionResult;
+                            if (m_TmrDelay.TimeOut())
+                            {
+                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcStart });
+                                m_SeqNum = SN.WaitVisionResult;
+                            }
                          break;
 
                         case SN.WaitVisionResult:
@@ -134,7 +139,52 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.TriggerCodeReader:
-                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcStart });
+                            if (m_TmrDelay.TimeOut())
+                            {
+                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcStart });
+                                m_SeqNum = SN.WaitCodeReaderResult;
+                            }
+                            break;
+
+                        case SN.WaitCodeReaderResult:
+                            if (m_SeqFlag.ProcCont)
+                            {
+                                m_SeqFlag.ProcCont = false;
+                                m_SeqNum = SN.TriggerCodeReader;
+                            }
+                            else if (m_SeqFlag.ProcFail)
+                            {
+                                m_SeqFlag.ProcFail = false;
+
+                                switch (m_FailType)
+                                {
+                                    case "MissingResult":
+                                        Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.MissingResult);
+                                        break;
+
+                                    case "BatchNotMatch":
+                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.BatchNotMatch);
+                                        break;
+
+                                    case "BoxQtyNotMatch":
+                                        Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.BoxQtyNotMatch);
+                                        break;
+
+                                    case "ExceedTotalBatchQty":
+                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
+                                        break;
+                                }
+                                m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
+                                m_SeqNum = SN.ErrorRoutine;
+                            }
+                            DateTime currentTime = DateTime.Now;
+                            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                            dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+                            WriteSoftwareResultLog(m_resultsDatalog);
+                            m_resultsDatalog.ClearAll();
                             break;
                         #endregion
 
@@ -142,8 +192,6 @@ namespace Sequence.MachineSeq
                             if (m_SeqFlag.EndLotComp)
                             {
                                 m_SeqFlag.EndLotComp = false;
-                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.EndLotComp });
-                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.EndLotComp });
                                 m_SeqNum = SN.EOS;
                             }
                             break;
@@ -158,7 +206,7 @@ namespace Sequence.MachineSeq
                             {
                                 m_SeqNum = m_SeqRsm[(int)RSM.Err];
                                 m_SeqRsm[(int)RSM.Err] = SN.NONE;
-                                m_TmrDelay.Time_Out = 0.01f;
+                                m_TmrDelay.Time_Out = 0.1f;
                             }
                             break;
                         #endregion
@@ -204,7 +252,6 @@ namespace Sequence.MachineSeq
                             break;
                     }
                 }
-
                 base.SequenceOperation(sequence);
             }
         }

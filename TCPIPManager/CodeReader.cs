@@ -139,7 +139,7 @@ namespace TCPIPManager
                         if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                         {
                             Global.CodeReaderResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
                         }
                         //OK result
                         else if (Global.CodeReaderResult == "OK")
@@ -164,7 +164,7 @@ namespace TCPIPManager
                     else
                     {
                         Global.CodeReaderResult = resultstatus.NG.ToString();
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
                     }
                 }
                 //Incorrect Batch No
@@ -178,7 +178,7 @@ namespace TCPIPManager
             else
             {
                 Global.CodeReaderResult = resultstatus.NG.ToString();
-                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "MissingResult" });
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "MissingResult" });
             }
 
             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
