@@ -142,18 +142,16 @@ namespace TCPIPManager
                             m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
                         }
                         //OK result
-                        else if (Global.CodeReaderResult == "OK")
-                        {
+                        else
+                        { 
                             Global.CodeReaderResult = resultstatus.OK.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcCont });
-
                             if (Global.VisOverallResult == "OK" && Global.CodeReaderResult == "OK")
                             {
-                                Global.VisOverallResult = resultstatus.OK.ToString();
                                 ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK);
                                 if (dialogResult == ButtonResult.OK)
                                 {
-
+                                    Global.LotInitialBatchNo = string.Empty;
+                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcStart});
                                 }
                                 CloseDialog("");
                                 ResetCounter();

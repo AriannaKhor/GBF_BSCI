@@ -104,25 +104,7 @@ namespace Sequence.MachineSeq
                     {
 
                         case MachineOperationType.ProcStart:
-                            m_SeqFlag.ProcStart = true;
                             m_SeqNum = SN.BeginCodeReader;
-                            break;
-
-                        case MachineOperationType.ProcCont:
-                            m_SeqFlag.ProcCont = true;
-                            break;
-
-                        case MachineOperationType.ProcFail:
-                            m_SeqFlag.ProcFail = true;
-                            m_FailType = sequence.FailType;
-                            break;
-
-                        case MachineOperationType.EndLotComp:
-                            m_SeqNum = SN.EndLot;
-                            break;
-
-                        case MachineOperationType.ProcUpdate:
-                            m_SeqFlag.ProcUpdate = true;
                             break;
                     }
                 }

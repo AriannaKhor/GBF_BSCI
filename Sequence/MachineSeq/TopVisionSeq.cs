@@ -105,19 +105,6 @@ namespace Sequence.MachineSeq
                         case MachineOperationType.ProcStart:
                             m_SeqNum = SN.BeginTopVision;
                             break;
-
-                        case MachineOperationType.ProcCont:
-                            m_SeqFlag.ProcCont = true;
-                            break;
-
-                        case MachineOperationType.ProcFail:
-                            m_SeqFlag.ProcFail = true;
-                            m_FailType = sequence.FailType;
-                            break;
-
-                        case MachineOperationType.EndLotComp:
-                            m_SeqNum = SN.EndLot;
-                            break;
                     }
                 }
 

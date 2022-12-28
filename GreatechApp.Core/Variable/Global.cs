@@ -37,10 +37,8 @@ namespace GreatechApp.Core.Variable
         public static int TotalOutput;
 
         // Lot Info
-        public static string LotInitialBatchNo;
+        public static string LotInitialBatchNo = string.Empty;
         public static int LotInitialTotalBatchQuantity;
-        public static string LotOperatorID;
-        public static string LotRecipe;
 
         //InsightVision
         public static string VisionConnStatus;

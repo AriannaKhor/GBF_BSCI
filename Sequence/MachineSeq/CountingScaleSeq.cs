@@ -243,10 +243,12 @@ namespace Sequence.MachineSeq
                         case MachineOperationType.EndLotComp:
                             m_SeqFlag.EndLotComp = true;
                             break;
+                        case MachineOperationType.ProcStart:
+                            m_SeqNum = SN.Begin;
+                            break;
                         case MachineOperationType.ProcCont:
                             m_SeqFlag.ProcCont = true;
                             break;
-
                         case MachineOperationType.ProcFail:
                             m_SeqFlag.ProcFail = true;
                             break;
