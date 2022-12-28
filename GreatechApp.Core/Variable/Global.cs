@@ -7,7 +7,8 @@ using System.Globalization;
 namespace GreatechApp.Core.Variable
 {
     public class Global
-    {        
+    {
+        public static bool Temp;
         public static string MachName;
         public static int MachNo;
         public static string SoftwareVersion;

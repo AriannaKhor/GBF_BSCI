@@ -217,11 +217,14 @@ namespace Sequence
             internal bool InitSuccess;
             internal bool InitFail;
             internal bool ProcStart;
-            internal bool ProcFail;
+            internal bool ProcCodeReaderFail;
+            internal bool ProcVisFail;
             internal bool ProcSkip;
             internal bool ProcAbort;
             internal bool ProcReady;
             internal bool ProcCont;
+            internal bool ProcVisCont;
+            internal bool ProcCodeReaderCont;
             internal bool ProcBusy;
             internal bool ProcComp;
             internal bool ItemGiven;
@@ -567,15 +570,17 @@ namespace Sequence
                     m_SeqFlag.ProcReady = true;
                     break;
 
-                case MachineOperationType.ProcCont:
-                    m_SeqFlag.ProcCont = true;
+                case MachineOperationType.ProcCodeReaderCont:
+                    m_SeqFlag.ProcCodeReaderCont = true;
+                    break;
+
+                case MachineOperationType.ProcVisCont:
+                    m_SeqFlag.ProcVisCont = true;
                     break;
 
                 case MachineOperationType.ProcUpdate:
                     m_SeqFlag.ProcUpdate = true;
                     break;
-
-             
 
                 case MachineOperationType.ProcBusy:
                     m_SeqFlag.ProcBusy = true;

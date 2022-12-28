@@ -119,9 +119,7 @@ namespace UIModule.MainPanel
                     if (dialogResult == ButtonResult.Yes)
                     {
                         Global.LotInitialBatchNo = LotID;
-                        Global.LotOperatorID = OperatorID;
                         Global.LotInitialTotalBatchQuantity = TotalBatchQuantity;
-                        Global.LotRecipe = SelectedRecipe.Product_Name.ToString();
                        
                         if (!m_SQLOperation.InsertNewLot(LotID, OperatorID, TotalBatchQuantity.ToString(), SelectedRecipe.Product_Name.ToString(), DateTime.Now))
                         {

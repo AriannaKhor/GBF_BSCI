@@ -26,17 +26,16 @@ namespace Sequence.MachineSeq
             ContainerNumberExist,//4
             BoxQtyNotMatch,//5
             ExceedTotalBatchQty,//6
-            
+
 
         }
         #endregion
 
         #region Variable
         private SN m_SeqNum;
-        private SN m_PrevSeqNum;
         private SN[] m_SeqRsm = new SN[Total_RSM];
-        private int m_CodeReaderLoopCount = 0;
         private string m_FailType;
+        private string m_ContType;
         #endregion
 
         #region Enum
@@ -52,36 +51,10 @@ namespace Sequence.MachineSeq
             WaitVisionResult,
             RetryVisionResult,
             WaitCodeReaderResult,
-            RetryGetCodeReaderResult,
-
-            // Intermediate Recovery
-            IM_MoveMotorXHome,
-            IM_WaitMtrXHome,
-
-            //Initialization Routine
-            IBegin,
-            IMoveLifterRest,
-            IWaitLifterRest,
-            IMoveMotorXHome,
-            IWaitMotorXHome,
-            IMoveMotorYHome,
-            IWaitMotorYHome,
-            ISuccess,
-            IEnd,
 
             //Error Routine
             ErrorRoutine,
             WaitResumeError,
-
-            // Stop Routine
-            StopRoutine,
-            WaitResumeStop,
-
-
-            ForceEOS,
-            UpdateLog,
-            EndLot,
-            TriggerDevices,
         }
         #endregion
 
@@ -113,19 +86,29 @@ namespace Sequence.MachineSeq
                                 Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcStart });
                                 m_SeqNum = SN.WaitVisionResult;
                             }
-                         break;
+                            break;
 
                         case SN.WaitVisionResult:
                             m_resultsDatalog.ClearAll();
-                            if (m_SeqFlag.ProcCont)
+                            if (m_SeqFlag.ProcVisCont)
                             {
+                                m_SeqFlag.ProcVisCont = false;
                                 Global.VisErrorCaused = "N/A";
-                                m_SeqFlag.ProcCont = false;
-                                m_SeqNum = SN.TriggerCodeReader;
+                                switch (m_ContType)
+                                {
+                                    case "ReTriggerVis":
+                                        m_SeqNum = SN.TriggerVis;
+                                        break;
+
+                                    case "TriggerCodeReader":
+                                        m_TmrDelay.Time_Out = 0.1f;
+                                        m_SeqNum = SN.TriggerCodeReader;
+                                        break;
+                                }
                             }
-                            else if (m_SeqFlag.ProcFail)
+                            else if (m_SeqFlag.ProcVisFail)
                             {
-                                m_SeqFlag.ProcFail = false;
+                                m_SeqFlag.ProcVisFail = false;
 
                                 switch (m_FailType)
                                 {
@@ -147,14 +130,9 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.WaitCodeReaderResult:
-                            if (m_SeqFlag.ProcCont)
+                            if (m_SeqFlag.ProcCodeReaderFail)
                             {
-                                m_SeqFlag.ProcCont = false;
-                                m_SeqNum = SN.TriggerCodeReader;
-                            }
-                            else if (m_SeqFlag.ProcFail)
-                            {
-                                m_SeqFlag.ProcFail = false;
+                                m_SeqFlag.ProcCodeReaderFail = false;
 
                                 switch (m_FailType)
                                 {
@@ -174,20 +152,28 @@ namespace Sequence.MachineSeq
                                         Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
                                         break;
                                 }
+                                DateTime currentTime = DateTime.Now;
+                                DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                                dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                                m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                                m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                                m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+                                WriteSoftwareResultLog(m_resultsDatalog);
+                                m_resultsDatalog.ClearAll();
+
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
                                 m_SeqNum = SN.ErrorRoutine;
                             }
-                            DateTime currentTime = DateTime.Now;
-                            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                            dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                            WriteSoftwareResultLog(m_resultsDatalog);
-                            m_resultsDatalog.ClearAll();
+                            else if (m_SeqFlag.ProcCodeReaderCont)
+                            {
+                                m_SeqFlag.ProcCodeReaderCont = false;
+                                m_SeqNum = SN.Begin;
+                            }
+                            
                             break;
                         #endregion
 
+                        #region End Lot
                         case SN.EndLot:
                             if (m_SeqFlag.EndLotComp)
                             {
@@ -195,6 +181,7 @@ namespace Sequence.MachineSeq
                                 m_SeqNum = SN.EOS;
                             }
                             break;
+                        #endregion
 
                         #region Error Routine
                         case SN.ErrorRoutine:
@@ -209,7 +196,7 @@ namespace Sequence.MachineSeq
                                 m_TmrDelay.Time_Out = 0.1f;
                             }
                             break;
-                        #endregion
+                            #endregion
                     }
                 }
             }
@@ -243,14 +230,20 @@ namespace Sequence.MachineSeq
                         case MachineOperationType.EndLotComp:
                             m_SeqFlag.EndLotComp = true;
                             break;
-                        case MachineOperationType.ProcStart:
-                            m_SeqNum = SN.Begin;
+                        case MachineOperationType.ProcVisCont:
+                            m_SeqFlag.ProcVisCont = true;
+                            m_ContType = sequence.ContType;
                             break;
-                        case MachineOperationType.ProcCont:
-                            m_SeqFlag.ProcCont = true;
+                        case MachineOperationType.ProcCodeReaderCont:
+                            m_SeqFlag.ProcCodeReaderCont = true;
                             break;
-                        case MachineOperationType.ProcFail:
-                            m_SeqFlag.ProcFail = true;
+                        case MachineOperationType.ProcVisFail:
+                            m_SeqFlag.ProcVisFail = true;
+                            m_FailType = sequence.FailType;
+                            break;
+                        case MachineOperationType.ProcCodeReaderFail:
+                            m_SeqFlag.ProcCodeReaderFail = true;
+                            m_FailType = sequence.FailType;
                             break;
                     }
                 }
@@ -264,7 +257,7 @@ namespace Sequence.MachineSeq
             {
                 m_SeqNum = SN.Begin;
             }
-             
+
         }
 
         public override void OperationChecking(bool checkopr)

@@ -238,18 +238,18 @@ namespace TCPIPManager
                             if (Global.VisProductQuantity == 0.000 && Global.VisProductCrtOrientation == "0.000" && Global.VisProductCrtOrientation == "0.000")
                             {
                                 Global.VisInspectResult = resultstatus.NoBoxDetected.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "ReTriggerVis" });
                             }
                             else
                             {
                                 Global.VisInspectResult = resultstatus.OK.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "TriggerCodeReader" });
                             }
                         }
                         else
                         {
                             Global.VisInspectResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "WrongOrientation" });
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisFail, FailType = "WrongOrientation" });
                         }
                     }
                     VisionLive();

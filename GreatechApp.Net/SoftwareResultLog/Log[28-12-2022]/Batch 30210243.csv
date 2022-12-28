@@ -1,0 +1,11 @@
+User ID,User Level,Timestamp,Inspection Type,Total Quantity,Correct Orientation,Wrong Orientation,Inspection Type,Decoded Batch Quantity,Decoded Box Quantity,Accumulated Batch Quantity,Overall Result,Messages,Remarks,Approved By
+a,Admin,28-12-2022 | 14:28:18.119,TopVision,8,8.000,0.000,CodeReader,281,26,0,NG,,,
+a,Admin,28-12-2022 | 14:54:19.471,TopVision,26,26.000,0.000,CodeReader,281,26,78,NG,,,
+a,Admin,28-12-2022 | 14:55:48.808,TopVision,26,26.000,0.000,CodeReader,281,26,78,NG,,,
+a,Admin,28-12-2022 | 15:00:52.433,TopVision,26,26.000,0.000,CodeReader,281,26,130,OK,,,
+a,Admin,28-12-2022 | 15:26:04.212,TopVision,26,26.000,0.000,CodeReader,281,26,156,OK,,,
+a,Admin,28-12-2022 | 15:44:32.183,TopVision,26,26.000,0.000,CodeReader,281,26,104,OK,,,
+a,Admin,28-12-2022 | 16:23:34.991,TopVision,26,26.000,0.000,CodeReader,281,26,286,NG,,,
+a,Admin,28-12-2022 | 17:33:44.336,TopVision,26,26.000,0.000,CodeReader,281,26,104,NG,,,
+a,Admin,28-12-2022 | 17:37:06.079,TopVision,26,26.000,0.000,CodeReader,281,26,130,NG,,,
+a,Admin,28-12-2022 | 17:39:11.667,TopVision,26,26.000,0.000,CodeReader,281,26,52,NG,,,

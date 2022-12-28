@@ -49,6 +49,11 @@ namespace TCPIPManager
         private CultureResources m_CultureResources;
         public event Action<IDialogResult> RequestClose;
         private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
+
+
+
+
+        private bool temp = false;
         #endregion
 
         #region Constructor
@@ -61,6 +66,7 @@ namespace TCPIPManager
             m_Events.GetEvent<RequestCodeReaderConnectionEvent>().Subscribe(ConnectCodeReader);
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
+
         }
         #endregion
 
@@ -80,7 +86,6 @@ namespace TCPIPManager
                 m_CodeReaderconnector = myConn;
 
                 m_CodeReader = new DataManSystem(m_CodeReaderconnector);
-
                 m_CodeReader.DefaultTimeout = 5000;
 
                 // Subscribe to events that are signalled when the system is connected / disconnected.
@@ -92,6 +97,7 @@ namespace TCPIPManager
                 m_CodeReaderResults = new ResultCollector(m_CodeReader, requested_result_types);
                 m_CodeReaderResults.ComplexResultCompleted += Results_ComplexResultCompleted;
                 m_CodeReader.SetKeepAliveOptions(false, 3000, 1000);
+                m_CodeReader.Disconnect();
                 m_CodeReader.Connect(); // Uncomment it when connected with the code reader
 
                 try
@@ -107,6 +113,7 @@ namespace TCPIPManager
                 MachineBase.ShowMessage(ex);
             }
         }
+
         public void AnalyseResult(string returnedresult)
         {
             string[] splitedresult = returnedresult.Split(new string[] { "\r\n" }, StringSplitOptions.None);
@@ -139,22 +146,23 @@ namespace TCPIPManager
                         if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                         {
                             Global.CodeReaderResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
                         }
                         //OK result
                         else
                         { 
                             Global.CodeReaderResult = resultstatus.OK.ToString();
-                            if (Global.VisOverallResult == "OK" && Global.CodeReaderResult == "OK")
+                            if (/*Global.VisOverallResult == "OK" &&*/ Global.CodeReaderResult == "OK")
                             {
                                 ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK);
                                 if (dialogResult == ButtonResult.OK)
                                 {
-                                    Global.LotInitialBatchNo = string.Empty;
-                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcStart});
+                                    //Global.LotInitialBatchNo = string.Empty;
+                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont});
+                                    CloseDialog("");
+                                    //ResetCounter();
                                 }
-                                CloseDialog("");
-                                ResetCounter();
+                                
                             }
                         }
                     }
@@ -162,25 +170,26 @@ namespace TCPIPManager
                     else
                     {
                         Global.CodeReaderResult = resultstatus.NG.ToString();
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
                     }
                 }
                 //Incorrect Batch No
                 else
                 {
                     Global.CodeReaderResult = resultstatus.NG.ToString();
-                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BatchNotMatch" });
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BatchNotMatch" });
                 }
             }
             //Missing Result
             else
             {
                 Global.CodeReaderResult = resultstatus.NG.ToString();
-                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "MissingResult" });
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "MissingResult" });
             }
 
             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-         
+            temp = false;
+            Global.Temp = false;
         }
         public void TriggerCodeReader()
         {
@@ -411,14 +420,20 @@ namespace TCPIPManager
         {
             m_Events.GetEvent<OnCodeReaderConnectedEvent>().Publish();
         }
+
         private void OnSystemDisconnected(object sender, System.EventArgs args)
         {
             m_Events.GetEvent<OnCodeReaderDisconnectedEvent>().Publish();
         }
+
         private void Results_ComplexResultCompleted(object sender, ComplexResult complexResult)
         {
-            string returnedresult = ShowResult(complexResult);
-            AnalyseResult(returnedresult);
+            if (temp == false)
+            {
+                temp = true;
+                string returnedresult = ShowResult(complexResult);
+                AnalyseResult(returnedresult);
+            }
         }
         #endregion
     }

@@ -132,9 +132,9 @@ namespace GreatechApp
 			containerRegistry.RegisterSingleton(typeof(BaseIO));
 			containerRegistry.RegisterSingleton(typeof(BaseMotion));
 			containerRegistry.RegisterSingleton(typeof(TCPIPBase));
-			containerRegistry.RegisterSingleton(typeof(InSightVision));
-			containerRegistry.RegisterSingleton(typeof(CodeReader));
-			containerRegistry.RegisterSingleton(typeof(SerialPortBase));
+            containerRegistry.RegisterSingleton(typeof(InSightVision));
+            containerRegistry.RegisterSingleton(typeof(CodeReader));
+            containerRegistry.RegisterSingleton(typeof(SerialPortBase));
 			containerRegistry.RegisterSingleton(typeof(ErrorOperation));
 			containerRegistry.RegisterSingleton(typeof(DelegateSeq));
 			containerRegistry.RegisterSingleton(typeof(SystemConfig));
