@@ -208,28 +208,6 @@ namespace TCPIPManager
 
             return destImage;
         }
-
-        private static BitmapImage Bitmap2BitmapImage(Bitmap bitmap)
-        {
-            IntPtr hBitmap = bitmap.GetHbitmap();
-            BitmapImage retval = null;
-
-            try
-            {
-                retval = (BitmapImage)Imaging.CreateBitmapSourceFromHBitmap(
-                         hBitmap,
-                         IntPtr.Zero,
-                         Int32Rect.Empty,
-                         BitmapSizeOptions.FromEmptyOptions());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            return retval;
-        }
-
         #endregion
 
         #region Event
@@ -260,18 +238,18 @@ namespace TCPIPManager
                             if (Global.VisProductQuantity == 0.000 && Global.VisProductCrtOrientation == "0.000" && Global.VisProductCrtOrientation == "0.000")
                             {
                                 Global.VisInspectResult = resultstatus.NoBoxDetected.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcCont });
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
                             }
                             else
                             {
                                 Global.VisInspectResult = resultstatus.OK.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcCont });
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
                             }
                         }
                         else
                         {
                             Global.VisInspectResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "WrongOrientation" });
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "WrongOrientation" });
                         }
                     }
                     VisionLive();

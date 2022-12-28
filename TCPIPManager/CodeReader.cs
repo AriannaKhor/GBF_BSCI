@@ -124,6 +124,12 @@ namespace TCPIPManager
                 {
                     Global.LotInitialTotalBatchQuantity = Global.CurrentBatchQuantity;
                 }
+
+                if (Global.LotInitialBatchNo == string.Empty)
+                {
+                    Global.LotInitialBatchNo = Global.CurrentBatchNum;
+                }
+
                 if (Global.CurrentBatchNum == Global.LotInitialBatchNo)
                 {
                     if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
@@ -145,6 +151,10 @@ namespace TCPIPManager
                             {
                                 Global.VisOverallResult = resultstatus.OK.ToString();
                                 ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK);
+                                if (dialogResult == ButtonResult.OK)
+                                {
+
+                                }
                                 CloseDialog("");
                                 ResetCounter();
                             }

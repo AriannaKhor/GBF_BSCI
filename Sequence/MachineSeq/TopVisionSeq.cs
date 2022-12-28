@@ -106,61 +106,11 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.DelayTrigger:
-                            if (m_TmrDelay.TimeOut())
-                            {
                                 InsightVision.TriggerVisCapture();
-                                m_SeqNum = SN.WaitVisionResult;
-                            }
-                            break;
-
-                        case SN.WaitVisionResult:
-                            m_resultsDatalog.ClearAll();
-
-                            if (m_SeqFlag.ProcCont)
-                            {
-                                Global.VisErrorCaused = "N/A";
-                                m_SeqFlag.ProcCont = false;
-                                m_SeqNum = SN.TriggerVis;
-                            }
-                            else if (m_SeqFlag.ProcFail)
-                            {
-                                m_SeqFlag.ProcFail = false;
-
-                                switch (m_FailType)
-                                {
-                                    case "WrongOrientation":
-                                        Global.VisErrorCaused = RaiseError((int)ErrorCode.WrongOrientation);
-                                        break;
-                                }
-                                m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
-                                m_SeqNum = SN.ErrorRoutine;
-                            }
+                                m_SeqNum = SN.EOS;
+                            
                             break;
                         #endregion
-
-                        #region Error Routine
-                        case SN.ErrorRoutine:
-                            m_SeqNum = SN.WaitResumeError;
-                            break;
-
-                        case SN.WaitResumeError:
-                            if (Global.MachineStatus == MachineStateType.Running)
-                            {
-                                m_SeqNum = m_SeqRsm[(int)RSM.Err];
-                                m_SeqRsm[(int)RSM.Err] = SN.NONE;
-                                m_TmrDelay.Time_Out = 0.01f;
-                                VisResume = true;
-
-                            }
-
-                            break;
-                        #endregion
-
-                        #region EndLot
-                        case SN.EndLot:
-                            m_SeqNum = SN.EOS;
-                            break;
-                            #endregion
                     }
                 }
 

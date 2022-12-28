@@ -254,27 +254,29 @@ namespace Sequence
             lock (m_SyncLog)
             {
                 {
-                    m_resultsDatalog.UserId = Global.UserId;
-                    m_resultsDatalog.UserLvl = Global.UserLvl;
-                    DateTime currentTime = DateTime.Now;
-                    DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                    dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                    m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                    m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                    m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                    m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
-                    m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
-                    m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
-                    m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
-                    m_resultsDatalog.DecodeResult = Global.CodeReaderResult;
-                    m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
-                    m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
-                    m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
-                    m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
-                    m_resultsDatalog.ErrorMessage = null;
-                    m_resultsDatalog.Remarks = null;
-                    m_resultsDatalog.ApprovedBy = null;
-
+                    if (m_resultsDatalog.UserId == string.Empty)
+                    {
+                        m_resultsDatalog.UserId = Global.UserId;
+                        m_resultsDatalog.UserLvl = Global.UserLvl;
+                        DateTime currentTime = DateTime.Now;
+                        DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                        dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                        m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                        m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                        m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+                        m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
+                        m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
+                        m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
+                        m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
+                        m_resultsDatalog.DecodeResult = Global.CodeReaderResult;
+                        m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
+                        m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
+                        m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
+                        m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
+                        m_resultsDatalog.ErrorMessage = null;
+                        m_resultsDatalog.Remarks = null;
+                        m_resultsDatalog.ApprovedBy = null;
+                    }
                     //create log directory V2
                     string date = DateTime.Now.ToString("dd-MM-yyyy");
                     string filePath = $"{SysCfgs.FolderPath.SoftwareResultLog}Log[{date}]\\";

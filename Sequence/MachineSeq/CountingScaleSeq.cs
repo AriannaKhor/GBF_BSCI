@@ -29,6 +29,7 @@ namespace Sequence.MachineSeq
 
         }
         #endregion
+
         #region Variable
         private SN m_SeqNum;
         private SN m_PrevSeqNum;
@@ -101,14 +102,42 @@ namespace Sequence.MachineSeq
                     {
                         #region Running Routine
                         case SN.Begin:
-                            m_SeqNum = SN.TriggerDevices;
+                            m_SeqNum = SN.TriggerVis;
                             break;
-                        case SN.TriggerDevices:
+
+                        case SN.TriggerVis:
                             Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcStart });
-                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcStart });
-                            m_SeqNum = SN.EndLot;
+                            m_SeqNum = SN.WaitVisionResult;
                          break;
+
+                        case SN.WaitVisionResult:
+                            m_resultsDatalog.ClearAll();
+                            if (m_SeqFlag.ProcCont)
+                            {
+                                Global.VisErrorCaused = "N/A";
+                                m_SeqFlag.ProcCont = false;
+                                m_SeqNum = SN.TriggerCodeReader;
+                            }
+                            else if (m_SeqFlag.ProcFail)
+                            {
+                                m_SeqFlag.ProcFail = false;
+
+                                switch (m_FailType)
+                                {
+                                    case "WrongOrientation":
+                                        Global.VisErrorCaused = RaiseError((int)ErrorCode.WrongOrientation);
+                                        break;
+                                }
+                                m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
+                                m_SeqNum = SN.ErrorRoutine;
+                            }
+                            break;
+
+                        case SN.TriggerCodeReader:
+                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcStart });
+                            break;
                         #endregion
+
                         case SN.EndLot:
                             if (m_SeqFlag.EndLotComp)
                             {
@@ -118,6 +147,21 @@ namespace Sequence.MachineSeq
                                 m_SeqNum = SN.EOS;
                             }
                             break;
+
+                        #region Error Routine
+                        case SN.ErrorRoutine:
+                            m_SeqNum = SN.WaitResumeError;
+                            break;
+
+                        case SN.WaitResumeError:
+                            if (Global.MachineStatus == MachineStateType.Running)
+                            {
+                                m_SeqNum = m_SeqRsm[(int)RSM.Err];
+                                m_SeqRsm[(int)RSM.Err] = SN.NONE;
+                                m_TmrDelay.Time_Out = 0.01f;
+                            }
+                            break;
+                        #endregion
                     }
                 }
             }
@@ -150,6 +194,13 @@ namespace Sequence.MachineSeq
                     {
                         case MachineOperationType.EndLotComp:
                             m_SeqFlag.EndLotComp = true;
+                            break;
+                        case MachineOperationType.ProcCont:
+                            m_SeqFlag.ProcCont = true;
+                            break;
+
+                        case MachineOperationType.ProcFail:
+                            m_SeqFlag.ProcFail = true;
                             break;
                     }
                 }
