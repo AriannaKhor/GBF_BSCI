@@ -284,7 +284,7 @@ namespace Sequence
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
 
-                    if (m_resultsDatalog.DecodeResult != null && m_resultsDatalog.VisTotalPrdQty != 0 && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
+                    if (m_resultsDatalog.DecodeResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
                     {
                         string filename = $"Batch {Global.CurrentBatchNum}.csv";
                         filename = filePath + filename;
@@ -294,7 +294,7 @@ namespace Sequence
 
                         if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
                         {
-                            if (m_resultsDatalog.DecodeResult != "PendingResult" && Global.CurrentBatchNum != string.Empty)
+                            if (m_resultsDatalog.DecodeResult != "PendingResult" && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
                             {
                                 if (!File.Exists(filename.ToString()))
                                 {
