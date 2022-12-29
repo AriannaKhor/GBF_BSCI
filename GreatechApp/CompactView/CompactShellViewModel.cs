@@ -104,13 +104,6 @@ namespace GreatechApp.CompactView
             IO.WriteBit((int)OUT.DO0102_AmberTowerLight, false);
             IO.WriteBit((int)OUT.DO0103_GreenTowerLight, false);
             IO.WriteBit((int)OUT.DO0100_Buzzer, false);
-
-            // Disable Motor
-            for (int index = 0; index < SysConfig.MotCfgRef.Count; index++)
-            {
-                MotionConfig mtrcfg = MotionConfig.Open(SysConfig.MotCfgRef[index].Reference);
-                Motion.StopServo(mtrcfg.Axis.CardID, mtrcfg.Axis.AxisID);
-            }
         }
         #endregion
     }
