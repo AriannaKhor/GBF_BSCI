@@ -84,12 +84,6 @@ namespace Sequence
 
         public int TotalFail = 0;
 
-        public MarkerType MarkerType = MarkerType.None;
-
-        public int SlotNum = 0;
-
-        public int StationNum = 0;
-
         protected bool InitialStart = true;
 
         private Dictionary<object, object> m_IOTbl = new Dictionary<object, object>();

@@ -5,7 +5,6 @@
     using Prism.Events;
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
@@ -219,7 +218,6 @@
     public class UIEvent : PubSubEvent<UIEvent>
     {
         public SQID SeqID;
-        public NotifyUIEnum NotifyUIEvent;
         public EventArgs EvArgs;
     }
 
@@ -230,7 +228,6 @@
 
     public class UnitDataTranfer : PubSubEvent<UnitDataTranfer>
     {
-        public Slot UnitInfo;
         public SQID TargetSeq;
         public int TargetSlotIndex;
     }

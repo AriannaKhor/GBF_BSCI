@@ -218,16 +218,6 @@ namespace Sequence
             return m_BaseSeq.Where(x => x.Key == seqName).FirstOrDefault().Value.SeqNum;
         }
 
-        public int GetSlotNum(SQID seqName)
-        {
-            return m_BaseSeq.Where(x => x.Key == seqName).FirstOrDefault().Value.SlotNum;
-        }
-
-        public int GetStationNum(SQID seqName)
-        {
-            return m_BaseSeq.Where(x => x.Key == seqName).FirstOrDefault().Value.StationNum;
-        }
-
         public bool GetIsAliveStatus(int sqid)
         {
             return IPollEngine.IsAlive(sqid);
