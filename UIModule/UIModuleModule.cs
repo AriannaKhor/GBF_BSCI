@@ -22,12 +22,10 @@ namespace UIModule
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
 
             regionManager.RegisterViewWithRegion(RegionNames.CenterContentRegion, typeof(Home));
-            regionManager.RegisterViewWithRegion(RegionNames.CenterContentRegion, typeof(MachinePerformanceView));
             regionManager.RegisterViewWithRegion(RegionNames.TopContentRegion, typeof(Toolbar));
 
             //Compact View Region
             regionManager.RegisterViewWithRegion(RegionNames.CompactRegion, typeof(CompactView));
-            regionManager.RegisterViewWithRegion(RegionNames.CompactRegion, typeof(MachinePerformanceView));
 
             IRegion homeRegion = regionManager.Regions[RegionNames.HomeTabControlRegion];
             homeRegion.Add(containerProvider.Resolve<EquipmentView>(), "EquipmentView");
@@ -46,12 +44,7 @@ namespace UIModule
             containerRegistry.RegisterForNavigation<LotHistoryView>();
             containerRegistry.RegisterForNavigation<SettingView>();
             containerRegistry.RegisterForNavigation<LifeCycleView>();
-            containerRegistry.RegisterForNavigation<OEEMainView>();
-            containerRegistry.RegisterForNavigation<OEELiveView>();
-            containerRegistry.RegisterForNavigation<OEEAnalysisView>();
             containerRegistry.RegisterForNavigation<ErrorAnalysisView>();
-            containerRegistry.RegisterForNavigation<MachinePerformanceView>();
-            containerRegistry.RegisterForNavigation<ModulePerformanceView>();
             containerRegistry.RegisterForNavigation<SeqParameterView>();
             containerRegistry.RegisterForNavigation<TowerLightView>();
             containerRegistry.RegisterForNavigation<IOView>();

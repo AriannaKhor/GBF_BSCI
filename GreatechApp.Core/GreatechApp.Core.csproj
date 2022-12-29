@@ -246,7 +246,6 @@
     <Compile Include="Helpers\TrueToVisibleConverter.cs" />
     <Compile Include="Interface\IError.cs" />
     <Compile Include="Interface\IOEECalculation.cs" />
-    <Compile Include="Interface\ISerialPort.cs" />
     <Compile Include="Interface\IShowDialog.cs" />
     <Compile Include="Interface\ISQLOperation.cs" />
     <Compile Include="Interface\ISystemConfig.cs" />

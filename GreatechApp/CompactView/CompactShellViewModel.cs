@@ -27,7 +27,6 @@ namespace GreatechApp.CompactView
         ITCPIP TCPIP;
         IInsightVision InsightVision;
         ICodeReader CodeReader;
-        ISerialPort Serial;
         IBaseIO IO;
         //IBaseMotion Motion;
         //ISecsGem SecsGem;
@@ -40,7 +39,6 @@ namespace GreatechApp.CompactView
             TCPIP = container.Resolve<ITCPIP>();
             InsightVision = container.Resolve<IInsightVision>();
             CodeReader = container.Resolve<ICodeReader>();
-            Serial = container.Resolve<ISerialPort>();
             IO = container.Resolve<IBaseIO>();
             //Motion = container.Resolve<IBaseMotion>();
             //SecsGem = container.Resolve<ISecsGem>();
@@ -92,13 +90,7 @@ namespace GreatechApp.CompactView
             {
                 TCPIP.clientSockets[i].Disconnect();
             }
-
-            // Disconnect Serial Port
-            for (int i = 0; i < Serial.serialPortCollection.Count; i++)
-            {
-                Serial.serialPortCollection[i].Close();
-            }
-
+        
             // Close IO (Vacuum / Air Pressure etc...)
             IO.WriteBit((int)OUT.DO0101_RedTowerLight, false);
             IO.WriteBit((int)OUT.DO0102_AmberTowerLight, false);

@@ -1070,10 +1070,10 @@ namespace UIModule.StationViews
 
             m_IOIntL = m_IOIntLCollection.FirstOrDefault(x => x.Provider == EnumHelper.GetValueFromDescription<SQID>(seqName));
 
-            if (m_IOIntL != null && !m_IOIntL.CheckIOInterlock((int)outbit, state, m_IOIntL.Provider != SQID.CriticalScan))
-            {
-                return;
-            }
+            //if (m_IOIntL != null && !m_IOIntL.CheckIOInterlock((int)outbit, state, m_IOIntL.Provider != SQID.CriticalScan))
+            //{
+            //    return;
+            //}
 
             m_IIO.WriteBit((int)outbit, state);
         }

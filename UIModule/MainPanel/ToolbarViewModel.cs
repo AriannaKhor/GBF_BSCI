@@ -276,11 +276,11 @@ namespace UIModule.MainPanel
             tmrSysClock.Tick += new EventHandler(tmrSysClock_Tick);
             tmrSysClock.Start();
 
-            // TCP/IP Monitor
-            m_tmrTCPMonitor = new DispatcherTimer();
-            m_tmrTCPMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            m_tmrTCPMonitor.Tick += new EventHandler(m_tmrTCPMonitor_Tick);
-            m_tmrTCPMonitor.Start();
+            //// TCP/IP Monitor
+            //m_tmrTCPMonitor = new DispatcherTimer();
+            //m_tmrTCPMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            //m_tmrTCPMonitor.Tick += new EventHandler(m_tmrTCPMonitor_Tick);
+            //m_tmrTCPMonitor.Start();
 
             MenuVisibility = Visibility.Collapsed;
             IsTCPIPListOpen = false;
@@ -419,27 +419,27 @@ namespace UIModule.MainPanel
             }
         }
 
-        private void m_tmrTCPMonitor_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                List<string> tooltip = new List<string>();
-                foreach(TCPDisplay tcpip in TCPCollection)
-                {
-                    tcpip.IsConnected = m_TCPIP.clientSockets[tcpip.ID].IsAlive;
-                }
+        //private void m_tmrTCPMonitor_Tick(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        List<string> tooltip = new List<string>();
+        //        foreach(TCPDisplay tcpip in TCPCollection)
+        //        {
+        //            tcpip.IsConnected = m_TCPIP.clientSockets[tcpip.ID].IsAlive;
+        //        }
 
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    TCPIPStateIcon = TCPCollection.All(x => x.IsConnected) ? Connected : Disconnected;
-                });
-                TCPIPStatus = TCPCollection.All(x => x.IsConnected) ? "Connected" : "Disconnected";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.Source);
-            }
-        }
+        //        Application.Current.Dispatcher.Invoke(() =>
+        //        {
+        //            TCPIPStateIcon = TCPCollection.All(x => x.IsConnected) ? Connected : Disconnected;
+        //        });
+        //        TCPIPStatus = TCPCollection.All(x => x.IsConnected) ? "Connected" : "Disconnected";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message, ex.Source);
+        //    }
+        //}
 
         public override void OnValidateLogin(bool IsAuthenticated)
         {

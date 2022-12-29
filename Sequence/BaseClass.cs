@@ -119,8 +119,6 @@ namespace Sequence
 
         public ICodeReader CodeReader;
 
-        public ISerialPort SerialPort;
-
         public IShowDialog ShowDialog;
 
 #if MOXA
@@ -482,11 +480,6 @@ namespace Sequence
         {
             m_SeqCfg = SeqConfig.Open(seqCfgRef);
             Debug.Assert(m_SeqCfg != null);
-        }
-
-        internal virtual void LoadToolLifeCfg()
-        {
-
         }
 
         internal virtual void SequenceOperation(SequenceEvent sequence)

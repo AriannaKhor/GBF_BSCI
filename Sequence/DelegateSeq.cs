@@ -8,7 +8,6 @@ using GreatechApp.Core.Variable;
 using IOManager;
 using Prism.Commands;
 using Prism.Events;
-using Sequence.CoreSeq;
 using Sequence.MachineSeq;
 using System;
 using System.Collections.Generic;
@@ -33,7 +32,6 @@ namespace Sequence
         private ITCPIP m_TCPIP;
         private IInsightVision   m_InsightVision;
         private ICodeReader m_CodeReader;
-        private ISerialPort m_SerialPort;
         private IError m_Error;
         private SystemConfig m_SysConfig;
         private IBaseIO m_BaseIO;
@@ -43,13 +41,12 @@ namespace Sequence
 
         Dictionary<SQID, BaseClass> m_BaseSeq;
 
-        public DelegateSeq(IEventAggregator eventAggregator, IError error, IBaseIO io, SystemConfig sysconfig, ITCPIP tcpip,IInsightVision insightvision,ICodeReader codereader, ISerialPort serialPort, IShowDialog showDialog, CultureResources cultureResources)
+        public DelegateSeq(IEventAggregator eventAggregator, IError error, IBaseIO io, SystemConfig sysconfig, ITCPIP tcpip,IInsightVision insightvision,ICodeReader codereader, IShowDialog showDialog, CultureResources cultureResources)
         {
             m_EventAggregator = eventAggregator;
             m_TCPIP = tcpip;
             m_InsightVision = insightvision;
             m_CodeReader = codereader;
-            m_SerialPort = serialPort;
             //m_BaseMotion = motion;
             m_Error = error;
             m_SysConfig = sysconfig;
@@ -65,7 +62,6 @@ namespace Sequence
             // Bind SQID with the constructor class
             m_BaseSeq = new Dictionary<SQID, BaseClass>()
             {
-                { SQID.CriticalScan, new CriticalScan() },
                 { SQID.TopVisionSeq, new TopVisionSeq() },
                 { SQID.CodeReaderSeq, new CodeReaderSeq() },
                 { SQID.CountingScaleSeq, new CountingScaleSeq() },
@@ -110,7 +106,6 @@ namespace Sequence
                 seq.TCPIP = m_TCPIP;
                 seq.InsightVision = m_InsightVision;
                 seq.CodeReader = m_CodeReader;
-                seq.SerialPort = m_SerialPort;
                 seq.ShowDialog = ShowDialog;
                 seq.CultureResources = m_CultureResources;
                 seq.SubscribeSeqEvent();
@@ -118,7 +113,6 @@ namespace Sequence
                 seq.LoadMotionCfg();
                 seq.LoadSeqCfg(m_SysConfig.SeqCfgRef[(int)seqName].Reference);
                 seq.IOMapping();
-                seq.LoadToolLifeCfg();
 
                 seq.MachOperation = new DelegateCommand<string>(seq.MachineOperation);
 
@@ -280,33 +274,6 @@ namespace Sequence
         int IDelegateSeq.GetMaxCycleTime(SQID seqName, int perfID)
         {
             return m_BaseSeq.Where(x => x.Key == seqName).FirstOrDefault().Value.GetMaxCycleTime(perfID);
-        }
-        int IDelegateSeq.TotalInput
-        {
-            get
-            {
-                return m_BaseSeq.Where(x => x.Key == SQID.TopVisionSeq).FirstOrDefault().Value.TotalInput;
-            }
-        }
-        int IDelegateSeq.TotalOutput
-        {
-            // You must implement project specific code here.
-            // Return output count value from one or more seq module.
-            // Example:
-            get
-            {
-                // the name of machine seq which provide total good unit
-                return m_BaseSeq.Where(x => x.Key == SQID.SampleSeq5).FirstOrDefault().Value.TotalOutput;
-            }
-        }
-
-        int IDelegateSeq.TotalFail
-        {
-            get
-            {
-                // the name of machine seq which provide total good unit
-                return 0;
-            }
         }
 
         #region Project Specific Properties

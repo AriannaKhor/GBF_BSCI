@@ -680,21 +680,6 @@ namespace ConfigManager
             set { this["ErrLibPath"] = value; }
             get { return (string)this["ErrLibPath"]; }
         }
-
-
-        //[ConfigurationProperty("ErrLibZhHant", DefaultValue = "", IsRequired = false)]
-        //public string ErrLibZhHant
-        //{
-        //    set { this["ErrLibZhHant"] = value; }
-        //    get { return (string)this["ErrLibZhHant"]; }
-        //}
-
-        //[ConfigurationProperty("ErrLibZhHans", DefaultValue = "", IsRequired = false)]
-        //public string ErrLibZhHans
-        //{
-        //    set { this["ErrLibZhHans"] = value; }
-        //    get { return (string)this["ErrLibZhHans"]; }
-        //}
         #endregion
     }
 }

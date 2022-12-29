@@ -144,10 +144,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cognex.DataMan.SDK.PC">
-      <HintPath>..\..\VisionEvaluation\Lib\Cognex.DataMan.SDK.PC.dll</HintPath>
+      <HintPath>..\Lib\Cognex.DataMan.SDK.PC.dll</HintPath>
     </Reference>
     <Reference Include="Cognex.DataMan.SDK.Utils.PC">
-      <HintPath>..\..\VisionEvaluation\Lib\Cognex.DataMan.SDK.Utils.PC.dll</HintPath>
+      <HintPath>..\Lib\Cognex.DataMan.SDK.Utils.PC.dll</HintPath>
     </Reference>
     <Reference Include="Cognex.InSight, Version=6.1.28.1, Culture=neutral, PublicKeyToken=6b9774afddb09935, processorArchitecture=MSIL" />
     <Reference Include="GEMPro">
@@ -222,12 +222,6 @@
     <Compile Include="StandardViews\LifeCycleViewModel.cs" />
     <Compile Include="MainPanel\LotEntryViewModel.cs" />
     <Compile Include="StandardViews\LotHistoryViewModel.cs" />
-    <Compile Include="StandardViews\ModulePerformanceViewModel.cs" />
-    <Compile Include="StandardViews\OEEAnalysisViewModel.cs" />
-    <Compile Include="StandardViews\OEELiveViewModel.cs" />
-    <Compile Include="StandardViews\OEEMainViewModel.cs" />
-    <Compile Include="StandardViews\MachinePerformanceViewModel.cs" />
-    <Compile Include="StandardViews\OEESettingViewModel.cs" />
     <Compile Include="RecipeViews\ProductRecipeViewModel.cs" />
     <Compile Include="RecipeViews\RecipeViewModel.cs" />
     <Compile Include="StandardViews\SeqParameterViewModel.cs" />
@@ -252,24 +246,6 @@
     </Compile>
     <Compile Include="StandardViews\LotHistoryView.xaml.cs">
       <DependentUpon>LotHistoryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\MachinePerformanceView.xaml.cs">
-      <DependentUpon>MachinePerformanceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\ModulePerformanceView.xaml.cs">
-      <DependentUpon>ModulePerformanceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\OEEAnalysisView.xaml.cs">
-      <DependentUpon>OEEAnalysisView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\OEELiveView.xaml.cs">
-      <DependentUpon>OEELiveView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\OEEMainView.xaml.cs">
-      <DependentUpon>OEEMainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\OEESettingView.xaml.cs">
-      <DependentUpon>OEESettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="RecipeViews\ProductRecipeView.xaml.cs">
       <DependentUpon>ProductRecipeView.xaml</DependentUpon>
@@ -401,30 +377,6 @@
     <Page Include="StandardViews\LotHistoryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="StandardViews\MachinePerformanceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StandardViews\ModulePerformanceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StandardViews\OEEAnalysisView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StandardViews\OEELiveView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StandardViews\OEEMainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StandardViews\OEESettingView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RecipeViews\ProductRecipeView.xaml">
       <SubType>Designer</SubType>

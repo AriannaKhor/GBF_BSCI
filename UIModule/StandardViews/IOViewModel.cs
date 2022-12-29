@@ -195,10 +195,10 @@ namespace UIModule.StandardViews
 
             m_IOIntL = m_IOIntLCollection.FirstOrDefault(x => x.Provider == EnumHelper.GetValueFromDescription<SQID>(seqName));
 
-            if (m_IOIntL != null && !m_IOIntL.CheckIOInterlock(ioParam.Tag, ioParam.Status, m_IOIntL.Provider != SQID.CriticalScan))
-            {
-                return;
-            }
+            //if (m_IOIntL != null && !m_IOIntL.CheckIOInterlock(ioParam.Tag, ioParam.Status, m_IOIntL.Provider != SQID.CriticalScan))
+            //{
+            //    return;
+            //}
 
             if (Global.MachineStatus != MachineStateType.Running && Global.MachineStatus != MachineStateType.Initializing)
             {

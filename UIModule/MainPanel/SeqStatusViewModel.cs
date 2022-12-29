@@ -289,10 +289,10 @@ namespace UIModule.MainPanel
         {
             try
             {
-                if (IsSkipCoreSeq && updatedSeqStatus.SeqName == SQID.CriticalScan.ToString())
-                {
-                    return;
-                }
+                //if (IsSkipCoreSeq && updatedSeqStatus.SeqName == SQID.CriticalScan.ToString())
+                //{
+                //    return;
+                //}
 
                 if (IsRunTracking)
                 {

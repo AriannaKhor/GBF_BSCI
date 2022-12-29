@@ -192,7 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseClass.cs" />
-    <Compile Include="CoreSeq\CriticalScan.cs" />
     <Compile Include="DelegateSeq.cs" />
     <Compile Include="Framework\TestEventArg.cs" />
     <Compile Include="IDelegateSeq.cs" />
@@ -227,6 +226,8 @@
       <Name>TCPIPManager</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CoreSeq\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -45,15 +45,16 @@ namespace TCPIPManager
             m_Events = eventAggregator;
 
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
-
+#if !SIMULATION
             m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(ConnectVision);
+#endif
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
             GetProductQuantityConfig();
         }
-        #endregion
+#endregion
 
-        #region Method
+#region Method
         public void ConnectVision()
         {
             try
@@ -141,14 +142,20 @@ namespace TCPIPManager
         {
             try
             {
-                //formVis = new InSightDisplayControl(m_topvisIp, m_Events);
-                //formVis.Show();
                 if (m_InsightV1.State == CvsInSightState.NotConnected)
                 {
+#if !SIMULATION
+
                     ConnectVision();
+#endif
                 }
                 Thread.Sleep(500);
+#if SIMULATION
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "TriggerCodeReader" });
+#else
                 m_InsightV1.ManualAcquire(); // Request a new acquisition to generate new results // capture Image *remember to check in-sight whether the spread sheet view is set to "Manual"
+#endif
+
                 allowVisResultchg = true;
 
                 //VisionLive();
@@ -210,9 +217,9 @@ namespace TCPIPManager
 
             return destImage;
         }
-        #endregion
+#endregion
 
-        #region Event
+#region Event
         private void InsightV1_ResultsChanged(object sender, System.EventArgs e)
         {
             try
@@ -286,6 +293,6 @@ namespace TCPIPManager
             m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Vision connection state:" + " " + m_InsightV1.State.ToString() });
         }
 
-        #endregion
+#endregion
     }
 }

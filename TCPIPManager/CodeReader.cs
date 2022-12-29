@@ -62,8 +62,9 @@ namespace TCPIPManager
             m_Events = eventAggregator;
 
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
-
+#if !SIMULATION
             m_Events.GetEvent<RequestCodeReaderConnectionEvent>().Subscribe(ConnectCodeReader);
+#endif
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
 
@@ -214,7 +215,11 @@ namespace TCPIPManager
         {
             try
             {
+#if SIMULATION
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
+#else
                 m_CodeReader.SendCommand("TRIGGER ON");
+#endif
             }
             catch (Exception ex)
             {
@@ -264,18 +269,18 @@ namespace TCPIPManager
             Global.CodeReaderProceedNewBox = true;
             Global.TopVisionProceedNewBox = true;
 
-            #region Code Reader
+#region Code Reader
             Global.CurrentContainerNum = string.Empty;
             Global.CurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = string.Empty;
-            #endregion
+#endregion
 
-            #region Top Vision
+#region Top Vision
             Global.VisProductQuantity = 0f;
             Global.VisProductCrtOrientation = string.Empty;
             Global.VisProductWrgOrientation = string.Empty;
-            #endregion
+#endregion
             m_Events.GetEvent<TopVisionResultEvent>().Publish();
         }
 
@@ -385,9 +390,9 @@ namespace TCPIPManager
 
             return destImage;
         }
-        #endregion
+#endregion
 
-        #region Events
+#region Events
         private void OnSystemConnected(object sender, System.EventArgs args)
         {
             m_Events.GetEvent<OnCodeReaderConnectedEvent>().Publish();
@@ -407,6 +412,6 @@ namespace TCPIPManager
                 AnalyseResult(returnedresult);
             }
         }
-        #endregion
+#endregion
     }
 }

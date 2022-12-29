@@ -11,9 +11,6 @@ namespace Sequence
         bool GetIsAliveStatus(int sqid);
         string GetSeqNum(SQID seqName);
         void BypassStation(SQID id, bool state);
-        int TotalInput { get; }               // Total units feed into the machine.
-        int TotalOutput { get; }              // Total units produced by the machine.
-        int TotalFail { get; }                // Total Fail units
         string[] GetPerfNames(SQID seqName);
         int GetProcCycleTime(SQID seqName, int perfID);    // Use individual module's Perf enum. UoM - ms (Last cycle time)
         double GetAvgCycleTime(SQID seqName, int perfID);  // Use individual module's Perf enum. UoM - ms (Average cyle time)

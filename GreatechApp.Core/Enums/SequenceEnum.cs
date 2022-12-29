@@ -3,17 +3,11 @@
     public enum SQID
     {
         None = -1,
-        // Core Sequence
-        CriticalScan = 0,
 
         // Machine Sequence
-        TopVisionSeq = 1,
-        CodeReaderSeq = 2,
-        SampleSeq3 = 3,
-        SampleSeq4 = 4,
-        SampleSeq5 = 5,
-        BarcodeScanner = 6,
-        CountingScaleSeq = 7,
+        TopVisionSeq = 0,
+        CodeReaderSeq = 1,
+        CountingScaleSeq = 2,
     }
 
     public enum MachineOperationType
