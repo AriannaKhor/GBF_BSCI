@@ -14,7 +14,7 @@ namespace IOManager
         Dictionary<SQID, List<object>> OutputMapList { get; set; }
         Dictionary<OUT, SQID> IOKeyList { get; set; }
 
-        void AssignInput(SQID seqname, IN masterIO);
+        //void AssignInput(SQID seqname, IN masterIO);
         void AssignOutput(SQID seqname, OUT masterIO);
         void StartScanIO();
         bool OpenDevice();

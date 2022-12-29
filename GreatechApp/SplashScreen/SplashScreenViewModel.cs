@@ -24,11 +24,9 @@ namespace GreatechApp.SplashScreen
         private object m_sqlKey = new object();
          
         IContainerProvider m_container;
-        //IBaseMotion Motion;
         IBaseIO IO;
         ITCPIP TCPIP;
         ISQLOperation SQLOperation;
-        //ISecsGem SecsGem;
         SystemConfig SysConfig;
         CultureResources m_CultureResources;
 
@@ -58,7 +56,6 @@ namespace GreatechApp.SplashScreen
             SysConfig = m_container.Resolve<SystemConfig>();
 
             Global.MachName = SysConfig.Machine.EquipName;
-            //Global.MachName = SysConfig.Machine.OperaName;
             Global.MachNo = int.Parse(SysConfig.Machine.MachineID);
 
             MachineName = Global.MachName;
@@ -102,30 +99,30 @@ namespace GreatechApp.SplashScreen
 #endif
                 });
             }
-#endregion
+            #endregion
 
             #region TCPIP
-            UpdateStatus(m_CultureResources.GetStringValue("TCPIP"), 80);
+//            UpdateStatus(m_CultureResources.GetStringValue("TCPIP"), 80);
 
-            if (SysConfig.NetworkDevices.Count > 0)
-            {
-                TCPIP = m_container.Resolve<ITCPIP>();
+//            if (SysConfig.NetworkDevices.Count > 0)
+//            {
+//                TCPIP = m_container.Resolve<ITCPIP>();
 
-                Thread.Sleep(500);
+//                Thread.Sleep(500);
 
-                for (int i = 0; i < TCPIP.clientSockets.Count; i++)
-                {
-                    if (!TCPIP.clientSockets[i].IsAlive)
-                    {
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-#if !SIMULATION
-                            MessageBox.Show($"{m_CultureResources.GetStringValue("TCPIP")} : [ {TCPIP.clientSockets[i].Name} ] {m_CultureResources.GetStringValue("FailConnect")}", m_CultureResources.GetStringValue("TCPIP"), MessageBoxButton.OK);
-#endif
-                        });
-                    }
-                }
-            }
+//                for (int i = 0; i < TCPIP.clientSockets.Count; i++)
+//                {
+//                    if (!TCPIP.clientSockets[i].IsAlive)
+//                    {
+//                        Application.Current.Dispatcher.Invoke(() =>
+//                        {
+//#if !SIMULATION
+//                            MessageBox.Show($"{m_CultureResources.GetStringValue("TCPIP")} : [ {TCPIP.clientSockets[i].Name} ] {m_CultureResources.GetStringValue("FailConnect")}", m_CultureResources.GetStringValue("TCPIP"), MessageBoxButton.OK);
+//#endif
+//                        });
+//                    }
+//                }
+//            }
             #endregion
 
             #region Utilities
@@ -133,7 +130,7 @@ namespace GreatechApp.SplashScreen
 
             Global.MachineStatus = MachineStateType.Idle;
 
-            m_container.Resolve<OEECalculation>();
+            //m_container.Resolve<OEECalculation>();
             #endregion
 
             #region Sequence

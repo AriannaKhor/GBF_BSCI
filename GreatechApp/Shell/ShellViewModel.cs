@@ -91,10 +91,10 @@ namespace GreatechApp.Shell
             {
                 TCPIP.clientSockets[i].Disconnect();
             }
-            // Close IO (Vacuum / Air Pressure etc...)
-            IO.WriteBit((int)OUT.DO0101_RedTowerLight, false);
-            IO.WriteBit((int)OUT.DO0102_AmberTowerLight, false);
-            IO.WriteBit((int)OUT.DO0103_GreenTowerLight, false);
+            //// Close IO (Vacuum / Air Pressure etc...)
+            //IO.WriteBit((int)OUT.DO0101_RedTowerLight, false);
+            //IO.WriteBit((int)OUT.DO0102_AmberTowerLight, false);
+            //IO.WriteBit((int)OUT.DO0103_GreenTowerLight, false);
             IO.WriteBit((int)OUT.DO0100_Buzzer, false);
         }
         #endregion

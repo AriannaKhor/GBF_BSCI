@@ -9,7 +9,7 @@ using System.Text;
 
 namespace InterlockManager.IO
 {
-    public class BaseIOIntL : IIOInterlock
+    public class BaseIOIntL /*: IIOInterlock*/
     {
         protected static SystemConfig m_SystemConfig;
         protected static IBaseIO m_BaseIO;
@@ -42,31 +42,31 @@ namespace InterlockManager.IO
             return seqName.ToString();
         }
 
-        public virtual bool CheckIOInterlock(int ioNum, bool oState, bool isChildExist)
-        {
-            InitData();
-            m_IntLMsg.Append(m_Header);
+   //     public virtual bool CheckIOInterlock(int ioNum, bool oState, bool isChildExist)
+   //     {
+   //         InitData();
+   //         m_IntLMsg.Append(m_Header);
 
-            if(m_SystemConfig.Machine.BypInterlock)
-            {
-                return true;
-            }
+   //         if(m_SystemConfig.Machine.BypInterlock)
+   //         {
+   //             return true;
+   //         }
 
-            if(m_BaseIO.ReadBit((int)IN.DI0100_E_StopBtn, true))
-            {
-                m_IntLMsg.Append(" - ").Append(m_CultureResources.GetStringValue("EStopNotRelease")).AppendLine();
-            }
+   //         if(m_BaseIO.ReadBit((int)IN.DI0100_E_StopBtn, true))
+   //         {
+   //             m_IntLMsg.Append(" - ").Append(m_CultureResources.GetStringValue("EStopNotRelease")).AppendLine();
+   //         }
 
-            if(isChildExist)
-			{
-                // Always return false to allow child class continue to check for respective interlock.
-                return false;
-            }
-            else
-			{
-                return Finalize();
-			}
-        }
+   //         if(isChildExist)
+			//{
+   //             // Always return false to allow child class continue to check for respective interlock.
+   //             return false;
+   //         }
+   //         else
+			//{
+   //             return Finalize();
+			//}
+   //     }
 
         protected bool Finalize() 
         {

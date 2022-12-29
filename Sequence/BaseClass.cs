@@ -806,22 +806,22 @@ namespace Sequence
         //    IO.AssignInput(SeqName, restSns);
         //}
 
-        protected virtual void AssignIO(IN masterInput)
-        {
-            // Assign selected input from masterlist into Seq InputList
-            IO.AssignInput(SeqName, masterInput);
-        }
+        //protected virtual void AssignIO(IN masterInput)
+        //{
+        //    // Assign selected input from masterlist into Seq InputList
+        //    IO.AssignInput(SeqName, masterInput);
+        //}
         protected virtual void AssignIO(OUT masterOutput)
         {
             // Assign selected output from masterlist into Seq OutputList
             IO.AssignOutput(SeqName, masterOutput);
         }
 
-        protected void AssignIO(object key, IN ioNum)
-        {
-            m_IOTbl.Add(key, ioNum);
-            IO.AssignInput(SeqName, ioNum);
-        }
+        //protected void AssignIO(object key, IN ioNum)
+        //{
+        //    m_IOTbl.Add(key, ioNum);
+        //    IO.AssignInput(SeqName, ioNum);
+        //}
 
         protected void AssignIO(object key, OUT ioNum)
         {

@@ -439,14 +439,14 @@ namespace UIModule.MainPanel
         public DelegateCommand ReconnectAllTCP { get; set; }
 
         private readonly IDialogService m_DialogService;
-        OEECalculation m_OEECalculation;
+        //OEECalculation m_OEECalculation;
         private static object m_SyncOEE = new object();
         private DispatcherTimer tmrOEEUpdate;
 
         public CompactViewModel(IDialogService dialogService, OEECalculation oEECalculation)
         {
             m_DialogService = dialogService;
-            m_OEECalculation = oEECalculation;
+            //m_OEECalculation = oEECalculation;
 
             m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineStateChange);
             m_EventAggregator.GetEvent<PerformanceEntity>().Subscribe(OnPerformanceChange);
@@ -468,12 +468,12 @@ namespace UIModule.MainPanel
             IsLogout = Visibility.Collapsed;
             LoginStatus = "Login";
 
-            //OEE Clock
-            tmrOEEUpdate = new DispatcherTimer();
-            tmrOEEUpdate.Interval = new TimeSpan(0, 0, 1); // 1 second timer
-            tmrOEEUpdate.Tick += tmrOEEUpdate_Tick;
-            // This timer will run as long as the application is alive.
-            tmrOEEUpdate.Start();
+            ////OEE Clock
+            //tmrOEEUpdate = new DispatcherTimer();
+            //tmrOEEUpdate.Interval = new TimeSpan(0, 0, 1); // 1 second timer
+            //tmrOEEUpdate.Tick += tmrOEEUpdate_Tick;
+            //// This timer will run as long as the application is alive.
+            //tmrOEEUpdate.Start();
 
             // System Clock
             tmrSysClock = new DispatcherTimer();
@@ -959,31 +959,31 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Method
-        private void tmrOEEUpdate_Tick(object sender, EventArgs arg)
-        {
-            if (Monitor.TryEnter(m_SyncOEE))
-            {
-                try
-                {   // OEE Chart
-                    Availability = m_OEECalculation.Availability;
-                    Performance = m_OEECalculation.Performance;
-                    Quality = m_OEECalculation.Quality;
-                    OEE = m_OEECalculation.OEE;
-                    //RefreshSysPerf();
+        //private void tmrOEEUpdate_Tick(object sender, EventArgs arg)
+        //{
+        //    if (Monitor.TryEnter(m_SyncOEE))
+        //    {
+        //        try
+        //        {   // OEE Chart
+        //            Availability = m_OEECalculation.Availability;
+        //            Performance = m_OEECalculation.Performance;
+        //            Quality = m_OEECalculation.Quality;
+        //            OEE = m_OEECalculation.OEE;
+        //            //RefreshSysPerf();
 
-                }
-                catch (Exception ex)
-                {
-                    tmrOEEUpdate.Stop();
-                    m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{GetStringTableValue("OEEUpdateError")} : {ex.Message}" });
-                }
-                finally
-                {
-                    // Ensure the lock is released.
-                    Monitor.Exit(m_SyncOEE);
-                }
-            }
-        }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            tmrOEEUpdate.Stop();
+        //            m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{GetStringTableValue("OEEUpdateError")} : {ex.Message}" });
+        //        }
+        //        finally
+        //        {
+        //            // Ensure the lock is released.
+        //            Monitor.Exit(m_SyncOEE);
+        //        }
+        //    }
+        //}
 
         void RaiseLoginPopup()
         {

@@ -315,7 +315,7 @@ namespace UIModule.MainPanel
 #if DEBUG
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("CompileMode")} : {GetStringTableValue("Debug")}"));
 #elif RELEASE
-            DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {ModulesTable.CompileMode} : {ModulesTable.Release}"));
+            DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("CompileMode")} : {GetStringTableValue("Release")}"));
 #endif
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("SerialNo")} : {Environment.MachineName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachName")} : {m_SystemConfig.Machine.EquipName}"));

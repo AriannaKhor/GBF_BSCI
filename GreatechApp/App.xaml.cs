@@ -28,141 +28,141 @@ namespace GreatechApp
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App
-	{
-		protected override void Initialize()
-		{
-			if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location)).Count() > 1)
-			{
-				Application.Current.Dispatcher.Invoke(() =>
-				{
-					MessageBox.Show($"Another {Application.ResourceAssembly.GetName().Name} Application already launched ! ", "System", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-				});
+    {
+        protected override void Initialize()
+        {
+            if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location)).Count() > 1)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MessageBox.Show($"Another {Application.ResourceAssembly.GetName().Name} Application already launched ! ", "System", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                });
 
-				Application.Current.Shutdown();
-			}
-			else
-			{
-				try
-				{
-					DeleteAllOEETempFiles();
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                try
+                {
+                    //DeleteAllOEETempFiles();
 
-					OEEConfig oeecfg = OEEConfig.Open(@"..\Config Section\OEE\OEE.Config");
+                    //OEEConfig oeecfg = OEEConfig.Open(@"..\Config Section\OEE\OEE.Config");
 
-					base.Initialize();
-				}
-				catch (Exception ex)
-				{
-					if (ReplaceWithTempFile())
-					{
-						base.Initialize();
-					}
-					else
-					{
-						Application.Current.Dispatcher.Invoke(() =>
-						{
-							MessageBox.Show($"{ex.Message}", "OEE Config fail to load", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-						});
+                    base.Initialize();
+                }
+                catch (Exception ex)
+                {
+                    if (ReplaceWithTempFile())
+                    {
+                        base.Initialize();
+                    }
+                    //else
+                    //{
+                    //    Application.Current.Dispatcher.Invoke(() =>
+                    //    {
+                    //        MessageBox.Show($"{ex.Message}", "OEE Config fail to load", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    //    });
 
-						Application.Current.Shutdown();
-					}
-				}
-			}
-		}
+                    //    Application.Current.Shutdown();
+                    //}
+                }
+            }
+        }
 
-		private bool ReplaceWithTempFile()
-		{
-			if (File.Exists(@"..\Config Section\OEE\OEE.Config"))
-			{
-				File.Delete(@"..\Config Section\OEE\OEE.Config");
-			}
+        private bool ReplaceWithTempFile()
+        {
+            if (File.Exists(@"..\Config Section\OEE\OEE.Config"))
+            {
+                File.Delete(@"..\Config Section\OEE\OEE.Config");
+            }
 
-			if (File.Exists(@"..\Config Section\OEE\OEE_Temp.Config"))
-			{
-				File.Move(@"..\Config Section\OEE\OEE_Temp.Config", @"..\Config Section\OEE\OEE.Config");
-				return true;
-			}
-			else
-			{
-				File.Copy(@"..\Config Section\OEE\OEE_Backup.Config", @"..\Config Section\OEE\OEE.Config");
-				return true;
-			}
-		}
+            if (File.Exists(@"..\Config Section\OEE\OEE_Temp.Config"))
+            {
+                File.Move(@"..\Config Section\OEE\OEE_Temp.Config", @"..\Config Section\OEE\OEE.Config");
+                return true;
+            }
+            else
+            {
+                File.Copy(@"..\Config Section\OEE\OEE_Backup.Config", @"..\Config Section\OEE\OEE.Config");
+                return true;
+            }
+        }
 
-		private void DeleteAllOEETempFiles()
-		{
-			string[] filePaths = Directory.GetFiles(@"..\Config Section\OEE\");
-			foreach (string filePath in filePaths)
-			{
-				var name = new FileInfo(filePath).Name;
-				if (name != "OEE.Config" && name != "OEE_Temp.Config" && name != "OEE_Backup.Config")
-				{
-					File.Delete(filePath);
-				}
-			}
-		}
+        private void DeleteAllOEETempFiles()
+        {
+            string[] filePaths = Directory.GetFiles(@"..\Config Section\OEE\");
+            foreach (string filePath in filePaths)
+            {
+                var name = new FileInfo(filePath).Name;
+                if (name != "OEE.Config" && name != "OEE_Temp.Config" && name != "OEE_Backup.Config")
+                {
+                    File.Delete(filePath);
+                }
+            }
+        }
 
-		protected override Window CreateShell()
-		{
-			Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+        protected override Window CreateShell()
+        {
+            Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-			var myview = Container.Resolve<SplashScreenView>();
-			myview.ShowDialog();
+            var myview = Container.Resolve<SplashScreenView>();
+            myview.ShowDialog();
 
-			SystemConfig config = SystemConfig.Open(@"..\Config Section\General\System.Config");
-			if(config.General.IsCompactView)
-				return Container.Resolve<CompactShellView>();
-			else
-				return Container.Resolve<ShellView>();
-		}
+            SystemConfig config = SystemConfig.Open(@"..\Config Section\General\System.Config");
+            if (config.General.IsCompactView)
+                return Container.Resolve<CompactShellView>();
+            else
+                return Container.Resolve<ShellView>();
+        }
 
-		protected override void RegisterTypes(IContainerRegistry containerRegistry)
-		{
-			containerRegistry.RegisterManySingleton(typeof(AuthService),
-													typeof(IAuthService),
-													typeof(IAccessService));
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterManySingleton(typeof(AuthService),
+                                                    typeof(IAuthService),
+                                                    typeof(IAccessService));
 
-			containerRegistry.RegisterSingleton(typeof(DefaultUser));
-			containerRegistry.RegisterSingleton(typeof(BaseIO));
-			//containerRegistry.RegisterSingleton(typeof(BaseMotion));
-			containerRegistry.RegisterSingleton(typeof(TCPIPBase));
-			containerRegistry.RegisterSingleton(typeof(InSightVision));
-			containerRegistry.RegisterSingleton(typeof(CodeReader));
-			//containerRegistry.RegisterSingleton(typeof(SerialPortBase));
-			containerRegistry.RegisterSingleton(typeof(ErrorOperation));
-			containerRegistry.RegisterSingleton(typeof(DelegateSeq));
-			containerRegistry.RegisterSingleton(typeof(SystemConfig));
-			containerRegistry.RegisterSingleton(typeof(OEECalculation));
-			containerRegistry.RegisterSingleton(typeof(TowerLight));
-			containerRegistry.RegisterSingleton(typeof(CultureResources));
+            containerRegistry.RegisterSingleton(typeof(DefaultUser));
+            containerRegistry.RegisterSingleton(typeof(BaseIO));
+            //containerRegistry.RegisterSingleton(typeof(BaseMotion));
+            containerRegistry.RegisterSingleton(typeof(TCPIPBase));
+            containerRegistry.RegisterSingleton(typeof(InSightVision));
+            containerRegistry.RegisterSingleton(typeof(CodeReader));
+            //containerRegistry.RegisterSingleton(typeof(SerialPortBase));
+            containerRegistry.RegisterSingleton(typeof(ErrorOperation));
+            containerRegistry.RegisterSingleton(typeof(DelegateSeq));
+            containerRegistry.RegisterSingleton(typeof(SystemConfig));
+            //containerRegistry.RegisterSingleton(typeof(OEECalculation));
+            containerRegistry.RegisterSingleton(typeof(TowerLight));
+            containerRegistry.RegisterSingleton(typeof(CultureResources));
 
-			OEEConfig oeecfg = OEEConfig.Open(@"..\Config Section\OEE\OEE.Config");
-			containerRegistry.RegisterInstance(oeecfg);
+            //OEEConfig oeecfg = OEEConfig.Open(@"..\Config Section\OEE\OEE.Config");
+            //containerRegistry.RegisterInstance(oeecfg);
 
-			SystemConfig sysConfig = SystemConfig.Open(@"..\Config Section\General\System.Config");
-			containerRegistry.RegisterInstance(sysConfig);
+            SystemConfig sysConfig = SystemConfig.Open(@"..\Config Section\General\System.Config");
+            containerRegistry.RegisterInstance(sysConfig);
 
-			containerRegistry.Register<ITCPIP, TCPIPBase>();
-			containerRegistry.Register<IInsightVision, InSightVision>();
-			containerRegistry.Register<ICodeReader, CodeReader>();
-			//containerRegistry.Register<ISerialPort, SerialPortBase>();
-			//containerRegistry.Register<ISecsGem, SecsGemBase>();
-			containerRegistry.Register<IError, ErrorOperation>();
-			containerRegistry.Register<ISQLOperation, SQLOperation>();
-			containerRegistry.Register<IShowDialog, ShowDialog>();
-			containerRegistry.Register<IDelegateSeq, DelegateSeq>();
-			containerRegistry.Register<IOEECalculation, OEECalculation>();
+            containerRegistry.Register<ITCPIP, TCPIPBase>();
+            containerRegistry.Register<IInsightVision, InSightVision>();
+            containerRegistry.Register<ICodeReader, CodeReader>();
+            //containerRegistry.Register<ISerialPort, SerialPortBase>();
+            //containerRegistry.Register<ISecsGem, SecsGemBase>();
+            containerRegistry.Register<IError, ErrorOperation>();
+            containerRegistry.Register<ISQLOperation, SQLOperation>();
+            containerRegistry.Register<IShowDialog, ShowDialog>();
+            containerRegistry.Register<IDelegateSeq, DelegateSeq>();
+            //containerRegistry.Register<IOEECalculation, OEECalculation>();
 
-			MapObject<IBaseIO> baseIO = new MapObject<IBaseIO>();
-			IBaseIO ioInstance = baseIO.CreateObject(sysConfig.DigitalIO.ClassName);
-			containerRegistry.RegisterInstance<IBaseIO>(ioInstance);
+            MapObject<IBaseIO> baseIO = new MapObject<IBaseIO>();
+            IBaseIO ioInstance = baseIO.CreateObject(sysConfig.DigitalIO.ClassName);
+            containerRegistry.RegisterInstance<IBaseIO>(ioInstance);
 
-			// IO Interlock Registration
-			containerRegistry.Register<IIOInterlock, BaseIOIntL>("BaseIO");
-		}
+            // IO Interlock Registration
+            //containerRegistry.Register<IIOInterlock, BaseIOIntL>("BaseIO");
+        }
 
-		protected override IModuleCatalog CreateModuleCatalog()
-		{
-			return new ConfigurationModuleCatalog();
-		}
-	}
+        protected override IModuleCatalog CreateModuleCatalog()
+        {
+            return new ConfigurationModuleCatalog();
+        }
+    }
 }

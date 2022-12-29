@@ -991,14 +991,14 @@ namespace UIModule.StationViews
         #endregion
 
         #region IO
-        private bool? GetBoolResult(IN? data)
-        {
-            if (data.HasValue)
-                return m_IIO.ReadBit((int)data);
+        //private bool? GetBoolResult(IN? data)
+        //{
+        //    if (data.HasValue)
+        //        return m_IIO.ReadBit((int)data);
 
-            else
-                return null;
-        }
+        //    else
+        //        return null;
+        //}
         private bool? GetBoolResult(OUT? data)
         {
             if (data.HasValue)
