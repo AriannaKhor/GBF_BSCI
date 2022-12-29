@@ -77,13 +77,6 @@ namespace ConfigManager
             get { return (DigitalIO)this["DigitalIO"]; }
         }
 
-        [ConfigurationProperty("TCOSIODevice")]
-        public TCOSIODeviceCollection TCOSIODevice
-        {
-            set { this["TCOSIODevice"] = value; }
-            get { return (TCOSIODeviceCollection)this["TCOSIODevice"]; }
-        }
-
         [ConfigurationProperty("IOCards")]
         public IOCardCollection IOCards
         {
@@ -103,41 +96,6 @@ namespace ConfigManager
         {
             set { this["IOOutDevices"] = value; }
             get { return (IODeviceCollection)this["IOOutDevices"]; }
-        }
-
-        [ConfigurationProperty("IOAdvantechDevices")]
-        public IODeviceCollection IOAdvantechDevices
-        {
-            set { this["IOAdvantechDevices"] = value; }
-            get { return (IODeviceCollection)this["IOAdvantechDevices"]; }
-        }
-
-        [ConfigurationProperty("IOWagoDevices")]
-        public IODeviceCollection IOWagoDevices
-        {
-            set { this["IOWagoDevices"] = value; }
-            get { return (IODeviceCollection)this["IOWagoDevices"]; }
-        }
-
-        [ConfigurationProperty("Motion")]
-        public Motion Motion
-        {
-            set { this["Motion"] = value; }
-            get { return (Motion)this["Motion"]; }
-        }
-
-        [ConfigurationProperty("MotionCards")]
-        public MotionCardCollection MotionCards
-        {
-            set { this["MotionCards"] = value; }
-            get { return (MotionCardCollection)this["MotionCards"]; }
-        }
-
-        [ConfigurationProperty("VisionTesterStations")]
-        public StationCollection VisionTesterStations
-        {
-            set { this["VisionTesterStations"] = value; }
-            get { return (StationCollection)this["VisionTesterStations"]; }
         }
 
         [ConfigurationProperty("NetworkDevices")]
@@ -168,13 +126,6 @@ namespace ConfigManager
             get { return (CfgCollection)this["PrdQtyLimitCfg"]; }
         }
 
-        [ConfigurationProperty("MotCfg", IsRequired = false)]
-        public CfgCollection MotCfgRef
-        {
-            set { this["MotCfg"] = value; }
-            get { return (CfgCollection)this["MotCfg"]; }
-        }
-
         [ConfigurationProperty("CounterCfg", IsRequired = false)]
         public CfgCollection CounterCfgRef
         {
@@ -182,33 +133,11 @@ namespace ConfigManager
             get { return (CfgCollection)this["CounterCfg"]; }
         }
 
-        [ConfigurationProperty("SerialPortCfg", IsRequired = false)]
-        public CfgCollection SerialPortRef
-        {
-            set { this["SerialPortCfg"] = value; }
-            get { return (CfgCollection)this["SerialPortCfg"]; }
-        }
-
         [ConfigurationProperty("TowerLightCfg", IsRequired = false)]
         public CfgCollection TowerLightRef
         {
             set { this["TowerLightCfg"] = value; }
             get { return (CfgCollection)this["TowerLightCfg"]; }
-        }
-
-
-        [ConfigurationProperty("GemCfg", IsRequired = false)]
-        public CfgCollection GemRef
-        {
-            set { this["GemCfg"] = value; }
-            get { return (CfgCollection)this["GemCfg"]; }
-        }
-
-        [ConfigurationProperty("SecsGemRcpCfg", IsRequired = false)]
-        public CfgCollection SecsGemRcpRef
-        {
-            set { this["SecsGemRcpCfg"] = value; }
-            get { return (CfgCollection)this["SecsGemRcpCfg"]; }
         }
     }
 
@@ -502,50 +431,6 @@ namespace ConfigManager
         #endregion
     }
 
-    public class TCOSIODeviceCollection : ConfigurationElementCollection
-    {
-        #region TCOSIODevice Devices Collection
-        public TCOSIODevice this[int idx]
-        {
-            get { return base.BaseGet(idx) as TCOSIODevice; }
-        }
-
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new TCOSIODevice();
-        }
-
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return ((TCOSIODevice)element).ID;
-        }
-        #endregion
-    }
-
-
-    public class TCOSIODevice : ConfigurationElement
-    {
-        #region TCOS IO Devices
-        public TCOSIODevice()
-        {
-        }
-
-        [ConfigurationProperty("ID", DefaultValue = 0, IsRequired = true)]
-        public int ID
-        {
-            set { this["ID"] = value; }
-            get { return (int)this["ID"]; }
-        }
-
-        [ConfigurationProperty("SerialNumber", DefaultValue = "N0200100006", IsRequired = true)]
-        public string SerialNumber
-        {
-            set { this["SerialNumber"] = value; }
-            get { return (string)this["SerialNumber"]; }
-        }
-        #endregion
-    }
-
     public class IOCards : ConfigurationElement
     {
         #region IO Cards
@@ -637,146 +522,6 @@ namespace ConfigManager
         {
             set { this["IOFile"] = value; }
             get { return (string)this["IOFile"]; }
-        }
-        #endregion
-    }
-
-    public class Motion : ConfigurationElement
-    {
-        #region Motion
-        [ConfigurationProperty("ClassName", IsRequired = true)]
-        public string ClassName
-        {
-            set { this["ClassName"] = value; }
-            get { return (string)this["ClassName"]; }
-        }
-
-        [ConfigurationProperty("NumOfController", DefaultValue = 1, IsRequired = true)]
-        public int NumOfController
-        {
-            set { this["NumOfController"] = value; }
-            get { return (int)this["NumOfController"]; }
-        }
-
-        [ConfigurationProperty("NumOfAxis", DefaultValue = 1, IsRequired = true)]
-        public int NumOfAxis
-        {
-            set { this["NumOfAxis"] = value; }
-            get { return (int)this["NumOfAxis"]; }
-        }
-        #endregion
-    }
-
-    public class MotionCardCollection : ConfigurationElementCollection
-    {
-        #region Motion Cards Collection
-        public MotionCard this[int idx]
-        {
-            get { return base.BaseGet(idx) as MotionCard; }
-        }
-
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new MotionCard();
-        }
-
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return ((MotionCard)element).ID;
-        }
-        #endregion
-    }
-
-    public class MotionCard : ConfigurationElement
-    {
-        #region Motion Card
-        public MotionCard()
-        {
-        }
-
-        [ConfigurationProperty("ID", DefaultValue = 0, IsRequired = true)]
-        public int ID
-        {
-            set { this["ID"] = value; }
-            get { return (int)this["ID"]; }
-        }
-
-        [ConfigurationProperty("CardID", DefaultValue = 0, IsRequired = true)]
-        public int CardID
-        {
-            set { this["CardID"] = value; }
-            get { return (int)this["CardID"]; }
-        }
-
-        [ConfigurationProperty("DeviceAddress", DefaultValue = "192.0.0.10", IsRequired = false)]
-        public string DeviceAddress
-        {
-            set { this["DeviceAddress"] = value; }
-            get { return (string)this["DeviceAddress"]; }
-        }
-
-        [ConfigurationProperty("DevicePort", DefaultValue = "8500", IsRequired = false)]
-        public string DevicePort
-        {
-            set { this["DevicePort"] = value; }
-            get { return (string)this["DevicePort"]; }
-        }
-
-        [ConfigurationProperty("ConfigFile", DefaultValue = "", IsRequired = false)]
-        public string ConfigFile
-        {
-            set { this["ConfigFile"] = value; }
-            get { return (string)this["ConfigFile"]; }
-        }
-        #endregion
-    }
-
-    public class StationCollection : ConfigurationElementCollection
-    {
-        #region Station Collection
-        public Station this[int idx]
-        {
-            get { return base.BaseGet(idx) as Station; }
-        }
-
-        protected override ConfigurationElement CreateNewElement()
-        {
-            return new Station();
-        }
-
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            return ((Station)element).ID;
-        }
-        #endregion
-    }
-
-    public class Station : ConfigurationElement
-    {
-        #region Station
-        public Station()
-        {
-        }
-
-        [ConfigurationProperty("ID", DefaultValue = 0, IsRequired = true)]
-        public int ID
-        {
-            set { this["ID"] = value; }
-            get { return (int)this["ID"]; }
-        }
-
-        [ConfigurationProperty("Name", DefaultValue = "", IsRequired = true)]
-        public string Name
-        {
-            set { this["Name"] = value; }
-            get { return (string)this["Name"]; }
-        }
-
-        [ConfigurationProperty("Type", DefaultValue = "", IsRequired = true)]
-        public string Type
-        {
-            set { this["Type"] = value; }
-            get { return (string)this["Type"]; }
         }
         #endregion
     }

@@ -166,16 +166,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ACSIO.cs" />
-    <Compile Include="AdlinkIO.cs" />
-    <Compile Include="AdvantechIO.cs" />
     <Compile Include="BaseIO.cs" />
-    <Compile Include="IACSIO.cs" />
-    <Compile Include="IAdlinkIO.cs" />
-    <Compile Include="IAdvantechIO.cs" />
     <Compile Include="IBaseIO.cs" />
     <Compile Include="IMoxaIO.cs" />
-    <Compile Include="IWagoIO.cs" />
     <Compile Include="MoxaIO.cs" />
     <Compile Include="MXIO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -191,7 +184,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="WagoIO.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -209,18 +201,6 @@
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ACSApi\ACSApi.csproj">
-      <Project>{aa7a68b6-b7fb-43ad-a13f-27ac36d9fddb}</Project>
-      <Name>ACSApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AdlinkApi\AdlinkApi.csproj">
-      <Project>{4bfbe77d-da52-49d3-a78c-bcf40bc5e2e9}</Project>
-      <Name>AdlinkApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AdvanTechAPI\AdvanTechAPI.csproj">
-      <Project>{12d36d72-bdd2-4189-a0ea-98ddd74fdc45}</Project>
-      <Name>AdvanTechAPI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ConfigManager\ConfigManager.csproj">
       <Project>{269c8c91-cf4b-4366-a16d-d344e93ee571}</Project>
       <Name>ConfigManager</Name>

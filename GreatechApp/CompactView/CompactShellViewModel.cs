@@ -4,11 +4,9 @@ using GreatechApp.Core.Enums;
 using GreatechApp.Core.Interface;
 using GreatechApp.Core.Variable;
 using IOManager;
-using MotionManager;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
-using SecsGemManager;
 using System;
 using System.ComponentModel;
 using System.Windows;
@@ -31,8 +29,8 @@ namespace GreatechApp.CompactView
         ICodeReader CodeReader;
         ISerialPort Serial;
         IBaseIO IO;
-        IBaseMotion Motion;
-        ISecsGem SecsGem;
+        //IBaseMotion Motion;
+        //ISecsGem SecsGem;
         SystemConfig SysConfig;
         CultureResources m_CultureResources;
 
@@ -44,8 +42,8 @@ namespace GreatechApp.CompactView
             CodeReader = container.Resolve<ICodeReader>();
             Serial = container.Resolve<ISerialPort>();
             IO = container.Resolve<IBaseIO>();
-            Motion = container.Resolve<IBaseMotion>();
-            SecsGem = container.Resolve<ISecsGem>();
+            //Motion = container.Resolve<IBaseMotion>();
+            //SecsGem = container.Resolve<ISecsGem>();
             SysConfig = container.Resolve<SystemConfig>();
             m_CultureResources = cultureResources;
 
@@ -106,13 +104,6 @@ namespace GreatechApp.CompactView
             IO.WriteBit((int)OUT.DO0102_AmberTowerLight, false);
             IO.WriteBit((int)OUT.DO0103_GreenTowerLight, false);
             IO.WriteBit((int)OUT.DO0100_Buzzer, false);
-
-            // Disable Motor
-            for (int index = 0; index < SysConfig.MotCfgRef.Count; index++)
-            {
-                MotionConfig mtrcfg = MotionConfig.Open(SysConfig.MotCfgRef[index].Reference);
-                Motion.StopServo(mtrcfg.Axis.CardID, mtrcfg.Axis.AxisID);
-            }
         }
         #endregion
     }

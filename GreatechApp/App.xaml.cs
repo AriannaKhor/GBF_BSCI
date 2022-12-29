@@ -1,5 +1,4 @@
-﻿using AdvanTechAPI;
-using ConfigManager;
+﻿using ConfigManager;
 using DialogManager;
 using GreatechApp.CompactView;
 using GreatechApp.Core.Cultures;
@@ -9,14 +8,10 @@ using GreatechApp.Services.Utilities;
 using GreatechApp.Shell;
 using GreatechApp.SplashScreen;
 using InterlockManager.IO;
-using InterlockManager.Motion;
 using IOManager;
-using MotionManager;
 using Prism.Ioc;
 using Prism.Modularity;
-using SecsGemManager;
 using Sequence;
-using SerialPortManager;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -24,17 +19,15 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using TCPIPManager;
-using UIModule.DataMarkers;
-using UIModule.DataMarkers.Interfaces;
 using UIModule.StandardViews.Services;
 using Unity;
 
 namespace GreatechApp
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
-	public partial class App
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App
 	{
 		protected override void Initialize()
 		{
@@ -130,16 +123,15 @@ namespace GreatechApp
 
 			containerRegistry.RegisterSingleton(typeof(DefaultUser));
 			containerRegistry.RegisterSingleton(typeof(BaseIO));
-			containerRegistry.RegisterSingleton(typeof(BaseMotion));
+			//containerRegistry.RegisterSingleton(typeof(BaseMotion));
 			containerRegistry.RegisterSingleton(typeof(TCPIPBase));
-            containerRegistry.RegisterSingleton(typeof(InSightVision));
-            containerRegistry.RegisterSingleton(typeof(CodeReader));
-            containerRegistry.RegisterSingleton(typeof(SerialPortBase));
+			containerRegistry.RegisterSingleton(typeof(InSightVision));
+			containerRegistry.RegisterSingleton(typeof(CodeReader));
+			//containerRegistry.RegisterSingleton(typeof(SerialPortBase));
 			containerRegistry.RegisterSingleton(typeof(ErrorOperation));
 			containerRegistry.RegisterSingleton(typeof(DelegateSeq));
 			containerRegistry.RegisterSingleton(typeof(SystemConfig));
 			containerRegistry.RegisterSingleton(typeof(OEECalculation));
-			containerRegistry.RegisterSingleton(typeof(AdvantechAPI));
 			containerRegistry.RegisterSingleton(typeof(TowerLight));
 			containerRegistry.RegisterSingleton(typeof(CultureResources));
 
@@ -152,21 +144,13 @@ namespace GreatechApp
 			containerRegistry.Register<ITCPIP, TCPIPBase>();
 			containerRegistry.Register<IInsightVision, InSightVision>();
 			containerRegistry.Register<ICodeReader, CodeReader>();
-			containerRegistry.Register<ISerialPort, SerialPortBase>();
-			containerRegistry.Register<ISecsGem, SecsGemBase>();
+			//containerRegistry.Register<ISerialPort, SerialPortBase>();
+			//containerRegistry.Register<ISecsGem, SecsGemBase>();
 			containerRegistry.Register<IError, ErrorOperation>();
 			containerRegistry.Register<ISQLOperation, SQLOperation>();
 			containerRegistry.Register<IShowDialog, ShowDialog>();
 			containerRegistry.Register<IDelegateSeq, DelegateSeq>();
 			containerRegistry.Register<IOEECalculation, OEECalculation>();
-
-			containerRegistry.Register<IMachineData, CircularDataMarkerViewModel>("CircularDataVM");
-			containerRegistry.Register<IMachineData, LinearDataMarkerViewModel>("LinearDataVM");
-			containerRegistry.Register<IMachineData, TrayDataMarkerViewModel>("TrayDataVM");
-
-			MapObject<IBaseMotion> baseMotion = new MapObject<IBaseMotion>();
-			IBaseMotion motionInstance = baseMotion.CreateObject(sysConfig.Motion.ClassName);
-			containerRegistry.RegisterInstance<IBaseMotion>(motionInstance);
 
 			MapObject<IBaseIO> baseIO = new MapObject<IBaseIO>();
 			IBaseIO ioInstance = baseIO.CreateObject(sysConfig.DigitalIO.ClassName);
@@ -174,13 +158,6 @@ namespace GreatechApp
 
 			// IO Interlock Registration
 			containerRegistry.Register<IIOInterlock, BaseIOIntL>("BaseIO");
-			containerRegistry.Register<IIOInterlock, SampleSeqIOIntL>("SampleSeqIO");
-
-			// Motor Interlock Registration
-			containerRegistry.Register<IMtrInterlock, BaseMtrIntL>("BaseMtr");
-			containerRegistry.Register<IMtrInterlock, XAxisMtrIntL>("XAxisMtr");
-			containerRegistry.Register<IMtrInterlock, YAxisMtrIntL>("YAxisMtr");
-			containerRegistry.Register<IMtrInterlock, ZAxisMtrIntL>("ZAxisMtr");
 		}
 
 		protected override IModuleCatalog CreateModuleCatalog()

@@ -481,18 +481,6 @@ namespace UIModule.MainPanel
             tmrSysClock.Tick += new EventHandler(tmrSysClock_Tick);
             tmrSysClock.Start();
 
-            //// Button Monitor
-            //tmrButtonMonitor = new DispatcherTimer();
-            //tmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            //tmrButtonMonitor.Tick += new EventHandler(tmrButtonMonitor_Tick);
-
-            // TCP/IP Monitor
-            CreateTCPCollection();
-            //m_tmrTCPMonitor = new DispatcherTimer();
-            //m_tmrTCPMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            //m_tmrTCPMonitor.Tick += new EventHandler(m_tmrTCPMonitor_Tick);
-            //m_tmrTCPMonitor.Start();
-
             IsTCPIPListOpen = false;
             DisableAllBtn();
 
@@ -1061,30 +1049,6 @@ namespace UIModule.MainPanel
                 m_AuthService.CurrentUser.IsAuthenticated = false;
                 m_EventAggregator.GetEvent<ValidateLogin>().Publish(false);
             }
-            //else if (Command == "Start")
-            //{
-            //    StartOperation();
-            //}
-            //else if (Command == "Stop")
-            //{
-            //    StopOperation();
-            //}
-        }
-
-        private void CreateTCPCollection()
-        {
-            TCPCollection = new ObservableCollection<TCPDisplay>();
-            for (int i = 0; i < m_SystemConfig.NetworkDevices.Count; i++)
-            {
-                TCPCollection.Add(new TCPDisplay()
-                {
-                    ID = i,
-                    TCPName = m_SystemConfig.NetworkDevices[i].Name,
-                    IsConnected = false,
-                    Type = (StationType)Enum.Parse(typeof(StationType), m_SystemConfig.NetworkDevices[i].Type),
-                });
-            }
-            TCPCollection = new ObservableCollection<TCPDisplay>(TCPCollection.OrderBy(key => key.Type).ToList());
         }
 
         private void OnReconnectTCP(TCPDisplay tcp)
@@ -1110,23 +1074,6 @@ namespace UIModule.MainPanel
             if (!m_TCPIP.clientSockets.All(x => x.IsAlive))
                 m_ShowDialog.Show(DialogIcon.Error, GetDialogTableValue("FailReconnectSomeTCP"));
         }
-
-        //private void StartOperation()
-        //{
-        //    Global.SeqStop = false;
-        //    IsTCPIPListOpen = false;
-        //    IsAllowStart = false;
-        //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
-        //    m_EventAggregator.GetEvent<WarningStatusCheck>().Publish();
-        //}
-
-        //private void StopOperation()
-        //{
-        //    Global.SeqStop = true;
-        //    IsTCPIPListOpen = false;
-        //    IsAllowStop = false;
-        //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
-        //}
         #endregion
     }
 }

@@ -1,9 +1,6 @@
 ﻿using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
-using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
-using Prism.Events;
-using Sequence.SeqEventArg;
 using System;
 using System.Globalization;
 using System.Threading;

@@ -194,20 +194,12 @@
     <Compile Include="BaseClass.cs" />
     <Compile Include="CoreSeq\CriticalScan.cs" />
     <Compile Include="DelegateSeq.cs" />
-    <Compile Include="Framework\AxisModel.cs" />
-    <Compile Include="Framework\AxisStatus.cs" />
     <Compile Include="Framework\TestEventArg.cs" />
     <Compile Include="IDelegateSeq.cs" />
-    <Compile Include="MachineSeq\BarcodeScanner.cs" />
     <Compile Include="MachineSeq\CountingScaleSeq.cs" />
     <Compile Include="MachineSeq\TopVisionSeq.cs" />
     <Compile Include="MachineSeq\CodeReaderSeq.cs" />
-    <Compile Include="MachineSeq\SampleSeq3.cs" />
-    <Compile Include="MachineSeq\SampleSeq4.cs" />
-    <Compile Include="MachineSeq\SampleSeq5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SeqEventArg\Sample2EventArg.cs" />
-    <Compile Include="UIEventArg\SampleSeq1UIEventArg.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -217,10 +209,6 @@
     <ProjectReference Include="..\ConfigManager\ConfigManager.csproj">
       <Project>{269c8c91-cf4b-4366-a16d-d344e93ee571}</Project>
       <Name>ConfigManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataManager\DataManager.csproj">
-      <Project>{d5f48820-9ac2-4fe9-902f-300a314c8dc4}</Project>
-      <Name>DataManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\GreatechApp.Core\GreatechApp.Core.csproj">
       <Project>{836015ae-5049-4b39-801f-a363aea3c537}</Project>
@@ -234,14 +222,11 @@
       <Project>{f9180ee7-9889-4e7e-8edb-052a2777fc37}</Project>
       <Name>IOManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MotionManager\MotionManager.csproj">
-      <Project>{75eca981-3d09-4c0a-95e8-e505923370d2}</Project>
-      <Name>MotionManager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TCPIPManager\TCPIPManager.csproj">
       <Project>{ffab358d-9e76-4c94-9fe3-eff9b3f56e0a}</Project>
       <Name>TCPIPManager</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

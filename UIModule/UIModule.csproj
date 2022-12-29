@@ -170,53 +170,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataMarkers\Adorners\DoubleFormatConverter.cs" />
-    <Compile Include="DataMarkers\Adorners\ResizeAdorner.cs" />
-    <Compile Include="DataMarkers\Adorners\ResizeChrome.cs" />
-    <Compile Include="DataMarkers\Adorners\RubberbandAdorner.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\AncestorLocator.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\DesignerCanvas.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\DesignerItem.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\IDesignerItem.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\MoveThumb.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\ResizeDecorator.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\ResizeThumb.cs" />
-    <Compile Include="DataMarkers\Helpers\CenterOnPoint.cs" />
-    <Compile Include="DataMarkers\Helpers\SizeObserver.cs" />
-    <Compile Include="DataMarkers\Helpers\SlotIdConverter.cs" />
-    <Compile Include="DataMarkers\Helpers\SlotSizeConverter.cs" />
-    <Compile Include="DataMarkers\Interfaces\IMachineData.cs" />
-    <Compile Include="DataMarkers\Interfaces\IMarkerSlot.cs" />
-    <Compile Include="DataMarkers\Resources\CirclePanel.cs" />
-    <Compile Include="DataMarkers\Resources\IconStatus.xaml.cs">
-      <DependentUpon>IconStatus.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\Resources\OutlinedTextBlock.cs" />
-    <Compile Include="DataMarkers\BaseDataMarkerViewModel.cs" />
-    <Compile Include="DataMarkers\BaseMarkerSlotViewModel.cs" />
-    <Compile Include="DataMarkers\CircularDataMarkerViewModel.cs" />
-    <Compile Include="DataMarkers\LinearDataMarkerViewModel.cs" />
-    <Compile Include="DataMarkers\SlotViewModel.cs" />
-    <Compile Include="DataMarkers\TrayDataMarkerViewModel.cs" />
-    <Compile Include="DataMarkers\TraySlotViewModel.cs" />
-    <Compile Include="DataMarkers\CircularDataMarkerView.xaml.cs">
-      <DependentUpon>CircularDataMarkerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\LinearDataMarkerView.xaml.cs">
-      <DependentUpon>LinearDataMarkerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\LinearSlotView.xaml.cs">
-      <DependentUpon>LinearSlotView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\CircularSlotView.xaml.cs">
-      <DependentUpon>CircularSlotView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\TrayDataMarkerView.xaml.cs">
-      <DependentUpon>TrayDataMarkerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\TraySlotView.xaml.cs">
-      <DependentUpon>TraySlotView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainPanel\BaseUIViewModel.cs" />
     <Compile Include="MainPanel\BypassViewModel.cs" />
     <Compile Include="MainPanel\CompactView.xaml.cs">
@@ -258,22 +211,10 @@
       <DependentUpon>IOView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StandardViews\IOViewModel.cs" />
-    <Compile Include="StandardViews\MotorView.xaml.cs">
-      <DependentUpon>MotorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\MotorViewModel.cs" />
     <Compile Include="StandardViews\ProductQtyView.xaml.cs">
       <DependentUpon>ProductQtyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StandardViews\ProductQtyViewModel.cs" />
-    <Compile Include="StandardViews\SecsGemSettingsView.xaml.cs">
-      <DependentUpon>SecsGemSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\SecsGemSettingsViewModel.cs" />
-    <Compile Include="StandardViews\SerialPortView.xaml.cs">
-      <DependentUpon>SerialPortView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\SerialPortViewModel.cs" />
     <Compile Include="StandardViews\Services\OEECalculation.cs" />
     <Compile Include="StandardViews\Services\TowerLight.cs" />
     <Compile Include="StandardViews\AboutViewModel.cs" />
@@ -349,10 +290,6 @@
       <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StationViews\BaseSeqViewModel.cs" />
-    <Compile Include="StationViews\SampleSeqViewModel.cs" />
-    <Compile Include="StationViews\SampleSeqView.xaml.cs">
-      <DependentUpon>SampleSeqView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIModuleModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -405,42 +342,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DataMarkers\Resources\DesignerItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\Resources\IconStatus.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\Resources\ResizeChrome.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\CircularDataMarkerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\LinearDataMarkerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\LinearSlotView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DataMarkers\CircularSlotView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\TrayDataMarkerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DataMarkers\TraySlotView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainPanel\BypassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -478,10 +379,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StandardViews\IOView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StandardViews\MotorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -541,17 +438,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StandardViews\SecsGemSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="StandardViews\SeqParameterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StandardViews\SerialPortView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="StandardViews\SettingView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -569,19 +458,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="StationViews\SampleSeqView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfigManager\ConfigManager.csproj">
       <Project>{269c8c91-cf4b-4366-a16d-d344e93ee571}</Project>
       <Name>ConfigManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataManager\DataManager.csproj">
-      <Project>{d5f48820-9ac2-4fe9-902f-300a314c8dc4}</Project>
-      <Name>DataManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\DBManager\DBManager.csproj">
       <Project>{3e5fc9af-bf25-46e8-a232-55965df15850}</Project>
@@ -606,14 +487,6 @@
     <ProjectReference Include="..\IOManager\IOManager.csproj">
       <Project>{f9180ee7-9889-4e7e-8edb-052a2777fc37}</Project>
       <Name>IOManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MotionManager\MotionManager.csproj">
-      <Project>{75eca981-3d09-4c0a-95e8-e505923370d2}</Project>
-      <Name>MotionManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SecsGemManager\SecsGemManager.csproj">
-      <Project>{E1E42E08-F89B-4399-A6CE-20B3D009E030}</Project>
-      <Name>SecsGemManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sequence\Sequence.csproj">
       <Project>{46658b31-1e7b-4975-93b6-d8b75d00bcfa}</Project>

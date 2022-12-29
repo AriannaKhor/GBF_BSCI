@@ -303,7 +303,6 @@
     <Compile Include="Utilities\InverseBooleanConverter.cs" />
     <Compile Include="Utilities\MachineBase.cs" />
     <Compile Include="Utilities\PerfInfo.cs" />
-    <Compile Include="Utilities\ProtoSerialize.cs" />
     <Compile Include="Utilities\ConfigFileReader.cs" />
     <Compile Include="Utilities\Converter.cs" />
     <Compile Include="Utilities\CTimer.cs" />

@@ -55,9 +55,7 @@ namespace UIModule
             containerRegistry.RegisterForNavigation<SeqParameterView>();
             containerRegistry.RegisterForNavigation<TowerLightView>();
             containerRegistry.RegisterForNavigation<IOView>();
-            containerRegistry.RegisterForNavigation<MotorView>();
             containerRegistry.RegisterForNavigation<TCPIPView>();
-            containerRegistry.RegisterForNavigation<SerialPortView>();
 
 
             //Dialog Views
@@ -74,7 +72,7 @@ namespace UIModule
             containerRegistry.RegisterForNavigation<RecipeView>();
 
             // Module View
-            containerRegistry.RegisterForNavigation<SampleSeqView>();
+            //containerRegistry.RegisterForNavigation<SampleSeqView>();
 
         }
     }

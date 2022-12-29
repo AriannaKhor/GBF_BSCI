@@ -1,5 +1,4 @@
-﻿using DataManager;
-using GreatechApp.Core.Enums;
+﻿using GreatechApp.Core.Enums;
 using System.Collections.Generic;
 
 namespace Sequence
@@ -11,8 +10,6 @@ namespace Sequence
         int TotalSeq { get; }
         bool GetIsAliveStatus(int sqid);
         string GetSeqNum(SQID seqName);
-        int GetSlotNum(SQID seqName);
-        int GetStationNum(SQID seqName);
         void BypassStation(SQID id, bool state);
         int TotalInput { get; }               // Total units feed into the machine.
         int TotalOutput { get; }              // Total units produced by the machine.
@@ -23,6 +20,5 @@ namespace Sequence
         int GetMinCycleTime(SQID seqName, int perfID);     // Use individual module's Perf enum. UoM - ms (Min cyle time)
         int GetMaxCycleTime(SQID seqName, int perfID);     // Use individual module's Perf enum. UoM - ms (Max cyle time)
         Dictionary<int, string> GetMotCfg(SQID seqName);
-        IBaseData GetBaseData(SQID seqName);
     }
 }

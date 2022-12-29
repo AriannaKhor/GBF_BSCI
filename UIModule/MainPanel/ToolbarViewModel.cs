@@ -1,12 +1,7 @@
-﻿using Cognex.DataMan.SDK;
-using Cognex.InSight;
-using CsvHelper;
-using CsvHelper.Configuration;
-using GreatechApp.Core;
+﻿using GreatechApp.Core;
 using GreatechApp.Core.Command;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
-using GreatechApp.Core.Helpers;
 using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
 using Prism.Commands;
@@ -14,10 +9,7 @@ using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -285,7 +277,6 @@ namespace UIModule.MainPanel
             tmrSysClock.Start();
 
             // TCP/IP Monitor
-            CreateTCPCollection();
             m_tmrTCPMonitor = new DispatcherTimer();
             m_tmrTCPMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
             m_tmrTCPMonitor.Tick += new EventHandler(m_tmrTCPMonitor_Tick);
@@ -644,22 +635,6 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
             m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             #endregion
-        }
-
-        private void CreateTCPCollection()
-        {
-            TCPCollection = new ObservableCollection<TCPDisplay>();
-            for (int i = 0; i < m_SystemConfig.NetworkDevices.Count; i++)
-            {
-                TCPCollection.Add(new TCPDisplay()
-                {
-                    ID = i,
-                    TCPName = m_SystemConfig.NetworkDevices[i].Name,
-                    IsConnected = false,
-                    Type = (StationType)Enum.Parse(typeof(StationType), m_SystemConfig.NetworkDevices[i].Type),
-                });
-            }
-            TCPCollection = new ObservableCollection<TCPDisplay>( TCPCollection.OrderBy(key => key.Type).ToList());
         }
 
         private void OnReconnectTCP(TCPDisplay tcp)

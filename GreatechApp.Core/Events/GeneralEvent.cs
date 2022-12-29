@@ -5,7 +5,6 @@
     using Prism.Events;
     using System;
     using System.Collections.Generic;
-    using System.Drawing;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
@@ -84,15 +83,7 @@
 
     }
 
-    public class SecsGemCommState : PubSubEvent<string>
-    {
-
-    }
-    public class LoadSecsGem : PubSubEvent<SecsGem>
-    {
-
-    }
-
+    
     public class MachineState : PubSubEvent<MachineStateType>
     {
 
@@ -168,19 +159,7 @@
         public byte[] MessageByte;
         public string Message;
     }
-
-    public class SerialPortMsg : PubSubEvent<SerialPortMsg>
-    {
-        public SerialDev DevName;
-        public string Message;
-    }
-
-    public class SerialPortStatus : PubSubEvent<SerialPortStatus>
-    {
-        public SerialDev DevName;
-        public bool IsPortOpen;
-    }
-
+    
     public class ErrorMsg : PubSubEvent<ErrorMsg>
     {
         public string[] ErrMsg;
@@ -239,7 +218,6 @@
     public class UIEvent : PubSubEvent<UIEvent>
     {
         public SQID SeqID;
-        public NotifyUIEnum NotifyUIEvent;
         public EventArgs EvArgs;
     }
 
@@ -250,7 +228,6 @@
 
     public class UnitDataTranfer : PubSubEvent<UnitDataTranfer>
     {
-        public Slot UnitInfo;
         public SQID TargetSeq;
         public int TargetSlotIndex;
     }
