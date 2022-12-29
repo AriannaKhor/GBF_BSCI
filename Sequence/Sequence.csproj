@@ -227,9 +227,6 @@
       <Name>TCPIPManager</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SeqEventArg\" />
-    <Folder Include="UIEventArg\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
