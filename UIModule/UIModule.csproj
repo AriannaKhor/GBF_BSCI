@@ -170,52 +170,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataMarkers\Adorners\ResizeAdorner.cs" />
-    <Compile Include="DataMarkers\Adorners\ResizeChrome.cs" />
-    <Compile Include="DataMarkers\Adorners\RubberbandAdorner.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\AncestorLocator.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\DesignerCanvas.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\DesignerItem.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\IDesignerItem.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\MoveThumb.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\ResizeDecorator.cs" />
-    <Compile Include="DataMarkers\DiagramDesigner\ResizeThumb.cs" />
-    <Compile Include="DataMarkers\Helpers\CenterOnPoint.cs" />
-    <Compile Include="DataMarkers\Helpers\SizeObserver.cs" />
-    <Compile Include="DataMarkers\Helpers\SlotIdConverter.cs" />
-    <Compile Include="DataMarkers\Helpers\SlotSizeConverter.cs" />
-    <Compile Include="DataMarkers\Interfaces\IMachineData.cs" />
-    <Compile Include="DataMarkers\Interfaces\IMarkerSlot.cs" />
-    <Compile Include="DataMarkers\Resources\CirclePanel.cs" />
-    <Compile Include="DataMarkers\Resources\IconStatus.xaml.cs">
-      <DependentUpon>IconStatus.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\Resources\OutlinedTextBlock.cs" />
-    <Compile Include="DataMarkers\BaseDataMarkerViewModel.cs" />
-    <Compile Include="DataMarkers\BaseMarkerSlotViewModel.cs" />
-    <Compile Include="DataMarkers\CircularDataMarkerViewModel.cs" />
-    <Compile Include="DataMarkers\LinearDataMarkerViewModel.cs" />
-    <Compile Include="DataMarkers\SlotViewModel.cs" />
-    <Compile Include="DataMarkers\TrayDataMarkerViewModel.cs" />
-    <Compile Include="DataMarkers\TraySlotViewModel.cs" />
-    <Compile Include="DataMarkers\CircularDataMarkerView.xaml.cs">
-      <DependentUpon>CircularDataMarkerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\LinearDataMarkerView.xaml.cs">
-      <DependentUpon>LinearDataMarkerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\LinearSlotView.xaml.cs">
-      <DependentUpon>LinearSlotView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\CircularSlotView.xaml.cs">
-      <DependentUpon>CircularSlotView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\TrayDataMarkerView.xaml.cs">
-      <DependentUpon>TrayDataMarkerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataMarkers\TraySlotView.xaml.cs">
-      <DependentUpon>TraySlotView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainPanel\BaseUIViewModel.cs" />
     <Compile Include="MainPanel\BypassViewModel.cs" />
     <Compile Include="MainPanel\CompactView.xaml.cs">
@@ -388,42 +342,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DataMarkers\Resources\DesignerItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\Resources\IconStatus.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\Resources\ResizeChrome.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\CircularDataMarkerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\LinearDataMarkerView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\LinearSlotView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DataMarkers\CircularSlotView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DataMarkers\TrayDataMarkerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DataMarkers\TraySlotView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainPanel\BypassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

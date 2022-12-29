@@ -1,15 +1,9 @@
-﻿using GreatechApp.Core.Enums;
-using Prism.Ioc;
-using Prism.Regions;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using UIModule.DataMarkers.DiagramDesigner;
-using UIModule.DataMarkers;
-using UIModule.MainPanel;
 
 namespace UIModule.MainPanel
 {

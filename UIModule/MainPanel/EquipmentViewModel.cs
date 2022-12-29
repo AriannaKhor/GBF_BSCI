@@ -19,14 +19,12 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using UIModule.DataMarkers.Interfaces;
 
 namespace UIModule.MainPanel
 {
     public class EquipmentViewModel : BaseUIViewModel
     {
         #region Variable
-        private IEnumerable<IMachineData> m_IMachineDataCollection;
         private const string MarkerLayoutFile = @"..\AppData\MarkerLayout.dat";
         private static object m_SynMarker = new object();
         private static object m_SynDesignItem = new object();
@@ -153,15 +151,6 @@ namespace UIModule.MainPanel
         {
             get { return m_TriggerLiveVis; }
             set { SetProperty(ref m_TriggerLiveVis, value); }
-        }
-
-   
-
-        private ObservableCollection<IMachineData> m_MachineDataCollection;
-        public ObservableCollection<IMachineData> MachineDataCollection
-        {
-            get { return m_MachineDataCollection; }
-            set { SetProperty(ref m_MachineDataCollection, value); }
         }
 
         private SolidColorBrush m_StatusFG;
@@ -293,8 +282,6 @@ namespace UIModule.MainPanel
         #region Constructor
         public EquipmentViewModel(IEventAggregator eventAggregator)
         {
-            m_IMachineDataCollection = ContainerLocator.Container.Resolve<Func<IEnumerable<IMachineData>>>()();
-
             TabPageHeader = GetStringTableValue("Equipment");
 
             Assembly asm = Assembly.GetEntryAssembly();

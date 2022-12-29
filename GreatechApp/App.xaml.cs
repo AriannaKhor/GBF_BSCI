@@ -19,8 +19,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using TCPIPManager;
-using UIModule.DataMarkers;
-using UIModule.DataMarkers.Interfaces;
 using UIModule.StandardViews.Services;
 using Unity;
 
@@ -154,14 +152,6 @@ namespace GreatechApp
 			containerRegistry.Register<IDelegateSeq, DelegateSeq>();
 			containerRegistry.Register<IOEECalculation, OEECalculation>();
 
-			containerRegistry.Register<IMachineData, CircularDataMarkerViewModel>("CircularDataVM");
-			containerRegistry.Register<IMachineData, LinearDataMarkerViewModel>("LinearDataVM");
-			containerRegistry.Register<IMachineData, TrayDataMarkerViewModel>("TrayDataVM");
-
-			//MapObject<IBaseMotion> baseMotion = new MapObject<IBaseMotion>();
-			//IBaseMotion motionInstance = baseMotion.CreateObject(sysConfig.Motion.ClassName);
-			//containerRegistry.RegisterInstance<IBaseMotion>(motionInstance);
-
 			MapObject<IBaseIO> baseIO = new MapObject<IBaseIO>();
 			IBaseIO ioInstance = baseIO.CreateObject(sysConfig.DigitalIO.ClassName);
 			containerRegistry.RegisterInstance<IBaseIO>(ioInstance);
@@ -169,12 +159,6 @@ namespace GreatechApp
 			// IO Interlock Registration
 			containerRegistry.Register<IIOInterlock, BaseIOIntL>("BaseIO");
 			containerRegistry.Register<IIOInterlock, SampleSeqIOIntL>("SampleSeqIO");
-
-			//// Motor Interlock Registration
-			//containerRegistry.Register<IMtrInterlock, BaseMtrIntL>("BaseMtr");
-			//containerRegistry.Register<IMtrInterlock, XAxisMtrIntL>("XAxisMtr");
-			//containerRegistry.Register<IMtrInterlock, YAxisMtrIntL>("YAxisMtr");
-			//containerRegistry.Register<IMtrInterlock, ZAxisMtrIntL>("ZAxisMtr");
 		}
 
 		protected override IModuleCatalog CreateModuleCatalog()
