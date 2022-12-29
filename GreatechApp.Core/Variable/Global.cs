@@ -62,9 +62,7 @@ namespace GreatechApp.Core.Variable
         public static string OverallResult;
 
         //Error 
-        public static string ErrorMsg;
-        public static string VisErrorCaused = "N/A";
-        public static string CodeReaderErrorCaused = "N/A";
+        public static string ErrorMsg = "N/A";
         public static string Remarks;
         public static string ForceEndLotRemarks;
         public static string CurrentApprovalLevel;

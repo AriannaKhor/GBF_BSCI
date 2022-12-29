@@ -146,13 +146,16 @@ namespace TCPIPManager
                         if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                         {
                             Global.CodeReaderResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
+                            Global.OverallResult = Global.CodeReaderResult;
                             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
+                           
                         }
                         //OK result
                         else
                         {
                             Global.CodeReaderResult = resultstatus.OK.ToString();
+                            Global.OverallResult = Global.CodeReaderResult;
                             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
 
                             if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
@@ -168,8 +171,9 @@ namespace TCPIPManager
                                 else if (dialogResult == ButtonResult.No)
                                 {
                                     Global.CodeReaderResult = resultstatus.NG.ToString();
-                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
+                                    Global.OverallResult = Global.CodeReaderResult;
                                     m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
                                 }
                             }
                             else
@@ -187,24 +191,27 @@ namespace TCPIPManager
                     else
                     {
                         Global.CodeReaderResult = resultstatus.NG.ToString();
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
+                        Global.OverallResult = Global.CodeReaderResult;
                         m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
                     }
                 }
                 //Incorrect Batch No
                 else
                 {
                     Global.CodeReaderResult = resultstatus.NG.ToString();
-                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BatchNotMatch" });
+                    Global.OverallResult = Global.CodeReaderResult;
                     m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BatchNotMatch" });
                 }
             }
             //Missing Result
             else
             {
                 Global.CodeReaderResult = resultstatus.NG.ToString();
-                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "MissingResult" });
+                Global.OverallResult = Global.CodeReaderResult;
                 m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "MissingResult" });
             }
             temp = false;
             Global.Temp = false;

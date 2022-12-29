@@ -210,10 +210,10 @@ namespace Sequence.CoreSeq
             //AssignIO(IN.DI0101_AirPressure);
             //AssignIO(IN.DI0102_Vacuum);
 
-            AssignIO(OUT.DO0100_RedTowerLight);
-            AssignIO(OUT.DO0101_AmberTowerLight);
-            AssignIO(OUT.DO0102_GreenTowerLight);
-            AssignIO(OUT.DO0103_Buzzer);
+            AssignIO(OUT.DO0101_RedTowerLight);
+            AssignIO(OUT.DO0102_AmberTowerLight);
+            AssignIO(OUT.DO0103_GreenTowerLight);
+            AssignIO(OUT.DO0100_Buzzer);
         }
         #endregion
     }
