@@ -8,7 +8,6 @@
 using ConfigManager;
 using CsvHelper;
 using CsvHelper.Configuration;
-using DataManager;
 using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
@@ -129,8 +128,6 @@ namespace Sequence
         public ISerialPort SerialPort;
 
         public IShowDialog ShowDialog;
-
-        public IBaseData BaseData;
 
 #if MOXA
         public IMoxaIO IO;
@@ -648,10 +645,6 @@ namespace Sequence
             m_SeqFlag.ExtTestRunComp = false;
 
             ResetPerfInfo();
-
-            // Reset BaseData
-            foreach (Slot slot in BaseData.ModuleSlots)
-                slot.ResetUnit();
         }
 
         public DelegateCommand<string> MachOperation { get; set; }

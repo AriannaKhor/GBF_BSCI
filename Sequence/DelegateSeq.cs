@@ -1,5 +1,4 @@
 ﻿using ConfigManager;
-using DataManager;
 using GreatechApp.Core.Command;
 using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Enums;
@@ -106,7 +105,7 @@ namespace Sequence
                 seq.Error.SeqName = seqName;
                 //seq.BaseMotion = m_BaseMotion;
                 seq.BaseIO = m_BaseIO;
-                seq.BaseData = new BaseData(seq.MarkerType, seqName, seq.SlotNum, m_EventAggregator);
+                //seq.BaseData = new BaseData(seq.MarkerType, seqName, seq.SlotNum, m_EventAggregator);
                 seq.SysCfgs = m_SysConfig;
                 seq.TCPIP = m_TCPIP;
                 seq.InsightVision = m_InsightVision;
@@ -237,11 +236,6 @@ namespace Sequence
         public void BypassStation(SQID id, bool state)
         {
             m_BaseSeq[id].OnBypassStation(state);
-        }
-
-        IBaseData IDelegateSeq.GetBaseData(SQID seqName)
-        {
-            return m_BaseSeq.Where(x => x.Key == seqName).FirstOrDefault().Value.BaseData;
         }
 
         public Dictionary<int, string> GetMotCfg(SQID seqName)

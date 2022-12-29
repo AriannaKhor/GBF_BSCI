@@ -1,5 +1,4 @@
-﻿using DataManager;
-using GreatechApp.Core.Enums;
+﻿using GreatechApp.Core.Enums;
 using System.Collections.Generic;
 
 namespace Sequence
@@ -23,6 +22,5 @@ namespace Sequence
         int GetMinCycleTime(SQID seqName, int perfID);     // Use individual module's Perf enum. UoM - ms (Min cyle time)
         int GetMaxCycleTime(SQID seqName, int perfID);     // Use individual module's Perf enum. UoM - ms (Max cyle time)
         Dictionary<int, string> GetMotCfg(SQID seqName);
-        IBaseData GetBaseData(SQID seqName);
     }
 }

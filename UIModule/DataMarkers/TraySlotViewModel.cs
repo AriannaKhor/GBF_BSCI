@@ -1,12 +1,6 @@
-﻿using DataManager;
-using GreatechApp.Core.Enums;
+﻿using GreatechApp.Core.Enums;
 using Prism.Ioc;
 using Sequence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace UIModule.DataMarkers
@@ -35,18 +29,18 @@ namespace UIModule.DataMarkers
             set { SetProperty(ref m_ColIndex, value); }
         }
 
-        private IBaseData m_IMacData;
+        //private IBaseData m_IMacData;
         #endregion
 
         #region Constructor
         public TraySlotViewModel(int rowIndex, int colIndex, SQID seqName)
         {
-            m_IMacData = ContainerLocator.Container.Resolve<IDelegateSeq>().GetBaseData(seqName);
+            //m_IMacData = ContainerLocator.Container.Resolve<IDelegateSeq>().GetBaseData(seqName);
 
-            RowIndex = rowIndex;
-            ColIndex = colIndex;
+            //RowIndex = rowIndex;
+            //ColIndex = colIndex;
             
-            SlotColor = Brushes.LightGray;
+            //SlotColor = Brushes.LightGray;
         }
         #endregion
 

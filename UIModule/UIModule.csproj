@@ -170,7 +170,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataMarkers\Adorners\DoubleFormatConverter.cs" />
     <Compile Include="DataMarkers\Adorners\ResizeAdorner.cs" />
     <Compile Include="DataMarkers\Adorners\ResizeChrome.cs" />
     <Compile Include="DataMarkers\Adorners\RubberbandAdorner.cs" />
@@ -546,10 +545,6 @@
     <ProjectReference Include="..\ConfigManager\ConfigManager.csproj">
       <Project>{269c8c91-cf4b-4366-a16d-d344e93ee571}</Project>
       <Name>ConfigManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataManager\DataManager.csproj">
-      <Project>{d5f48820-9ac2-4fe9-902f-300a314c8dc4}</Project>
-      <Name>DataManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\DBManager\DBManager.csproj">
       <Project>{3e5fc9af-bf25-46e8-a232-55965df15850}</Project>

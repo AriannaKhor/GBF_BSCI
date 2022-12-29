@@ -210,10 +210,6 @@
       <Project>{269c8c91-cf4b-4366-a16d-d344e93ee571}</Project>
       <Name>ConfigManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataManager\DataManager.csproj">
-      <Project>{d5f48820-9ac2-4fe9-902f-300a314c8dc4}</Project>
-      <Name>DataManager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GreatechApp.Core\GreatechApp.Core.csproj">
       <Project>{836015ae-5049-4b39-801f-a363aea3c537}</Project>
       <Name>GreatechApp.Core</Name>
