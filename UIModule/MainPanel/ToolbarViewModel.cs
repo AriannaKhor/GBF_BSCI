@@ -285,7 +285,6 @@ namespace UIModule.MainPanel
             tmrSysClock.Start();
 
             // TCP/IP Monitor
-            CreateTCPCollection();
             m_tmrTCPMonitor = new DispatcherTimer();
             m_tmrTCPMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
             m_tmrTCPMonitor.Tick += new EventHandler(m_tmrTCPMonitor_Tick);
@@ -644,22 +643,6 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
             m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             #endregion
-        }
-
-        private void CreateTCPCollection()
-        {
-            TCPCollection = new ObservableCollection<TCPDisplay>();
-            for (int i = 0; i < m_SystemConfig.NetworkDevices.Count; i++)
-            {
-                TCPCollection.Add(new TCPDisplay()
-                {
-                    ID = i,
-                    TCPName = m_SystemConfig.NetworkDevices[i].Name,
-                    IsConnected = false,
-                    Type = (StationType)Enum.Parse(typeof(StationType), m_SystemConfig.NetworkDevices[i].Type),
-                });
-            }
-            TCPCollection = new ObservableCollection<TCPDisplay>( TCPCollection.OrderBy(key => key.Type).ToList());
         }
 
         private void OnReconnectTCP(TCPDisplay tcp)

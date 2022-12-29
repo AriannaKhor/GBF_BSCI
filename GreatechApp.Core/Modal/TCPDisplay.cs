@@ -1,11 +1,5 @@
 ﻿using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace GreatechApp.Core.Modal
@@ -42,35 +36,6 @@ namespace GreatechApp.Core.Modal
         {
             get { return m_Image; }
             set { SetProperty(ref m_Image, value); }
-        }
-
-        private StationType m_Type;
-        public StationType Type
-        {
-            get { return m_Type; }
-            set 
-            { 
-                SetProperty(ref m_Type, value);
-
-                switch (value)
-                {
-                    case StationType.Vision:
-                        TCPImageSource = $@"/GreatechApp.Core;component/Icon/Vision.png";
-                        break;
-
-                    case StationType.Tester:
-                        TCPImageSource = $@"/GreatechApp.Core;component/Icon/Test.png";
-                        break;
-
-                    case StationType.Scanner:
-                        TCPImageSource = $@"/GreatechApp.Core;component/Icon/Scanner.png";
-                        break;
-
-                    case StationType.SecsGem:
-                        TCPImageSource = $@"/GreatechApp.Core;component/Icon/SEMI.png";
-                        break;
-                }
-            }
         }
 
         private string m_TCPImageSource;
