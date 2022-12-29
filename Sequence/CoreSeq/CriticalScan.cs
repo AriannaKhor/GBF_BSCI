@@ -206,14 +206,14 @@ namespace Sequence.CoreSeq
         #region IO
         internal override void IOMapping()
         {
-            AssignIO(IN.DI0100_E_StopBtn);
-            //AssignIO(IN.DI0101_AirPressure);
-            //AssignIO(IN.DI0102_Vacuum);
+            //AssignIO(IN.DI0100_E_StopBtn);
+            ////AssignIO(IN.DI0101_AirPressure);
+            ////AssignIO(IN.DI0102_Vacuum);
 
-            AssignIO(OUT.DO0101_RedTowerLight);
-            AssignIO(OUT.DO0102_AmberTowerLight);
-            AssignIO(OUT.DO0103_GreenTowerLight);
-            AssignIO(OUT.DO0100_Buzzer);
+            //AssignIO(OUT.DO0101_RedTowerLight);
+            //AssignIO(OUT.DO0102_AmberTowerLight);
+            //AssignIO(OUT.DO0103_GreenTowerLight);
+            //AssignIO(OUT.DO0100_Buzzer);
         }
         #endregion
     }

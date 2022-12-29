@@ -99,18 +99,12 @@ namespace TCPIPManager
                 m_CodeReader.SetKeepAliveOptions(false, 3000, 1000);
                 m_CodeReader.Disconnect();
                 m_CodeReader.Connect(); // Uncomment it when connected with the code reader
-
-                try
-                {
-                    m_CodeReader.SetResultTypes(requested_result_types);
-                }
-                catch
-                { }
+                m_CodeReader.SetResultTypes(requested_result_types);
+                
             }
             catch (Exception ex)
             {
-                Global.CodeReaderConnStatus = ConnectionState.Disconnected.ToString();
-                MachineBase.ShowMessage(ex);
+                m_Events.GetEvent<OnCodeReaderDisconnectedEvent>().Publish();
             }
         }
 

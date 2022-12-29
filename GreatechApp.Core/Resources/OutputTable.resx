@@ -117,37 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DO0100_RedTowerLight" xml:space="preserve">
-    <value>O0100 | Red Tower Light</value>
+  <data name="DO0100_Buzzer" xml:space="preserve">
+    <value>O0100 | Buzzer   </value>
   </data>
-  <data name="DO0101_AmberTowerLight" xml:space="preserve">
-    <value>O0101 | Amber Tower Light</value>
+  <data name="DO0101_RedTowerLight" xml:space="preserve">
+    <value>O0101 | Red Tower Light</value>
   </data>
-  <data name="DO0102_GreenTowerLight" xml:space="preserve">
-    <value>O0102 | Green Tower Light</value>
+  <data name="DO0102_AmberTowerLight" xml:space="preserve">
+    <value>O0102 | Amber Tower Light</value>
   </data>
-  <data name="DO0103_Buzzer" xml:space="preserve">
-    <value>O0103 | Buzzer   </value>
-  </data>
-  <data name="DO0104_Output5" xml:space="preserve">
-    <value>O0104 | Output Value 5</value>
-  </data>
-  <data name="DO0105_Output6" xml:space="preserve">
-    <value>O0105 | Output Value 6</value>
-  </data>
-  <data name="DO0106_Output7" xml:space="preserve">
-    <value>O0106 | Output Value 7</value>
-  </data>
-  <data name="DO0107_Output8" xml:space="preserve">
-    <value>O0107 | Output Value 8</value>
-  </data>
-  <data name="DO0108_Output9" xml:space="preserve">
-    <value>O0108 | Output Value 9</value>
-  </data>
-  <data name="DO0109_Test_GripperWork" xml:space="preserve">
-    <value>Test | Sample Sequence Gripper Work</value>
-  </data>
-  <data name="DO0110_Test_GripperRest" xml:space="preserve">
-    <value>Test | Sample Sequence Gripper Rest</value>
+  <data name="DO0103_GreenTowerLight" xml:space="preserve">
+    <value>O0103 | Green Tower Light</value>
   </data>
 </root>

@@ -384,7 +384,6 @@ namespace UIModule.MainPanel
             var tray = m_IMachineDataCollection.FirstOrDefault(x => x.DataMarkerType == MarkerType.TrayDataMarker) as TrayDataMarkerViewModel;
             tray.BuildDataMarker("InputTray", SQID.BarcodeScanner, 14, 25);
             MachineDataCollection.Add(tray);
-
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
         }
@@ -468,17 +467,19 @@ namespace UIModule.MainPanel
         //New Can Be Use
         private void OnCodeReaderConnected()
         {
-            Global.CodeReaderConnStatus = ConnectionState.Connected.ToString();
+            Global.CodeReaderConnStatus = "Connected";
             CdStatusFG = System.Windows.Media.Brushes.Green;
             CodeReaderConnStatus = Global.CodeReaderConnStatus;
+
 
         }
         //New Can Be Use
         private void OnCodeReaderDisconnected()
         {
-            Global.CodeReaderConnStatus = ConnectionState.Disconnected.ToString();
+            Global.CodeReaderConnStatus = "Disconnected";
             CdStatusFG = System.Windows.Media.Brushes.Red;
             CodeReaderConnStatus = Global.CodeReaderConnStatus;
+
         }
         //New Can Be Use
         private void OnCodeReaderEndResult()

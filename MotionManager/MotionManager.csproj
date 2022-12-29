@@ -143,9 +143,9 @@
     <Reference Include="ACS.SPiiPlusNET">
       <HintPath>..\GreatechApp.Net\Execution\ACS.SPiiPlusNET.dll</HintPath>
     </Reference>
-    <Reference Include="AdvMotAPI, Version=2.0.3.1, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AdvMotAPI, Version=2.0.9.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\MotionTest\App.Net\Execution\AdvMotAPI.dll</HintPath>
+      <HintPath>..\Lib\AdvMotAPI.dll</HintPath>
     </Reference>
     <Reference Include="Interop.Galil">
       <HintPath>..\GreatechApp.Net\Execution\Interop.Galil.dll</HintPath>

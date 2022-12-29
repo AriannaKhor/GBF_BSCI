@@ -16,7 +16,6 @@ namespace IOManager
 
         void AssignInput(SQID seqname, IN masterIO);
         void AssignOutput(SQID seqname, OUT masterIO);
-
         void StartScanIO();
         bool OpenDevice();
         bool CloseDevice();

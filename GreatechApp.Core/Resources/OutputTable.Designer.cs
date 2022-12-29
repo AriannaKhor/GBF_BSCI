@@ -61,101 +61,38 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O0100 | Red Tower Light.
+        ///   Looks up a localized string similar to O0100 | Buzzer   .
         /// </summary>
-        public static string DO0100_RedTowerLight {
+        public static string DO0100_Buzzer {
             get {
-                return ResourceManager.GetString("DO0100_RedTowerLight", resourceCulture);
+                return ResourceManager.GetString("DO0100_Buzzer", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O0101 | Amber Tower Light.
+        ///   Looks up a localized string similar to O0101 | Red Tower Light.
         /// </summary>
-        public static string DO0101_AmberTowerLight {
+        public static string DO0101_RedTowerLight {
             get {
-                return ResourceManager.GetString("DO0101_AmberTowerLight", resourceCulture);
+                return ResourceManager.GetString("DO0101_RedTowerLight", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O0102 | Green Tower Light.
+        ///   Looks up a localized string similar to O0102 | Amber Tower Light.
         /// </summary>
-        public static string DO0102_GreenTowerLight {
+        public static string DO0102_AmberTowerLight {
             get {
-                return ResourceManager.GetString("DO0102_GreenTowerLight", resourceCulture);
+                return ResourceManager.GetString("DO0102_AmberTowerLight", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O0103 | Buzzer   .
+        ///   Looks up a localized string similar to O0103 | Green Tower Light.
         /// </summary>
-        public static string DO0103_Buzzer {
+        public static string DO0103_GreenTowerLight {
             get {
-                return ResourceManager.GetString("DO0103_Buzzer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O0104 | Output Value 5.
-        /// </summary>
-        public static string DO0104_Output5 {
-            get {
-                return ResourceManager.GetString("DO0104_Output5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O0105 | Output Value 6.
-        /// </summary>
-        public static string DO0105_Output6 {
-            get {
-                return ResourceManager.GetString("DO0105_Output6", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O0106 | Output Value 7.
-        /// </summary>
-        public static string DO0106_Output7 {
-            get {
-                return ResourceManager.GetString("DO0106_Output7", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O0107 | Output Value 8.
-        /// </summary>
-        public static string DO0107_Output8 {
-            get {
-                return ResourceManager.GetString("DO0107_Output8", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to O0108 | Output Value 9.
-        /// </summary>
-        public static string DO0108_Output9 {
-            get {
-                return ResourceManager.GetString("DO0108_Output9", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Test | Sample Sequence Gripper Work.
-        /// </summary>
-        public static string DO0109_Test_GripperWork {
-            get {
-                return ResourceManager.GetString("DO0109_Test_GripperWork", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Test | Sample Sequence Gripper Rest.
-        /// </summary>
-        public static string DO0110_Test_GripperRest {
-            get {
-                return ResourceManager.GetString("DO0110_Test_GripperRest", resourceCulture);
+                return ResourceManager.GetString("DO0103_GreenTowerLight", resourceCulture);
             }
         }
     }

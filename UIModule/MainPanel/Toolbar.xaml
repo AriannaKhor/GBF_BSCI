@@ -67,7 +67,7 @@
                 <ColumnDefinition Width="*" MaxWidth="200"/>
                 <ColumnDefinition Width="*" MinWidth="210"/>
                 <ColumnDefinition Width="*" MaxWidth="200"/>
-                <ColumnDefinition Width="100" MaxWidth="500"/>
+                <ColumnDefinition Width="8" MaxWidth="500"/>
                 <ColumnDefinition Width="*" MaxWidth="200"/>
                 <ColumnDefinition Width="80" />
             </Grid.ColumnDefinitions>
@@ -303,34 +303,14 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="15"/>
                             <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="15"/>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="15"/>
-                            <ColumnDefinition Width="80"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
 
-                        <!--Lot Entry-->
-                        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
-                            <Image Width="38" Height="38" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/LOTEntry.png" ToolTip="{Binding Path=LotHistory, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
-                            <Label Content="{Binding Path=LotHistory, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDown">
-                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="LotHistoryView" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseEnter">
-                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </StackPanel>
-
-                        <Rectangle Grid.Column="1" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
-
                         <!--IO-->
-                        <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
                             <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/IO list.png" ToolTip="{Binding Path=InputOutput, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
                             <Label Content="{Binding Path=IO, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
                             <i:Interaction.Triggers>
@@ -343,26 +323,10 @@
                             </i:Interaction.Triggers>
                         </StackPanel>
 
-                        <Rectangle Grid.Column="3" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
-
-                        <!--Serial Port-->
-                        <StackPanel Grid.Column="4" Orientation="Vertical" VerticalAlignment="Center">
-                            <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/SerialPort.png" ToolTip="{Binding Path=SerialPort, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
-                            <Label Content="{Binding Path=SerialPort, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDown">
-                                    <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="SerialPortView" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseEnter">
-                                    <prism:InvokeCommandAction Command="{Binding CloseMenuCommand}" CommandParameter="SecondRow" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </StackPanel>
-
-                        <Rectangle Grid.Column="5" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+                        <Rectangle Grid.Column="1" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
 
                         <!--Alarm Config-->
-                        <StackPanel Grid.Column="6" Orientation="Vertical" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
                             <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/AlarmConfig.png" ToolTip="{Binding Path=AlarmCfg, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
                             <Label Content="{Binding Path=AlarmCfg, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
                             <i:Interaction.Triggers>
@@ -375,10 +339,10 @@
                             </i:Interaction.Triggers>
                         </StackPanel>
 
-                        <Rectangle Grid.Column="7" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+                        <Rectangle Grid.Column="3" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
 
                         <!--Setting-->
-                        <StackPanel Grid.Column="8" Orientation="Vertical" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="4" Orientation="Vertical" VerticalAlignment="Center">
                             <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/Setting.png" ToolTip="{Binding Path=Setting, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
                             <Label Content="{Binding Path=Setting, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
                             <i:Interaction.Triggers>
@@ -391,11 +355,11 @@
                             </i:Interaction.Triggers>
                         </StackPanel>
 
-                        <Rectangle Grid.Column="9" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+                        <Rectangle Grid.Column="5" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
 
 
                         <!--User-->
-                        <StackPanel Grid.Column="10" Orientation="Vertical" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="6" Orientation="Vertical" VerticalAlignment="Center">
                             <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/User.png" ToolTip="{Binding Path=UserAccount, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
                             <Label Content="{Binding Path=UserAccount, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
                             <i:Interaction.Triggers>
@@ -408,10 +372,10 @@
                             </i:Interaction.Triggers>
                         </StackPanel>
 
-                        <Rectangle Grid.Column="11" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
+                        <Rectangle Grid.Column="7" HorizontalAlignment="Stretch" Width="2" Margin="5,4,5,4" Fill="White"/>
 
                         <!--About-->
-                        <StackPanel Grid.Column="12" Orientation="Vertical" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="8" Orientation="Vertical" VerticalAlignment="Center">
                             <Image Width="40" Height="40" Stretch="Fill" Source="/GreatechApp.Core;component/Icon/About.png" ToolTip="{Binding Path=About, Source={StaticResource StringTableODP}}" Style="{StaticResource ImageHover}"/>
                             <Label Content="{Binding Path=About, Source={StaticResource StringTableODP}}" HorizontalContentAlignment="Center" FontSize="12"/>
                             <i:Interaction.Triggers>

@@ -2,6 +2,7 @@
 using GreatechApp.Core.Modal;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 
 namespace GreatechApp.Core.Variable
@@ -57,10 +58,11 @@ namespace GreatechApp.Core.Variable
         public static string CurrentBatchNum;
         public static int CurrentBoxQuantity;
         public static int AccumulateCurrentBatchQuantity;
-        public static string CodeReaderConnStatus;
+        public static string CodeReaderConnStatus = "Not Connected";
         public static string CodeReaderResult = resultstatus.PendingResult.ToString();
         public static string OverallResult;
 
+       
         //Error 
         public static string ErrorMsg = "N/A";
         public static string Remarks;
