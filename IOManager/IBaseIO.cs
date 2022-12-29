@@ -9,7 +9,7 @@ namespace IOManager
         string ErrorMsg { get; set; }
         int MaxBitPerDevice { get; set; }
 
-        List<VacuumCylinderIO> VacuumCylinderList { get; set; }
+        //List<VacuumCylinderIO> VacuumCylinderList { get; set; }
         Dictionary<SQID, List<object>> InputMapList { get; set; }
         Dictionary<SQID, List<object>> OutputMapList { get; set; }
         Dictionary<OUT, SQID> IOKeyList { get; set; }

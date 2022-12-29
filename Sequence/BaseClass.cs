@@ -17,9 +17,6 @@ using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
 using GreatechApp.Services.Utilities;
 using IOManager;
-using MotionManager;
-using MotionTest.IO_Manager;
-using MotionTest.MotionManager;
 using Prism.Commands;
 using Prism.Events;
 using Sequence.Framework;
@@ -32,7 +29,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using TCPIPManager;
-using static ConfigManager.MotAxis;
 
 namespace Sequence
 {
@@ -104,7 +100,7 @@ namespace Sequence
 
         protected CTimer _TmrPerfScan = new CTimer();
 
-        protected AxisModel m_AxisModel = new AxisModel();
+        //protected AxisModel m_AxisModel = new AxisModel();
 
         internal Dictionary<int, string> MotCfgs = new Dictionary<int, string>();
 
@@ -162,32 +158,6 @@ namespace Sequence
                 IO = (IWagoIO)value;
 #elif ADLINK
                 IO = (IAdlinkIO)value;
-#endif
-            }
-        }
-
-#if GALIL
-        public IGalilMotion Motion;
-#elif ADVANTECH
-        public IAdvantechMotion Motion;
-#elif ACS
-        public IACSMotion Motion;
-#elif ADLINK
-        public IADLinkMotion Motion;
-#endif
-
-        public IBaseMotion BaseMotion
-        {
-            set
-            {
-#if GALIL
-                Motion = (IGalilMotion)value;
-#elif ADVANTECH
-                Motion = (IAdvantechMotion)value;
-#elif ACS
-                Motion = (IACSMotion)value;
-#elif ADLINK
-                Motion = (IADLinkMotion)value;
 #endif
             }
         }
@@ -755,107 +725,107 @@ namespace Sequence
 
         }
 
-        protected virtual void AssignVacuumIO(string vacuumName, IN? pickedUpSns, OUT vacuum, OUT? purge)
-        {
-            // Vacuum input and output pairing 
-            IO.VacuumCylinderList.Add(new VacuumCylinderIO
-            {
-                SeqName = SeqName,
-                VacuumName = vacuumName,
-                Vacuum = vacuum,
-                VacuumPickedUpSns1 = pickedUpSns,
-                Purge = purge,
+        //protected virtual void AssignVacuumIO(string vacuumName, IN? pickedUpSns, OUT vacuum, OUT? purge)
+        //{
+        //    // Vacuum input and output pairing 
+        //    IO.VacuumCylinderList.Add(new VacuumCylinderIO
+        //    {
+        //        SeqName = SeqName,
+        //        VacuumName = vacuumName,
+        //        Vacuum = vacuum,
+        //        VacuumPickedUpSns1 = pickedUpSns,
+        //        Purge = purge,
 
-            });
+        //    });
 
-            // Assign Vacuum Output into Seq OutputList
-            IO.AssignOutput(SeqName, vacuum);
-            if (purge != null)
-                IO.AssignOutput(SeqName, purge.Value);
+        //    // Assign Vacuum Output into Seq OutputList
+        //    IO.AssignOutput(SeqName, vacuum);
+        //    if (purge != null)
+        //        IO.AssignOutput(SeqName, purge.Value);
 
-            // Assign Vacuum Input into Seq InputList
-            if (pickedUpSns != null)
-                IO.AssignInput(SeqName, pickedUpSns.Value);
-        }
+        //    // Assign Vacuum Input into Seq InputList
+        //    if (pickedUpSns != null)
+        //        IO.AssignInput(SeqName, pickedUpSns.Value);
+        //}
 
-        protected virtual void AssignVacuumIO(string vacuumName, IN? vacuumOnSns, IN? pickedUpSns, OUT vacuum, OUT? purge)
-        {
-            // vacuumOnSns is sensor of checking is vacuum turned on after writebit
-            // pickedUpsns is sensor of checking vacuum picked up successfully
+        //protected virtual void AssignVacuumIO(string vacuumName, IN? vacuumOnSns, IN? pickedUpSns, OUT vacuum, OUT? purge)
+        //{
+        //    // vacuumOnSns is sensor of checking is vacuum turned on after writebit
+        //    // pickedUpsns is sensor of checking vacuum picked up successfully
 
-            // Vacuum input and output pairing 
-            IO.VacuumCylinderList.Add(new VacuumCylinderIO
-            {
-                SeqName = SeqName,
-                VacuumName = vacuumName,
-                Vacuum = vacuum,
-                VacuumPressureSns1 = vacuumOnSns,
-                Purge = purge,
-                VacuumPickedUpSns1 = pickedUpSns,
-            });
+        //    // Vacuum input and output pairing 
+        //    IO.VacuumCylinderList.Add(new VacuumCylinderIO
+        //    {
+        //        SeqName = SeqName,
+        //        VacuumName = vacuumName,
+        //        Vacuum = vacuum,
+        //        VacuumPressureSns1 = vacuumOnSns,
+        //        Purge = purge,
+        //        VacuumPickedUpSns1 = pickedUpSns,
+        //    });
 
-            // Assign Vacuum Output into Seq OutputList
-            IO.AssignOutput(SeqName, vacuum);
-            if (purge != null)
-                IO.AssignOutput(SeqName, purge.Value);
+        //    // Assign Vacuum Output into Seq OutputList
+        //    IO.AssignOutput(SeqName, vacuum);
+        //    if (purge != null)
+        //        IO.AssignOutput(SeqName, purge.Value);
 
-            // Assign Vacuum Input into Seq InputList
-            if (vacuumOnSns != null)
-                IO.AssignInput(SeqName, vacuumOnSns.Value);
-            if (pickedUpSns != null)
-                IO.AssignInput(SeqName, pickedUpSns.Value);
-        }
+        //    // Assign Vacuum Input into Seq InputList
+        //    if (vacuumOnSns != null)
+        //        IO.AssignInput(SeqName, vacuumOnSns.Value);
+        //    if (pickedUpSns != null)
+        //        IO.AssignInput(SeqName, pickedUpSns.Value);
+        //}
 
-        protected virtual void AssignCylinderIO(string doubleSolenoidCylinderName, IN? workSns1, IN? workSns2, IN? restSns1, IN? restSns2, OUT work, OUT? rest)
-        {
-            // Cylinder input and output pairing 
-            IO.VacuumCylinderList.Add(new VacuumCylinderIO
-            {
-                SeqName = SeqName,
-                CylinderName = doubleSolenoidCylinderName,
-                Work = work,
-                WorkSns1 = workSns1,
-                WorkSns2 = workSns2,
-                Rest = rest,
-                RestSns1 = restSns1,
-                RestSns2 = restSns2
-            });
+        //protected virtual void AssignCylinderIO(string doubleSolenoidCylinderName, IN? workSns1, IN? workSns2, IN? restSns1, IN? restSns2, OUT work, OUT? rest)
+        //{
+        //    // Cylinder input and output pairing 
+        //    IO.VacuumCylinderList.Add(new VacuumCylinderIO
+        //    {
+        //        SeqName = SeqName,
+        //        CylinderName = doubleSolenoidCylinderName,
+        //        Work = work,
+        //        WorkSns1 = workSns1,
+        //        WorkSns2 = workSns2,
+        //        Rest = rest,
+        //        RestSns1 = restSns1,
+        //        RestSns2 = restSns2
+        //    });
 
-            // Assign Cylinder Output into Seq OutputList
-            IO.AssignOutput(SeqName, work);
-            if (rest != null)
-                IO.AssignOutput(SeqName, rest.Value);
+        //    // Assign Cylinder Output into Seq OutputList
+        //    IO.AssignOutput(SeqName, work);
+        //    if (rest != null)
+        //        IO.AssignOutput(SeqName, rest.Value);
 
-            // Assign Cylinder Input into Seq InputList
-            if(workSns1 !=null)
-                IO.AssignInput(SeqName, workSns1.Value);
-            if(restSns1 !=null)
-                IO.AssignInput(SeqName, restSns1.Value);
-            if (workSns2 != null)
-                IO.AssignInput(SeqName, workSns2.Value);
-            if (restSns2 != null)
-                IO.AssignInput(SeqName, restSns2.Value);
-        }
+        //    // Assign Cylinder Input into Seq InputList
+        //    if(workSns1 !=null)
+        //        IO.AssignInput(SeqName, workSns1.Value);
+        //    if(restSns1 !=null)
+        //        IO.AssignInput(SeqName, restSns1.Value);
+        //    if (workSns2 != null)
+        //        IO.AssignInput(SeqName, workSns2.Value);
+        //    if (restSns2 != null)
+        //        IO.AssignInput(SeqName, restSns2.Value);
+        //}
 
-        protected virtual void AssignCylinderIO(string singleSolenoidCylinderName, IN workSns, IN restSns, OUT work)
-        {
-            // Cylinder input and output pairing 
-            IO.VacuumCylinderList.Add(new VacuumCylinderIO
-            {
-                SeqName = SeqName,
-                CylinderName = singleSolenoidCylinderName,
-                Work = work,
-                WorkSns1 = workSns,
-                RestSns1 = restSns,
-            });
+        //protected virtual void AssignCylinderIO(string singleSolenoidCylinderName, IN workSns, IN restSns, OUT work)
+        //{
+        //    // Cylinder input and output pairing 
+        //    IO.VacuumCylinderList.Add(new VacuumCylinderIO
+        //    {
+        //        SeqName = SeqName,
+        //        CylinderName = singleSolenoidCylinderName,
+        //        Work = work,
+        //        WorkSns1 = workSns,
+        //        RestSns1 = restSns,
+        //    });
 
-            // Assign Cylinder Output into Seq OutputList
-            IO.AssignOutput(SeqName, work);
+        //    // Assign Cylinder Output into Seq OutputList
+        //    IO.AssignOutput(SeqName, work);
 
-            // Assign Cylinder Input into Seq InputList
-            IO.AssignInput(SeqName, workSns);
-            IO.AssignInput(SeqName, restSns);
-        }
+        //    // Assign Cylinder Input into Seq InputList
+        //    IO.AssignInput(SeqName, workSns);
+        //    IO.AssignInput(SeqName, restSns);
+        //}
 
         protected virtual void AssignIO(IN masterInput)
         {
@@ -1017,416 +987,6 @@ namespace Sequence
         }
         #endregion
 
-        #region Motion
-        protected virtual bool MtrReady(int axis = 0)
-        {
-#if SIMULATION
-            return true;
-#else
-
-            m_AxisModel.Status[axis].Busy = Motion.AxisInMotion(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-            // Retrieve Motor Alarm signal status
-            m_AxisModel.Status[axis].Alarm = GetAlarmStatus(m_AxisModel.MotCfgs[axis]);
-            // Retrieve Motor Ready signal status
-            m_AxisModel.Status[axis].Ready = GetReadyStatus(m_AxisModel.MotCfgs[axis]);
-
-            if (m_AxisModel.MotCfgs[axis].Option.ChkInPos)
-            {
-                m_AxisModel.Status[axis].InPos = Motion.GetMotionDoneStatus(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-                //m_AxisModel.Status[axis].InPos = !Motion.AxisInMotion(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-            }
-            if (m_AxisModel.MotCfgs[axis].Option.ChkFwdLimit)
-            {
-                m_AxisModel.Status[axis].FwdLmt = Motion.GetPositiveLimitStatus(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-            }
-            if (m_AxisModel.MotCfgs[axis].Option.ChkRevLimit)
-            {
-                m_AxisModel.Status[axis].RevLmt = Motion.GetNegativeLimitStatus(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-            }
-
-            if (m_AxisModel.Status[axis].AllPass())
-            {
-                return true;
-            }
-            return false;
-#endif
-        }
-        protected virtual bool GetAlarmStatus(MotionConfig motCfg, Enum iAlarm = null)
-        {
-#if SIMULATION
-            return false;
-#endif
-            if (motCfg.Option.ChkAlarm)
-            {
-                if (motCfg.Option.AlarmContact == Contact.NO)
-                {
-                    // No inversion
-                    return Motion.GetAlarmStatus(motCfg.Axis.CardID, motCfg.Axis.AxisID);
-                }
-                return !Motion.GetAlarmStatus(motCfg.Axis.CardID, motCfg.Axis.AxisID);
-            }
-            // Always return false if no need to check for alarm.
-            return false;
-        }
-
-        protected virtual bool GetReadyStatus(MotionConfig motCfg)
-        {
-#if SIMULATION
-            return true;
-#endif
-            if (motCfg.Option.ChkReady)
-            {
-                if (motCfg.Option.ReadyContact == Contact.NO)
-                {
-                    return Motion.GetServoStatus(motCfg.Axis.CardID, motCfg.Axis.AxisID);
-                }
-                else
-                {
-                    return !Motion.GetServoStatus(motCfg.Axis.CardID, motCfg.Axis.AxisID);
-                }
-            }
-            // Always return true if no Ready Signal is available.
-            return true;
-        }
-
-        protected void Wait(double period)
-        {
-            double delay = period * 1000; // convert from s to ms.
-            if (delay > 0)
-            {
-                // Causes current thread to go into a Wait state
-                m_PauseSeqEv.WaitOne((int)delay);
-            }
-        }
-
-        protected virtual bool MotionTimeout(CTimer tmr, int axis = 0)
-        {
-            // When a system does not have limit sensors or alarm signal, the flag is always false.
-            // Note: can't use this for limit offset homing phase.
-            if (tmr.TimeOut() || m_AxisModel.Status[axis].FwdLmt || m_AxisModel.Status[axis].RevLmt || m_AxisModel.Status[axis].Alarm)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        protected virtual bool MoveAbs(int axis, double position, int speed)
-        {
-#if SIMULATION
-            return true;
-#else
-            Motion.SetAxisParam(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].DriveVel, m_AxisModel.MotCfgs[axis].Velocity[speed].Acc, m_AxisModel.MotCfgs[axis].Velocity[speed].Dcc,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].JerkTime, m_AxisModel.MotCfgs[axis].Velocity[speed].KillDcc);
-
-            int pulse = 0;
-
-#if ACS
-            pulse = position * 1000;
-#else
-            if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Linear)
-            {
-#if ADVANTECH
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, (float)position, true);
-#else
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, (float)position);
-#endif
-            }
-            else if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Rotary)
-            {
-                pulse = Motion.degree2pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, (float)position);
-            }
-#endif
-            return Motion.MoveAbs(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID, pulse, m_AxisModel.MotCfgs[axis].Dir.Opr);
-#endif
-        }
-
-        protected virtual bool MoveAbs(int axis, int distIdx, int speed)
-        {
-#if SIMULATION
-            return true;
-#else
-
-            Motion.SetAxisParam(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].DriveVel, m_AxisModel.MotCfgs[axis].Velocity[speed].Acc, m_AxisModel.MotCfgs[axis].Velocity[speed].Dcc,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].JerkTime, m_AxisModel.MotCfgs[axis].Velocity[speed].KillDcc);
-
-            int pulse = 0;
-
-#if ACS
-            pulse = (int)(m_AxisModel.MotCfgs[axis].Position[distIdx].Point * 1000);
-#else
-            if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Linear)
-            {
-#if ADVANTECH
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, (float)m_AxisModel.MotCfgs[axis].Position[distIdx].Point, true);
-#else
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, (float)m_AxisModel.MotCfgs[axis].Position[distIdx].Point);
-#endif
-            }
-            else if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Rotary)
-            {
-                pulse = Motion.degree2pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, (float)m_AxisModel.MotCfgs[axis].Position[distIdx].Point);
-            }
-#endif
-            return Motion.MoveAbs(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID, pulse, m_AxisModel.MotCfgs[axis].Dir.Opr);
-#endif
-        }
-
-        protected bool MoveAbsZeroPos(int axis, int speed)
-        {
-#if SIMULATION
-            return true;
-#else
-
-            Motion.SetAxisParam(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].DriveVel, m_AxisModel.MotCfgs[axis].Velocity[speed].Acc, m_AxisModel.MotCfgs[axis].Velocity[speed].Dcc,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].JerkTime, m_AxisModel.MotCfgs[axis].Velocity[speed].KillDcc);
-            int ZeroPos = 0;
-            int pulse = 0;
-
-#if ACS
-            pulse = (int)(m_AxisModel.MotCfgs[axis].Position[distIdx].Point * 1000);
-#else
-            if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Linear)
-            {
-#if ADVANTECH
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, (float)m_AxisModel.MotCfgs[axis].Position[distIdx].Point, true);
-#else
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, ZeroPos);
-#endif
-            }
-            else if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Rotary)
-            {
-                pulse = Motion.degree2pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, ZeroPos);
-            }
-#endif
-            return Motion.MoveAbs(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID, pulse, m_AxisModel.MotCfgs[axis].Dir.Opr);
-#endif
-        }
-
-        protected virtual bool MoveRel(int axis, int distIdx, int speed)
-        {
-#if SIMULATION
-            return true;
-#else
-            Motion.SetAxisParam(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].DriveVel, m_AxisModel.MotCfgs[axis].Velocity[speed].Acc, m_AxisModel.MotCfgs[axis].Velocity[speed].Dcc,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].JerkTime, m_AxisModel.MotCfgs[axis].Velocity[speed].KillDcc);
-
-            int pulse = 0;
-
-            pulse = (int)(m_AxisModel.MotCfgs[axis].Position[distIdx].Point);
-#if ACS
-            if (m_AxisModel.MotCfgs[axis].Position[distIdx].Point > 0)
-            {
-                pulse = Math.Abs((int)pulse * 1000);
-            }
-            else
-            {
-                pulse = -(Math.Abs((int)pulse * 1000));
-            }
-#else
-            if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Linear)
-            {
-#if ADVANTECH
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, (float)pulse, true);
-#else
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, (float)pulse);
-#endif
-            }
-            else if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Rotary)
-            {
-                pulse = Motion.degree2pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, (float)pulse);
-            }
-#endif
-            return Motion.MoveRel(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID, pulse);
-#endif
-        }
-
-
-        protected bool MoveRelRecipe(int axis, int dist, int speed)
-        {
-#if SIMULATION
-            return true;
-#else
-            Motion.SetAxisParam(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].DriveVel, m_AxisModel.MotCfgs[axis].Velocity[speed].Acc, m_AxisModel.MotCfgs[axis].Velocity[speed].Dcc,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].JerkTime, m_AxisModel.MotCfgs[axis].Velocity[speed].KillDcc);
-
-            int pulse = 0;
-
-            pulse = dist;
-#if ACS
-            if (m_AxisModel.MotCfgs[axis].Position[distIdx].Point > 0)
-            {
-                pulse = Math.Abs((int)pulse * 1000);
-            }
-            else
-            {
-                pulse = -(Math.Abs((int)pulse * 1000));
-            }
-#else
-            if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Linear)
-            {
-#if ADVANTECH
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, (float)pulse, true);
-#else
-                pulse = Motion.mm2Pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, m_AxisModel.MotCfgs[axis].Axis.Pitch, (float)pulse);
-#endif
-            }
-            else if (m_AxisModel.MotCfgs[axis].Axis.System == DriveMethod.Rotary)
-            {
-                pulse = Motion.degree2pulse(m_AxisModel.MotCfgs[axis].Axis.Revolution, (float)pulse);
-            }
-#endif
-            return Motion.MoveRel(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID, pulse);
-#endif
-        }
-
-
-        protected virtual bool Jog(int axis, int speed, short direction)
-        {
-#if Advantech
-            Motion.SetAxisJogParam(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID,
-                                   m_AxisModel.MotCfgs[axis].Velocity[speed].DriveVel, m_AxisModel.MotCfgs[axis].Velocity[speed].Acc, m_AxisModel.MotCfgs[axis].Velocity[speed].Dcc);
-#else
-            Motion.SetAxisParam(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].DriveVel, m_AxisModel.MotCfgs[axis].Velocity[speed].Acc, m_AxisModel.MotCfgs[axis].Velocity[speed].Dcc,
-                                m_AxisModel.MotCfgs[axis].Velocity[speed].JerkTime, m_AxisModel.MotCfgs[axis].Velocity[speed].KillDcc);
-#endif
-
-            return Motion.Jog(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID,
-                                direction, m_AxisModel.MotCfgs[axis].Velocity[speed].DriveVel);
-        }
-
-        protected virtual bool ChkServoStatus(int axis)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.GetServoStatus(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-#endif
-        }
-
-        protected virtual bool ResetMtrAlarm(int axis, bool isResetAlarm)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.ResetMotorAlarm(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID, isResetAlarm);
-#endif
-        }
-
-        protected virtual bool ServoON(int axis)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.ServoON(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-#endif
-        }
-
-        protected virtual bool StopServo(int axis)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.StopServo(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-#endif
-        }
-
-        protected virtual bool ChkAxisInMotion(int axis)
-        {
-#if SIMULATION
-            return false;
-#else
-            return Motion.AxisInMotion(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-#endif
-        }
-
-        protected virtual bool ChkHomeLimitStatus(int cardID, int axisID)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.GetHomeLimitStatus(cardID, axisID);
-#endif
-        }
-
-        protected virtual bool ChkPositiveLimitStatus(int cardID, int axisID)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.GetPositiveLimitStatus(cardID, axisID);
-#endif
-        }
-
-        protected virtual bool ChkNegativeLimitStatus(int cardID, int axisID)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.GetNegativeLimitStatus(cardID, axisID);
-#endif
-        }
-
-        protected virtual bool ChkMotionDoneStatus(int axis)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.GetMotionDoneStatus(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-#endif
-        }
-
-        protected virtual double GetEncoderPosition(int axis)
-        {
-#if SIMULATION
-            return 0;
-#else
-            return Motion.GetEncoderPosition(m_AxisModel.MotCfgs[axis].Axis.CardID, m_AxisModel.MotCfgs[axis].Axis.AxisID);
-#endif
-        }
-
-        protected virtual bool SetZeroPosition(int cardID, int axisID)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.SetZeroPosition(cardID, axisID);
-#endif
-        }
-
-        protected virtual bool FindEdge(int cardID, int axisID, double speed)
-        {
-#if SIMULATION
-            return true;
-#else
-            return Motion.FindEdge(cardID, axisID, speed);
-#endif
-        }
-
-        protected virtual bool FindIndex(int cardID, int axisID, double speed)
-        {
-#if SIMULATION
-            return true;
-#elif GALIL
-            return Motion.FindIndex(cardID, axisID, speed);
-#else
-            return true;
-#endif
-        }
-
-        public void StopAllMotorPulse()
-        {
-            for (int i = 0; i < MotCfgs.Count; i++)
-            {
-                Motion.StopServo(m_AxisModel.MotCfgs[i].Axis.CardID, m_AxisModel.MotCfgs[i].Axis.AxisID);
-            }
-        }
-        #endregion
         /// <summary>
         /// This methos shows a UI dialog box at center of screen, the calling thread/ Seq Module will stop and wait for button result from user.
         /// </summary>

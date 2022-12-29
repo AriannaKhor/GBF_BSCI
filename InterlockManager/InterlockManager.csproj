@@ -86,11 +86,6 @@
     <Compile Include="IO\BaseIOIntL.cs" />
     <Compile Include="IO\IIOInterlock.cs" />
     <Compile Include="IO\SampleSeqIOIntL.cs" />
-    <Compile Include="Motion\BaseMtrIntL.cs" />
-    <Compile Include="Motion\IMtrInterlock.cs" />
-    <Compile Include="Motion\XAxisMtrIntL.cs" />
-    <Compile Include="Motion\YAxisMtrIntL.cs" />
-    <Compile Include="Motion\ZAxisMtrIntL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -113,10 +108,6 @@
     <ProjectReference Include="..\IOManager\IOManager.csproj">
       <Project>{f9180ee7-9889-4e7e-8edb-052a2777fc37}</Project>
       <Name>IOManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MotionManager\MotionManager.csproj">
-      <Project>{75eca981-3d09-4c0a-95e8-e505923370d2}</Project>
-      <Name>MotionManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sequence\Sequence.csproj">
       <Project>{46658b31-1e7b-4975-93b6-d8b75d00bcfa}</Project>

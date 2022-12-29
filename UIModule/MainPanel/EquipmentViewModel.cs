@@ -1,9 +1,4 @@
 ﻿using Cognex.DataMan.SDK;
-using Cognex.DataMan.SDK.Utils;
-using Cognex.InSight;
-using Cognex.InSight.Cell;
-using ConfigManager;
-using DialogManager.ErrorMsg;
 using GreatechApp.Core;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
@@ -11,34 +6,24 @@ using GreatechApp.Core.Helpers;
 using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
 using GreatechApp.Services.Utilities;
-using IOManager;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Ioc;
-using Prism.Services.Dialogs;
-using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using UIModule.DataMarkers;
-using UIModule.DataMarkers.DiagramDesigner;
 using UIModule.DataMarkers.Interfaces;
 
 namespace UIModule.MainPanel
 {
-	public class EquipmentViewModel : BaseUIViewModel
+    public class EquipmentViewModel : BaseUIViewModel
     {
         #region Variable
         private IEnumerable<IMachineData> m_IMachineDataCollection;
@@ -354,36 +339,6 @@ namespace UIModule.MainPanel
             //Software Results Log
             SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
             SoftwareResultCollection.CollectionChanged += this.OnSoftwareResultCollectionChanged;
-
-            MachineDataCollection = new ObservableCollection<IMachineData>();
-            var Seq3 = m_IMachineDataCollection.FirstOrDefault(x => x.DataMarkerType == MarkerType.CircularDataMarker) as CircularDataMarkerViewModel;
-            Seq3.BuildDataMarker("SampleSeq 3", SQID.SampleSeq3, UnitFlowDir.CW);
-            Seq3.SetSlotName(0, "In");
-            Seq3.SetSlotName(1, "Top Vision");
-            Seq3.SetSlotName(4, "Bottom Vision");
-            Seq3.SetSlotName(5, "Out");
-            Seq3.NavigateView = "SampleSeqView";
-            MachineDataCollection.Add(Seq3);
-
-            var Sseq4 = m_IMachineDataCollection.FirstOrDefault(x => x.DataMarkerType == MarkerType.LinearDataMarker) as LinearDataMarkerViewModel;
-            Sseq4.BuildDataMarker("SampleSeq 4", SQID.SampleSeq4);
-            Sseq4.SetSlotName(0, "Vision4S");
-            Sseq4.SetSlotName(1, "Tester1");
-            Sseq4.SetSlotName(2, "Out");
-            Sseq4.NavigateView = "SampleSeqView";
-            MachineDataCollection.Add(Sseq4);
-
-            var Sseq5 = m_IMachineDataCollection.FirstOrDefault(x => x.DataMarkerType == MarkerType.CircularDataMarker) as CircularDataMarkerViewModel;
-            Sseq5.BuildDataMarker("SampleSeq 5", SQID.SampleSeq5, UnitFlowDir.CCW);
-            Sseq5.SetSlotName(0, "In");
-            Sseq5.SetSlotName(1, "Tester2");
-            Sseq5.SetSlotName(2, "Out");
-            Sseq5.NavigateView = "SampleSeqView";
-            MachineDataCollection.Add(Sseq5);
-
-            var tray = m_IMachineDataCollection.FirstOrDefault(x => x.DataMarkerType == MarkerType.TrayDataMarker) as TrayDataMarkerViewModel;
-            tray.BuildDataMarker("InputTray", SQID.BarcodeScanner, 14, 25);
-            MachineDataCollection.Add(tray);
 
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();

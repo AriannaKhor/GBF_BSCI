@@ -2,13 +2,10 @@
 using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Interface;
-using GreatechApp.Core.Resources;
 using IOManager;
-using MotionManager;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
 using System.Text;
-using System.Windows.Forms;
 
 namespace InterlockManager.IO
 {
@@ -16,7 +13,7 @@ namespace InterlockManager.IO
     {
         protected static SystemConfig m_SystemConfig;
         protected static IBaseIO m_BaseIO;
-        protected static IBaseMotion m_BaseMotion;
+        //protected static IBaseMotion m_BaseMotion;
         public static IShowDialog m_ShowDialog;
         protected static CultureResources m_CultureResources;
 
@@ -28,7 +25,7 @@ namespace InterlockManager.IO
         {
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
             m_BaseIO = (IBaseIO)ContainerLocator.Container.Resolve(typeof(IBaseIO));
-            m_BaseMotion = (IBaseMotion)ContainerLocator.Container.Resolve(typeof(IBaseMotion));
+            //m_BaseMotion = (IBaseMotion)ContainerLocator.Container.Resolve(typeof(IBaseMotion));
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
             m_IntLMsg = new StringBuilder();

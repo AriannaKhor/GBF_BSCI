@@ -4,10 +4,8 @@ using GreatechApp.Core.Enums;
 using GreatechApp.Core.Interface;
 using GreatechApp.Core.Variable;
 using IOManager;
-using MotionManager;
 using Prism.Ioc;
 using Prism.Mvvm;
-using SecsGemManager;
 using Sequence;
 using System;
 using System.Globalization;
@@ -20,18 +18,18 @@ using UIModule.StandardViews.Services;
 
 namespace GreatechApp.SplashScreen
 {
-	public class SplashScreenViewModel : BindableBase
+    public class SplashScreenViewModel : BindableBase
     {
         #region Variables
         private object m_sqlKey = new object();
          
         IContainerProvider m_container;
-        IBaseMotion Motion;
+        //IBaseMotion Motion;
         IBaseIO IO;
         ITCPIP TCPIP;
         ISerialPort Serial;
         ISQLOperation SQLOperation;
-        ISecsGem SecsGem;
+        //ISecsGem SecsGem;
         SystemConfig SysConfig;
         CultureResources m_CultureResources;
 
@@ -87,7 +85,7 @@ namespace GreatechApp.SplashScreen
             #endregion
 
             #region IO
-            UpdateStatus(m_CultureResources.GetStringValue("IO"), 50);
+            UpdateStatus(m_CultureResources.GetStringValue("IO"), 60);
             IO = m_container.Resolve<IBaseIO>();
 
             //IO.MaxBitPerDevice = SysConfig.DigitalIO.MaxBitPerPort;
@@ -108,25 +106,25 @@ namespace GreatechApp.SplashScreen
 #endregion
 
             #region Motion
-            UpdateStatus(m_CultureResources.GetStringValue("Motor"), 60);
-            Motion = m_container.Resolve<IBaseMotion>();
+//            UpdateStatus(m_CultureResources.GetStringValue("Motor"), 60);
+//            Motion = m_container.Resolve<IBaseMotion>();
 
-            for (int i = 0; i < Motion.TotalCards; i++)
-            {
-                if (!Motion.IsConnect(SysConfig.MotionCards[i].CardID))
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-#if !SIMULATION
-                        MessageBox.Show($"{m_CultureResources.GetStringValue("MotorError")} : {Motion.ErrorMsg}", m_CultureResources.GetStringValue("MotionControllerConnection"), MessageBoxButton.OK);
-#endif
-                    });
-                }
-            }
+//            for (int i = 0; i < Motion.TotalCards; i++)
+//            {
+//                if (!Motion.IsConnect(SysConfig.MotionCards[i].CardID))
+//                {
+//                    Application.Current.Dispatcher.Invoke(() =>
+//                    {
+//#if !SIMULATION
+//                        MessageBox.Show($"{m_CultureResources.GetStringValue("MotorError")} : {Motion.ErrorMsg}", m_CultureResources.GetStringValue("MotionControllerConnection"), MessageBoxButton.OK);
+//#endif
+//                    });
+//                }
+//            }
             #endregion
 
             #region TCPIP
-            UpdateStatus(m_CultureResources.GetStringValue("TCPIP"), 70);
+            UpdateStatus(m_CultureResources.GetStringValue("TCPIP"), 80);
 
             if (SysConfig.NetworkDevices.Count > 0)
             {
@@ -150,31 +148,31 @@ namespace GreatechApp.SplashScreen
             #endregion
 
             #region Serial Port
-            UpdateStatus(m_CultureResources.GetStringValue("SerialPort"), 80);
+//            UpdateStatus(m_CultureResources.GetStringValue("SerialPort"), 80);
 
-            if (SysConfig.SerialPortRef.Count > 0)
-            {
-                Serial = m_container.Resolve<ISerialPort>();
+//            if (SysConfig.SerialPortRef.Count > 0)
+//            {
+//                Serial = m_container.Resolve<ISerialPort>();
 
-                for (int i = 0; i < Serial.serialPortCollection.Count; i++)
-                {
-                    if (!Serial.serialPortCollection[i].IsOpen)
-                    {
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-#if !SIMULATION
-                            MessageBox.Show($"{m_CultureResources.GetStringValue("SerialPort")} : [ {Serial.serialPortCollection[i].PortName} ] {m_CultureResources.GetStringValue("FailConnect")}", m_CultureResources.GetStringValue("SerialPort"), MessageBoxButton.OK);
-#endif
-                        });
-                    }
-                }
-            }
+//                for (int i = 0; i < Serial.serialPortCollection.Count; i++)
+//                {
+//                    if (!Serial.serialPortCollection[i].IsOpen)
+//                    {
+//                        Application.Current.Dispatcher.Invoke(() =>
+//                        {
+//#if !SIMULATION
+//                            MessageBox.Show($"{m_CultureResources.GetStringValue("SerialPort")} : [ {Serial.serialPortCollection[i].PortName} ] {m_CultureResources.GetStringValue("FailConnect")}", m_CultureResources.GetStringValue("SerialPort"), MessageBoxButton.OK);
+//#endif
+//                        });
+//                    }
+//                }
+//            }
             #endregion
 
             #region SecsGem
-            UpdateStatus(m_CultureResources.GetStringValue("SecsGem"), 85);
+            //UpdateStatus(m_CultureResources.GetStringValue("SecsGem"), 85);
 
-            SecsGem = m_container.Resolve<SecsGemBase>();
+            //SecsGem = m_container.Resolve<SecsGemBase>();
             #endregion
 
             #region Utilities

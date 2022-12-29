@@ -7,14 +7,12 @@ using GreatechApp.Core.Events;
 using GreatechApp.Core.Interface;
 using GreatechApp.Core.Variable;
 using IOManager;
-using MotionManager;
 using Prism.Commands;
 using Prism.Events;
 using Sequence.CoreSeq;
 using Sequence.MachineSeq;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -31,7 +29,7 @@ namespace Sequence
         private int InitFailCount;
         private int EndLotCompletedCount;
 
-        private IBaseMotion m_BaseMotion;
+        //private IBaseMotion m_BaseMotion;
         private IEventAggregator m_EventAggregator;
         private ITCPIP m_TCPIP;
         private IInsightVision   m_InsightVision;
@@ -46,14 +44,14 @@ namespace Sequence
 
         Dictionary<SQID, BaseClass> m_BaseSeq;
 
-        public DelegateSeq(IEventAggregator eventAggregator, IError error, IBaseMotion motion, IBaseIO io, SystemConfig sysconfig, ITCPIP tcpip,IInsightVision insightvision,ICodeReader codereader, ISerialPort serialPort, IShowDialog showDialog, CultureResources cultureResources)
+        public DelegateSeq(IEventAggregator eventAggregator, IError error, IBaseIO io, SystemConfig sysconfig, ITCPIP tcpip,IInsightVision insightvision,ICodeReader codereader, ISerialPort serialPort, IShowDialog showDialog, CultureResources cultureResources)
         {
             m_EventAggregator = eventAggregator;
             m_TCPIP = tcpip;
             m_InsightVision = insightvision;
             m_CodeReader = codereader;
             m_SerialPort = serialPort;
-            m_BaseMotion = motion;
+            //m_BaseMotion = motion;
             m_Error = error;
             m_SysConfig = sysconfig;
             m_BaseIO = io;
@@ -71,10 +69,6 @@ namespace Sequence
                 { SQID.CriticalScan, new CriticalScan() },
                 { SQID.TopVisionSeq, new TopVisionSeq() },
                 { SQID.CodeReaderSeq, new CodeReaderSeq() },
-                { SQID.SampleSeq3, new SampleSeq3(MarkerType.CircularDataMarker,6,3) },
-                { SQID.SampleSeq4, new SampleSeq4(MarkerType.LinearDataMarker,3,6) },
-                { SQID.SampleSeq5, new SampleSeq5(MarkerType.CircularDataMarker,3,13) },
-                { SQID.BarcodeScanner, new BarcodeScanner(350) },
                 { SQID.CountingScaleSeq, new CountingScaleSeq() },
             };
 
@@ -110,7 +104,7 @@ namespace Sequence
                 seq.Publisher = m_EventAggregator;
                 seq.Error = m_Error;
                 seq.Error.SeqName = seqName;
-                seq.BaseMotion = m_BaseMotion;
+                //seq.BaseMotion = m_BaseMotion;
                 seq.BaseIO = m_BaseIO;
                 seq.BaseData = new BaseData(seq.MarkerType, seqName, seq.SlotNum, m_EventAggregator);
                 seq.SysCfgs = m_SysConfig;
@@ -198,7 +192,7 @@ namespace Sequence
                 case MachineStateType.CriticalAlarm:
                     foreach (KeyValuePair<SQID, BaseClass> baseSeq in m_BaseSeq)
                     {
-                        baseSeq.Value.StopAllMotorPulse();
+                        //baseSeq.Value.StopAllMotorPulse();
                     }
                     break;
 

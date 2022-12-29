@@ -84,15 +84,7 @@
 
     }
 
-    public class SecsGemCommState : PubSubEvent<string>
-    {
-
-    }
-    public class LoadSecsGem : PubSubEvent<SecsGem>
-    {
-
-    }
-
+    
     public class MachineState : PubSubEvent<MachineStateType>
     {
 
@@ -168,19 +160,7 @@
         public byte[] MessageByte;
         public string Message;
     }
-
-    public class SerialPortMsg : PubSubEvent<SerialPortMsg>
-    {
-        public SerialDev DevName;
-        public string Message;
-    }
-
-    public class SerialPortStatus : PubSubEvent<SerialPortStatus>
-    {
-        public SerialDev DevName;
-        public bool IsPortOpen;
-    }
-
+    
     public class ErrorMsg : PubSubEvent<ErrorMsg>
     {
         public string[] ErrMsg;

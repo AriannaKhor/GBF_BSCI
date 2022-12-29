@@ -1,25 +1,15 @@
 ﻿using GreatechApp.Services.UserServices;
 using Prism.Mvvm;
-using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
-using GreatechApp.Core.Modal;
-using GreatechApp.Core.Variable;
-using GreatechApp.Services.Utilities;
 using Prism.Events;
 using Sequence;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using Prism.Ioc;
 using ConfigManager;
 using Prism.Regions;
 using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Interface;
 using TCPIPManager;
-using MotionManager;
 using IOManager;
-using Prism.Services.Dialogs;
-using SecsGemManager;
 
 namespace UIModule.MainPanel
 {
@@ -33,11 +23,11 @@ namespace UIModule.MainPanel
         public ITCPIP m_TCPIP;
         public IInsightVision m_InsightVision;
         public ICodeReader m_CodeReader;
-        public IBaseMotion m_Motion;
+        //public IBaseMotion m_Motion;
         public IShowDialog m_ShowDialog;
         public IBaseIO m_IO;
         public IUser m_CurrentUser;
-        public ISecsGem m_SecsGem;
+        //public ISecsGem m_SecsGem;
         public AuthService m_AuthService;
         public SystemConfig m_SystemConfig;
         public CultureResources m_CultureResources;
@@ -54,8 +44,8 @@ namespace UIModule.MainPanel
             m_InsightVision = (IInsightVision)ContainerLocator.Container.Resolve(typeof(IInsightVision));
             m_CodeReader = (ICodeReader)ContainerLocator.Container.Resolve(typeof(ICodeReader));
             m_IO = (IBaseIO)ContainerLocator.Container.Resolve(typeof(IBaseIO));
-            m_Motion = (IBaseMotion)ContainerLocator.Container.Resolve(typeof(IBaseMotion));
-            m_SecsGem = (ISecsGem)ContainerLocator.Container.Resolve(typeof(ISecsGem));
+            //m_Motion = (IBaseMotion)ContainerLocator.Container.Resolve(typeof(IBaseMotion));
+            //m_SecsGem = (ISecsGem)ContainerLocator.Container.Resolve(typeof(ISecsGem));
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             m_CurrentUser = (DefaultUser)ContainerLocator.Container.Resolve(typeof(DefaultUser));
             m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));

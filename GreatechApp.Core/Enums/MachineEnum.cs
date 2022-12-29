@@ -31,14 +31,6 @@ namespace GreatechApp.Core.Enums
         CodeReader,
     }
 
-    public enum SerialDev
-    {
-        [Description("Hioki Tester")]
-        HiokiTester,
-        [Description("Chroma Tester")]
-        ChromaTester,
-    }
-
     public enum ToolLifeID
     {
         Test1,

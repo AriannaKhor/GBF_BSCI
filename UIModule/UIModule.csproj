@@ -258,22 +258,10 @@
       <DependentUpon>IOView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StandardViews\IOViewModel.cs" />
-    <Compile Include="StandardViews\MotorView.xaml.cs">
-      <DependentUpon>MotorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\MotorViewModel.cs" />
     <Compile Include="StandardViews\ProductQtyView.xaml.cs">
       <DependentUpon>ProductQtyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StandardViews\ProductQtyViewModel.cs" />
-    <Compile Include="StandardViews\SecsGemSettingsView.xaml.cs">
-      <DependentUpon>SecsGemSettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\SecsGemSettingsViewModel.cs" />
-    <Compile Include="StandardViews\SerialPortView.xaml.cs">
-      <DependentUpon>SerialPortView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\SerialPortViewModel.cs" />
     <Compile Include="StandardViews\Services\OEECalculation.cs" />
     <Compile Include="StandardViews\Services\TowerLight.cs" />
     <Compile Include="StandardViews\AboutViewModel.cs" />
@@ -349,10 +337,6 @@
       <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StationViews\BaseSeqViewModel.cs" />
-    <Compile Include="StationViews\SampleSeqViewModel.cs" />
-    <Compile Include="StationViews\SampleSeqView.xaml.cs">
-      <DependentUpon>SampleSeqView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIModuleModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -481,10 +465,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StandardViews\MotorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="StandardViews\AboutView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -541,17 +521,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StandardViews\SecsGemSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="StandardViews\SeqParameterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StandardViews\SerialPortView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="StandardViews\SettingView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -568,10 +540,6 @@
     <Page Include="StandardViews\UserView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="StationViews\SampleSeqView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -606,14 +574,6 @@
     <ProjectReference Include="..\IOManager\IOManager.csproj">
       <Project>{f9180ee7-9889-4e7e-8edb-052a2777fc37}</Project>
       <Name>IOManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MotionManager\MotionManager.csproj">
-      <Project>{75eca981-3d09-4c0a-95e8-e505923370d2}</Project>
-      <Name>MotionManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SecsGemManager\SecsGemManager.csproj">
-      <Project>{E1E42E08-F89B-4399-A6CE-20B3D009E030}</Project>
-      <Name>SecsGemManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sequence\Sequence.csproj">
       <Project>{46658b31-1e7b-4975-93b6-d8b75d00bcfa}</Project>
