@@ -68,7 +68,7 @@ namespace GreatechApp.Core.Modal
             DecodeBatchQuantity     = 0;
             DecodeBoxQuantity       = 0;
             DecodeAccuQuantity      = 0;
-            DecodeResult            = string.Empty;
+            OverallResult = string.Empty;
 
             ErrorMessage            = string.Empty;
             Remarks                 = string.Empty;

@@ -7,9 +7,9 @@
 
     public enum OUT : int
     {
-        DO0100_RedTowerLight,
-        DO0101_AmberTowerLight,
-        DO0102_GreenTowerLight,
-        DO0103_Buzzer,
+        DO0100_Buzzer,
+        DO0101_RedTowerLight,
+        DO0102_AmberTowerLight,
+        DO0103_GreenTowerLight,
     }
 }

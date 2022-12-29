@@ -46,8 +46,8 @@ namespace UIModule.StationViews
             #region Preset
             PresetCommand = new DelegateCommand<string>(OnPresetCommand);
 
-            Task1Output = new List<OUT>() { OUT.DO0100_RedTowerLight, OUT.DO0101_AmberTowerLight, OUT.DO0102_GreenTowerLight, OUT.DO0103_Buzzer };
-            Task2Output = new List<OUT>() { OUT.DO0100_RedTowerLight, OUT.DO0101_AmberTowerLight };
+            Task1Output = new List<OUT>() { OUT.DO0101_RedTowerLight, OUT.DO0102_AmberTowerLight, OUT.DO0103_GreenTowerLight, OUT.DO0100_Buzzer };
+            Task2Output = new List<OUT>() { OUT.DO0101_RedTowerLight, OUT.DO0102_AmberTowerLight };    
             #endregion
         }
         #endregion

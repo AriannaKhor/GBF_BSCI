@@ -102,10 +102,10 @@ namespace GreatechApp.CompactView
             }
 
             // Close IO (Vacuum / Air Pressure etc...)
-            IO.WriteBit((int)OUT.DO0100_RedTowerLight, false);
-            IO.WriteBit((int)OUT.DO0101_AmberTowerLight, false);
-            IO.WriteBit((int)OUT.DO0102_GreenTowerLight, false);
-            IO.WriteBit((int)OUT.DO0103_Buzzer, false);
+            IO.WriteBit((int)OUT.DO0101_RedTowerLight, false);
+            IO.WriteBit((int)OUT.DO0102_AmberTowerLight, false);
+            IO.WriteBit((int)OUT.DO0103_GreenTowerLight, false);
+            IO.WriteBit((int)OUT.DO0100_Buzzer, false);
 
             // Disable Motor
             for (int index = 0; index < SysConfig.MotCfgRef.Count; index++)
