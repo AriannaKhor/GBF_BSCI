@@ -146,6 +146,7 @@ namespace TCPIPManager
                         if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                         {
                             Global.CodeReaderResult = resultstatus.NG.ToString();
+                            Global.OverallResult = Global.CodeReaderResult;
                             m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
                             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
                         }
@@ -153,6 +154,7 @@ namespace TCPIPManager
                         else
                         {
                             Global.CodeReaderResult = resultstatus.OK.ToString();
+                            Global.OverallResult = Global.CodeReaderResult;
                             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
 
                             if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
@@ -168,6 +170,7 @@ namespace TCPIPManager
                                 else if (dialogResult == ButtonResult.No)
                                 {
                                     Global.CodeReaderResult = resultstatus.NG.ToString();
+                                    Global.OverallResult = Global.CodeReaderResult;
                                     m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
                                     m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
                                 }
@@ -187,6 +190,7 @@ namespace TCPIPManager
                     else
                     {
                         Global.CodeReaderResult = resultstatus.NG.ToString();
+                        Global.OverallResult = Global.CodeReaderResult;
                         m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
                         m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
                     }
@@ -195,6 +199,7 @@ namespace TCPIPManager
                 else
                 {
                     Global.CodeReaderResult = resultstatus.NG.ToString();
+                    Global.OverallResult = Global.CodeReaderResult;
                     m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BatchNotMatch" });
                     m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
                 }
@@ -203,6 +208,7 @@ namespace TCPIPManager
             else
             {
                 Global.CodeReaderResult = resultstatus.NG.ToString();
+                Global.OverallResult = Global.CodeReaderResult;
                 m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "MissingResult" });
                 m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             }

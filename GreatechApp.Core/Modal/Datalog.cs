@@ -45,7 +45,7 @@ namespace GreatechApp.Core.Modal
         public int DecodeBatchQuantity { get; set; }
         public int DecodeBoxQuantity { get; set; }
         public int DecodeAccuQuantity { get; set; }
-        public string DecodeResult { get; set; }
+        public string OverallResult { get; set; }
         public string ErrorMessage { get; set; }
         public string VisErrorMessage { get; set; }
         public string CodeReaderErrorMessage { get; set; }
@@ -71,8 +71,6 @@ namespace GreatechApp.Core.Modal
             DecodeResult            = string.Empty;
 
             ErrorMessage            = string.Empty;
-            VisErrorMessage         = string.Empty;
-            CodeReaderErrorMessage  = string.Empty;
             Remarks                 = string.Empty;
             ApprovedBy              = string.Empty;
         }
@@ -92,7 +90,7 @@ namespace GreatechApp.Core.Modal
                 Map(m => m.DecodeBatchQuantity).Name("Decoded Batch Quantity");
                 Map(m => m.DecodeBoxQuantity).Name("Decoded Box Quantity");
                 Map(m => m.DecodeAccuQuantity).Name("Accumulated Batch Quantity");
-                Map(m => m.DecodeResult).Name("Overall Result");
+                Map(m => m.OverallResult).Name("Overall Result");
                 Map(m => m.ErrorMessage).Name("Messages");
                 Map(m => m.Remarks).Name("Remarks");
                 Map(m => m.ApprovedBy).Name("Approved By");

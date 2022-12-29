@@ -137,6 +137,13 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_ErrMessage, value); }
         }
 
+        private string m_remarks;
+        public string remarks
+        {
+            get { return m_remarks; }
+            set { SetProperty(ref m_remarks, Global.Remarks = value); }
+        }
+
         private bool m_IsSkipRetest;
         public bool IsSkipRetest
         {
@@ -187,6 +194,7 @@ namespace DialogManager.ErrorMsg
                 {
                     btnYesEnable = true;
                     ErrMessage = "Valid Login";
+                    Global.CurrentApprovalLevel = currentUserLevel.ToString();
                 }
                 else
                 {

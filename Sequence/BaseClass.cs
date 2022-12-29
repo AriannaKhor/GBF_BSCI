@@ -269,14 +269,14 @@ namespace Sequence
                     m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
                     m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
                     m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
-                    m_resultsDatalog.DecodeResult = Global.CodeReaderResult;
+                    m_resultsDatalog.OverallResult = Global.OverallResult;
                     m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
                     m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
                     m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
                     m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
-                    m_resultsDatalog.ErrorMessage = null;
-                    m_resultsDatalog.Remarks = null;
-                    m_resultsDatalog.ApprovedBy = null;
+                    m_resultsDatalog.ErrorMessage = Global.ErrorMsg;
+                    m_resultsDatalog.Remarks = Global.Remarks;
+                    m_resultsDatalog.ApprovedBy = Global.CurrentApprovalLevel;
 
                     //create log directory V2
                     string date = DateTime.Now.ToString("dd-MM-yyyy");
@@ -284,7 +284,7 @@ namespace Sequence
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
 
-                    if (m_resultsDatalog.DecodeResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
+                    if (m_resultsDatalog.OverallResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
                     {
                         string filename = $"Batch {Global.CurrentBatchNum}.csv";
                         filename = filePath + filename;
@@ -294,7 +294,7 @@ namespace Sequence
 
                         if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
                         {
-                            if (m_resultsDatalog.DecodeResult != "PendingResult" && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
+                            if (m_resultsDatalog.OverallResult != "PendingResult" && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
                             {
                                 if (!File.Exists(filename.ToString()))
                                 {

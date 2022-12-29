@@ -220,6 +220,7 @@ namespace DialogManager.ErrorMsg
                 {
                     btnYesEnable = true;
                     ErrMessage = "Valid Login";
+                    Global.CurrentApprovalLevel = currentUserLevel.ToString();
                 }
                 else
                 {

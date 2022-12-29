@@ -90,10 +90,10 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.WaitVisionResult:
+                            Global.ErrorMsg = string.Empty;
                             if (m_SeqFlag.ProcVisCont)
                             {
                                 m_SeqFlag.ProcVisCont = false;
-                                Global.VisErrorCaused = "N/A";
                                 switch (m_ContType)
                                 {
                                     case "ReTriggerVis":
@@ -113,10 +113,10 @@ namespace Sequence.MachineSeq
                                 switch (m_FailType)
                                 {
                                     case "WrongOrientation":
-                                        Global.VisErrorCaused = RaiseError((int)ErrorCode.WrongOrientation);
+                                        Global.ErrorMsg = RaiseError((int)ErrorCode.WrongOrientation);
                                         break;
                                     case "ExceedUpperLimit":
-                                        Global.VisErrorCaused = RaiseError((int)ErrorCode.ExceedUpperLimit);
+                                        Global.ErrorMsg = RaiseError((int)ErrorCode.ExceedUpperLimit);
                                         break;
                                 }
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
@@ -140,19 +140,19 @@ namespace Sequence.MachineSeq
                                 switch (m_FailType)
                                 {
                                     case "MissingResult":
-                                        Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.MissingResult);
+                                        Global.ErrorMsg = RaiseError((int)ErrorCode.MissingResult);
                                         break;
 
                                     case "BatchNotMatch":
-                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.BatchNotMatch);
+                                        Global.ErrorMsg = RaiseVerificationError((int)ErrorCode.BatchNotMatch);
                                         break;
 
                                     case "BoxQtyNotMatch":
-                                        Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.BoxQtyNotMatch);
+                                        Global.ErrorMsg = RaiseError((int)ErrorCode.BoxQtyNotMatch);
                                         break;
 
                                     case "ExceedTotalBatchQty":
-                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
+                                        Global.ErrorMsg = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
                                         break;
                                 }
 
