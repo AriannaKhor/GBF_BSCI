@@ -147,8 +147,9 @@ namespace TCPIPManager
                         {
                             Global.CodeReaderResult = resultstatus.NG.ToString();
                             Global.OverallResult = Global.CodeReaderResult;
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
                             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
+                           
                         }
                         //OK result
                         else
@@ -171,8 +172,8 @@ namespace TCPIPManager
                                 {
                                     Global.CodeReaderResult = resultstatus.NG.ToString();
                                     Global.OverallResult = Global.CodeReaderResult;
-                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
                                     m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
                                 }
                             }
                             else
@@ -191,8 +192,8 @@ namespace TCPIPManager
                     {
                         Global.CodeReaderResult = resultstatus.NG.ToString();
                         Global.OverallResult = Global.CodeReaderResult;
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
                         m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
                     }
                 }
                 //Incorrect Batch No
@@ -200,8 +201,8 @@ namespace TCPIPManager
                 {
                     Global.CodeReaderResult = resultstatus.NG.ToString();
                     Global.OverallResult = Global.CodeReaderResult;
-                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BatchNotMatch" });
                     m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BatchNotMatch" });
                 }
             }
             //Missing Result
@@ -209,8 +210,8 @@ namespace TCPIPManager
             {
                 Global.CodeReaderResult = resultstatus.NG.ToString();
                 Global.OverallResult = Global.CodeReaderResult;
-                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "MissingResult" });
                 m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "MissingResult" });
             }
             temp = false;
             Global.Temp = false;
