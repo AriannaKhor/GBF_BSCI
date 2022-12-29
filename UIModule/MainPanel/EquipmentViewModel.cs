@@ -35,8 +35,8 @@ namespace UIModule.MainPanel
 
         #region Properties
         private string m_TabPageHeader;
-        public string TabPageHeader 
-        { 
+        public string TabPageHeader
+        {
             get { return m_TabPageHeader; }
             set { SetProperty(ref m_TabPageHeader, value); }
         }
@@ -88,9 +88,9 @@ namespace UIModule.MainPanel
         public float VisProductQuantity
         {
             get { return m_VisProductQuantity; }
-            set 
+            set
             {
-                
+
                 SetProperty(ref m_VisProductQuantity, value);
             }
         }
@@ -254,7 +254,7 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_IsAllowEquipment, value); }
         }
 
-    
+
         private bool m_IsEquipViewLoaded;
         public bool IsEquipViewLoaded
         {
@@ -422,57 +422,53 @@ namespace UIModule.MainPanel
             CodeReaderConnStatus = Global.CodeReaderConnStatus;
 
         }
-        //New Can Be Use
+
         private void OnCodeReaderEndResult()
         {
-            if (Global.Temp == false)
+            if (Global.CodeReaderEndLot)
             {
-                Global.Temp = true;
-                if (Global.CodeReaderEndLot)
+                Global.CodeReaderEndLot = false;
+                #region Code Reader
+                ViewCurrentContainerNumber = Global.CurrentContainerNum;
+                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
+                ViewAccumulateCurrentTotalBatchQuantity = 0;
+                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+                ViewCurrentBatchNumber = Global.CurrentBatchNum;
+                CodeReaderResult = resultstatus.PendingResult.ToString();
+                CodeReaderImage = null;
+                CdResultBG = System.Windows.Media.Brushes.Transparent;
+                #endregion
+            }
+            else if (Global.CodeReaderProceedNewBox)
+            {
+                Global.CodeReaderProceedNewBox = false;
+                #region Code Reader
+                ViewCurrentContainerNumber = Global.CurrentContainerNum;
+                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
+                ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
+                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+                ViewCurrentBatchNumber = Global.CurrentBatchNum;
+                CodeReaderResult = resultstatus.PendingResult.ToString();
+                CodeReaderImage = null;
+                CdResultBG = System.Windows.Media.Brushes.Transparent;
+                #endregion
+            }
+            else
+            {
+                ViewCurrentContainerNumber = Global.CurrentContainerNum;
+                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
+                ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
+                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+                ViewCurrentBatchNumber = Global.CurrentBatchNum;
+                CodeReaderResult = Global.CodeReaderResult;
+
+                if (Global.CodeReaderResult == "OK")
                 {
-                    Global.CodeReaderEndLot = false;
-                    #region Code Reader
-                    ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                    ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                    ViewAccumulateCurrentTotalBatchQuantity = 0;
-                    ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                    ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                    CodeReaderResult = resultstatus.PendingResult.ToString();
-                    CodeReaderImage = null;
-                    CdResultBG = System.Windows.Media.Brushes.Transparent;
-                    #endregion
-                }
-                else if (Global.CodeReaderProceedNewBox)
-                {
-                    Global.CodeReaderProceedNewBox = false;
-                    #region Code Reader
-                    ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                    ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                    ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
-                    ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                    ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                    CodeReaderResult = resultstatus.PendingResult.ToString();
-                    CodeReaderImage = null;
-                    CdResultBG = System.Windows.Media.Brushes.Transparent;
-                    #endregion
+                    CdResultBG = System.Windows.Media.Brushes.Green;
                 }
                 else
                 {
-                    ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                    ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                    ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
-                    ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                    ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                    CodeReaderResult = Global.CodeReaderResult;
-
-                    if (Global.CodeReaderResult == "OK")
-                    {
-                        CdResultBG = System.Windows.Media.Brushes.Green;
-                    }
-                    else
-                    {
-                        CdResultBG = System.Windows.Media.Brushes.Red;
-                    }
+                    CdResultBG = System.Windows.Media.Brushes.Red;
                 }
             }
         }
@@ -481,7 +477,7 @@ namespace UIModule.MainPanel
         {
             CodeReaderImage = img;
         }
-            
+
         #endregion
 
         private void OnNavigation(string page)
@@ -495,7 +491,7 @@ namespace UIModule.MainPanel
             base.OnValidateLogin(IsAuthenticated);
             // IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
             //IsAllowAccessEquipment = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin  && m_AuthService.CurrentUser.IsAuthenticated)
+            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
             {
                 IsAllowEquipment = Visibility.Visible;
 
@@ -520,14 +516,14 @@ namespace UIModule.MainPanel
                 SoftwareResultCollection.Add(new Datalog(log.MsgType, log.MsgText));
             });
         }
-        
+
 
         private void OnDatalogEntity(DatalogEntity log)
         {
-            if((log.MsgType == LogMsgType.TCP && !m_SystemConfig.General.IsLogTCPMsg) || (log.MsgType == LogMsgType.SerialPort && !m_SystemConfig.General.IsLogSerialMsg))
-			{
+            if ((log.MsgType == LogMsgType.TCP && !m_SystemConfig.General.IsLogTCPMsg) || (log.MsgType == LogMsgType.SerialPort && !m_SystemConfig.General.IsLogSerialMsg))
+            {
                 return;
-			}
+            }
 
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -564,14 +560,14 @@ namespace UIModule.MainPanel
                 {
                     Datalog dtLog = e.NewItems[0] as Datalog;
 
-                    if(dtLog == null)
+                    if (dtLog == null)
                     {
                         return;
                     }
                     WriteLog(dtLog);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.Source);
             }
@@ -581,7 +577,7 @@ namespace UIModule.MainPanel
         #region Method
 
         #region Vision
-     //New Can Be Use
+        //New Can Be Use
         public void OnVisionConnection()
         {
             VisionConnStatus = Global.VisionConnStatus;
@@ -613,7 +609,7 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Code Reader
-     
+
         #endregion
 
         #region Log
@@ -664,7 +660,7 @@ namespace UIModule.MainPanel
 
         private void WriteLog(Datalog log)
         {
-            lock(m_SyncLog)
+            lock (m_SyncLog)
             {
                 string executableName = System.IO.Path.GetDirectoryName(
                          System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
@@ -727,7 +723,7 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Enum 
-   
+
         #endregion
     }
 }
