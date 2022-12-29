@@ -30,6 +30,7 @@ using System.Threading;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
+using System.Collections.ObjectModel;
 
 namespace TCPIPManager
 {
@@ -41,9 +42,13 @@ namespace TCPIPManager
         private bool m_EnableCodeReader;
         private bool allowVisResultchg = false;
         public SystemConfig m_SystemConfig;
-        private FixedSizeObservableCollection<ResultsDatalog> m_SoftwareResultCollection;
+        public ProductQtyConfig productQtyConfig;
         private CvsInSight m_InsightV1 = new CvsInSight();
         private readonly IEventAggregator m_Events;
+        private float m_MaxQuantity;
+        public ObservableCollection<ProductQuantityParameter> ProductQuantityLimit;
+
+
         #endregion
 
         #region Constructor
@@ -57,6 +62,7 @@ namespace TCPIPManager
             m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(ConnectVision);
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
+            GetProductQuantityConfig();
         }
         #endregion
 
@@ -133,6 +139,15 @@ namespace TCPIPManager
             Global.VisionConnStatus = status;
             Global.VisConnection = visConnection;
             m_Events.GetEvent<VisionConnectionEvent>().Publish();
+        }
+
+        public void GetProductQuantityConfig()
+        {
+            ProductQtyConfig m_ProductQttSettingsysCfg = ProductQtyConfig.Open(@"..\Config Section\Product Quantity Setting\QtyLimit.Config");
+            for (int i = 0; i < m_ProductQttSettingsysCfg.Setting.Count; i++)
+            {
+                m_MaxQuantity = m_ProductQttSettingsysCfg.Setting[i].MaxQuantity;
+            }
         }
 
         public void TriggerVisCapture()
@@ -238,18 +253,23 @@ namespace TCPIPManager
                             if (Global.VisProductQuantity == 0.000 && Global.VisProductCrtOrientation == "0.000" && Global.VisProductCrtOrientation == "0.000")
                             {
                                 Global.VisInspectResult = resultstatus.NoBoxDetected.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "ReTriggerVis" });
+                            }
+                            else if (Global.VisProductQuantity > m_MaxQuantity)
+                            {
+                                Global.VisInspectResult = resultstatus.NG.ToString();
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisFail, FailType = "ExceedUpperLimit" });
                             }
                             else
                             {
                                 Global.VisInspectResult = resultstatus.OK.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCont });
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "TriggerCodeReader" });
                             }
                         }
                         else
                         {
                             Global.VisInspectResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "WrongOrientation" });
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisFail, FailType = "WrongOrientation" });
                         }
                     }
                     VisionLive();

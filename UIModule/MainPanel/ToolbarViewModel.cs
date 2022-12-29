@@ -253,8 +253,6 @@ namespace UIModule.MainPanel
         public DelegateCommand ReconnectAllTCP { get; set; }
         public DelegateCommand<string> ControlStateCheck { get; set; }
 
-        private static object m_SyncLog = new object();
-
         public event Action<string> EStopWindEvent;
 
         private readonly IDialogService m_DialogService;
@@ -506,6 +504,13 @@ namespace UIModule.MainPanel
             }
         }
 
+        private void Reset()
+        {
+            m_EventAggregator.GetEvent<CheckOperation>().Publish(true);
+            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
+            CloseDialog("");
+        }
+
         void RaiseLoginPopup()
         {
             m_DialogService.ShowDialog(DialogList.LoginView.ToString(),
@@ -591,18 +596,24 @@ namespace UIModule.MainPanel
             }
             else if (Command == "Stop")
             {
-                StopOperation();
+                CloseDialog("");
                 if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
                 {
                     ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
 
                     if (dialogResult == ButtonResult.Yes)
                     {
+                        Global.AccumulateCurrentBatchQuantity = Global.LotInitialTotalBatchQuantity = 0;
                         m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Init")} {GetStringTableValue("EndLot")} {GetStringTableValue("Sequence")} : {Global.LotInitialBatchNo}" });
+                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                        ResetCounter();
 
-
+                    }
+                    else if (dialogResult == ButtonResult.No)
+                    {
+                        Reset();
+                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
                     }
                 }
                 else
@@ -612,6 +623,27 @@ namespace UIModule.MainPanel
                 }
                 CloseDialog("");
             }
+        }
+
+        private void ResetCounter()
+        {
+            #region Code Reader
+            Global.CurrentContainerNum = String.Empty;
+            Global.CurrentBatchQuantity = 0;
+            Global.AccumulateCurrentBatchQuantity = 0;
+            Global.CurrentBoxQuantity = 0;
+            Global.CurrentBatchNum = String.Empty;
+            #endregion
+
+            #region Top Vision
+            Global.VisProductQuantity = 0f;
+            Global.VisProductCrtOrientation = String.Empty;
+            Global.VisProductWrgOrientation = String.Empty;
+            Global.TopVisionEndLot = true;
+            Global.CodeReaderEndLot = true;
+            m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
+            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+            #endregion
         }
 
         private void CreateTCPCollection()
@@ -676,16 +708,8 @@ namespace UIModule.MainPanel
 
         private void StartOperation()
         {
-            Global.SeqStop = false;
             IsAllowStart = false;
             m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
-        }
-
-        private void StopOperation()
-        {
-            Global.SeqStop = true;
-            IsAllowStop = false;
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Stopped);
         }
         #endregion
     }

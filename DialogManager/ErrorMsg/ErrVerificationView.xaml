@@ -8,7 +8,7 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600" Background="Transparent">
+             d:DesignHeight="500" d:DesignWidth="600" Background="Transparent">
 
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -27,7 +27,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" VerticalAlignment="Top">
@@ -51,14 +50,14 @@
                     </Grid.ColumnDefinitions>
 
                     <Image Source="/GreatechApp.Core;component/Icon/error.png" Width="50" Height="50"/>
-                    <ScrollViewer Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
@@ -71,17 +70,18 @@
                             <TextBlock Grid.Row="0" Text="{Binding ErrorMsg}" TextWrapping="WrapWithOverflow" FontSize="22" Margin="6,10" HorizontalAlignment="Left" Grid.ColumnSpan="2" FontWeight="Bold"/>
                             <Label Grid.Row="1" Content="{Binding Path=Sequence, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0}:" FontSize="16" Margin="3" VerticalAlignment="Center"/>
                             <Label Grid.Row="2" Content="{Binding Path=Recovery, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0}:" FontSize="16" Margin="3" VerticalAlignment="Top"/>
+                            <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding Station}" TextWrapping="WrapWithOverflow" FontSize="16" Margin="100,0,0,0" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding Action}" TextWrapping="WrapWithOverflow" FontSize="16" Margin="100,7,0,0"  VerticalAlignment="Top"/>
                             <Label Grid.Row="3" Content="User ID: " FontSize="16" Margin="3" VerticalAlignment="Top"/>
-                            <TextBox Text="{Binding UserID}" Grid.Row="3" Grid.Column="2" Width="100" Margin="0,0,380,0" Height="20"></TextBox>
-                            <Label Grid.Row="3" Grid.Column="1"  Margin="180,0,0,0" Content="Password: " FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Left" Width="236"/>
-                            <PasswordBox  Grid.Row="3" Grid.Column="2"  Margin="150,0,0,0" VerticalContentAlignment="Center" Width="100" Height="20" PasswordChanged="PasswordBox_PasswordChanged"/>
-                            <TextBox x:Name="UnMaskPass" Grid.Column="0" Text="{Binding Password, Mode=TwoWay, ElementName=MaskPass}" FontSize="15" FontWeight="SemiBold" MaxWidth="160" VerticalContentAlignment="Center" Visibility="Collapsed"/>
-                            <Button Grid.Row="3" Command="{Binding VerificationCommand}" Grid.Column="2" Margin="400,0,0,0"  CommandParameter="Verify" Width="70" Height="30" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15" />
-                            <Label Grid.Row="7" Content="Remarks: " FontSize="16" Margin="3" VerticalAlignment="Top" />
-                            <TextBox Text="{Binding remarks}" Grid.Row="7" Grid.Column="2" Margin="0,0,0,0" Width="480" Height="20"></TextBox>
-                            <TextBlock Grid.Row="8" Text="{Binding ErrMessage}" TextWrapping="Wrap" FontSize="15"  Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Station}" TextWrapping="WrapWithOverflow" FontSize="16" Margin="6" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Action}" TextWrapping="WrapWithOverflow" FontSize="16" Margin="6" VerticalAlignment="Top"/>
+                            <TextBox Text="{Binding UserID}" Grid.Row="3"  Width="80" Margin="137,8,333,9" Height="20"></TextBox>
+                            <Label Grid.Row="3" Content="Password: " FontSize="16" Margin="240,0,0,0" VerticalAlignment="Top"/>
+                            <PasswordBox x:Name="MaskPass" Grid.Row="3"  Margin="200,0,0,0" VerticalContentAlignment="Center" Width="80" Height="20" PasswordChanged="MaskPass_PasswordChanged" Password=""/>
+                            <TextBox x:Name="UnMaskPass" Grid.Column="2"  Text="{Binding Password, Mode=TwoWay, ElementName=MaskPass}" FontSize="15" FontWeight="SemiBold" MaxWidth="160" VerticalContentAlignment="Center" Visibility="Collapsed"/>
+                            <Button Grid.Row="3" Command="{Binding VerificationCommand}" Margin="480,0,0,0" CommandParameter="{Binding ElementName=MaskPass}" Grid.Column="2" Content="Verify" Width="70" Height="30" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15" />
+                            <Label Grid.Row="5" Content="Remarks: " FontSize="16" Margin="3" VerticalAlignment="Top" />
+                            <TextBox Text="{Binding remarks}"  IsEnabled="{Binding btnYesEnable}"  Grid.Row="5" Grid.Column="2" Margin="22,0,0,0" Width="300" Height="20"></TextBox>
+                            <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding ErrMessage}" TextWrapping="Wrap" FontSize="15"  Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
                         </Grid>
                     </ScrollViewer>
 

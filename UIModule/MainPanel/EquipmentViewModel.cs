@@ -438,50 +438,54 @@ namespace UIModule.MainPanel
         //New Can Be Use
         private void OnCodeReaderEndResult()
         {
-            if (Global.CodeReaderEndLot)
+            if (Global.Temp == false)
             {
-                Global.CodeReaderEndLot = false;
-                #region Code Reader
-                ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                ViewAccumulateCurrentTotalBatchQuantity = 0;
-                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                CodeReaderResult = resultstatus.PendingResult.ToString();
-                CodeReaderImage = null;
-                CdResultBG = System.Windows.Media.Brushes.Transparent;
-                #endregion
-            }
-            else if (Global.CodeReaderProceedNewBox)
-            {
-                Global.CodeReaderProceedNewBox = false;
-                #region Code Reader
-                ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                ViewAccumulateCurrentTotalBatchQuantity = 0;
-                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                CodeReaderResult = resultstatus.PendingResult.ToString();
-                CodeReaderImage = null;
-                CdResultBG = System.Windows.Media.Brushes.Transparent;
-                #endregion
-            }
-            else
-            {
-                ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
-                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                CodeReaderResult = Global.CodeReaderResult;
-
-                if (Global.CodeReaderResult == "OK")
+                Global.Temp = true;
+                if (Global.CodeReaderEndLot)
                 {
-                    CdResultBG = System.Windows.Media.Brushes.Green;
+                    Global.CodeReaderEndLot = false;
+                    #region Code Reader
+                    ViewCurrentContainerNumber = Global.CurrentContainerNum;
+                    ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
+                    ViewAccumulateCurrentTotalBatchQuantity = 0;
+                    ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+                    ViewCurrentBatchNumber = Global.CurrentBatchNum;
+                    CodeReaderResult = resultstatus.PendingResult.ToString();
+                    CodeReaderImage = null;
+                    CdResultBG = System.Windows.Media.Brushes.Transparent;
+                    #endregion
+                }
+                else if (Global.CodeReaderProceedNewBox)
+                {
+                    Global.CodeReaderProceedNewBox = false;
+                    #region Code Reader
+                    ViewCurrentContainerNumber = Global.CurrentContainerNum;
+                    ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
+                    ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
+                    ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+                    ViewCurrentBatchNumber = Global.CurrentBatchNum;
+                    CodeReaderResult = resultstatus.PendingResult.ToString();
+                    CodeReaderImage = null;
+                    CdResultBG = System.Windows.Media.Brushes.Transparent;
+                    #endregion
                 }
                 else
                 {
-                    CdResultBG = System.Windows.Media.Brushes.Red;
+                    ViewCurrentContainerNumber = Global.CurrentContainerNum;
+                    ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
+                    ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
+                    ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+                    ViewCurrentBatchNumber = Global.CurrentBatchNum;
+                    CodeReaderResult = Global.CodeReaderResult;
+
+                    if (Global.CodeReaderResult == "OK")
+                    {
+                        CdResultBG = System.Windows.Media.Brushes.Green;
+                    }
+                    else
+                    {
+                        CdResultBG = System.Windows.Media.Brushes.Red;
+                    }
                 }
             }
         }

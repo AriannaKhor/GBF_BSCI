@@ -7,7 +7,8 @@ using System.Globalization;
 namespace GreatechApp.Core.Variable
 {
     public class Global
-    {        
+    {
+        public static bool Temp;
         public static string MachName;
         public static int MachNo;
         public static string SoftwareVersion;
@@ -37,10 +38,8 @@ namespace GreatechApp.Core.Variable
         public static int TotalOutput;
 
         // Lot Info
-        public static string LotInitialBatchNo;
+        public static string LotInitialBatchNo = string.Empty;
         public static int LotInitialTotalBatchQuantity;
-        public static string LotOperatorID;
-        public static string LotRecipe;
 
         //InsightVision
         public static string VisionConnStatus;

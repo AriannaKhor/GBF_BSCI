@@ -32,7 +32,7 @@ using System.Xml;
 
 namespace TCPIPManager
 {
-    public class CodeReader : ICodeReader
+    public class CodeReader :ICodeReader
     {
         #region Variable
         private bool canContAnalyse = false;
@@ -49,6 +49,11 @@ namespace TCPIPManager
         private CultureResources m_CultureResources;
         public event Action<IDialogResult> RequestClose;
         private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
+
+
+
+
+        private bool temp = false;
         #endregion
 
         #region Constructor
@@ -61,6 +66,7 @@ namespace TCPIPManager
             m_Events.GetEvent<RequestCodeReaderConnectionEvent>().Subscribe(ConnectCodeReader);
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
+
         }
         #endregion
 
@@ -80,7 +86,6 @@ namespace TCPIPManager
                 m_CodeReaderconnector = myConn;
 
                 m_CodeReader = new DataManSystem(m_CodeReaderconnector);
-
                 m_CodeReader.DefaultTimeout = 5000;
 
                 // Subscribe to events that are signalled when the system is connected / disconnected.
@@ -92,6 +97,7 @@ namespace TCPIPManager
                 m_CodeReaderResults = new ResultCollector(m_CodeReader, requested_result_types);
                 m_CodeReaderResults.ComplexResultCompleted += Results_ComplexResultCompleted;
                 m_CodeReader.SetKeepAliveOptions(false, 3000, 1000);
+                m_CodeReader.Disconnect();
                 m_CodeReader.Connect(); // Uncomment it when connected with the code reader
 
                 try
@@ -107,6 +113,7 @@ namespace TCPIPManager
                 MachineBase.ShowMessage(ex);
             }
         }
+
         public void AnalyseResult(string returnedresult)
         {
             string[] splitedresult = returnedresult.Split(new string[] { "\r\n" }, StringSplitOptions.None);
@@ -139,24 +146,40 @@ namespace TCPIPManager
                         if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
                         {
                             Global.CodeReaderResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "ExceedTotalBatchQty" });
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
+                            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
                         }
                         //OK result
-                        else if (Global.CodeReaderResult == "OK")
+                        else
                         {
                             Global.CodeReaderResult = resultstatus.OK.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcCont });
+                            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
 
-                            if (Global.VisOverallResult == "OK" && Global.CodeReaderResult == "OK")
+                            if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
                             {
-                                Global.VisOverallResult = resultstatus.OK.ToString();
+                                ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
+
+                                if (dialogResult == ButtonResult.Yes)
+                                {
+                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
+                                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum});
+                                    m_Events.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                                }
+                                else if (dialogResult == ButtonResult.No)
+                                {
+                                    Global.CodeReaderResult = resultstatus.NG.ToString();
+                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
+                                    m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                                }
+                            }
+                            else
+                            {
                                 ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK);
                                 if (dialogResult == ButtonResult.OK)
                                 {
-
+                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
+                                    CloseDialog("");
                                 }
-                                CloseDialog("");
-                                ResetCounter();
                             }
                         }
                     }
@@ -164,33 +187,33 @@ namespace TCPIPManager
                     else
                     {
                         Global.CodeReaderResult = resultstatus.NG.ToString();
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BoxQtyNotMatch" });
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
+                        m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
                     }
                 }
                 //Incorrect Batch No
                 else
                 {
                     Global.CodeReaderResult = resultstatus.NG.ToString();
-                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "BatchNotMatch" });
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BatchNotMatch" });
+                    m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
                 }
             }
             //Missing Result
             else
             {
                 Global.CodeReaderResult = resultstatus.NG.ToString();
-                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcFail, FailType = "MissingResult" });
+                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "MissingResult" });
+                m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             }
-
-            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-         
+            temp = false;
+            Global.Temp = false;
         }
         public void TriggerCodeReader()
         {
             try
             {
                 m_CodeReader.SendCommand("TRIGGER ON");
-                //Thread.Sleep(2000);
-                //m_CodeReader.SendCommand("TRIGGER OFF");
             }
             catch (Exception ex)
             {
@@ -241,20 +264,18 @@ namespace TCPIPManager
             Global.TopVisionProceedNewBox = true;
 
             #region Code Reader
-            Global.CurrentContainerNum = String.Empty;
+            Global.CurrentContainerNum = string.Empty;
             Global.CurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
-            Global.CurrentBatchNum = String.Empty;
+            Global.CurrentBatchNum = string.Empty;
             #endregion
 
             #region Top Vision
             Global.VisProductQuantity = 0f;
-            Global.VisProductCrtOrientation = String.Empty;
-            Global.VisProductWrgOrientation = String.Empty;
+            Global.VisProductCrtOrientation = string.Empty;
+            Global.VisProductWrgOrientation = string.Empty;
             #endregion
-
             m_Events.GetEvent<TopVisionResultEvent>().Publish();
-            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
         }
 
         public void CloseDialog(string parameter)
@@ -363,49 +384,6 @@ namespace TCPIPManager
 
             return destImage;
         }
-
-        private static BitmapImage Bitmap2BitmapImage(Bitmap bitmap)
-        {
-            IntPtr hBitmap = bitmap.GetHbitmap();
-            BitmapImage retval = null;
-
-            try
-            {
-                retval = (BitmapImage)Imaging.CreateBitmapSourceFromHBitmap(
-                         hBitmap,
-                         IntPtr.Zero,
-                         Int32Rect.Empty,
-                         BitmapSizeOptions.FromEmptyOptions());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            return retval;
-        }
-
-        public static void ShowLiveView(DataManSystem m_CodeReader, IEventAggregator m_Events)
-        {
-            //m_CodeReader.SendCommand("SET LIVEIMG.MODE 2");
-
-            BitmapImage liveimage;
-            Image tempImage = m_CodeReader.GetLiveImage(Cognex.DataMan.SDK.ImageFormat.bitmap, ImageSize.Quarter, ImageQuality.Medium);
-
-
-            Bitmap dImg = new Bitmap(tempImage);
-            MemoryStream ms = new MemoryStream();
-            dImg.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            BitmapImage bImg = new BitmapImage();
-            bImg.BeginInit();
-            bImg.StreamSource = new MemoryStream(ms.ToArray());
-            bImg.EndInit();
-
-            liveimage = bImg;
-
-            m_Events.GetEvent<CodeReaderImage>().Publish(liveimage);
-        }
-
         #endregion
 
         #region Events
@@ -413,14 +391,20 @@ namespace TCPIPManager
         {
             m_Events.GetEvent<OnCodeReaderConnectedEvent>().Publish();
         }
+
         private void OnSystemDisconnected(object sender, System.EventArgs args)
         {
             m_Events.GetEvent<OnCodeReaderDisconnectedEvent>().Publish();
         }
+
         private void Results_ComplexResultCompleted(object sender, ComplexResult complexResult)
         {
-            string returnedresult = ShowResult(complexResult);
-            AnalyseResult(returnedresult);
+            if (temp == false)
+            {
+                temp = true;
+                string returnedresult = ShowResult(complexResult);
+                AnalyseResult(returnedresult);
+            }
         }
         #endregion
     }

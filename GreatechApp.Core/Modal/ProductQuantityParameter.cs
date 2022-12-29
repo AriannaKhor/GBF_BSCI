@@ -18,22 +18,22 @@ namespace GreatechApp.Core.Modal
             set { SetProperty(ref m_Description, value); }
         }
 
-        private string m_Min;
-        public string Min
+        private float m_Min;
+        public float Min
         {
             get { return m_Min; }
             set { SetProperty(ref m_Min, value); }
         }
 
-        private string m_Max;
-        public string Max
+        private float m_Max;
+        public float Max
         {
             get { return m_Max; }
             set { SetProperty(ref m_Max, value); }
         }
         public int PrevId { get; set; }
         public string PrevDescription { get; set; }
-        public string PrevMin { get; set; }
-        public string PrevMax { get; set; }
+        public float PrevMin { get; set; }
+        public float PrevMax { get; set; }
     }
 }

@@ -25,9 +25,7 @@ namespace Sequence.MachineSeq
         private SN m_PrevSeqNum;
         private SN[] m_SeqRsm = new SN[Total_RSM];
         private string m_FailType;
-       
 
-        // private int m_InsightVisionLoopCount = 0;
         #endregion
 
         #region Enum
@@ -35,45 +33,10 @@ namespace Sequence.MachineSeq
         {
             NONE = -2,
             EOS = -1,
-            BeginVision,
-
+            BeginTopVision,
 
             // Runnning Routine
             TriggerVis,
-            DelayTrigger,
-            TriggerCodeReader,
-            WaitVisionResult,
-            RetryGetVisionResult,
-
-            // Intermediate Recovery
-            IM_MoveMotorXHome,
-            IM_WaitMtrXHome,
-
-            //Initialization Routine
-            IBegin,
-            IMoveLifterRest,
-            IWaitLifterRest,
-            IMoveMotorXHome,
-            IWaitMotorXHome,
-            IMoveMotorYHome,
-            IWaitMotorYHome,
-            ISuccess,
-            IEnd,
-
-            //Error Routine
-            ErrorRoutine,
-            WaitResumeError,
-
-            // Stop Routine
-            StopRoutine,
-            WaitResumeStop,
-
-
-            ForceEOS,
-            BeginTopVision,
-            TopVisionRepeat,
-            EndLot,
-            UpdateLog,
         }
 
         #endregion
@@ -101,20 +64,12 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.TriggerVis:
-                            m_TmrDelay.Time_Out = 0.01f;
-                            m_SeqNum = SN.DelayTrigger;
+                            InsightVision.TriggerVisCapture();
+                            m_SeqNum = SN.EOS;
                             break;
-
-                        case SN.DelayTrigger:
-                                InsightVision.TriggerVisCapture();
-                                m_SeqNum = SN.EOS;
-                            
-                            break;
-                        #endregion
+                            #endregion
                     }
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -148,24 +103,8 @@ namespace Sequence.MachineSeq
                         case MachineOperationType.ProcStart:
                             m_SeqNum = SN.BeginTopVision;
                             break;
-
-                        case MachineOperationType.ProcCont:
-                            m_SeqFlag.ProcCont = true;
-                            break;
-
-                        case MachineOperationType.ProcFail:
-                            m_SeqFlag.ProcFail = true;
-                            m_FailType = sequence.FailType;
-                            break;
-
-                        case MachineOperationType.EndLotComp:
-                            m_SeqNum = SN.EndLot;
-                            break;
                     }
                 }
-
-
-
                 base.SequenceOperation(sequence);
             }
         }

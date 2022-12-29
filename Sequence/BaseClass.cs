@@ -187,11 +187,14 @@ namespace Sequence
             internal bool InitSuccess;
             internal bool InitFail;
             internal bool ProcStart;
-            internal bool ProcFail;
+            internal bool ProcCodeReaderFail;
+            internal bool ProcVisFail;
             internal bool ProcSkip;
             internal bool ProcAbort;
             internal bool ProcReady;
             internal bool ProcCont;
+            internal bool ProcVisCont;
+            internal bool ProcCodeReaderCont;
             internal bool ProcBusy;
             internal bool ProcComp;
             internal bool ItemGiven;
@@ -224,36 +227,34 @@ namespace Sequence
             lock (m_SyncLog)
             {
                 {
-                    if (m_resultsDatalog.UserId == string.Empty)
-                    {
-                        m_resultsDatalog.UserId = Global.UserId;
-                        m_resultsDatalog.UserLvl = Global.UserLvl;
-                        DateTime currentTime = DateTime.Now;
-                        DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                        dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                        m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                        m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                        m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                        m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
-                        m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
-                        m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
-                        m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
-                        m_resultsDatalog.DecodeResult = Global.CodeReaderResult;
-                        m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
-                        m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
-                        m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
-                        m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
-                        m_resultsDatalog.ErrorMessage = null;
-                        m_resultsDatalog.Remarks = null;
-                        m_resultsDatalog.ApprovedBy = null;
-                    }
+                    m_resultsDatalog.UserId = Global.UserId;
+                    m_resultsDatalog.UserLvl = Global.UserLvl;
+                    DateTime currentTime = DateTime.Now;
+                    DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                    dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                    m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                    m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                    m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+                    m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
+                    m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
+                    m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
+                    m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
+                    m_resultsDatalog.DecodeResult = Global.CodeReaderResult;
+                    m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
+                    m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
+                    m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
+                    m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
+                    m_resultsDatalog.ErrorMessage = null;
+                    m_resultsDatalog.Remarks = null;
+                    m_resultsDatalog.ApprovedBy = null;
+
                     //create log directory V2
                     string date = DateTime.Now.ToString("dd-MM-yyyy");
                     string filePath = $"{SysCfgs.FolderPath.SoftwareResultLog}Log[{date}]\\";
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
-                    
-                    if(m_resultsDatalog.DecodeResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
+
+                    if (m_resultsDatalog.DecodeResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
                     {
                         string filename = $"Batch {Global.CurrentBatchNum}.csv";
                         filename = filePath + filename;
@@ -261,9 +262,9 @@ namespace Sequence
                         var records = new List<ResultsDatalog>();
                         records.Add(m_resultsDatalog);
 
-                        if(tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
+                        if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
                         {
-                            if (m_resultsDatalog.DecodeResult != "PendingResult" && Global.CurrentBatchNum != string.Empty)
+                            if (m_resultsDatalog.DecodeResult != "PendingResult" && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
                             {
                                 if (!File.Exists(filename.ToString()))
                                 {
@@ -537,15 +538,13 @@ namespace Sequence
                     m_SeqFlag.ProcReady = true;
                     break;
 
-                case MachineOperationType.ProcCont:
-                    m_SeqFlag.ProcCont = true;
+                case MachineOperationType.ProcCodeReaderCont:
+                    m_SeqFlag.ProcCodeReaderCont = true;
                     break;
 
-                case MachineOperationType.ProcUpdate:
-                    m_SeqFlag.ProcUpdate = true;
+                case MachineOperationType.ProcVisCont:
+                    m_SeqFlag.ProcVisCont = true;
                     break;
-
-             
 
                 case MachineOperationType.ProcBusy:
                     m_SeqFlag.ProcBusy = true;
@@ -944,7 +943,7 @@ namespace Sequence
         protected virtual void WriteBit(object bit, bool oState, bool isUsingLocalEnum = false)
         {
 #if !SIMULATION
-            if(isUsingLocalEnum)
+            if (isUsingLocalEnum)
             {
                 IO.WriteBit((int)m_IOTbl[bit], oState);
             }
@@ -1013,7 +1012,7 @@ namespace Sequence
         {
             if (m_TestEventArg.RunMode == TestEventArg.Run_Mode.None)
             {
-               return Error.RaiseVerificationError(ErrorCode, SeqName);
+                return Error.RaiseVerificationError(ErrorCode, SeqName);
             }
             else
             {

@@ -4,6 +4,7 @@ using GreatechApp.Core.Modal;
 using GreatechApp.Core.Variable;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -25,17 +26,17 @@ namespace Sequence.MachineSeq
             ContainerNumberExist,//4
             BoxQtyNotMatch,//5
             ExceedTotalBatchQty,//6
-            
+            ExceedUpperLimit, //7
+
 
         }
         #endregion
 
         #region Variable
         private SN m_SeqNum;
-        private SN m_PrevSeqNum;
         private SN[] m_SeqRsm = new SN[Total_RSM];
-        private int m_CodeReaderLoopCount = 0;
         private string m_FailType;
+        private string m_ContType;
         #endregion
 
         #region Enum
@@ -51,36 +52,10 @@ namespace Sequence.MachineSeq
             WaitVisionResult,
             RetryVisionResult,
             WaitCodeReaderResult,
-            RetryGetCodeReaderResult,
-
-            // Intermediate Recovery
-            IM_MoveMotorXHome,
-            IM_WaitMtrXHome,
-
-            //Initialization Routine
-            IBegin,
-            IMoveLifterRest,
-            IWaitLifterRest,
-            IMoveMotorXHome,
-            IWaitMotorXHome,
-            IMoveMotorYHome,
-            IWaitMotorYHome,
-            ISuccess,
-            IEnd,
-
+            EndLot,
             //Error Routine
             ErrorRoutine,
             WaitResumeError,
-
-            // Stop Routine
-            StopRoutine,
-            WaitResumeStop,
-
-
-            ForceEOS,
-            UpdateLog,
-            EndLot,
-            TriggerDevices,
         }
         #endregion
 
@@ -102,30 +77,46 @@ namespace Sequence.MachineSeq
                     {
                         #region Running Routine
                         case SN.Begin:
+                            m_TmrDelay.Time_Out = 0.1f;
                             m_SeqNum = SN.TriggerVis;
                             break;
 
                         case SN.TriggerVis:
-                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcStart });
-                            m_SeqNum = SN.WaitVisionResult;
-                         break;
+                            if (m_TmrDelay.TimeOut())
+                            {
+                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcStart });
+                                m_SeqNum = SN.WaitVisionResult;
+                            }
+                            break;
 
                         case SN.WaitVisionResult:
-                            m_resultsDatalog.ClearAll();
-                            if (m_SeqFlag.ProcCont)
+                            if (m_SeqFlag.ProcVisCont)
                             {
+                                m_SeqFlag.ProcVisCont = false;
                                 Global.VisErrorCaused = "N/A";
-                                m_SeqFlag.ProcCont = false;
-                                m_SeqNum = SN.TriggerCodeReader;
+                                switch (m_ContType)
+                                {
+                                    case "ReTriggerVis":
+                                        m_SeqNum = SN.TriggerVis;
+                                        break;
+
+                                    case "TriggerCodeReader":
+                                        m_TmrDelay.Time_Out = 0.1f;
+                                        m_SeqNum = SN.TriggerCodeReader;
+                                        break;
+                                }
                             }
-                            else if (m_SeqFlag.ProcFail)
+                            else if (m_SeqFlag.ProcVisFail)
                             {
-                                m_SeqFlag.ProcFail = false;
+                                m_SeqFlag.ProcVisFail = false;
 
                                 switch (m_FailType)
                                 {
                                     case "WrongOrientation":
                                         Global.VisErrorCaused = RaiseError((int)ErrorCode.WrongOrientation);
+                                        break;
+                                    case "ExceedUpperLimit":
+                                        Global.VisErrorCaused = RaiseError((int)ErrorCode.ExceedUpperLimit);
                                         break;
                                 }
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
@@ -134,19 +125,69 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.TriggerCodeReader:
-                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcStart });
+                            if (m_TmrDelay.TimeOut())
+                            {
+                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcStart });
+                                m_SeqNum = SN.WaitCodeReaderResult;
+                            }
+                            break;
+
+                        case SN.WaitCodeReaderResult:
+                            if (m_SeqFlag.ProcCodeReaderFail)
+                            {
+                                m_SeqFlag.ProcCodeReaderFail = false;
+
+                                switch (m_FailType)
+                                {
+                                    case "MissingResult":
+                                        Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.MissingResult);
+                                        break;
+
+                                    case "BatchNotMatch":
+                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.BatchNotMatch);
+                                        break;
+
+                                    case "BoxQtyNotMatch":
+                                        Global.CodeReaderErrorCaused = RaiseError((int)ErrorCode.BoxQtyNotMatch);
+                                        break;
+
+                                    case "ExceedTotalBatchQty":
+                                        Global.CodeReaderErrorCaused = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
+                                        break;
+                                }
+
+                                m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
+                                m_SeqNum = SN.ErrorRoutine;
+                            }
+                            else if (m_SeqFlag.ProcCodeReaderCont)
+                            {
+                                m_SeqFlag.ProcCodeReaderCont = false;
+                                m_SeqNum = SN.Begin;
+                            }
+                            //else if (m_SeqFlag.EndLotComp)
+                            //{
+                            //    m_SeqNum = SN.EndLot;
+                            //}
+                            DateTime currentTime = DateTime.Now;
+                            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                            dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+                            WriteSoftwareResultLog(m_resultsDatalog);
+                            m_resultsDatalog.ClearAll();
                             break;
                         #endregion
 
+                        #region End Lot
                         case SN.EndLot:
                             if (m_SeqFlag.EndLotComp)
                             {
                                 m_SeqFlag.EndLotComp = false;
-                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.EndLotComp });
-                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.EndLotComp });
                                 m_SeqNum = SN.EOS;
                             }
                             break;
+                        #endregion
 
                         #region Error Routine
                         case SN.ErrorRoutine:
@@ -158,10 +199,10 @@ namespace Sequence.MachineSeq
                             {
                                 m_SeqNum = m_SeqRsm[(int)RSM.Err];
                                 m_SeqRsm[(int)RSM.Err] = SN.NONE;
-                                m_TmrDelay.Time_Out = 0.01f;
+                                m_TmrDelay.Time_Out = 0.1f;
                             }
                             break;
-                        #endregion
+                            #endregion
                     }
                 }
             }
@@ -195,33 +236,45 @@ namespace Sequence.MachineSeq
                         case MachineOperationType.EndLotComp:
                             m_SeqFlag.EndLotComp = true;
                             break;
-                        case MachineOperationType.ProcCont:
-                            m_SeqFlag.ProcCont = true;
+                        case MachineOperationType.ProcVisCont:
+                            m_SeqFlag.ProcVisCont = true;
+                            m_ContType = sequence.ContType;
                             break;
-
-                        case MachineOperationType.ProcFail:
-                            m_SeqFlag.ProcFail = true;
+                        case MachineOperationType.ProcCodeReaderCont:
+                            m_SeqFlag.ProcCodeReaderCont = true;
+                            break;
+                        case MachineOperationType.ProcVisFail:
+                            m_SeqFlag.ProcVisFail = true;
+                            m_FailType = sequence.FailType;
+                            break;
+                        case MachineOperationType.ProcCodeReaderFail:
+                            m_SeqFlag.ProcCodeReaderFail = true;
+                            m_FailType = sequence.FailType;
+                            break;
+                        case MachineOperationType.ProcContErrRtn:
+                            m_SeqNum = SN.ErrorRoutine;
                             break;
                     }
                 }
-
                 base.SequenceOperation(sequence);
             }
         }
 
         public override void StartProduction()
         {
-            if (!checkOp)
-            {
-                m_SeqNum = SN.Begin;
-            }
-             
+            //if (!checkOp)
+            //{
+            //    m_SeqNum = SN.Begin;
+            //}
+            m_SeqNum = SN.Begin;
+
         }
 
         public override void OperationChecking(bool checkopr)
         {
             if (checkopr)
             {
+                //checkopr = false;
                 checkOp = true;
             }
         }
