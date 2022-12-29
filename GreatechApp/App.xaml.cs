@@ -158,7 +158,6 @@ namespace GreatechApp
 
 			// IO Interlock Registration
 			containerRegistry.Register<IIOInterlock, BaseIOIntL>("BaseIO");
-			containerRegistry.Register<IIOInterlock, SampleSeqIOIntL>("SampleSeqIO");
 		}
 
 		protected override IModuleCatalog CreateModuleCatalog()

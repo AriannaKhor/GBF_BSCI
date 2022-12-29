@@ -85,7 +85,6 @@
   <ItemGroup>
     <Compile Include="IO\BaseIOIntL.cs" />
     <Compile Include="IO\IIOInterlock.cs" />
-    <Compile Include="IO\SampleSeqIOIntL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
