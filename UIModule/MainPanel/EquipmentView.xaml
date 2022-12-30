@@ -59,16 +59,16 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <WrapPanel >
-                            <Label Content="{Binding Path=TotalQuantity, Source={StaticResource StringTableODP}}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground="Black"/>
-                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding ProductQuantityFG}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Label Content="{Binding Path=TotalQuantity, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground="Black"/>
+                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding ProductQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                         <WrapPanel Grid.Column="1">
-                            <Label Content="{Binding Path=CorrectOrientation, Source={StaticResource StringTableODP}}"  FontSize="18" FontWeight="Bold" VerticalAlignment="Center"  Margin="10" Foreground="Black"/>
-                            <Label Content="{Binding VisProductCrtOrientation}" Foreground="{Binding CorrectOrientationFG}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Label Content="{Binding Path=CorrectOrientation, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center"  Margin="10" Foreground="Black"/>
+                            <Label Content="{Binding VisProductCrtOrientation}" Foreground="{Binding CorrectOrientationFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                         <WrapPanel Grid.Column="2">
-                            <Label Content="{Binding Path=WrongOrientation, Source={StaticResource StringTableODP}}"  FontSize="18" FontWeight="Bold" VerticalAlignment="Center"  Margin="10" Foreground="Black"/>
-                            <Label Content= "{Binding VisProductWrgOrientation}" Foreground="{Binding WrgOrientationFG}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Label Content="{Binding Path=WrongOrientation, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center"  Margin="10" Foreground="Black"/>
+                            <Label Content= "{Binding VisProductWrgOrientation}" Foreground="{Binding WrgOrientationFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                     </Grid>
                 </Grid>
@@ -88,10 +88,10 @@
                     <WrapPanel Grid.Row="0">
                         <Label Content="{Binding Path=Status, Source={StaticResource StringTableODP}}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" Margin="10" Foreground="Black"/>
                         <Label Content="{Binding CodeReaderConnStatus}" Foreground="{Binding CdStatusFG}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <Label Content="{Binding Path=Batch, Source={StaticResource StringTableODP}}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50,0,0,0" Foreground="Black"/>
-                        <Label Content="{Binding ViewCurrentBatchNumber}" Foreground="{Binding BatchNoFG}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,0,0"/>
-                        <Label Content="{Binding Path=Container, Source={StaticResource StringTableODP}}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50,0,0,0" Foreground="Black"/>
-                        <Label Content="{Binding ViewCurrentContainerNumber}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,0,0"/>
+                        <Label Content="{Binding Path=Batch, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50,0,0,0" Foreground="Black"/>
+                        <Label Content="{Binding ViewCurrentBatchNumber}" Foreground="{Binding BatchNoFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,0,0"/>
+                        <Label Content="{Binding Path=Container, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50,0,0,0" Foreground="Black"/>
+                        <Label Content="{Binding ViewCurrentContainerNumber}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,0,0"/>
                     </WrapPanel>
                     <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" Width="300"  FontWeight="Bold" FontSize="30"
                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
@@ -103,16 +103,16 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <WrapPanel Grid.Column="0">
-                            <Label Content="{Binding Path=TotalBatchQuantity, Source={StaticResource StringTableODP}}" FontSize="18" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground="Black"/>
-                            <Label Content="{Binding ViewCurrentBatchTotalQuantity}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Label Content="{Binding Path=TotalBatchQuantity, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground="Black"/>
+                            <Label Content="{Binding ViewCurrentBatchTotalQuantity}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                         <WrapPanel Grid.Column="1">
-                            <Label Content="{Binding Path=TotalCurrentBatchQuantity, Source={StaticResource StringTableODP}}"  FontSize="18" FontWeight="Bold" VerticalAlignment="Center"  Margin="5" Foreground="Black"/>
-                            <Label Content="{Binding ViewAccumulateCurrentTotalBatchQuantity}" Foreground="{Binding CurrentTotalBatchQuantityFG}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            <Label Content="{Binding Path=TotalCurrentBatchQuantity, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Margin="3" Foreground="Black"/>
+                            <Label Content="{Binding ViewAccumulateCurrentTotalBatchQuantity}" Foreground="{Binding CurrentTotalBatchQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         </WrapPanel>
                         <WrapPanel Grid.Column="2">
-                            <Label Content="{Binding Path=TotalCurrentBoxQuantity, Source={StaticResource StringTableODP}}"  FontSize="18" FontWeight="Bold" VerticalAlignment="Center"  Margin="10" Foreground="Black"/>
-                            <Label Content= "{Binding ViewCurrentBoxQuantity}" Foreground="{Binding CurrentQuantityFG}" FontWeight="Bold" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                            <Label Content="{Binding Path=TotalCurrentBoxQuantity, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center"  Margin="10" Foreground="Black"/>
+                            <Label Content= "{Binding ViewCurrentBoxQuantity}" Foreground="{Binding CurrentQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         </WrapPanel>
                     </Grid>
                 </Grid>

@@ -245,17 +245,42 @@ namespace DialogManager.ErrorMsg
 
         private void OperationMethod(string Command)
         {
-            if (Command == "Yes")
+            if (Command == "Continue")
             {
                 Reset();
                 m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
             }
       
-            else if (Command == "No")
+            else if (Command == "EndLot")
             {
-                RaiseEndLotPopup();
+                m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish();
+                m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
+                m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
+                m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                ResetCounter();
             }
             CloseDialog("");
+        }
+
+        private void ResetCounter()
+        {
+            #region Code Reader
+            Global.CurrentContainerNum = String.Empty;
+            Global.CurrentBatchQuantity = 0;
+            Global.AccumulateCurrentBatchQuantity = 0;
+            Global.CurrentBoxQuantity = 0;
+            Global.CurrentBatchNum = String.Empty;
+            #endregion
+
+            #region Top Vision
+            Global.VisProductQuantity = 0f;
+            Global.VisProductCrtOrientation = String.Empty;
+            Global.VisProductWrgOrientation = String.Empty;
+            Global.TopVisionEndLot = true;
+            Global.CodeReaderEndLot = true;
+            m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
+            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+            #endregion
         }
 
         protected virtual void CloseDialog(string parameter)

@@ -91,8 +91,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="3" IsEnabled="{Binding btnYesEnable}" Content="Yes" Command="{Binding OperationCommand}" CommandParameter="Yes" Width="70" Height="30" HorizontalAlignment="Left" Style="{DynamicResource styGlassButton}" Margin="70,0,0,0" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15"/>
-                    <Button Grid.Column="4" IsEnabled="{Binding btnYesEnable}" Content="No" Command="{Binding OperationCommand}" CommandParameter="No" Width="70" Height="30" HorizontalAlignment="Right" Style="{DynamicResource styGlassButton}" Margin="0,0,60,0" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15"/>
+                    <Button Grid.Column="3" IsEnabled="{Binding btnYesEnable}" Content="End Lot" Command="{Binding OperationCommand}" CommandParameter="EndLot"  Width="70" Height="30" HorizontalAlignment="Left" Style="{DynamicResource styGlassButton}" Margin="70,0,0,0" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15"/>
+                    <Button Grid.Column="4" IsEnabled="{Binding btnYesEnable}" Content="Continue" Command="{Binding OperationCommand}" CommandParameter="Continue" Width="70" Height="30" HorizontalAlignment="Right" Style="{DynamicResource styGlassButton}" Margin="0,0,60,0" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15"/>
                 </Grid>
             </Grid>
         </Grid>

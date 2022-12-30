@@ -219,14 +219,15 @@ namespace DialogManager.ErrorMsg
 
         private void OperationMethod(string Command)
         {
-            if (Command == "Yes")
+            if (Command == "EndLot")
             {
+                m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish();
                 m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
                 m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                 m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                 ResetCounter();
             }
-            else if (Command == "No")
+            else if (Command == "Continue")
             {
                 Reset();
                 m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });

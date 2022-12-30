@@ -327,7 +327,7 @@ namespace UIModule.MainPanel
         public void ProductionMode()
         {
             IsAllowStart = false;
-            IsAllowStop = true;
+            IsAllowStop = false;
          
         }
 
@@ -418,29 +418,6 @@ namespace UIModule.MainPanel
                     break;
             }
         }
-
-        //private void m_tmrTCPMonitor_Tick(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        List<string> tooltip = new List<string>();
-        //        foreach(TCPDisplay tcpip in TCPCollection)
-        //        {
-        //            tcpip.IsConnected = m_TCPIP.clientSockets[tcpip.ID].IsAlive;
-        //        }
-
-        //        Application.Current.Dispatcher.Invoke(() =>
-        //        {
-        //            TCPIPStateIcon = TCPCollection.All(x => x.IsConnected) ? Connected : Disconnected;
-        //        });
-        //        TCPIPStatus = TCPCollection.All(x => x.IsConnected) ? "Connected" : "Disconnected";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message, ex.Source);
-        //    }
-        //}
-
         public override void OnValidateLogin(bool IsAuthenticated)
         {
             if (IsAuthenticated)

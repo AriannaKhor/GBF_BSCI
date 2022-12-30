@@ -182,7 +182,6 @@ namespace TCPIPManager
                                     else if (dialogResult == ButtonResult.Cancel)
                                     {
                                         m_Events.GetEvent<ResultLoggingEvent>().Publish();
-                                        Global.AccumulateCurrentBatchQuantity = Global.LotInitialTotalBatchQuantity = 0;
                                         m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
                                         m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                                         m_Events.GetEvent<MachineState>().Publish(MachineStateType.Idle);

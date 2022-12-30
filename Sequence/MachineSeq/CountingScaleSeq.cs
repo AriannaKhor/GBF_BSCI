@@ -20,13 +20,11 @@ namespace Sequence.MachineSeq
         {
             WrongOrientation, //0
             VisionOverallResultRejected,//1
-
-            MissingResult,//2
-            BatchNotMatch,//3
-            ContainerNumberExist,//4
-            BoxQtyNotMatch,//5
-            ExceedTotalBatchQty,//6
-            ExceedUpperLimit, //7
+            BatchNotMatch,//2
+            ContainerNumberExist,//3
+            BoxQtyNotMatch,//4
+            ExceedTotalBatchQty,//5
+            ExceedUpperLimit, //6
 
 
         }
@@ -139,10 +137,6 @@ namespace Sequence.MachineSeq
 
                                 switch (m_FailType)
                                 {
-                                    case "MissingResult":
-                                        Global.ErrorMsg = RaiseError((int)ErrorCode.MissingResult);
-                                        break;
-
                                     case "BatchNotMatch":
                                         Global.ErrorMsg = RaiseVerificationError((int)ErrorCode.BatchNotMatch);
                                         break;

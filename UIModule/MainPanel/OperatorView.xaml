@@ -17,9 +17,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/GreatechApp.Core;component/Resources/Controls/ExpanderStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
-          
+
         </ResourceDictionary>
-    
+
     </UserControl.Resources>
 
     <Grid>
@@ -29,7 +29,7 @@
         </Grid.RowDefinitions>
 
 
-        
+
         <!--Operator View-->
         <Grid Grid.Row="0" Background="GhostWhite" IsEnabled="{Binding CanAccess}" Width="Auto" Height="Auto" >
             <Grid.ColumnDefinitions>
@@ -41,7 +41,6 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="100"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -52,15 +51,15 @@
                         <Label Content="{Binding VisionConnStatus}" Foreground="{Binding StatusFG}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     </WrapPanel>
 
-                    <Label Grid.Row="1" Content="{Binding VisInspectResult}" Foreground="{Binding VisResultFG}" Background="{Binding VisResultBG}" Width="300" FontWeight="Bold" FontSize="30" VerticalAlignment="Stretch"
-                           HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
+                    <Label Grid.Row="1" Content="{Binding VisInspectResult}" Foreground="{Binding VisResultFG}" Background="{Binding VisResultBG}" Width="300" Height="105" FontWeight="Bold" FontSize="30" VerticalAlignment="Stretch"
+                           HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,30"/>
                     <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="70"/>
                         </Grid.RowDefinitions>
                         <WrapPanel >
-                            <Label Content="{Binding Path=TotalQuantity, Source={StaticResource StringTableODP}}" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground ="Black" FontWeight="Bold"/>
-                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding ProductQuantityFG}" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Label Content="{Binding Path=TotalQuantity, Source={StaticResource StringTableODP}}" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground ="Black" FontWeight="Bold"/>
+                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding ProductQuantityFG}" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </WrapPanel>
                     </Grid>
 
@@ -69,8 +68,8 @@
                             <RowDefinition Height="160"/>
                         </Grid.RowDefinitions>
                         <WrapPanel >
-                            <Label Content="{Binding Path=CorrectOrientation, Source={StaticResource StringTableODP}}"  FontSize="30" VerticalAlignment="Center"  Margin="10" Foreground ="Black" FontWeight="Bold" />
-                            <Label Content="{Binding VisProductCrtOrientation}" Foreground="{Binding CorrectOrientationFG}" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Left"   />
+                            <Label Content="{Binding Path=CorrectOrientation, Source={StaticResource StringTableODP}}"  FontSize="25" VerticalAlignment="Center"  Margin="17" Foreground ="Black" FontWeight="Bold" />
+                            <Label Content="{Binding VisProductCrtOrientation}" Foreground="{Binding CorrectOrientationFG}" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left"   />
                         </WrapPanel>
                     </Grid>
 
@@ -79,8 +78,8 @@
                             <RowDefinition Height="220"/>
                         </Grid.RowDefinitions>
                         <WrapPanel >
-                            <Label Content="{Binding Path=WrongOrientation, Source={StaticResource StringTableODP}}"  FontSize="30" VerticalAlignment="Center"  Margin="10" Foreground ="Black" FontWeight="Bold"/>
-                            <Label Content= "{Binding VisProductWrgOrientation}" Foreground="{Binding WrgOrientationFG}" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Label Content="{Binding Path=WrongOrientation, Source={StaticResource StringTableODP}}"  FontSize="25" VerticalAlignment="Center"  Margin="20" Foreground ="Black" FontWeight="Bold"/>
+                            <Label Content= "{Binding VisProductWrgOrientation}" Foreground="{Binding WrgOrientationFG}" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                     </Grid>
                 </Grid>
@@ -102,8 +101,8 @@
                         <Label Content="{Binding CodeReaderConnStatus}" Foreground="{Binding CdStatusFG}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
                     </WrapPanel>
-                    <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" Width="300"  FontWeight="Bold" FontSize="30"
-                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
+                    <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" Width="300"  Height="105" FontWeight="Bold" FontSize="30"
+                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="75,2,70,0"/>
                     <Grid Grid.Row="2" VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
