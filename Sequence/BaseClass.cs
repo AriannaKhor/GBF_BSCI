@@ -6,8 +6,6 @@
 //#define ADLINK
 
 using ConfigManager;
-using CsvHelper;
-using CsvHelper.Configuration;
 using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
@@ -70,8 +68,6 @@ namespace Sequence
 
         public string SeqNum;
 
-        float tempvisquantityholder = 0;
-
         public bool checkOp = false;
 
         public bool VisResume = false;
@@ -104,10 +100,6 @@ namespace Sequence
         public SystemConfig SysCfgs;
 
         public CultureResources CultureResources;
-
-        public ResultsDatalog m_resultsDatalog = new ResultsDatalog();
-
-        public static object m_SyncLog = new object();
 
         public IEventAggregator Publisher;
 
@@ -209,91 +201,6 @@ namespace Sequence
             m_TestEventArg.RunMode = TestEventArg.Run_Mode.None;
             m_TestEventComp = new bool[Enum.GetNames(typeof(TestEventArg.Run_Mode)).Length];
         }
-
-        #region Logging 
-        public void WriteSoftwareResultLog(ResultsDatalog log)
-        {
-            lock (m_SyncLog)
-            {
-                {
-                    m_resultsDatalog.UserId = Global.UserId;
-                    m_resultsDatalog.UserLvl = Global.UserLvl;
-                    DateTime currentTime = DateTime.Now;
-                    DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                    dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                    m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                    m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                    m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                    m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
-                    m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
-                    m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
-                    m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
-                    m_resultsDatalog.OverallResult = Global.OverallResult;
-                    m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
-                    m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
-                    m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
-                    m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
-                    m_resultsDatalog.ErrorMessage = Global.ErrorMsg;
-                    m_resultsDatalog.Remarks = Global.Remarks;
-                    m_resultsDatalog.ApprovedBy = Global.CurrentApprovalLevel;
-
-                    //create log directory V2
-                    string date = DateTime.Now.ToString("dd-MM-yyyy");
-                    string filePath = $"{SysCfgs.FolderPath.SoftwareResultLog}Log[{date}]\\";
-                    if (!Directory.Exists(filePath))
-                        Directory.CreateDirectory(filePath);
-
-                    if (m_resultsDatalog.OverallResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
-                    {
-                        string filename = $"Batch {Global.CurrentBatchNum}.csv";
-                        filename = filePath + filename;
-
-                        var records = new List<ResultsDatalog>();
-                        records.Add(m_resultsDatalog);
-
-                        if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
-                        {
-                            if (m_resultsDatalog.OverallResult != "PendingResult" && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
-                            {
-                                if (!File.Exists(filename.ToString()))
-                                {
-                                    //create new .csv file and initialize the headers
-                                    using (var writer = new StreamWriter(filename))
-                                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                                    {
-                                        csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
-                                        csv.WriteRecords(records);
-                                    }
-                                }
-                                else
-                                {
-                                    //append to .csv file
-                                    var configList = new CsvConfiguration(CultureInfo.InvariantCulture)
-                                    {
-                                        HasHeaderRecord = false
-                                    };
-
-                                    using (var stream = File.Open(filename, FileMode.Append))
-                                    using (var writer = new StreamWriter(stream))
-                                    using (var csv = new CsvWriter(writer, configList))
-                                    {
-                                        csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
-                                        csv.WriteRecords(records);
-                                    }
-                                }
-                                tempvisquantityholder = m_resultsDatalog.VisTotalPrdQty;
-                                m_resultsDatalog.ClearAll();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        date = DateTime.Now.ToString("dd-MM-yyyy");
-                    }
-                }
-            }
-        }
-        #endregion
 
         #region Method
         public string GetStringTableValue(string key)

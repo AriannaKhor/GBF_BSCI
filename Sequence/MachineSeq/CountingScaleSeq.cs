@@ -164,18 +164,6 @@ namespace Sequence.MachineSeq
                                 m_SeqFlag.ProcCodeReaderCont = false;
                                 m_SeqNum = SN.Begin;
                             }
-                            //else if (m_SeqFlag.EndLotComp)
-                            //{
-                            //    m_SeqNum = SN.EndLot;
-                            //}
-                            DateTime currentTime = DateTime.Now;
-                            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                            dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                            WriteSoftwareResultLog(m_resultsDatalog);
-                            m_resultsDatalog.ClearAll();
                             break;
                         #endregion
 

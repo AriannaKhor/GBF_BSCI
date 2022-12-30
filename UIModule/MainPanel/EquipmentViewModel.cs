@@ -1,4 +1,6 @@
 ﻿using Cognex.DataMan.SDK;
+using CsvHelper;
+using CsvHelper.Configuration;
 using GreatechApp.Core;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
@@ -9,8 +11,10 @@ using GreatechApp.Services.Utilities;
 using Prism.Commands;
 using Prism.Events;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -28,6 +32,8 @@ namespace UIModule.MainPanel
         private static object m_SynDesignItem = new object();
         private static object m_SyncLog = new object();
         CTimer m_timeOut = new CTimer();
+        private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
+        private float tempvisquantityholder = 0;
 
         public DelegateCommand<string> NavigationCommand { get; set; }
         public DelegateCommand<string> TriggerVisCmd { get; private set; }
@@ -301,6 +307,8 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Subscribe(OnCodeReaderEndResult);//
             m_EventAggregator.GetEvent<TopVisionImage>().Subscribe(OnTopVisionImg);//
             m_EventAggregator.GetEvent<CodeReaderImage>().Subscribe(OnCodeReaderImg);//
+            m_EventAggregator.GetEvent<ResultLoggingEvent>().Subscribe(OnResultLog);//
+
 
             //Button Command
             NavigationCommand = new DelegateCommand<string>(OnNavigation);
@@ -329,6 +337,7 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
         }
 
+
         #endregion
 
         #region Event
@@ -336,6 +345,90 @@ namespace UIModule.MainPanel
         {
             TabPageHeader = GetStringTableValue("Equipment");
         }
+        #region Logging
+        private void OnResultLog()
+        {
+            lock (m_SyncLog)
+            {
+                {
+                    m_resultsDatalog.UserId = Global.UserId;
+                    m_resultsDatalog.UserLvl = Global.UserLvl;
+                    DateTime currentTime = DateTime.Now;
+                    DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+                    dateFormat.ShortDatePattern = "dd-MM-yyyy";
+                    m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+                    m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+                    m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+                    m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
+                    m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
+                    m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
+                    m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
+                    m_resultsDatalog.OverallResult = Global.OverallResult;
+                    m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
+                    m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
+                    m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
+                    m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
+                    m_resultsDatalog.ErrorMessage = Global.ErrorMsg;
+                    m_resultsDatalog.Remarks = Global.Remarks;
+                    m_resultsDatalog.ApprovedBy = Global.CurrentApprovalLevel;
+
+                    //create log directory V2
+                    string date = DateTime.Now.ToString("dd-MM-yyyy");
+                    string filePath = $"{m_SystemConfig.FolderPath.SoftwareResultLog}Log[{date}]\\";
+                    if (!Directory.Exists(filePath))
+                        Directory.CreateDirectory(filePath);
+
+                    if (m_resultsDatalog.OverallResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
+                    {
+                        string filename = $"Batch {Global.CurrentBatchNum}.csv";
+                        filename = filePath + filename;
+
+                        var records = new List<ResultsDatalog>();
+                        records.Add(m_resultsDatalog);
+
+                        if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
+                        {
+                            if (m_resultsDatalog.OverallResult != "PendingResult" && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
+                            {
+                                if (!File.Exists(filename.ToString()))
+                                {
+                                    //create new .csv file and initialize the headers
+                                    using (var writer = new StreamWriter(filename))
+                                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                                    {
+                                        csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+                                        csv.WriteRecords(records);
+                                    }
+                                }
+                                else
+                                {
+                                    //append to .csv file
+                                    var configList = new CsvConfiguration(CultureInfo.InvariantCulture)
+                                    {
+                                        HasHeaderRecord = false
+                                    };
+
+                                    using (var stream = File.Open(filename, FileMode.Append))
+                                    using (var writer = new StreamWriter(stream))
+                                    using (var csv = new CsvWriter(writer, configList))
+                                    {
+                                        csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+                                        csv.WriteRecords(records);
+                                    }
+                                }
+                                tempvisquantityholder = m_resultsDatalog.VisTotalPrdQty;
+                                m_resultsDatalog.ClearAll();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        date = DateTime.Now.ToString("dd-MM-yyyy");
+                    }
+                }
+            }
+        }
+        #endregion
 
         #region Vision
         private void OnTopVisionResult()

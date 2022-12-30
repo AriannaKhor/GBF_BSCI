@@ -8,6 +8,11 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
+
+    public class ResultLoggingEvent : PubSubEvent
+    {
+
+    }
     public class TopVisionImage : PubSubEvent<BitmapImage>
     {
 

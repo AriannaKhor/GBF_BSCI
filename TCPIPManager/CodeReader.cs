@@ -1,6 +1,8 @@
 ﻿using Cognex.DataMan.SDK;
 using Cognex.DataMan.SDK.Utils;
 using ConfigManager;
+using CsvHelper;
+using CsvHelper.Configuration;
 using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
@@ -43,21 +45,16 @@ namespace TCPIPManager
         private ISystemConnector m_CodeReaderconnector = null;
         private readonly IEventAggregator m_Events;
         private ObservableCollection<string> m_ContainerCollection = new ObservableCollection<string>();
-        private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
         private object _currentResultInfoSyncLock = new object();
         public IShowDialog m_ShowDialog;
         private CultureResources m_CultureResources;
         public event Action<IDialogResult> RequestClose;
-        private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
-
-
-
-
         private bool temp = false;
+
         #endregion
 
         #region Constructor
-        public CodeReader(IEventAggregator eventAggregator)
+        public CodeReader(IEventAggregator eventAggregator, ResultsDatalog resultsDatalog)
         {
             m_Events = eventAggregator;
 
@@ -111,105 +108,124 @@ namespace TCPIPManager
 
         public void AnalyseResult(string returnedresult)
         {
-            string[] splitedresult = returnedresult.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-
-            if (splitedresult.Length == 5)
+            try
             {
-                Global.CurrentContainerNum = splitedresult[0];
-                Global.CurrentBatchQuantity = Int32.Parse(splitedresult[1]);
-                Global.CurrentMatl = splitedresult[2];
-                Global.CurrentBoxQuantity = Int32.Parse(splitedresult[3]);
-                Global.CurrentBatchNum = splitedresult[4];
+                string[] splitedresult = returnedresult.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
-
-                if (Global.LotInitialTotalBatchQuantity == 0)
+                if (splitedresult.Length == 5)
                 {
-                    Global.LotInitialTotalBatchQuantity = Global.CurrentBatchQuantity;
-                }
+                    Global.CurrentContainerNum = splitedresult[0];
+                    Global.CurrentBatchQuantity = Int32.Parse(splitedresult[1]);
+                    Global.CurrentMatl = splitedresult[2];
+                    Global.CurrentBoxQuantity = Int32.Parse(splitedresult[3]);
+                    Global.CurrentBatchNum = splitedresult[4];
 
-                if (Global.LotInitialBatchNo == string.Empty)
-                {
-                    Global.LotInitialBatchNo = Global.CurrentBatchNum;
-                }
 
-                if (Global.CurrentBatchNum == Global.LotInitialBatchNo)
-                {
-                    if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
+                    if (Global.LotInitialTotalBatchQuantity == 0)
                     {
-                        Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
-                        // Exceed Total Batch Quantity
-                        if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
+                        Global.LotInitialTotalBatchQuantity = Global.CurrentBatchQuantity;
+                    }
+
+                    if (Global.LotInitialBatchNo == string.Empty)
+                    {
+                        Global.LotInitialBatchNo = Global.CurrentBatchNum;
+                    }
+
+                    if (Global.CurrentBatchNum == Global.LotInitialBatchNo)
+                    {
+                        if (Global.CurrentBoxQuantity == Global.VisProductQuantity)
+                        {
+                            Global.AccumulateCurrentBatchQuantity = Global.AccumulateCurrentBatchQuantity + Global.CurrentBoxQuantity;
+                            // Exceed Total Batch Quantity
+                            if (Global.AccumulateCurrentBatchQuantity > Global.LotInitialTotalBatchQuantity)
+                            {
+                                Global.CodeReaderResult = resultstatus.NG.ToString();
+                                Global.OverallResult = Global.CodeReaderResult;
+                                m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
+
+                            }
+                            //OK result
+                            else
+                            {
+                                Global.CodeReaderResult = resultstatus.OK.ToString();
+                                Global.OverallResult = Global.CodeReaderResult;
+                                m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+
+                                if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
+                                {
+                                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
+
+                                    if (dialogResult == ButtonResult.Yes)
+                                    {
+                                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
+                                        m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
+                                        m_Events.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                                    }
+                                    else if (dialogResult == ButtonResult.No)
+                                    {
+                                        Global.CodeReaderResult = resultstatus.NG.ToString();
+                                        Global.OverallResult = Global.CodeReaderResult;
+                                        m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
+                                    }
+                                }
+                                else
+                                {
+                                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK, ButtonResult.Cancel);
+                                    if (dialogResult == ButtonResult.OK)
+                                    {
+                                        m_Events.GetEvent<ResultLoggingEvent>().Publish();
+                                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
+                                        CloseDialog("");
+                                    }
+                                    else if (dialogResult == ButtonResult.Cancel)
+                                    {
+                                        m_Events.GetEvent<ResultLoggingEvent>().Publish();
+                                        Global.AccumulateCurrentBatchQuantity = Global.LotInitialTotalBatchQuantity = 0;
+                                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
+                                        m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
+                                        m_Events.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                                        ResetCounter();
+                                        CloseDialog("");
+                                    }
+                                }
+                            }
+                        }
+                        //Unequal Box Quantity
+                        else
                         {
                             Global.CodeReaderResult = resultstatus.NG.ToString();
                             Global.OverallResult = Global.CodeReaderResult;
                             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
-                           
-                        }
-                        //OK result
-                        else
-                        {
-                            Global.CodeReaderResult = resultstatus.OK.ToString();
-                            Global.OverallResult = Global.CodeReaderResult;
-                            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-
-                            if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
-                            {
-                                ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
-
-                                if (dialogResult == ButtonResult.Yes)
-                                {
-                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum});
-                                    m_Events.GetEvent<MachineState>().Publish(MachineStateType.Idle);
-                                }
-                                else if (dialogResult == ButtonResult.No)
-                                {
-                                    Global.CodeReaderResult = resultstatus.NG.ToString();
-                                    Global.OverallResult = Global.CodeReaderResult;
-                                    m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
-                                }
-                            }
-                            else
-                            {
-                                ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK);
-                                if (dialogResult == ButtonResult.OK)
-                                {
-                                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
-                                    CloseDialog("");
-                                }
-                            }
+                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
                         }
                     }
-                    //Unequal Box Quantity
+                    //Incorrect Batch No
                     else
                     {
                         Global.CodeReaderResult = resultstatus.NG.ToString();
                         Global.OverallResult = Global.CodeReaderResult;
                         m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
+                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BatchNotMatch" });
                     }
                 }
-                //Incorrect Batch No
+                //Missing Result
                 else
                 {
                     Global.CodeReaderResult = resultstatus.NG.ToString();
                     Global.OverallResult = Global.CodeReaderResult;
                     m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BatchNotMatch" });
+                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
+
                 }
+                temp = false;
             }
-            //Missing Result
-            else
+            catch (Exception ex)
             {
-                Global.CodeReaderResult = resultstatus.NG.ToString();
-                Global.OverallResult = Global.CodeReaderResult;
-                m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "MissingResult" });
+                MessageBox.Show(ex.Message, ex.Source);
             }
-            temp = false;
-            Global.Temp = false;
+            
         }
         public void TriggerCodeReader()
         {
@@ -266,22 +282,23 @@ namespace TCPIPManager
 
         private void ResetCounter()
         {
-            Global.CodeReaderProceedNewBox = true;
-            Global.TopVisionProceedNewBox = true;
-
-#region Code Reader
-            Global.CurrentContainerNum = string.Empty;
+            #region Code Reader
+            Global.CurrentContainerNum = String.Empty;
             Global.CurrentBatchQuantity = 0;
+            Global.AccumulateCurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
-            Global.CurrentBatchNum = string.Empty;
-#endregion
+            Global.CurrentBatchNum = String.Empty;
+            #endregion
 
-#region Top Vision
+            #region Top Vision
             Global.VisProductQuantity = 0f;
-            Global.VisProductCrtOrientation = string.Empty;
-            Global.VisProductWrgOrientation = string.Empty;
-#endregion
+            Global.VisProductCrtOrientation = String.Empty;
+            Global.VisProductWrgOrientation = String.Empty;
+            Global.TopVisionEndLot = true;
+            Global.CodeReaderEndLot = true;
             m_Events.GetEvent<TopVisionResultEvent>().Publish();
+            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+            #endregion
         }
 
         public void CloseDialog(string parameter)
@@ -390,9 +407,10 @@ namespace TCPIPManager
 
             return destImage;
         }
-#endregion
 
-#region Events
+        #endregion
+
+        #region Events
         private void OnSystemConnected(object sender, System.EventArgs args)
         {
             m_Events.GetEvent<OnCodeReaderConnectedEvent>().Publish();

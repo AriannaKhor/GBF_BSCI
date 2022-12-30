@@ -74,8 +74,8 @@ namespace UIModule.StandardViews
         public DelegateCommand<IOList> IOCommand { get; private set; }
 
 
-        private IEnumerable<IIOInterlock> m_IOIntLCollection;
-        private IIOInterlock m_IOIntL;
+       // private IEnumerable<IIOInterlock> m_IOIntLCollection;
+       // private IIOInterlock m_IOIntL;
         private Timer tmr_UpdateStatus;
 
         public DelegateCommand SelectedItemChanged { get; set; }
@@ -85,8 +85,8 @@ namespace UIModule.StandardViews
 
         public IOViewModel()
         {
-            m_IOIntLCollection = ContainerLocator.Container.Resolve<Func<IEnumerable<IIOInterlock>>>()();
-            m_IOIntL = m_IOIntLCollection.FirstOrDefault();
+            //m_IOIntLCollection = ContainerLocator.Container.Resolve<Func<IEnumerable<IIOInterlock>>>()();
+            //m_IOIntL = m_IOIntLCollection.FirstOrDefault();
 
             RaisePropertyChanged(nameof(CanAccess));
 
@@ -189,11 +189,11 @@ namespace UIModule.StandardViews
 
         private void Command(IOList ioParam)
         {
-            m_IOIntL = m_IOIntLCollection.FirstOrDefault();
+            //m_IOIntL = m_IOIntLCollection.FirstOrDefault();
 
-            string seqName = m_IOIntL.GetSeqName((OUT)ioParam.Tag);
+            //string seqName = m_IOIntL.GetSeqName((OUT)ioParam.Tag);
 
-            m_IOIntL = m_IOIntLCollection.FirstOrDefault(x => x.Provider == EnumHelper.GetValueFromDescription<SQID>(seqName));
+            //m_IOIntL = m_IOIntLCollection.FirstOrDefault(x => x.Provider == EnumHelper.GetValueFromDescription<SQID>(seqName));
 
             if (Global.MachineStatus != MachineStateType.Running && Global.MachineStatus != MachineStateType.Initializing)
             {
