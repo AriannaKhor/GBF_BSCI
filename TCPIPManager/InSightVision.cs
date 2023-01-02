@@ -166,7 +166,7 @@ namespace TCPIPManager
             }
         }
 
-        public void VisionLive()
+        public void VisionImg()
         {
             try
             {
@@ -266,7 +266,7 @@ namespace TCPIPManager
                             m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisFail, FailType = "WrongOrientation" });
                         }
                     }
-                    VisionLive();
+                    VisionImg();
                     m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
                 }
             }

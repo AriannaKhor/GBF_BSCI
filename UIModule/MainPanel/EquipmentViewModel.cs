@@ -428,23 +428,6 @@ namespace UIModule.MainPanel
                 VisImage = null;
                 #endregion
             }
-            else if (Global.TopVisionProceedNewBox)
-            {
-                Global.TopVisionProceedNewBox = false;
-                #region Top Vision
-                VisProductQuantity = Global.VisProductQuantity;
-                VisProductCrtOrientation = Global.VisProductCrtOrientation;
-                VisProductWrgOrientation = Global.VisProductWrgOrientation;
-                VisInspectResult = resultstatus.PendingResult.ToString();
-
-                VisResultBG = System.Windows.Media.Brushes.Transparent;
-                ProductQuantityFG = System.Windows.Media.Brushes.Black;
-                CorrectOrientationFG = System.Windows.Media.Brushes.Black;
-                WrgOrientationFG = System.Windows.Media.Brushes.Black;
-
-                VisImage = null;
-                #endregion
-            }
             else
             {
                 VisInspectResult = Global.VisInspectResult;
@@ -503,20 +486,6 @@ namespace UIModule.MainPanel
                 ViewCurrentContainerNumber = Global.CurrentContainerNum;
                 ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
                 ViewAccumulateCurrentTotalBatchQuantity = 0;
-                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                CodeReaderResult = resultstatus.PendingResult.ToString();
-                CodeReaderImage = null;
-                CdResultBG = System.Windows.Media.Brushes.Transparent;
-                #endregion
-            }
-            else if (Global.CodeReaderProceedNewBox)
-            {
-                Global.CodeReaderProceedNewBox = false;
-                #region Code Reader
-                ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
                 ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
                 ViewCurrentBatchNumber = Global.CurrentBatchNum;
                 CodeReaderResult = resultstatus.PendingResult.ToString();
