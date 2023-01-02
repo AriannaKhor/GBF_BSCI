@@ -9,7 +9,7 @@
     using System.Windows.Media.Imaging;
 
 
-    public class ResultLoggingEvent : PubSubEvent
+    public class ResultLoggingEvent : PubSubEvent<ResultsDatalog>
     {
 
     }

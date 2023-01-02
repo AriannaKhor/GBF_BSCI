@@ -16,6 +16,7 @@ using GreatechApp.Core.Cultures;
 using GreatechApp.Services.UserServices;
 using System.Windows.Controls;
 using Prism.Ioc;
+using System.Globalization;
 
 namespace DialogManager.ErrorMsg
 {
@@ -30,12 +31,17 @@ namespace DialogManager.ErrorMsg
         public IShowDialog m_ShowDialog;
         private CultureResources m_CultureResources;
         public IUser m_CurrentUser;
+        private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
 
         private string m_remarks;
         public string remarks
         {
             get { return m_remarks; }
-            set { SetProperty(ref m_remarks, Global.Remarks = value); }
+            set 
+            { 
+                SetProperty(ref m_remarks, value);
+                Global.Remarks = value;
+            }
         }
 
         private BitmapImage m_Image;
@@ -204,7 +210,7 @@ namespace DialogManager.ErrorMsg
             m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             OperationCommand = new DelegateCommand<string>(OperationMethod);
-            EndLotCommand = new DelegateCommand(RaiseEndLotPopup);
+            //EndLotCommand = new DelegateCommand(RaiseEndLotPopup);
             AlarmDetail = new AlarmParameter();
         }
 
@@ -215,6 +221,10 @@ namespace DialogManager.ErrorMsg
 
             if (m_AuthService.Authenticate(UserID, password))
             {
+                if (remarks == null || remarks == string.Empty)
+                {
+                    remarks = "N/A";
+                }
                 var currentUserLevel = m_AuthService.CurrentUser.UserLevel;
                 if (currentUserLevel == ACL.UserLevel.Admin || currentUserLevel == ACL.UserLevel.Engineer || currentUserLevel == ACL.UserLevel.Technician)
                 {
@@ -245,6 +255,9 @@ namespace DialogManager.ErrorMsg
 
         private void OperationMethod(string Command)
         {
+            SaveGlobalResult();
+            m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
+            m_resultsDatalog.ClearAll();
             if (Command == "Continue")
             {
                 Reset();
@@ -253,13 +266,36 @@ namespace DialogManager.ErrorMsg
       
             else if (Command == "EndLot")
             {
-                m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish();
                 m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
                 m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                 m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                 ResetCounter();
             }
             CloseDialog("");
+        }
+
+        private void SaveGlobalResult()
+        {
+            m_resultsDatalog.UserId = Global.UserId;
+            m_resultsDatalog.UserLvl = Global.UserLvl;
+            DateTime currentTime = DateTime.Now;
+            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+            dateFormat.ShortDatePattern = "dd-MM-yyyy";
+            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+            m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
+            m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
+            m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
+            m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
+            m_resultsDatalog.OverallResult = Global.OverallResult;
+            m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
+            m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
+            m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
+            m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
+            m_resultsDatalog.ErrorMessage = Global.ErrorMsg;
+            m_resultsDatalog.Remarks = Global.Remarks;
+            m_resultsDatalog.ApprovedBy = Global.CurrentApprovalLevel;
         }
 
         private void ResetCounter()
@@ -304,13 +340,12 @@ namespace DialogManager.ErrorMsg
         {
 
         }
-
-        void RaiseEndLotPopup()
-        {
-            m_DialogService.ShowDialog(DialogList.ForcedEndLotView.ToString(),
-                                      new DialogParameters($"message={""}"),
-                                      null);
-        }
+        //void RaiseEndLotPopup()
+        //{
+        //    m_DialogService.ShowDialog(DialogList.ForcedEndLotView.ToString(),
+        //                              new DialogParameters($"message={""}"),
+        //                              null);
+        //}
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
             string[] split = parameters.GetValue<string>("message").Split(';');

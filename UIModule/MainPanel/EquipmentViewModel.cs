@@ -27,9 +27,9 @@ namespace UIModule.MainPanel
     public class EquipmentViewModel : BaseUIViewModel
     {
         #region Variable
-        private const string MarkerLayoutFile = @"..\AppData\MarkerLayout.dat";
-        private static object m_SynMarker = new object();
-        private static object m_SynDesignItem = new object();
+        //private const string MarkerLayoutFile = @"..\AppData\MarkerLayout.dat";
+        //private static object m_SynMarker = new object();
+        //private static object m_SynDesignItem = new object();
         private static object m_SyncLog = new object();
         CTimer m_timeOut = new CTimer();
         private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
@@ -346,32 +346,11 @@ namespace UIModule.MainPanel
             TabPageHeader = GetStringTableValue("Equipment");
         }
         #region Logging
-        private void OnResultLog()
+        private void OnResultLog(ResultsDatalog resultsDatalog)
         {
             lock (m_SyncLog)
             {
                 {
-                    m_resultsDatalog.UserId = Global.UserId;
-                    m_resultsDatalog.UserLvl = Global.UserLvl;
-                    DateTime currentTime = DateTime.Now;
-                    DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
-                    dateFormat.ShortDatePattern = "dd-MM-yyyy";
-                    m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
-                    m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
-                    m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-                    m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
-                    m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
-                    m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
-                    m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
-                    m_resultsDatalog.OverallResult = Global.OverallResult;
-                    m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
-                    m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
-                    m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
-                    m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
-                    m_resultsDatalog.ErrorMessage = Global.ErrorMsg;
-                    m_resultsDatalog.Remarks = Global.Remarks;
-                    m_resultsDatalog.ApprovedBy = Global.CurrentApprovalLevel;
-
                     //create log directory V2
                     string date = DateTime.Now.ToString("dd-MM-yyyy");
                     string filePath = $"{m_SystemConfig.FolderPath.SoftwareResultLog}Log[{date}]\\";
@@ -384,7 +363,7 @@ namespace UIModule.MainPanel
                         filename = filePath + filename;
 
                         var records = new List<ResultsDatalog>();
-                        records.Add(m_resultsDatalog);
+                        records.Add(resultsDatalog);
 
                         if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
                         {
@@ -417,7 +396,6 @@ namespace UIModule.MainPanel
                                     }
                                 }
                                 tempvisquantityholder = m_resultsDatalog.VisTotalPrdQty;
-                                m_resultsDatalog.ClearAll();
                             }
                         }
                     }

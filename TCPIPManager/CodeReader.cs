@@ -50,6 +50,7 @@ namespace TCPIPManager
         private CultureResources m_CultureResources;
         public event Action<IDialogResult> RequestClose;
         private bool temp = false;
+        private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
 
         #endregion
 
@@ -172,16 +173,17 @@ namespace TCPIPManager
                                 }
                                 else
                                 {
+                                    SaveGlobalResult();
+                                    m_Events.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
+                                    m_resultsDatalog.ClearAll();
                                     ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK, ButtonResult.Cancel);
                                     if (dialogResult == ButtonResult.OK)
                                     {
-                                        m_Events.GetEvent<ResultLoggingEvent>().Publish();
                                         m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
                                         CloseDialog("");
                                     }
                                     else if (dialogResult == ButtonResult.Cancel)
                                     {
-                                        m_Events.GetEvent<ResultLoggingEvent>().Publish();
                                         m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
                                         m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                                         m_Events.GetEvent<MachineState>().Publish(MachineStateType.Idle);
@@ -226,6 +228,31 @@ namespace TCPIPManager
             }
             
         }
+
+        private void SaveGlobalResult()
+        {
+            m_resultsDatalog.UserId = Global.UserId;
+            m_resultsDatalog.UserLvl = Global.UserLvl;
+            DateTime currentTime = DateTime.Now;
+            DateTimeFormatInfo dateFormat = new DateTimeFormatInfo();
+            dateFormat.ShortDatePattern = "dd-MM-yyyy";
+            m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
+            m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
+            m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
+            m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
+            m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
+            m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
+            m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
+            m_resultsDatalog.OverallResult = Global.OverallResult;
+            m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
+            m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
+            m_resultsDatalog.VisCorrectOrient = Global.VisProductCrtOrientation;
+            m_resultsDatalog.VisWrongOrient = Global.VisProductWrgOrientation;
+            m_resultsDatalog.ErrorMessage = Global.ErrorMsg;
+            m_resultsDatalog.Remarks = Global.Remarks;
+            m_resultsDatalog.ApprovedBy = Global.CurrentApprovalLevel;
+        }
+
         public void TriggerCodeReader()
         {
             try
