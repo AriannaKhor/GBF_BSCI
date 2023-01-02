@@ -7,8 +7,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True" 
              mc:Ignorable="d" 
              d:DesignHeight="985" d:DesignWidth="1720"
-             IsEnabled="True">
-             <!--IsEnabled="{Binding CanAccess}">-->
+             IsEnabled="{Binding CanAccess}">
 
     <UserControl.Resources>
         <Style TargetType="TabItem">

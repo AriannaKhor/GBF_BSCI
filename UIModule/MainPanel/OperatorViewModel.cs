@@ -243,13 +243,13 @@ namespace UIModule.MainPanel
         }
 
 
-        private Visibility m_IsAllowOperator = Visibility.Collapsed;
+        //private Visibility m_IsAllowOperator = Visibility.Collapsed;
 
-        public Visibility IsAllowOperator
-        {
-            get { return m_IsAllowOperator; }
-            set { SetProperty(ref m_IsAllowOperator, value); }
-        }
+        //public Visibility IsAllowOperator
+        //{
+        //    get { return m_IsAllowOperator; }
+        //    set { SetProperty(ref m_IsAllowOperator, value); }
+        //}
 
         private bool m_IsEquipViewLoaded;
         public bool IsEquipViewLoaded
@@ -447,23 +447,22 @@ namespace UIModule.MainPanel
                 m_RegionManager.RequestNavigate(RegionNames.CenterContentRegion, page);
         }
 
-        public override void OnValidateLogin(bool IsAuthenticated)
-        {
-         base.OnValidateLogin(IsAuthenticated);
-            //IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-            //IsAllowAccessOperator = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+        //public override void OnValidateLogin(bool IsAuthenticated)
+        //{
+        //    //base.OnValidateLogin(IsAuthenticated);
+        //    //IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+        //    //IsAllowAccessOperator = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
 
-            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
-            {
-                IsAllowOperator = Visibility.Visible;
+        //    if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
+        //    {
+        //        IsAllowOperator = Visibility.Visible;
                 
-            }
-            else
-            {
-                IsAllowOperator = Visibility.Collapsed;
-
-            }
-        }
+        //    }
+        //    else
+        //    {
+        //        IsAllowOperator = Visibility.Collapsed;
+        //    }
+        //}
 
         private void OnResultlogEntity(ResultlogEntity log)
         {

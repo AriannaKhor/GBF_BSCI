@@ -526,37 +526,23 @@ namespace UIModule.MainPanel
                 m_RegionManager.RequestNavigate(RegionNames.CenterContentRegion, page);
         }
 
-        public override void OnValidateLogin(bool IsAuthenticated)
-        {
-            base.OnValidateLogin(IsAuthenticated);
-            // IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-            //IsAllowAccessEquipment = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
-            {
-                IsAllowEquipment = Visibility.Visible;
+        //public override void OnValidateLogin(bool IsAuthenticated)
+        //{
+        //    base.OnValidateLogin(IsAuthenticated);
+        //    // IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+        //    //IsAllowAccessEquipment = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+        //    if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
+        //    {
+        //        IsAllowEquipment = Visibility.Visible;
 
-            }
-            else
-            {
-                IsAllowEquipment = Visibility.Collapsed;
+        //    }
+        //    else  
+        //    {
+        //        IsAllowEquipment = Visibility.Collapsed;
 
-            }
+        //    }
 
-        }
-
-        private void OnResultlogEntity(ResultlogEntity log)
-        {
-            if ((log.MsgType == LogMsgType.TCP && !m_SystemConfig.General.IsLogTCPMsg) || (log.MsgType == LogMsgType.SerialPort && !m_SystemConfig.General.IsLogSerialMsg))
-            {
-                return;
-            }
-
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                SoftwareResultCollection.Add(new Datalog(log.MsgType, log.MsgText));
-            });
-        }
-
+        //}
 
         private void OnDatalogEntity(DatalogEntity log)
         {
