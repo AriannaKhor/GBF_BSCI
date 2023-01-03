@@ -46,8 +46,8 @@ namespace GreatechApp.Core.Variable
         public static string VisionConnStatus;
         public static bool VisConnection;
         public static float VisProductQuantity;
-        public static string VisProductCrtOrientation;
-        public static string VisProductWrgOrientation;
+        public static float VisProductCrtOrientation;
+        public static float VisProductWrgOrientation;
         public static string VisOverallResult;
         public static string VisInspectResult = resultstatus.PendingResult.ToString();
 

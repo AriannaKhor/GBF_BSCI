@@ -91,15 +91,15 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_VisProductQuantity, value); }
         }
 
-        private string m_VisProductCrtOrientation;
-        public string VisProductCrtOrientation
+        private float m_VisProductCrtOrientation;
+        public float VisProductCrtOrientation
         {
             get { return m_VisProductCrtOrientation; }
             set { SetProperty(ref m_VisProductCrtOrientation, value); }
         }
 
-        private string m_VisProductWrgOrientation;
-        public string VisProductWrgOrientation
+        private float m_VisProductWrgOrientation;
+        public float VisProductWrgOrientation
         {
             get { return m_VisProductWrgOrientation; }
             set { SetProperty(ref m_VisProductWrgOrientation, value); }
@@ -196,14 +196,14 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_CdResultBG, value); }
         }
 
-        private SolidColorBrush m_CorrectOrientationFG = System.Windows.Media.Brushes.Green;
+        private SolidColorBrush m_CorrectOrientationFG = System.Windows.Media.Brushes.Black;
         public SolidColorBrush CorrectOrientationFG
         {
             get { return m_CorrectOrientationFG; }
             set { SetProperty(ref m_CorrectOrientationFG, value); }
         }
 
-        private SolidColorBrush m_WrgOrientationFG = System.Windows.Media.Brushes.Red;
+        private SolidColorBrush m_WrgOrientationFG = System.Windows.Media.Brushes.Black;
         public SolidColorBrush WrgOrientationFG
         {
             get { return m_WrgOrientationFG; }

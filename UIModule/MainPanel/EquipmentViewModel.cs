@@ -101,15 +101,15 @@ namespace UIModule.MainPanel
             }
         }
 
-        private string m_VisProductCrtOrientation;
-        public string VisProductCrtOrientation
+        private float m_VisProductCrtOrientation;
+        public float VisProductCrtOrientation
         {
             get { return m_VisProductCrtOrientation; }
             set { SetProperty(ref m_VisProductCrtOrientation, value); }
         }
 
-        private string m_VisProductWrgOrientation;
-        public string VisProductWrgOrientation
+        private float m_VisProductWrgOrientation;
+        public float VisProductWrgOrientation
         {
             get { return m_VisProductWrgOrientation; }
             set { SetProperty(ref m_VisProductWrgOrientation, value); }
@@ -526,23 +526,23 @@ namespace UIModule.MainPanel
                 m_RegionManager.RequestNavigate(RegionNames.CenterContentRegion, page);
         }
 
-        //public override void OnValidateLogin(bool IsAuthenticated)
-        //{
-        //    base.OnValidateLogin(IsAuthenticated);
-        //    // IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-        //    //IsAllowAccessEquipment = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-        //    if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
-        //    {
-        //        IsAllowEquipment = Visibility.Visible;
+        public override void OnValidateLogin(bool IsAuthenticated)
+        {
+            base.OnValidateLogin(IsAuthenticated);
+            // IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+            //IsAllowAccessEquipment = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
+            {
+                IsAllowEquipment = Visibility.Visible;
 
-        //    }
-        //    else  
-        //    {
-        //        IsAllowEquipment = Visibility.Collapsed;
+            }
+            else
+            {
+                IsAllowEquipment = Visibility.Collapsed;
 
-        //    }
+            }
 
-        //}
+        }
 
         private void OnDatalogEntity(DatalogEntity log)
         {

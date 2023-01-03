@@ -605,8 +605,8 @@ namespace UIModule.MainPanel
 
             #region Top Vision
             Global.VisProductQuantity = 0f;
-            Global.VisProductCrtOrientation = String.Empty;
-            Global.VisProductWrgOrientation = String.Empty;
+            Global.VisProductCrtOrientation =0f;
+            Global.VisProductWrgOrientation = 0f;
             Global.TopVisionEndLot = true;
             Global.CodeReaderEndLot = true;
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();

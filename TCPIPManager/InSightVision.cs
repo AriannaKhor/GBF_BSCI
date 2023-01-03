@@ -238,13 +238,13 @@ namespace TCPIPManager
                                 !string.IsNullOrEmpty(cellResult4.Text) && cellResult4.Text.ToUpper() != "NULL" && cellResult4.Text.ToUpper() != "ERR")
                     {
                         Global.VisProductQuantity = float.Parse(cellResult1.Text);
-                        Global.VisProductCrtOrientation = cellResult2.Text;
-                        Global.VisProductWrgOrientation = cellResult3.Text;
+                        Global.VisProductCrtOrientation = float.Parse(cellResult2.Text);
+                        Global.VisProductWrgOrientation = float.Parse(cellResult3.Text);
                         Global.VisOverallResult = cellResult4.Text;
 
                         if (Global.VisOverallResult == "OK")
                         {
-                            if (Global.VisProductQuantity == 0.000 && Global.VisProductCrtOrientation == "0.000" && Global.VisProductCrtOrientation == "0.000")
+                            if (Global.VisProductQuantity == 0.000 && Global.VisProductCrtOrientation == 0.000 && Global.VisProductCrtOrientation == 0.000)
                             {
                                 Global.VisInspectResult = resultstatus.NoBoxDetected.ToString();
                                 m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "ReTriggerVis" });

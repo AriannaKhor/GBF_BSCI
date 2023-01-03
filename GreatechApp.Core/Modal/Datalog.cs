@@ -40,11 +40,11 @@ namespace GreatechApp.Core.Modal
         public string TopVision { get; set; }
         public string CodeReader { get; set; }
         public float VisTotalPrdQty { get; set; }
-        public string VisCorrectOrient { get; set; }
-        public string VisWrongOrient { get; set; }
+        public float VisCorrectOrient { get; set; }
+        public float VisWrongOrient { get; set; }
         public int DecodeBatchQuantity { get; set; }
         public int DecodeBoxQuantity { get; set; }
-        public int DecodeAccuQuantity { get; set; }
+        public int DecodeAccuQuantity { get; set; } 
         public string OverallResult { get; set; }
         public string ErrorMessage { get; set; }
         public string VisErrorMessage { get; set; }
@@ -61,8 +61,8 @@ namespace GreatechApp.Core.Modal
                                                   
             TopVision               = string.Empty;
             VisTotalPrdQty          = 0;
-            VisCorrectOrient        = string.Empty;
-            VisWrongOrient          = string.Empty;
+            VisCorrectOrient        = 0;
+            VisWrongOrient          = 0;
                                                   
             CodeReader              = string.Empty;
             DecodeBatchQuantity     = 0;
