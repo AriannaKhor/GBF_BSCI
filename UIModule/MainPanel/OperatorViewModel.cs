@@ -210,13 +210,13 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_WrgOrientationFG, value); }
         }
 
-        //private FixedSizeObservableCollection<Datalog> m_DataLogCollection;
+        private FixedSizeObservableCollection<Datalog> m_DataLogCollection;
 
-        //public FixedSizeObservableCollection<Datalog> DataLogCollection
-        //{
-        //    get { return m_DataLogCollection; }
-        //    set { SetProperty(ref m_DataLogCollection, value); }
-        //}
+        public FixedSizeObservableCollection<Datalog> DataLogCollection
+        {
+            get { return m_DataLogCollection; }
+            set { SetProperty(ref m_DataLogCollection, value); }
+        }
 
 
         private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection;
@@ -289,6 +289,7 @@ namespace UIModule.MainPanel
             string buildDate = fi.LastWriteTime.ToLongDateString();
             string buildTime = fi.LastWriteTime.ToShortTimeString();
 
+            m_EventAggregator.GetEvent<DatalogEntity>().Subscribe(OnDatalogEntity);
             m_EventAggregator.GetEvent<ResultlogEntity>().Subscribe(OnResultlogEntity);
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Subscribe(OnTopVisionResult);//
             m_EventAggregator.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
@@ -301,6 +302,21 @@ namespace UIModule.MainPanel
             //Button Command
             NavigationCommand = new DelegateCommand<string>(OnNavigation);
             TriggerVisCmd = new DelegateCommand<string>(VisOperation);
+
+            //DataLogging
+            DataLogCollection = new FixedSizeObservableCollection<Datalog>(m_SystemConfig.General.MaxLogItem);
+            DataLogCollection.CollectionChanged += this.OnDatalogCollectionChanged;
+
+            DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("SoftwareVer")} : {version}"));
+            DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("SoftwareBuildDate")} : {string.Format("{0}, {1}", buildDate, buildTime)}"));
+#if DEBUG
+            DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("CompileMode")} : {GetStringTableValue("Debug")}"));
+#elif RELEASE
+            DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("CompileMode")} : {GetStringTableValue("Release")}"));
+#endif
+            DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("SerialNo")} : {Environment.MachineName}"));
+            DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachName")} : {m_SystemConfig.Machine.EquipName}"));
+            DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
 
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
@@ -431,6 +447,23 @@ namespace UIModule.MainPanel
                 m_RegionManager.RequestNavigate(RegionNames.CenterContentRegion, page);
         }
 
+        //public override void OnValidateLogin(bool IsAuthenticated)
+        //{
+        //    //base.OnValidateLogin(IsAuthenticated);
+        //    //IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+        //    //IsAllowAccessOperator = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
+
+        //    if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
+        //    {
+        //        IsAllowOperator = Visibility.Visible;
+                
+        //    }
+        //    else
+        //    {
+        //        IsAllowOperator = Visibility.Collapsed;
+        //    }
+        //}
+
         private void OnResultlogEntity(ResultlogEntity log)
         {
             if ((log.MsgType == LogMsgType.TCP && !m_SystemConfig.General.IsLogTCPMsg) || (log.MsgType == LogMsgType.SerialPort && !m_SystemConfig.General.IsLogSerialMsg))
@@ -444,6 +477,20 @@ namespace UIModule.MainPanel
             });
         }
         
+
+        private void OnDatalogEntity(DatalogEntity log)
+        {
+            if((log.MsgType == LogMsgType.TCP && !m_SystemConfig.General.IsLogTCPMsg) || (log.MsgType == LogMsgType.SerialPort && !m_SystemConfig.General.IsLogSerialMsg))
+			{
+                return;
+			}
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                DataLogCollection.Add(new Datalog(log.MsgType, log.MsgText));
+            });
+        }
+
         private void OnDatalogCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             try
