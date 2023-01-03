@@ -531,7 +531,7 @@ namespace UIModule.MainPanel
             base.OnValidateLogin(IsAuthenticated);
             // IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
             //IsAllowAccessEquipment = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-            if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated)
+            if (m_AuthService.CurrentUser.IsAuthenticated)
             {
                 IsAllowEquipment = Visibility.Visible;
 

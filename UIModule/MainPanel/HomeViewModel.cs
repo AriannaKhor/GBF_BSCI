@@ -200,7 +200,7 @@ namespace UIModule.MainPanel
             {
                 m_regionManager.RequestNavigate("HomeTabControlRegion","OperatorView");
             }
-            else if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin || m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Engineer || m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Technician && m_AuthService.CurrentUser.IsAuthenticated)
+            else
             {
                 m_regionManager.RequestNavigate("HomeTabControlRegion", "EquipmentView");
             }
