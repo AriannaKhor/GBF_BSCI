@@ -7,6 +7,7 @@
     using GreatechApp.Core.Interface;
     using GreatechApp.Core.Resources;
     using GreatechApp.Services.UserServices;
+    using GreatechApp.Services.Utilities;
     using Microsoft.EntityFrameworkCore;
     using Prism.Commands;
     using Prism.Events;
@@ -167,9 +168,9 @@
             UserCommand = new DelegateCommand<string>(UserOperation);
 
             m_UserLevelCollection = new List<string>();
-            for (int i = 0; i < Enum.GetNames(typeof(UserLevel)).Length; i++)
+            for (int i = 0; i < Enum.GetNames(typeof(UserLevel)).Length - 1; i++)
             {
-                UserLevelCollection.Add(((UserLevel)i).ToString());
+                UserLevelCollection.Add(EnumHelper.GetDescription((UserLevel)i));
             }
 
             RefreshDatabase();
@@ -206,12 +207,12 @@
                 ButtonResult buttonResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("AskConfirmDeleteUser"));
 
 
-                    if(buttonResult == ButtonResult.Yes)
-                    {
-                        UserStatus = m_SQLOperation.DeleteUser(UserCollection[SelectedIndex].User_ID) ? $"{DialogTable.SuccessdeleteUser} : {UserCollection[SelectedIndex].User_ID}" : $"{DialogTable.FaildeleteUser} : {UserCollection[SelectedIndex].User_ID}";
-                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Delete")} : {UserCollection[SelectedIndex].User_ID}" });
-                        RefreshDatabase();
-                    }
+                if (buttonResult == ButtonResult.Yes)
+                {
+                    UserStatus = m_SQLOperation.DeleteUser(UserCollection[SelectedIndex].User_ID) ? $"{DialogTable.SuccessdeleteUser} : {UserCollection[SelectedIndex].User_ID}" : $"{DialogTable.FaildeleteUser} : {UserCollection[SelectedIndex].User_ID}";
+                    m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("Delete")} : {UserCollection[SelectedIndex].User_ID}" });
+                    RefreshDatabase();
+                }
             }
             else if (Command == "Update")
             {

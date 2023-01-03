@@ -1,13 +1,20 @@
-﻿namespace GreatechApp.Core.Enums
+﻿using System.ComponentModel;
+
+namespace GreatechApp.Core.Enums
 {
     public sealed class ACL
     {
         public enum UserLevel
         {
+            [Description("None")]
             None = -1,
+            [Description("Admin")]
             Admin,
+            [Description("Engineer")]
             Engineer,
+            [Description("Technician")]
             Technician,
+            [Description("Operator")]
             Operator,
         }
 
