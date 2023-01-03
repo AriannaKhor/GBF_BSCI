@@ -53,7 +53,7 @@ namespace UIModule.MainPanel
             for (int i = 0; i < Enum.GetNames(typeof(BYP_IDX)).Length; i++)
             {
                 BypassCollection.Add(new Bypass(i));
-                BypassCollection[i].Description = EnumHelper.GetDescription((BYP_IDX)i);
+                BypassCollection[i].Description = EnumHelper.GetDescription(((BYP_IDX)i));
             }
 
         }
