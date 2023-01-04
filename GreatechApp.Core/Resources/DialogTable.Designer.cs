@@ -97,7 +97,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure want to Close The Application ?.
+        ///   Looks up a localized string similar to Are you sure want to close the application ?.
         /// </summary>
         public static string AskConfirmCloseApp {
             get {

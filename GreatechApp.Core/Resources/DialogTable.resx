@@ -130,7 +130,7 @@
     <value>already exist in database</value>
   </data>
   <data name="AskConfirmCloseApp" xml:space="preserve">
-    <value>Are you sure want to Close The Application ?</value>
+    <value>Are you sure want to close the application ?</value>
   </data>
   <data name="AskConfirmDeleteLiveSeq" xml:space="preserve">
     <value>Are you sure want to clear live sequence collection?</value>

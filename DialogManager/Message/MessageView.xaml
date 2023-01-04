@@ -51,7 +51,7 @@
 
                     <Image Source="{Binding Image}" Width="50" Height="50"/>
                     <ScrollViewer  Grid.Row="0" Grid.Column="1" VerticalScrollBarVisibility="Auto">
-                        <TextBlock Text="{Binding Message}" TextWrapping="Wrap" FontSize="16" Margin="3" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Message}" FontWeight="SemiBold" TextWrapping="Wrap" FontSize="16" Margin="3" VerticalAlignment="Center"/>
                     </ScrollViewer>
                 </Grid>
 
