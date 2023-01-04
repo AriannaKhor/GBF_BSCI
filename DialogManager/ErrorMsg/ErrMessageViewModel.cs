@@ -231,6 +231,10 @@ namespace DialogManager.ErrorMsg
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
             m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             #endregion
+
+            #region Error
+            Global.ErrorMsg = string.Empty;
+            #endregion
         }
 
         private string GetDialogTableValue(string key)

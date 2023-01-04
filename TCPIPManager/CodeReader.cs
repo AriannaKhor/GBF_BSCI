@@ -152,6 +152,9 @@ namespace TCPIPManager
                                 Global.CodeReaderResult = resultstatus.OK.ToString();
                                 Global.OverallResult = Global.CodeReaderResult;
                                 m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+                                SaveGlobalResult();
+                                m_Events.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
+                                m_resultsDatalog.ClearAll();
 
                                 if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
                                 {
@@ -173,12 +176,10 @@ namespace TCPIPManager
                                 }
                                 else
                                 {
-                                    SaveGlobalResult();
-                                    m_Events.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
-                                    m_resultsDatalog.ClearAll();
                                     ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK, ButtonResult.Cancel);
                                     if (dialogResult == ButtonResult.OK)
                                     {
+                                        ResetCounter();
                                         m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
                                         CloseDialog("");
                                     }
@@ -219,7 +220,6 @@ namespace TCPIPManager
                     Global.OverallResult = Global.CodeReaderResult;
                     m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
                     m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
-
                 }
                 temp = false;
             }
@@ -236,7 +236,14 @@ namespace TCPIPManager
             {
                 Global.CurrentLotBatchNum = Global.CurrentBatchNum;
             }
-            
+
+            if (Global.OverallResult == "OK")
+            {
+                Global.ErrorMsg = "N/A";
+                Global.Remarks = "N/A";
+                Global.CurrentApprovalLevel = "N/A";
+            }
+
             m_resultsDatalog.UserId = Global.UserId;
             m_resultsDatalog.UserLvl = Global.UserLvl;
             DateTime currentTime = DateTime.Now;
@@ -331,6 +338,10 @@ namespace TCPIPManager
             Global.VisInspectResult = resultstatus.PendingResult.ToString();
             m_Events.GetEvent<TopVisionResultEvent>().Publish();
             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+            #endregion
+
+            #region Error
+            Global.ErrorMsg = string.Empty;
             #endregion
         }
 

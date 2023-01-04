@@ -65,7 +65,7 @@ namespace GreatechApp.Core.Variable
 
        
         //Error 
-        public static string ErrorMsg = "N/A";
+        public static string ErrorMsg;
         public static string Remarks;
         public static string ForceEndLotRemarks;
         public static string CurrentApprovalLevel;

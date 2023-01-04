@@ -110,10 +110,12 @@ namespace Sequence.MachineSeq
                                 switch (m_FailType)
                                 {
                                     case "WrongOrientation":
-                                        Global.ErrorMsg = RaiseError((int)ErrorCode.WrongOrientation);
+                                        Global.ErrorMsg = ErrorCode.WrongOrientation.ToString();
+                                        RaiseError((int)ErrorCode.WrongOrientation);
                                         break;
                                     case "ExceedUpperLimit":
-                                        Global.ErrorMsg = RaiseError((int)ErrorCode.ExceedUpperLimit);
+                                        Global.ErrorMsg = ErrorCode.ExceedUpperLimit.ToString();
+                                        RaiseError((int)ErrorCode.ExceedUpperLimit);
                                         break;
                                 }
                                 m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
@@ -137,17 +139,20 @@ namespace Sequence.MachineSeq
                                 switch (m_FailType)
                                 {
                                     case "BatchNotMatch":
-                                        Global.ErrorMsg = RaiseVerificationError((int)ErrorCode.BatchNotMatch);
+                                        Global.ErrorMsg = ErrorCode.BatchNotMatch.ToString();
+                                        RaiseVerificationError((int)ErrorCode.BatchNotMatch);
                                         m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
                                         break;
 
                                     case "BoxQtyNotMatch":
-                                        Global.ErrorMsg = RaiseError((int)ErrorCode.BoxQtyNotMatch);
+                                        Global.ErrorMsg = ErrorCode.BoxQtyNotMatch.ToString();
+                                        RaiseError((int)ErrorCode.BoxQtyNotMatch);
                                         m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
                                         break;
 
                                     case "ExceedTotalBatchQty":
-                                        Global.ErrorMsg = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
+                                        Global.ErrorMsg = ErrorCode.ExceedTotalBatchQty.ToString();
+                                        RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
                                         m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
                                         break;
                                 }

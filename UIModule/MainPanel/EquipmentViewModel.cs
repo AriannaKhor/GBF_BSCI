@@ -356,37 +356,39 @@ namespace UIModule.MainPanel
                     string filePath = $"{m_SystemConfig.FolderPath.SoftwareResultLog}Log[{date}]\\";
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
-
-                    string filename = $"Batch {Global.CurrentLotBatchNum}.csv";
-                    filename = filePath + filename;
-
-                    var records = new List<ResultsDatalog>();
-                    records.Add(resultsDatalog);
-
-                    if (!File.Exists(filename.ToString()))
+                    if (m_resultsDatalog.OverallResult != null)
                     {
-                        //create new .csv file and initialize the headers
-                        using (var writer = new StreamWriter(filename))
-                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        string filename = $"Batch {Global.CurrentLotBatchNum}.csv";
+                        filename = filePath + filename;
+
+                        var records = new List<ResultsDatalog>();
+                        records.Add(resultsDatalog);
+
+                        if (!File.Exists(filename.ToString()))
                         {
-                            csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
-                            csv.WriteRecords(records);
+                            //create new .csv file and initialize the headers
+                            using (var writer = new StreamWriter(filename))
+                            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                            {
+                                csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+                                csv.WriteRecords(records);
+                            }
                         }
-                    }
-                    else
-                    {
-                        //append to .csv file
-                        var configList = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        else
                         {
-                            HasHeaderRecord = false
-                        };
+                            //append to .csv file
+                            var configList = new CsvConfiguration(CultureInfo.InvariantCulture)
+                            {
+                                HasHeaderRecord = false
+                            };
 
-                        using (var stream = File.Open(filename, FileMode.Append))
-                        using (var writer = new StreamWriter(stream))
-                        using (var csv = new CsvWriter(writer, configList))
-                        {
-                            csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
-                            csv.WriteRecords(records);
+                            using (var stream = File.Open(filename, FileMode.Append))
+                            using (var writer = new StreamWriter(stream))
+                            using (var csv = new CsvWriter(writer, configList))
+                            {
+                                csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+                                csv.WriteRecords(records);
+                            }
                         }
                     }
                 }
