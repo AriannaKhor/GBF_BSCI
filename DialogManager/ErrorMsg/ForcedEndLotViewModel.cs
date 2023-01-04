@@ -207,6 +207,7 @@ namespace DialogManager.ErrorMsg
                     Global.CurrentApprovalLevel = currentUserLevel.ToString();
                     SaveGlobalResult();
                     m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
+                    m_resultsDatalog.ClearAll();
                 }
                 else
                 {
@@ -233,7 +234,7 @@ namespace DialogManager.ErrorMsg
         {
             //SaveGlobalResult();
             //m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
-            m_resultsDatalog.ClearAll();
+            //m_resultsDatalog.ClearAll();
             if (Command == "EndLot")
             {
                 m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });

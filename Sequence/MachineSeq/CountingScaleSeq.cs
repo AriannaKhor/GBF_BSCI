@@ -130,7 +130,6 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.WaitCodeReaderResult:
-                            Global.ErrorMsg = string.Empty;
                             if (m_SeqFlag.ProcCodeReaderFail)
                             {
                                 m_SeqFlag.ProcCodeReaderFail = false;
