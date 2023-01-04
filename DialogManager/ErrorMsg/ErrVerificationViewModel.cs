@@ -309,6 +309,7 @@ namespace DialogManager.ErrorMsg
             Global.AccumulateCurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
+            Global.CurrentLotBatchNum = String.Empty;
             Global.CodeReaderResult = resultstatus.PendingResult.ToString();
             #endregion
 
