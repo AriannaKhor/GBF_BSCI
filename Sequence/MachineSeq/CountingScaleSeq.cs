@@ -88,7 +88,6 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.WaitVisionResult:
-                            Global.ErrorMsg = string.Empty;
                             if (m_SeqFlag.ProcVisCont)
                             {
                                 m_SeqFlag.ProcVisCont = false;
@@ -131,6 +130,7 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.WaitCodeReaderResult:
+                            Global.ErrorMsg = string.Empty;
                             if (m_SeqFlag.ProcCodeReaderFail)
                             {
                                 m_SeqFlag.ProcCodeReaderFail = false;

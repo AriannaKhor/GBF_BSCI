@@ -1,0 +1,2 @@
+User ID,User Level,Timestamp,Inspection Type,Total Quantity,Correct Orientation,Wrong Orientation,Inspection Type,Decoded Batch Quantity,Decoded Box Quantity,Accumulated Batch Quantity,Overall Result,Messages,Remarks,Approved By
+e,Engineer,04-01-2023 | 11:08:32.941,TopVision,26,26,0,CodeReader,285,26,260,NG,,Test 2,Admin

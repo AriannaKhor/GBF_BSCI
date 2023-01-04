@@ -357,55 +357,101 @@ namespace UIModule.MainPanel
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
 
-                    if (m_resultsDatalog.OverallResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
+                    string filename = $"Batch {Global.CurrentBatchNum}.csv";
+                    filename = filePath + filename;
+
+                    var records = new List<ResultsDatalog>();
+                    records.Add(resultsDatalog);
+
+                    if (!File.Exists(filename.ToString()))
                     {
-                        string filename = $"Batch {Global.CurrentBatchNum}.csv";
-                        filename = filePath + filename;
-
-                        var records = new List<ResultsDatalog>();
-                        records.Add(resultsDatalog);
-
-                        if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
+                        //create new .csv file and initialize the headers
+                        using (var writer = new StreamWriter(filename))
+                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                         {
-                            if (m_resultsDatalog.OverallResult != "PendingResult" && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
-                            {
-                                if (!File.Exists(filename.ToString()))
-                                {
-                                    //create new .csv file and initialize the headers
-                                    using (var writer = new StreamWriter(filename))
-                                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                                    {
-                                        csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
-                                        csv.WriteRecords(records);
-                                    }
-                                }
-                                else
-                                {
-                                    //append to .csv file
-                                    var configList = new CsvConfiguration(CultureInfo.InvariantCulture)
-                                    {
-                                        HasHeaderRecord = false
-                                    };
-
-                                    using (var stream = File.Open(filename, FileMode.Append))
-                                    using (var writer = new StreamWriter(stream))
-                                    using (var csv = new CsvWriter(writer, configList))
-                                    {
-                                        csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
-                                        csv.WriteRecords(records);
-                                    }
-                                }
-                                tempvisquantityholder = m_resultsDatalog.VisTotalPrdQty;
-                            }
+                            csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+                            csv.WriteRecords(records);
                         }
                     }
                     else
                     {
-                        date = DateTime.Now.ToString("dd-MM-yyyy");
+                        //append to .csv file
+                        var configList = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HasHeaderRecord = false
+                        };
+
+                        using (var stream = File.Open(filename, FileMode.Append))
+                        using (var writer = new StreamWriter(stream))
+                        using (var csv = new CsvWriter(writer, configList))
+                        {
+                            csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+                            csv.WriteRecords(records);
+                        }
                     }
                 }
             }
         }
+        //private void OnResultLog(ResultsDatalog resultsDatalog)
+        //{
+        //    lock (m_SyncLog)
+        //    {
+        //        {
+        //            //create log directory V2
+        //            string date = DateTime.Now.ToString("dd-MM-yyyy");
+        //            string filePath = $"{m_SystemConfig.FolderPath.SoftwareResultLog}Log[{date}]\\";
+        //            if (!Directory.Exists(filePath))
+        //                Directory.CreateDirectory(filePath);
+
+        //            if (m_resultsDatalog.OverallResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
+        //            {
+        //                string filename = $"Batch {Global.CurrentBatchNum}.csv";
+        //                filename = filePath + filename;
+
+        //                var records = new List<ResultsDatalog>();
+        //                records.Add(resultsDatalog);
+
+        //                if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
+        //                {
+        //                    if (m_resultsDatalog.OverallResult != "PendingResult" && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
+        //                    {
+        //                        if (!File.Exists(filename.ToString()))
+        //                        {
+        //                            //create new .csv file and initialize the headers
+        //                            using (var writer = new StreamWriter(filename))
+        //                            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+        //                            {
+        //                                csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+        //                                csv.WriteRecords(records);
+        //                            }
+        //                        }
+        //                        else
+        //                        {
+        //                            //append to .csv file
+        //                            var configList = new CsvConfiguration(CultureInfo.InvariantCulture)
+        //                            {
+        //                                HasHeaderRecord = false
+        //                            };
+
+        //                            using (var stream = File.Open(filename, FileMode.Append))
+        //                            using (var writer = new StreamWriter(stream))
+        //                            using (var csv = new CsvWriter(writer, configList))
+        //                            {
+        //                                csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
+        //                                csv.WriteRecords(records);
+        //                            }
+        //                        }
+        //                        tempvisquantityholder = m_resultsDatalog.VisTotalPrdQty;
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                date = DateTime.Now.ToString("dd-MM-yyyy");
+        //            }
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Vision
