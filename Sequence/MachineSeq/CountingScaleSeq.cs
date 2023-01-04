@@ -139,18 +139,20 @@ namespace Sequence.MachineSeq
                                 {
                                     case "BatchNotMatch":
                                         Global.ErrorMsg = RaiseVerificationError((int)ErrorCode.BatchNotMatch);
+                                        m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
                                         break;
 
                                     case "BoxQtyNotMatch":
                                         Global.ErrorMsg = RaiseError((int)ErrorCode.BoxQtyNotMatch);
+                                        m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
                                         break;
 
                                     case "ExceedTotalBatchQty":
                                         Global.ErrorMsg = RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
+                                        m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
                                         break;
                                 }
 
-                                m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
                                 m_SeqNum = SN.ErrorRoutine;
                             }
                             else if (m_SeqFlag.ProcCodeReaderCont)

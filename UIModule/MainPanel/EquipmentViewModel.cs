@@ -164,6 +164,13 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_StatusFG, value); }
         }
 
+        private SolidColorBrush m_CdStatusFG;
+        public SolidColorBrush CdStatusFG
+        {
+            get { return m_CdStatusFG; }
+            set { SetProperty(ref m_CdStatusFG, value); }
+        }
+
         private SolidColorBrush m_ProductQuantityFG = System.Windows.Media.Brushes.Black;
         public SolidColorBrush ProductQuantityFG
         {
@@ -171,12 +178,6 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_ProductQuantityFG, value); }
         }
 
-        private SolidColorBrush m_CdStatusFG;
-        public SolidColorBrush CdStatusFG
-        {
-            get { return m_CdStatusFG; }
-            set { SetProperty(ref m_CdStatusFG, value); }
-        }
 
         private SolidColorBrush m_VisResultFG = System.Windows.Media.Brushes.Black;
         public SolidColorBrush VisResultFG
@@ -228,7 +229,6 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_DataLogCollection, value); }
         }
 
-
         private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection;
 
         public FixedSizeObservableCollection<Datalog> SoftwareResultCollection
@@ -259,7 +259,6 @@ namespace UIModule.MainPanel
             get { return m_IsAllowEquipment; }
             set { SetProperty(ref m_IsAllowEquipment, value); }
         }
-
 
         private bool m_IsEquipViewLoaded;
         public bool IsEquipViewLoaded
@@ -335,6 +334,7 @@ namespace UIModule.MainPanel
 
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
+            CodeReaderConnStatus = Global.CodeReaderConnStatus;
         }
 
 
@@ -411,44 +411,32 @@ namespace UIModule.MainPanel
         #region Vision
         private void OnTopVisionResult()
         {
-            if (Global.TopVisionEndLot)
-            {
-                Global.TopVisionEndLot = false;
-                #region Top Vision
-                VisProductQuantity = Global.VisProductQuantity;
-                VisProductCrtOrientation = Global.VisProductCrtOrientation;
-                VisProductWrgOrientation = Global.VisProductWrgOrientation;
-                VisInspectResult = resultstatus.PendingResult.ToString();
+            VisInspectResult = Global.VisInspectResult;
+            VisProductQuantity = Global.VisProductQuantity;
+            VisProductCrtOrientation = Global.VisProductCrtOrientation;
+            VisProductWrgOrientation = Global.VisProductWrgOrientation;
 
+            if (Global.VisInspectResult == "OK")
+            {
+                VisResultBG = System.Windows.Media.Brushes.Green;
+                ProductQuantityFG = System.Windows.Media.Brushes.Green;
+                CorrectOrientationFG = System.Windows.Media.Brushes.Green;
+                WrgOrientationFG = System.Windows.Media.Brushes.Green;
+            }
+            else if (Global.VisInspectResult == "NG")
+            {
+                VisResultBG = System.Windows.Media.Brushes.Red;
+                ProductQuantityFG = System.Windows.Media.Brushes.Red;
+                CorrectOrientationFG = System.Windows.Media.Brushes.Red;
+                WrgOrientationFG = System.Windows.Media.Brushes.Red;
+            }
+            else
+            {
+                VisImage = null;
                 VisResultBG = System.Windows.Media.Brushes.Transparent;
                 ProductQuantityFG = System.Windows.Media.Brushes.Black;
                 CorrectOrientationFG = System.Windows.Media.Brushes.Black;
                 WrgOrientationFG = System.Windows.Media.Brushes.Black;
-
-                VisImage = null;
-                #endregion
-            }
-            else
-            {
-                VisInspectResult = Global.VisInspectResult;
-                VisProductQuantity = Global.VisProductQuantity;
-                VisProductCrtOrientation = Global.VisProductCrtOrientation;
-                VisProductWrgOrientation = Global.VisProductWrgOrientation;
-
-                if (Global.VisInspectResult == "OK")
-                {
-                    VisResultBG = System.Windows.Media.Brushes.Green;
-                    ProductQuantityFG = System.Windows.Media.Brushes.Green;
-                    CorrectOrientationFG = System.Windows.Media.Brushes.Green;
-                    WrgOrientationFG = System.Windows.Media.Brushes.Green;
-                }
-                else
-                {
-                    VisResultBG = System.Windows.Media.Brushes.Red;
-                    ProductQuantityFG = System.Windows.Media.Brushes.Red;
-                    CorrectOrientationFG = System.Windows.Media.Brushes.Red;
-                    WrgOrientationFG = System.Windows.Media.Brushes.Red;
-                }
             }
         }
 
@@ -479,39 +467,28 @@ namespace UIModule.MainPanel
 
         private void OnCodeReaderEndResult()
         {
-            if (Global.CodeReaderEndLot)
+            ViewCurrentContainerNumber = Global.CurrentContainerNum;
+            ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
+            ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
+            ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+            ViewCurrentBatchNumber = Global.CurrentBatchNum;
+            CodeReaderResult = Global.CodeReaderResult;
+
+            if (Global.CodeReaderResult == "OK")
             {
-                Global.CodeReaderEndLot = false;
-                #region Code Reader
-                ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                ViewAccumulateCurrentTotalBatchQuantity = 0;
-                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                CodeReaderResult = resultstatus.PendingResult.ToString();
-                CodeReaderImage = null;
-                CdResultBG = System.Windows.Media.Brushes.Transparent;
-                #endregion
+                CdResultBG = System.Windows.Media.Brushes.Green;
+            }
+            else if (Global.CodeReaderResult == "NG")
+            {
+                CdResultBG = System.Windows.Media.Brushes.Red;
             }
             else
             {
-                ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
-                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                CodeReaderResult = Global.CodeReaderResult;
-
-                if (Global.CodeReaderResult == "OK")
-                {
-                    CdResultBG = System.Windows.Media.Brushes.Green;
-                }
-                else
-                {
-                    CdResultBG = System.Windows.Media.Brushes.Red;
-                }
+                CodeReaderImage = null;
+                CdResultBG = System.Windows.Media.Brushes.Transparent;
             }
         }
+        
 
         private void OnCodeReaderImg(BitmapImage img)
         {

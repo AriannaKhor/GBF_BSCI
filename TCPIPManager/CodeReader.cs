@@ -200,6 +200,7 @@ namespace TCPIPManager
                             Global.OverallResult = Global.CodeReaderResult;
                             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
                             m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "BoxQtyNotMatch" });
+
                         }
                     }
                     //Incorrect Batch No
@@ -314,14 +315,14 @@ namespace TCPIPManager
             Global.AccumulateCurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
+            Global.CodeReaderResult = resultstatus.PendingResult.ToString();
             #endregion
 
             #region Top Vision
             Global.VisProductQuantity = 0f;
             Global.VisProductCrtOrientation = 0f;
             Global.VisProductWrgOrientation = 0f;
-            Global.TopVisionEndLot = true;
-            Global.CodeReaderEndLot = true;
+            Global.VisInspectResult = resultstatus.PendingResult.ToString();
             m_Events.GetEvent<TopVisionResultEvent>().Publish();
             m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             #endregion

@@ -24,5 +24,6 @@ namespace DialogManager.Message
         {
             InitializeComponent();
         }
+
     }
 }

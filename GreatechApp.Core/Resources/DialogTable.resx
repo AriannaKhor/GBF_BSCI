@@ -283,6 +283,11 @@ Example: A1 61 FF 97 </value>
   <data name="NotAllowToCloseApp" xml:space="preserve">
     <value>Please Make Sure Machine Status is Idle before Close Application</value>
   </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes:
+Press Enter to continue. 
+Press ESC to cancel.</value>
+  </data>
   <data name="OEEDataSaved" xml:space="preserve">
     <value>OEE Data saved</value>
   </data>
@@ -293,13 +298,17 @@ Example: A1 61 FF 97 </value>
     <value>OK</value>
   </data>
   <data name="OKResult" xml:space="preserve">
-    <value>Proceed with new box</value>
+    <value>Proceed with new box.
+
+Notes:
+Press Enter to continue. 
+Press ESC to cancel.</value>
   </data>
   <data name="OperatorIDEmpty" xml:space="preserve">
     <value>Please Make Sure Operator ID is not Empty</value>
   </data>
   <data name="PassResult" xml:space="preserve">
-    <value>Result Pass for Top Vision and Code Reader</value>
+    <value>Pass Result</value>
   </data>
   <data name="ProductExist" xml:space="preserve">
     <value>Product Name already exist in database</value>

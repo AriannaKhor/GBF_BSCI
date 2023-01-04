@@ -298,7 +298,7 @@ namespace DialogManager.ErrorMsg
             m_resultsDatalog.ApprovedBy = Global.CurrentApprovalLevel;
         }
 
-        private void ResetCounter()
+          private void ResetCounter()
         {
             #region Code Reader
             Global.CurrentContainerNum = String.Empty;
@@ -306,14 +306,14 @@ namespace DialogManager.ErrorMsg
             Global.AccumulateCurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
+            Global.CodeReaderResult = resultstatus.PendingResult.ToString();
             #endregion
 
             #region Top Vision
             Global.VisProductQuantity = 0f;
             Global.VisProductCrtOrientation = 0f;
             Global.VisProductWrgOrientation = 0f;
-            Global.TopVisionEndLot = true;
-            Global.CodeReaderEndLot = true;
+            Global.VisInspectResult = resultstatus.PendingResult.ToString();
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
             m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             #endregion
@@ -340,12 +340,7 @@ namespace DialogManager.ErrorMsg
         {
 
         }
-        //void RaiseEndLotPopup()
-        //{
-        //    m_DialogService.ShowDialog(DialogList.ForcedEndLotView.ToString(),
-        //                              new DialogParameters($"message={""}"),
-        //                              null);
-        //}
+
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
             string[] split = parameters.GetValue<string>("message").Split(';');

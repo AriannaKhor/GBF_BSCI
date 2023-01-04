@@ -35,8 +35,8 @@ namespace UIModule.MainPanel
 
         #region Properties
         private string m_TabPageHeader;
-        public string TabPageHeader 
-        { 
+        public string TabPageHeader
+        {
             get { return m_TabPageHeader; }
             set { SetProperty(ref m_TabPageHeader, value); }
         }
@@ -242,7 +242,6 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_IsAllowEditMarker, value); }
         }
 
-
         private Visibility m_IsAllowOperator = Visibility.Collapsed;
 
         public Visibility IsAllowOperator
@@ -334,44 +333,31 @@ namespace UIModule.MainPanel
         #region Vision
         private void OnTopVisionResult()
         {
-            if (Global.TopVisionEndLot)
-            {
-                Global.TopVisionEndLot = false;
-                #region Top Vision
-                VisProductQuantity = Global.VisProductQuantity;
-                VisProductCrtOrientation = Global.VisProductCrtOrientation;
-                VisProductWrgOrientation = Global.VisProductWrgOrientation;
-                VisInspectResult = resultstatus.PendingResult.ToString();
+            VisInspectResult = Global.VisInspectResult;
+            VisProductQuantity = Global.VisProductQuantity;
+            VisProductCrtOrientation = Global.VisProductCrtOrientation;
+            VisProductWrgOrientation = Global.VisProductWrgOrientation;
 
+            if (Global.VisInspectResult == "OK")
+            {
+                VisResultBG = System.Windows.Media.Brushes.Green;
+                ProductQuantityFG = System.Windows.Media.Brushes.Green;
+                CorrectOrientationFG = System.Windows.Media.Brushes.Green;
+                WrgOrientationFG = System.Windows.Media.Brushes.Green;
+            }
+            else if (Global.VisInspectResult == "NG")
+            {
+                VisResultBG = System.Windows.Media.Brushes.Red;
+                ProductQuantityFG = System.Windows.Media.Brushes.Red;
+                CorrectOrientationFG = System.Windows.Media.Brushes.Red;
+                WrgOrientationFG = System.Windows.Media.Brushes.Red;
+            }
+            else
+            {
                 VisResultBG = System.Windows.Media.Brushes.Transparent;
                 ProductQuantityFG = System.Windows.Media.Brushes.Black;
                 CorrectOrientationFG = System.Windows.Media.Brushes.Black;
                 WrgOrientationFG = System.Windows.Media.Brushes.Black;
-
-                VisImage = null;
-                #endregion
-            }
-            else
-            {
-                VisInspectResult = Global.VisInspectResult;
-                VisProductQuantity = Global.VisProductQuantity;
-                VisProductCrtOrientation = Global.VisProductCrtOrientation;
-                VisProductWrgOrientation = Global.VisProductWrgOrientation;
-
-                if (Global.VisInspectResult == "OK")
-                {
-                    VisResultBG = System.Windows.Media.Brushes.Green;
-                    ProductQuantityFG = System.Windows.Media.Brushes.Green;
-                    CorrectOrientationFG = System.Windows.Media.Brushes.Green;
-                    WrgOrientationFG = System.Windows.Media.Brushes.Green;
-                }
-                else
-                {
-                    VisResultBG = System.Windows.Media.Brushes.Red;
-                    ProductQuantityFG = System.Windows.Media.Brushes.Red;
-                    CorrectOrientationFG = System.Windows.Media.Brushes.Red;
-                    WrgOrientationFG = System.Windows.Media.Brushes.Red;
-                }
             }
         }
 
@@ -400,37 +386,24 @@ namespace UIModule.MainPanel
         //New Can Be Use
         private void OnCodeReaderEndResult()
         {
-            if (Global.CodeReaderEndLot)
+            ViewCurrentContainerNumber = Global.CurrentContainerNum;
+            ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
+            ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
+            ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
+            ViewCurrentBatchNumber = Global.CurrentBatchNum;
+            CodeReaderResult = Global.CodeReaderResult;
+
+            if (Global.CodeReaderResult == "OK")
             {
-                Global.CodeReaderEndLot = false;
-                #region Code Reader
-                ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                ViewAccumulateCurrentTotalBatchQuantity = 0;
-                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                CodeReaderResult = resultstatus.PendingResult.ToString();
-                CodeReaderImage = null;
-                CdResultBG = System.Windows.Media.Brushes.Transparent;
-                #endregion
+                CdResultBG = System.Windows.Media.Brushes.Green;
+            }
+            else if (Global.CodeReaderResult == "NG")
+            {
+                CdResultBG = System.Windows.Media.Brushes.Red;
             }
             else
             {
-                ViewCurrentContainerNumber = Global.CurrentContainerNum;
-                ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-                ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
-                ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-                ViewCurrentBatchNumber = Global.CurrentBatchNum;
-                CodeReaderResult = Global.CodeReaderResult;
-
-                if (Global.CodeReaderResult == "OK")
-                {
-                    CdResultBG = System.Windows.Media.Brushes.Green;
-                }
-                else
-                {
-                    CdResultBG = System.Windows.Media.Brushes.Red;
-                }
+                CdResultBG = System.Windows.Media.Brushes.Transparent;
             }
         }
 
@@ -438,7 +411,7 @@ namespace UIModule.MainPanel
         {
             CodeReaderImage = img;
         }
-            
+
         #endregion
 
         private void OnNavigation(string page)
@@ -449,14 +422,14 @@ namespace UIModule.MainPanel
 
         public override void OnValidateLogin(bool IsAuthenticated)
         {
-         base.OnValidateLogin(IsAuthenticated);
+            base.OnValidateLogin(IsAuthenticated);
             //IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
             //IsAllowAccessOperator = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
 
             if (m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Operator && m_AuthService.CurrentUser.IsAuthenticated)
             {
                 IsAllowOperator = Visibility.Visible;
-                
+
             }
             else
             {
@@ -477,14 +450,14 @@ namespace UIModule.MainPanel
                 SoftwareResultCollection.Add(new Datalog(log.MsgType, log.MsgText));
             });
         }
-        
+
 
         private void OnDatalogEntity(DatalogEntity log)
         {
-            if((log.MsgType == LogMsgType.TCP && !m_SystemConfig.General.IsLogTCPMsg) || (log.MsgType == LogMsgType.SerialPort && !m_SystemConfig.General.IsLogSerialMsg))
-			{
+            if ((log.MsgType == LogMsgType.TCP && !m_SystemConfig.General.IsLogTCPMsg) || (log.MsgType == LogMsgType.SerialPort && !m_SystemConfig.General.IsLogSerialMsg))
+            {
                 return;
-			}
+            }
 
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -500,14 +473,14 @@ namespace UIModule.MainPanel
                 {
                     Datalog dtLog = e.NewItems[0] as Datalog;
 
-                    if(dtLog == null)
+                    if (dtLog == null)
                     {
                         return;
                     }
                     WriteLog(dtLog);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.Source);
             }
@@ -517,7 +490,7 @@ namespace UIModule.MainPanel
         #region Method
 
         #region Vision
-     //New Can Be Use
+        //New Can Be Use
         public void OnVisionConnection()
         {
             VisionConnStatus = Global.VisionConnStatus;
@@ -549,13 +522,13 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Code Reader
-     
+
         #endregion
 
         #region Log
         private void WriteLog(Datalog log)
         {
-            lock(m_SyncLog)
+            lock (m_SyncLog)
             {
                 string executableName = System.IO.Path.GetDirectoryName(
                          System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
@@ -600,7 +573,7 @@ namespace UIModule.MainPanel
 
         #region Others
 
-   
+
 
         public bool KeepAlive
         {
@@ -615,7 +588,7 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Enum 
-   
+
         #endregion
     }
 }

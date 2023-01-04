@@ -557,6 +557,17 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notes:
+        ///Press Enter to continue. 
+        ///Press ESC to cancel..
+        /// </summary>
+        public static string Notes {
+            get {
+                return ResourceManager.GetString("Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OEE Data saved.
         /// </summary>
         public static string OEEDataSaved {
@@ -585,6 +596,10 @@ namespace GreatechApp.Core.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to Proceed with new box.
+        ///
+        ///Notes:
+        ///Press Enter to continue. 
+        ///Press ESC to cancel..
         /// </summary>
         public static string OKResult {
             get {
@@ -602,7 +617,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Result Pass for Top Vision and Code Reader.
+        ///   Looks up a localized string similar to Pass Result.
         /// </summary>
         public static string PassResult {
             get {
