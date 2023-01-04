@@ -205,6 +205,8 @@ namespace DialogManager.ErrorMsg
                     btnYesEnable = true;
                     ErrMessage = "Valid Login";
                     Global.CurrentApprovalLevel = currentUserLevel.ToString();
+                    SaveGlobalResult();
+                    m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
                 }
                 else
                 {
@@ -229,8 +231,8 @@ namespace DialogManager.ErrorMsg
 
         private void OperationMethod(string Command)
         {
-            SaveGlobalResult();
-            m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
+            //SaveGlobalResult();
+            //m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
             m_resultsDatalog.ClearAll();
             if (Command == "EndLot")
             {

@@ -210,10 +210,11 @@ namespace DialogManager.ErrorMsg
             m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             OperationCommand = new DelegateCommand<string>(OperationMethod);
-            //EndLotCommand = new DelegateCommand(RaiseEndLotPopup);
             AlarmDetail = new AlarmParameter();
         }
+        #endregion
 
+        #region Event
         private void VerificationMethod(object value)
         {
             var passwordBox = value as PasswordBox;
@@ -231,6 +232,8 @@ namespace DialogManager.ErrorMsg
                     btnYesEnable = true;
                     ErrMessage = "Valid Login";
                     Global.CurrentApprovalLevel = currentUserLevel.ToString();
+                    SaveGlobalResult();
+                    m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
                 }
                 else
                 {
@@ -255,8 +258,8 @@ namespace DialogManager.ErrorMsg
 
         private void OperationMethod(string Command)
         {
-            SaveGlobalResult();
-            m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
+            //SaveGlobalResult();
+            //m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
             m_resultsDatalog.ClearAll();
             if (Command == "Continue")
             {
