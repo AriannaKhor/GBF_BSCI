@@ -61,6 +61,7 @@ namespace GreatechApp.Core.Variable
         public static string CodeReaderConnStatus = "Not Connected";
         public static string CodeReaderResult = resultstatus.PendingResult.ToString();
         public static string OverallResult;
+        public static string CurrentLotBatchNum;
 
        
         //Error 

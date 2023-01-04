@@ -601,6 +601,7 @@ namespace UIModule.MainPanel
             Global.AccumulateCurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
+            Global.CurrentLotBatchNum = String.Empty;
             #endregion
 
             #region Top Vision

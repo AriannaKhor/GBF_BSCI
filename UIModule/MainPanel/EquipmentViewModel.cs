@@ -357,7 +357,7 @@ namespace UIModule.MainPanel
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
 
-                    string filename = $"Batch {Global.CurrentBatchNum}.csv";
+                    string filename = $"Batch {Global.CurrentLotBatchNum}.csv";
                     filename = filePath + filename;
 
                     var records = new List<ResultsDatalog>();

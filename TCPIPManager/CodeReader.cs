@@ -232,6 +232,11 @@ namespace TCPIPManager
 
         private void SaveGlobalResult()
         {
+            if(Global.CurrentLotBatchNum == null || Global.CurrentLotBatchNum == String.Empty)
+            {
+                Global.CurrentLotBatchNum = Global.CurrentBatchNum;
+            }
+            
             m_resultsDatalog.UserId = Global.UserId;
             m_resultsDatalog.UserLvl = Global.UserLvl;
             DateTime currentTime = DateTime.Now;
@@ -315,6 +320,7 @@ namespace TCPIPManager
             Global.AccumulateCurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
+            Global.CurrentLotBatchNum = String.Empty;
             Global.CodeReaderResult = resultstatus.PendingResult.ToString();
             #endregion
 
