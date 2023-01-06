@@ -282,6 +282,18 @@ namespace DialogManager.ErrorMsg
 
         private void SaveGlobalResult()
         {
+            if (Global.CurrentLotBatchNum == null || Global.CurrentLotBatchNum == String.Empty)
+            {
+                Global.CurrentLotBatchNum = Global.CurrentBatchNum;
+            }
+
+            if (Global.OverallResult == "OK")
+            {
+                Global.ErrorMsg = "N/A";
+                Global.Remarks = "N/A";
+                Global.CurrentApprovalLevel = "N/A";
+            }
+
             m_resultsDatalog.UserId = Global.UserId;
             m_resultsDatalog.UserLvl = Global.UserLvl;
             DateTime currentTime = DateTime.Now;
@@ -303,6 +315,7 @@ namespace DialogManager.ErrorMsg
             m_resultsDatalog.Remarks = Global.Remarks;
             m_resultsDatalog.ApprovedBy = Global.CurrentApprovalLevel;
         }
+
         #endregion
 
         #region Properties

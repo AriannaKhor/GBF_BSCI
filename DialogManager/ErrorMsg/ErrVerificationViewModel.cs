@@ -37,8 +37,8 @@ namespace DialogManager.ErrorMsg
         public string remarks
         {
             get { return m_remarks; }
-            set 
-            { 
+            set
+            {
                 SetProperty(ref m_remarks, value);
                 Global.Remarks = value;
             }
@@ -267,7 +267,7 @@ namespace DialogManager.ErrorMsg
                 Reset();
                 m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
             }
-      
+
             else if (Command == "EndLot")
             {
                 m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
@@ -280,6 +280,18 @@ namespace DialogManager.ErrorMsg
 
         private void SaveGlobalResult()
         {
+            if (Global.CurrentLotBatchNum == null || Global.CurrentLotBatchNum == String.Empty)
+            {
+                Global.CurrentLotBatchNum = Global.CurrentBatchNum;
+            }
+
+            if (Global.OverallResult == "OK")
+            {
+                Global.ErrorMsg = "N/A";
+                Global.Remarks = "N/A";
+                Global.CurrentApprovalLevel = "N/A";
+            }
+
             m_resultsDatalog.UserId = Global.UserId;
             m_resultsDatalog.UserLvl = Global.UserLvl;
             DateTime currentTime = DateTime.Now;
@@ -302,7 +314,7 @@ namespace DialogManager.ErrorMsg
             m_resultsDatalog.ApprovedBy = Global.CurrentApprovalLevel;
         }
 
-          private void ResetCounter()
+        private void ResetCounter()
         {
             #region Code Reader
             Global.CurrentContainerNum = String.Empty;

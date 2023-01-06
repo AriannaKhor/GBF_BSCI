@@ -328,9 +328,9 @@ namespace UIModule.MainPanel
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachName")} : {m_SystemConfig.Machine.EquipName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
 
-            //Software Results Log
-            SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
-            SoftwareResultCollection.CollectionChanged += this.OnSoftwareResultCollectionChanged;
+            ////Software Results Log
+            //SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
+            //SoftwareResultCollection.CollectionChanged += this.OnSoftwareResultCollectionChanged;
 
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
@@ -356,7 +356,8 @@ namespace UIModule.MainPanel
                     string filePath = $"{m_SystemConfig.FolderPath.SoftwareResultLog}Log[{date}]\\";
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
-                    if (m_resultsDatalog.OverallResult != null)
+
+                    if (Global.OverallResult!=null && Global.CurrentLotBatchNum !=null && Global.CurrentLotBatchNum !=string.Empty)
                     {
                         string filename = $"Batch {Global.CurrentLotBatchNum}.csv";
                         filename = filePath + filename;
@@ -582,26 +583,26 @@ namespace UIModule.MainPanel
             });
         }
 
-        private void OnSoftwareResultCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            try
-            {
-                if (e.Action == NotifyCollectionChangedAction.Add)
-                {
-                    Datalog resultLog = e.NewItems[0] as Datalog;
+        //private void OnSoftwareResultCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (e.Action == NotifyCollectionChangedAction.Add)
+        //        {
+        //            Datalog resultLog = e.NewItems[0] as Datalog;
 
-                    if (resultLog == null)
-                    {
-                        return;
-                    }
-                    WriteSoftwareResultLog(resultLog);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.Source);
-            }
-        }
+        //            if (resultLog == null)
+        //            {
+        //                return;
+        //            }
+        //            WriteSoftwareResultLog(resultLog);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message, ex.Source);
+        //    }
+        //}
 
         private void OnDatalogCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

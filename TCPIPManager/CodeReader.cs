@@ -188,6 +188,7 @@ namespace TCPIPManager
                                         m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
                                         m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                                         m_Events.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                                        Global.ContAccumBatchQty = false;
                                         ResetCounter();
                                         CloseDialog("");
                                     }
@@ -324,11 +325,16 @@ namespace TCPIPManager
             #region Code Reader
             Global.CurrentContainerNum = String.Empty;
             Global.CurrentBatchQuantity = 0;
-            Global.AccumulateCurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
-            Global.CurrentLotBatchNum = String.Empty;
             Global.CodeReaderResult = resultstatus.PendingResult.ToString();
+
+            if (!Global.ContAccumBatchQty)
+            {
+                Global.ContAccumBatchQty = true;
+                Global.AccumulateCurrentBatchQuantity = 0;
+                Global.CurrentLotBatchNum = String.Empty;
+            }
             #endregion
 
             #region Top Vision

@@ -1,0 +1,487 @@
+﻿<UserControl x:Class="UIModule.StationViews.SampleSeqView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:res="clr-namespace:GreatechApp.Core.Resources;assembly=GreatechApp.Core"
+             xmlns:ctrl="clr-namespace:GreatechApp.Core.Resources.Controls;assembly=GreatechApp.Core"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:util="clr-namespace:GreatechApp.Services.Utilities;assembly=GreatechApp.Services"
+             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             IsEnabled="{Binding CanAccess}"
+             d:DesignHeight="600" d:DesignWidth="1000" Background="White">
+
+    <UserControl.Resources>
+        <util:InverseBooleanConverter x:Key="InvertedBoolenConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--Header-->
+        <Border Name="Bd" CornerRadius="3,3,0,0">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF627793" Offset="0"/>
+                    <GradientStop Color="#FF234372" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Style="{DynamicResource styRoundButton}" Height="40" Width="40" Margin="5,0" ClickMode="Hover">
+                    <Image Source="/GreatechApp.Core;component/Icon/pictures.png" Height="30" Width="30" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseEnter">
+                                <prism:InvokeCommandAction Command="{Binding ImageCommand}" CommandParameter="Visible" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeave">
+                                <prism:InvokeCommandAction Command="{Binding ImageCommand}" CommandParameter="Collapsed" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
+                </Button>
+                <Label Grid.Column="1" Content="{Binding Title}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="0,2,2,0"/>
+            </Grid>
+        </Border>
+
+        <ScrollViewer  Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True" >
+            <WrapPanel Orientation="Vertical">
+                <!--Preset-->
+                <GroupBox Visibility="{Binding PresetVis}" Header="{Binding Path=Preset, Source={StaticResource StringTableODP}}" FontWeight="DemiBold" FontSize="14" BorderBrush="{DynamicResource GridLineBrush}" 
+                  Margin="3" BorderThickness="2" >
+                    <StackPanel Margin="5">
+                        <!--<Button Style="{DynamicResource styGlassButton}" Margin="0,5,0,5" FontSize="11" Command="{Binding PresetCommand}" CommandParameter="VacuumOn">
+                            <Label Content="{x:Static res:ModulesTable.AllVacOn}" VerticalContentAlignment="Center" Margin="2,0" Foreground="Black"/>
+                        </Button>
+                        <Button Style="{DynamicResource styGlassButton}" Margin="0,5,0,5" FontSize="11" Command="{Binding PresetCommand}" CommandParameter="VacuumOff">
+                            <Label Content="{x:Static res:ModulesTable.AllVacOff}" VerticalContentAlignment="Center"  Margin="2,0" Foreground="Black"/>
+                        </Button>-->
+                        <Button Style="{DynamicResource styGlassButton}" Margin="0,5,0,5" FontSize="11" Command="{Binding PresetCommand}" CommandParameter="PurgeOn">
+                            <Label Content="{Binding Path=AllPurgeOn, Source={StaticResource StringTableODP}}" VerticalContentAlignment="Center"  Margin="2,0" Foreground="Black"/>
+                        </Button>
+                        <Button Style="{DynamicResource styGlassButton}" Margin="0,5,0,5" FontSize="11" Command="{Binding PresetCommand}" CommandParameter="PurgeOff">
+                            <Label Content="{Binding Path=AllPurgeOff, Source={StaticResource StringTableODP}}" VerticalContentAlignment="Center" Margin="2,0" Foreground="Black"/>
+                        </Button>
+                        <!--<Button Style="{DynamicResource styGlassButton}" Margin="0,5,0,5" FontSize="11" Command="{Binding PresetCommand}" CommandParameter="Task1">
+                            <Label Content="Task 1" VerticalContentAlignment="Center" Margin="2,0" Foreground="Black"/>
+                        </Button>-->
+                        <Button Style="{DynamicResource styGlassButton}" Margin="0,5,0,5" FontSize="11" Command="{Binding PresetCommand}" CommandParameter="Task2">
+                            <Label Content="Task 2" VerticalContentAlignment="Center" Margin="2,0" Foreground="Black"/>
+                        </Button>
+                    </StackPanel>
+                </GroupBox>
+                <!--Test Run-->
+                <GroupBox Visibility="{Binding TestRunVis}" Header="{Binding Path=TestRun, Source={StaticResource StringTableODP}}" MinHeight="250" MinWidth="300" FontWeight="DemiBold" FontSize="14" BorderBrush="{DynamicResource GridLineBrush}" 
+                  Margin="3" BorderThickness="2" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,0,0,5">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="{Binding Path=TestCycTime, Source={StaticResource StringTableODP}}" ContentStringFormat="{}{0} : " FontSize="18" HorizontalContentAlignment="Center"/>
+                                <Label Grid.Column="1" Content="{Binding TestTime}" FontSize="22" FontWeight="Medium"  HorizontalContentAlignment="Center"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
+                            <Label Content="{Binding Path=TestCycCount, Source={StaticResource StringTableODP}}" FontSize="13" Margin="3"/>
+                            <Label Content="{Binding Path=TestSeq, Source={StaticResource StringTableODP}}" FontSize="13" Margin="3"/>
+                            <Label Content="{Binding Path=Axis, Source={StaticResource StringTableODP}}" FontSize="13" IsEnabled="{Binding IsHomeMotorSelected}" Margin="3"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1"  Orientation="Vertical" >
+                            <xctk:IntegerUpDown Grid.Column="1" Height="33" Margin="0,0,0,3" Width="auto" Value="{Binding CycleCount}" 
+                                                Minimum="1" IsEnabled="{Binding CanMultipleCycle}" AllowTextInput="False" />
+                            
+                            <ComboBox Style="{DynamicResource ComboBoxFlatStyle}" Height="33" Margin="0,0,0,3" ItemsSource="{Binding TestSeqNumList}" SelectedItem="{Binding SelectedTestSeqNum}" HorizontalContentAlignment="Center">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Desc}" FontSize="13"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ComboBox Style="{DynamicResource ComboBoxFlatStyle}" Height="33" Margin="0,0,0,3" ItemsSource="{Binding MotorList}" SelectedItem="{Binding SelectedAxis}"  HorizontalContentAlignment="Center" IsEnabled="{Binding IsHomeMotorSelected}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding AxisName}" FontSize="13"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <Button Grid.Row="2" Grid.Column="0"  Style="{DynamicResource styGlassButton}"  Margin="20,3" Command="{Binding StartCommand}" 
+                        IsEnabled="{Binding Path=IsTesting, Converter={StaticResource InvertedBoolenConverter}}" 
+                        Background="{DynamicResource NormalBackgroundBrush}" >
+                            <Label Content="{Binding Path=StartTest, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}"/>
+                        </Button>
+
+                        <Button Grid.Row="2" Grid.Column="1" Style="{DynamicResource styGlassButton}" Margin="20,3" Command="{Binding StopCommand}" 
+                        IsEnabled="{Binding IsTesting}" Background="{DynamicResource NormalBackgroundBrush}" >
+                            <Label Content="{Binding Path=StopTest, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}"/>
+                        </Button>
+
+                    </Grid>
+                </GroupBox>
+                <!--IO-->
+                <GroupBox Visibility="{Binding IOVis}" Header="{Binding Path=IO, Source={StaticResource StringTableODP}}" FontWeight="DemiBold" FontSize="14"  BorderBrush="{DynamicResource GridLineBrush}" 
+                  BorderThickness="2" Margin="3" >
+                    <WrapPanel Orientation="Vertical">
+                        <!--General Input-->
+                        <GroupBox Visibility="{Binding GInputVis}" FontWeight="DemiBold" FontSize="14" BorderThickness="0" BorderBrush="{DynamicResource GridLineBrush}" Margin="1">
+                            <GroupBox.Header>
+                                <Label Foreground="Blue" Content="{Binding Path=GenInput, Source={StaticResource StringTableODP}}"/>
+                            </GroupBox.Header>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding InputList, Mode=TwoWay}" >
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Vertical"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate >
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                                <Border BorderBrush="Black" BorderThickness="0.5" Margin="5">
+                                                    <StackPanel Orientation="Horizontal" Margin="3" Width="auto">
+                                                        <ctrl:InputIcon IsOn="{Binding Status}" Margin="2,0,5,0"/>
+                                                        <TextBlock Text="{Binding Assignment, Mode=OneWay}" Padding="2" VerticalAlignment="Center" FontSize="13"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <Label Content="{Binding Description}" Height="35" HorizontalAlignment="Left" FontSize="14"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </GroupBox>
+
+                        <!--General Output-->
+                        <GroupBox Visibility="{Binding GOutputVis}" FontWeight="DemiBold" FontSize="14" BorderThickness="0" BorderBrush="{DynamicResource GridLineBrush}" Margin="1">
+                            <GroupBox.Header>
+                                <Label Foreground="Blue" Content="{Binding Path=GenOutput, Source={StaticResource StringTableODP}}"/>
+                            </GroupBox.Header>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <ItemsControl ItemsSource="{Binding OutputList, Mode=TwoWay}" >
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Vertical"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate >
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                                <Border BorderBrush="Black" BorderThickness="0.5" Margin="5">
+                                                    <ToggleButton Name="OutputToggle" IsChecked="{Binding Status}" Command="{Binding DataContext.IOCommand,RelativeSource={RelativeSource AncestorType=WrapPanel}}" 
+                                                          CommandParameter="{Binding ElementName=OutputToggle,Path=DataContext}" Margin="2" HorizontalAlignment="Left" Width="auto" Height="30" >
+                                                        <ToggleButton.Style>
+                                                            <Style TargetType="{x:Type ToggleButton}">
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="ToggleButton">
+                                                                            <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsChecked" Value="True">
+                                                                        <Setter Property="Background" Value="DodgerBlue"/>
+                                                                    </Trigger>
+                                                                    <Trigger Property="IsChecked" Value="False">
+                                                                        <Setter Property="Background" Value="WhiteSmoke"/>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </ToggleButton.Style>
+                                                        <StackPanel Orientation="Horizontal" Margin="2.5" Width="auto">
+                                                            <ctrl:OutputIcon IsOn="{Binding Status}" Margin="3,0,0,0"/>
+                                                            <TextBlock Text="{Binding Assignment, Mode=OneWay}" Margin="5,0,3,0" VerticalAlignment="Center" FontSize="13"/>
+                                                        </StackPanel>
+                                                    </ToggleButton>
+                                                </Border>
+                                                <Label Content="{Binding Description}" Height="35" HorizontalAlignment="Left" FontSize="14"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </GroupBox>
+
+                        <!--Cylinder-->
+                        <GroupBox FontSize="14" BorderThickness="0" Margin="1" Visibility="{Binding CylinderVis}">
+                            <GroupBox.Header>
+                                <Label Foreground="Blue" Content="{Binding Path=Cylinder, Source={StaticResource StringTableODP}}"/>
+                            </GroupBox.Header>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                                <ItemsControl ItemsSource="{Binding CylinderList}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal" MaxWidth="300" HorizontalAlignment="Left"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate >
+                                            <ctrl:CylinderIO x:Name="cylinderIO" Margin="5" Width="120" HorizontalAlignment="Left" 
+                                            CylinderName="{Binding CylinderName}" IsCylinderWork="{Binding IsCylinderWork, Mode=TwoWay}"
+                                            WorkCommand="{Binding WorkCommand}"  RestCommand="{Binding RestCommand}" CommandParameter="{Binding}" 
+                                            WorkTooltip="{Binding WorkCylinderTooltip}" RestTooltip="{Binding RestCylinderTooltip}"
+                                            IsWorkSns1="{Binding IsWorkSns1}" IsWorkSns2="{Binding IsWorkSns2}" WorkSnsTooltip1="{Binding WorkTooltip1}" WorkSnsTooltip2="{Binding WorkTooltip2}"
+                                            IsRestSns1="{Binding IsRestSns1}" IsRestSns2="{Binding IsRestSns2}" RestSnsTooltip1="{Binding RestTooltip1}" RestSnsTooltip2="{Binding RestTooltip2}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </GroupBox>
+
+                        <!--Vacuum-->
+                        <GroupBox Visibility="{Binding VacuumVis}" FontWeight="DemiBold" FontSize="14" BorderThickness="0" Margin="1" >
+                            <GroupBox.Header>
+                                <Label Foreground="Blue" Content="{Binding Path=Vacuum, Source={StaticResource StringTableODP}}"/>
+                            </GroupBox.Header>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" >
+                                <ItemsControl ItemsSource="{Binding VacuumList}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Vertical" Margin="0,5,0,5">
+                                                <Border BorderThickness="1" CornerRadius="10" >
+                                                    <Border.BorderBrush>
+                                                        <DrawingBrush Viewport="10,10,10,10" ViewportUnits="Absolute" TileMode="Tile">
+                                                            <DrawingBrush.Drawing>
+                                                                <DrawingGroup>
+                                                                    <GeometryDrawing Brush="Black">
+                                                                        <GeometryDrawing.Geometry>
+                                                                            <GeometryGroup>
+                                                                                <RectangleGeometry Rect="0,0,50,50" />
+                                                                                <RectangleGeometry Rect="50,50,50,50" />
+                                                                            </GeometryGroup>
+                                                                        </GeometryDrawing.Geometry>
+                                                                    </GeometryDrawing>
+                                                                </DrawingGroup>
+                                                            </DrawingBrush.Drawing>
+                                                        </DrawingBrush>
+                                                    </Border.BorderBrush>
+                                                    <StackPanel Orientation="Vertical" Margin="5,0">
+                                                        <Label Content="{Binding VacuumName}" FontSize="13" FontFamily="Arial" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8" HorizontalAlignment="Center">
+                                                            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                                <Image Source="{Binding VacOnImage}" Height="auto" Width="15" Margin="0,2" ToolTip="{Binding VacuumOnTooltip}"/>
+                                                                <Image Source="{Binding PickedUpImage}" Height="15" Width="15" Margin="0,2" ToolTip="{Binding PickedUpTooltip}"/>
+                                                            </StackPanel>
+                                                            <Border BorderThickness="1" BorderBrush="Black" Margin="3,0" Width="90" Height="35">
+                                                                <ToggleButton Name="vacuumButton" IsChecked="{Binding IsVacuumOn}" Command="{Binding DataContext.VacuumCommand,RelativeSource={RelativeSource AncestorType=ScrollViewer}}" 
+                                                          CommandParameter="{Binding ElementName=vacuumButton,Path=DataContext}" Margin="2" HorizontalAlignment="Left" Width="auto" Height="30" ToolTip="{Binding VacuumOutputTooltip}">
+                                                                    <ToggleButton.Style>
+                                                                        <Style TargetType="{x:Type ToggleButton}">
+                                                                            <Setter Property="Template">
+                                                                                <Setter.Value>
+                                                                                    <ControlTemplate TargetType="ToggleButton">
+                                                                                        <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                                        </Border>
+                                                                                    </ControlTemplate>
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                            <Style.Triggers>
+                                                                                <Trigger Property="IsChecked" Value="True">
+                                                                                    <Setter Property="Background" Value="DodgerBlue"/>
+                                                                                </Trigger>
+                                                                                <Trigger Property="IsChecked" Value="False">
+                                                                                    <Setter Property="Background" Value="WhiteSmoke"/>
+                                                                                </Trigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </ToggleButton.Style>
+                                                                    <StackPanel Orientation="Horizontal" Margin="5" Width="80">
+                                                                        <Image Source="{Binding VacuumImage}" Height="15"/>
+                                                                        <TextBlock Text="Vacuum" Margin="5,0,3,0" VerticalAlignment="Center" FontSize="13"/>
+                                                                    </StackPanel>
+                                                                </ToggleButton>
+                                                            </Border>
+                                                            <Border BorderThickness="1" BorderBrush="Black" Margin="0" Width="90" Height="35" Visibility="{Binding IsPurgeAvail, Converter={StaticResource trueToVisible}}">
+                                                                <ToggleButton Name="purgeButton" IsChecked="{Binding IsPurgeOn}" Command="{Binding DataContext.PurgeCommand,RelativeSource={RelativeSource AncestorType=ScrollViewer}}" 
+                                                          CommandParameter="{Binding ElementName=purgeButton,Path=DataContext}" Margin="2" HorizontalAlignment="Left" Width="auto" Height="30" ToolTip="{Binding PurgeOutputTooltip}">
+                                                                    <ToggleButton.Style>
+                                                                        <Style TargetType="{x:Type ToggleButton}">
+                                                                            <Setter Property="Template">
+                                                                                <Setter.Value>
+                                                                                    <ControlTemplate TargetType="ToggleButton">
+                                                                                        <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                                        </Border>
+                                                                                    </ControlTemplate>
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                            <Style.Triggers>
+                                                                                <Trigger Property="IsChecked" Value="True">
+                                                                                    <Setter Property="Background" Value="DodgerBlue"/>
+                                                                                </Trigger>
+                                                                                <Trigger Property="IsChecked" Value="False">
+                                                                                    <Setter Property="Background" Value="WhiteSmoke"/>
+                                                                                </Trigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </ToggleButton.Style>
+                                                                    <StackPanel Orientation="Horizontal" Margin="5" Width="80">
+                                                                        <Image Source="{Binding PurgeImage}" Height="15"/>
+                                                                        <TextBlock Text="Purge" Margin="5,0,3,0" VerticalAlignment="Center" FontSize="13"/>
+                                                                    </StackPanel>
+                                                                </ToggleButton>
+                                                            </Border>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </GroupBox>
+
+                    </WrapPanel>
+                </GroupBox>
+
+                <!--Motion-->
+                <GroupBox Visibility="{Binding MotorVis}" Header="{Binding Path=Motion, Source={StaticResource StringTableODP}}" FontWeight="DemiBold" FontSize="14"
+                          BorderBrush="{DynamicResource GridLineBrush}" Margin="3" BorderThickness="2" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="350"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="150"/>
+                        </Grid.RowDefinitions>
+
+                        <!--Current Position-->
+                        <GroupBox Header="{Binding Path=CurrentPos, Source={StaticResource StringTableODP}}" BorderBrush="{DynamicResource GridLineBrush}" FontSize="13">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label FontSize="13" Content="{Binding CurrentPos}" />
+                                <Label FontSize="13" Content="{Binding UoM}" />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!--Motion Status-->
+                        <GroupBox Grid.Row="1" Header="{Binding Path=Status, Source={StaticResource StringTableODP}}" FontWeight="DemiBold"  FontSize="14" BorderBrush="{DynamicResource GridLineBrush}" Margin="2" >
+                            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Vertical" >
+                                        <Image Source="{Binding Ready}" Stretch="Fill"  Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblReadyIcon" Margin="3" Visibility="{Binding IsReadyVisible}"/>
+                                        <Image Source="{Binding Alarm}" Stretch="Fill"  Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblAlarmIcon" Margin="3" Visibility="{Binding IsAlarmVisible}"/>
+                                        <Image Source="{Binding InPos}" Stretch="Fill"  Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblInPosIcon" Margin="3" Visibility="{Binding IsInPosVisible}"/>
+                                        <Image Source="{Binding AxisHome}" Stretch="Fill"  Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Name="lblHomeDoneIcon"  Margin="3" ToolTip="{Binding Path=AxisHomeToolTip, Source={StaticResource StringTableODP}}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Vertical">
+                                        <Label Content="{Binding Path=Ready, Source={StaticResource StringTableODP}}" Height="auto" FontSize="12" Name="lblReady" Visibility="{Binding IsReadyVisible}"/>
+                                        <Label Content="{Binding Path=Alarm, Source={StaticResource StringTableODP}}" Height="auto" FontSize="12" Name="lblAlarm" Visibility="{Binding IsAlarmVisible}"/>
+                                        <Label Content="{Binding Path=InPos, Source={StaticResource StringTableODP}}" Height="auto" FontSize="12" Name="lblInPos" Visibility="{Binding IsInPosVisible}"/>
+                                        <Label Content="{Binding Path=HomeDone, Source={StaticResource StringTableODP}}" Height="auto" FontSize="12" Name="lblHomeDone"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </GroupBox>
+
+                        <TabControl ItemsSource="{Binding MotorList}" SelectedIndex="{Binding SelectedTabIndex}" TabStripPlacement="Right" Grid.ColumnSpan="2" Grid.RowSpan="3">
+                            <TabControl.Template>
+                                <ControlTemplate TargetType="TabControl">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="130"/>
+                                            <ColumnDefinition Width="350"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <ScrollViewer Grid.Column="0" Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Top">
+                                            <GroupBox Header="{Binding Path=MtrAxisList, Source={StaticResource StringTableODP}}" FontWeight="DemiBold"  FontSize="14" BorderBrush="{DynamicResource GridLineBrush}" Margin="2">
+                                                <TabPanel Margin="0,5,0,0"
+                                                  x:Name="HeaderPanel"
+                                                  Panel.ZIndex ="1" 
+                                                  KeyboardNavigation.TabIndex="0"
+                                                  IsItemsHost="true"/>
+                                            </GroupBox>
+                                        </ScrollViewer>
+                                        <ContentPresenter Grid.Column="1" Grid.RowSpan="3" x:Name="PART_SelectedContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" ContentSource="SelectedContent"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </TabControl.Template>
+
+                            <TabControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}, Path=DataContext.AxisName}" FontWeight="DemiBold" FontSize="12" Height="20" MinWidth="80"/>
+                                </DataTemplate>
+                            </TabControl.ItemTemplate>
+
+                            <TabControl.ContentTemplate>
+                                <DataTemplate>
+                                    <GroupBox Header="{Binding Path=TeachPos, Source={StaticResource StringTableODP}}" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" FontWeight="DemiBold"  FontSize="14" BorderBrush="{DynamicResource GridLineBrush}" Margin="2">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="0 20 0 0" >
+                                            <ItemsControl ItemsSource="{Binding Positions}" >
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate >
+                                                        <Grid Margin="2" Name="TeachingList" >
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Text="{Binding TeachingPointName}" TextWrapping="Wrap" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"   />
+                                                            <Button Visibility="{Binding btnGoVisible}" Grid.Column="1" Height="25" Width="55" HorizontalAlignment="Center"  Content="{Binding Path=Go, Source={StaticResource StringTableODP}}" Style="{DynamicResource  styGlassButton}" Background="Silver" Foreground="Black" 
+                                                            Command="{Binding DataContext.GoCommand,RelativeSource={RelativeSource AncestorType=TabControl}}" CommandParameter="{Binding ElementName=TeachingList,Path=DataContext}" IsEnabled="{Binding IsAllowMoveMtr}"  />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </GroupBox>
+
+                                </DataTemplate>
+                            </TabControl.ContentTemplate>
+                        </TabControl>
+                    </Grid>
+                </GroupBox>
+            </WrapPanel>
+        </ScrollViewer>
+
+        <Canvas Grid.Row="1" Grid.Column="0" Margin="5" Visibility="{Binding ImageVisibility}">
+            <Border BorderBrush="Gray" BorderThickness="0,0,2,2" CornerRadius="5">
+                <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5">
+                    <!--<Image Source="/GreatechApp.Core;component/Images/SampleSeq2.png" Stretch="Fill" />-->
+                </Border>
+            </Border>
+        </Canvas>
+    </Grid>
+</UserControl>

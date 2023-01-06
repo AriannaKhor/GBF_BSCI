@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="UIModule.StandardViews.OEESettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:res="clr-namespace:GreatechApp.Core.Resources;assembly=GreatechApp.Core"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <GroupBox Header="{Binding Path=OEEConfig, Source={StaticResource StringTableODP}}" Margin="5" FontSize="16" FontWeight="DemiBold">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="{Binding Path=IdealCycleTime, Source={StaticResource StringTableODP}}" HorizontalAlignment="Right" VerticalAlignment="Center"  FontSize="14"/>
+                <Label Grid.Row="1" Content="{Binding Path=ShiftStartTime, Source={StaticResource StringTableODP}}" HorizontalAlignment="Right" VerticalAlignment="Center"  FontSize="14"/>
+                <Label Grid.Row="2" Content="{Binding Path=ShiftCount, Source={StaticResource StringTableODP}}" HorizontalAlignment="Right" VerticalAlignment="Center"  FontSize="14"/>
+
+                <TextBox Grid.Column="1" Height="26" Width="800" HorizontalAlignment="Left" Margin="5" Text="{Binding IdealCycleTime}"/>
+                <Grid Grid.Row="1" Grid.Column="1"  Name="CustomTimePicker">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="80"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ComboBox Grid.Column="0" Height="26" Width="70" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding TimePickerHourList}" SelectedItem="{Binding TimePickerHour}"/>
+                    <Label Grid.Column="1" Height="30" Width="30" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Center" Margin="5" Content=":"/>
+                    <ComboBox Grid.Column="2" Height="26" Width="70" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding TimePickerMinList}" SelectedItem="{Binding TimePickerMin}"/>
+                    <Label Grid.Column="3" Height="30" Width="30" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Center" Margin="5" Content=":"/>
+                    <ComboBox Grid.Column="4" Height="26" Width="70" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding TimePickerSecList}" SelectedItem="{Binding TimePickerSec}"/>
+                    <ComboBox Grid.Column="5" Height="26" Width="70" HorizontalAlignment="Left" Margin="5" ItemsSource="{Binding TimePickerPeriodList}" SelectedItem="{Binding TimePickerPeriod}"/>
+                </Grid>
+
+                <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Height="26"  Width="80" HorizontalAlignment="Left" Margin="5"  Value="{Binding ShiftCount}" Minimum="1" Maximum="999"/>
+
+                <Button Grid.Row="4" Grid.Column="1" Content="{Binding Path=Save, Source={StaticResource StringTableODP}}" Foreground="{DynamicResource NormalForegroundBrush}" Height="40" Command="{Binding SaveCommand}" Style="{DynamicResource styGlassButton}" Background="{DynamicResource NormalBackgroundBrush}" Width="100" Margin="0,0,5,0" HorizontalAlignment="Left" FontSize="16"   />
+
+                <!--Status-->
+                <StackPanel Grid.Row="6" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBox TextWrapping="Wrap" HorizontalAlignment="Left" TextAlignment="Center" FontSize="15" MinWidth="300" Height="50" Margin="5"
+                                                    Text="{Binding Status, Mode=OneWay, NotifyOnTargetUpdated=True}"
+                                                    IsReadOnly="False" Background="Transparent" BorderBrush="{x:Null}" VerticalAlignment="Center">
+                        <TextBox.Triggers>
+                            <EventTrigger RoutedEvent="TextBox.TextChanged">
+                                <BeginStoryboard>
+                                    <Storyboard BeginTime="00:00:00" RepeatBehavior="3x"  AutoReverse="True" 
+                                                                    Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" SpeedRatio="2">
+                                        <ColorAnimation From="Transparent" To="Yellow" Duration="0:0:1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBox.Triggers>
+                    </TextBox>
+                </StackPanel>
+                
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

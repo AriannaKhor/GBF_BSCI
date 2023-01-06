@@ -183,31 +183,31 @@ namespace DialogManager.ErrorMsg
             else if (Command == "EndLot")
             {
                 CloseDialog("");
-                if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
-                {
-                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
 
-                    if (dialogResult == ButtonResult.Yes)
+                ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
+
+                if (dialogResult == ButtonResult.Yes) //lot ended
+                {
+                    if (Global.VisInspectResult == "NG") // for wrong and exceed
                     {
-                        Global.AccumulateCurrentBatchQuantity = Global.LotInitialTotalBatchQuantity = 0;
                         m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
                         m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                         ResetCounter();
                     }
-                    else if (dialogResult == ButtonResult.No)
+                    else if (Global.CodeReaderResult == "NG") //for unequal
                     {
-                        Reset();
-                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
+                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
+                        RaiseEndLotPopup();
                     }
+                    CloseDialog("");
                 }
-                else
+                else if (dialogResult == ButtonResult.No) //reset and return same error
                 {
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-                    RaiseEndLotPopup();
+                    Reset();
+                    m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
                 }
-                CloseDialog("");
-
+                //CloseDialog("");
             }
         }
 

@@ -50,7 +50,7 @@ namespace TCPIPManager
 #endif
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
-            GetProductQuantityConfig();
+            //GetProductQuantityConfig();
         }
 #endregion
 
@@ -224,6 +224,8 @@ namespace TCPIPManager
         {
             try
             {
+                GetProductQuantityConfig();
+
                 if (allowVisResultchg)
                 {
                     allowVisResultchg = false;

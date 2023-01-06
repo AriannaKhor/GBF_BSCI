@@ -288,7 +288,6 @@ namespace UIModule.MainPanel
             string buildDate = fi.LastWriteTime.ToLongDateString();
             string buildTime = fi.LastWriteTime.ToShortTimeString();
 
-            m_EventAggregator.GetEvent<DatalogEntity>().Subscribe(OnDatalogEntity);
             m_EventAggregator.GetEvent<ResultlogEntity>().Subscribe(OnResultlogEntity);
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Subscribe(OnTopVisionResult);//
             m_EventAggregator.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
@@ -448,20 +447,6 @@ namespace UIModule.MainPanel
             Application.Current.Dispatcher.Invoke(() =>
             {
                 SoftwareResultCollection.Add(new Datalog(log.MsgType, log.MsgText));
-            });
-        }
-
-
-        private void OnDatalogEntity(DatalogEntity log)
-        {
-            if ((log.MsgType == LogMsgType.TCP && !m_SystemConfig.General.IsLogTCPMsg) || (log.MsgType == LogMsgType.SerialPort && !m_SystemConfig.General.IsLogSerialMsg))
-            {
-                return;
-            }
-
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                DataLogCollection.Add(new Datalog(log.MsgType, log.MsgText));
             });
         }
 

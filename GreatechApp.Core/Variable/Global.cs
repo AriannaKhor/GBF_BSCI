@@ -58,6 +58,7 @@ namespace GreatechApp.Core.Variable
         public static string CurrentBatchNum;
         public static int CurrentBoxQuantity;
         public static int AccumulateCurrentBatchQuantity;
+        public static bool ContAccumBatchQty = true;
         public static string CodeReaderConnStatus = "Not Connected";
         public static string CodeReaderResult = resultstatus.PendingResult.ToString();
         public static string OverallResult;
