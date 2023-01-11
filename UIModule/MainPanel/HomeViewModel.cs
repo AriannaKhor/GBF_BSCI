@@ -80,7 +80,6 @@ namespace UIModule.MainPanel
             ShowInitState = Visibility.Collapsed;
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(UpdateMachineOperation);
             m_EventAggregator.GetEvent<MachineState>().Subscribe(UpdateMachineState);
-            //m_EventAggregator.GetEvent<OpenLotEntryView>().Subscribe(OpenLotEntry);
 
             // Add machine seq into init status colection except core seq
             SeqCollection = new ObservableCollection<InitStatus>();
@@ -89,31 +88,6 @@ namespace UIModule.MainPanel
                 SeqCollection.Add(new InitStatus((SQID)i));
             }
         }
-
-        //private Visibility m_TabOperator = Visibility.Collapsed;
-
-        //public Visibility TabOperator
-        //{
-        //    get { return m_TabOperator; }
-        //    set { SetProperty(ref m_TabOperator, value); }
-        //}
-
-        //private Visibility m_TabAdmin = Visibility.Collapsed;
-
-        //public Visibility TabAdmin
-        //{
-        //    get { return m_TabAdmin; }
-        //    set { SetProperty(ref m_TabAdmin, value); }
-        //}
-
-      
-
-
-        private void OpenLotEntry(bool canOpenLotEntryView)
-        {
-            IsLotEntryExpand = canOpenLotEntryView;
-        }
-
         #endregion
 
         #region Event
@@ -134,7 +108,6 @@ namespace UIModule.MainPanel
                 }
             }
         }
-
 
         private void UpdateMachineState(MachineStateType stateType)
         {

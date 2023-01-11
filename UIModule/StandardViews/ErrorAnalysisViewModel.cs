@@ -241,7 +241,6 @@ namespace UIModule.StandardViews
                     {
                         if (ErrLogs[i].Error_Type == "Error")
                         {
-                            //list.Add(ErrLogs[i].station + " - " + ErrLogs[i].err_descp);
                             list.Add(ErrLogs[i].Station);
                             string errMsg = ErrLogs[i].Station + " - " + ErrLogs[i].Error_Desc;
                         }

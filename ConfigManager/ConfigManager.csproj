@@ -157,7 +157,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeqConfig.cs" />
     <Compile Include="SystemConfig.cs" />
-    <Compile Include="ToolLifeConfig.cs" />
     <Compile Include="TowerLightConfig.cs" />
   </ItemGroup>
   <ItemGroup>

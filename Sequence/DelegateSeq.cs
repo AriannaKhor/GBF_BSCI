@@ -27,7 +27,6 @@ namespace Sequence
         private int InitFailCount;
         private int EndLotCompletedCount;
 
-        //private IBaseMotion m_BaseMotion;
         private IEventAggregator m_EventAggregator;
         private ITCPIP m_TCPIP;
         private IInsightVision   m_InsightVision;
@@ -58,7 +57,6 @@ namespace Sequence
                  .Where(t => (t.IsClass && t.BaseType.BaseType != null && t.Namespace == "Sequence.CoreSeq"))
                 .ToList();
 
-
             // Bind SQID with the constructor class
             m_BaseSeq = new Dictionary<SQID, BaseClass>()
             {
@@ -82,10 +80,8 @@ namespace Sequence
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(OnSeqInitCompleted, filter => filter.MachineOpr == MachineOperationType.InitDone);
             m_EventAggregator.GetEvent<InitOperation>().Subscribe(OnInit);
             m_EventAggregator.GetEvent<EndLotOperation>().Subscribe(OnEndLot);
-
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(OnSeqEndLotComplted, filter => filter.MachineOpr == MachineOperationType.EndLotComp);
             m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineStateChange);
-           // m_EventAggregator.GetEvent<CheckOperation>().Subscribe(OnCheckOperation);
         }
 
         private void CreateSeqInstance()
@@ -99,9 +95,7 @@ namespace Sequence
                 seq.Publisher = m_EventAggregator;
                 seq.Error = m_Error;
                 seq.Error.SeqName = seqName;
-                //seq.BaseMotion = m_BaseMotion;
                 seq.BaseIO = m_BaseIO;
-                //seq.BaseData = new BaseData(seq.MarkerType, seqName, seq.SlotNum, m_EventAggregator);
                 seq.SysCfgs = m_SysConfig;
                 seq.TCPIP = m_TCPIP;
                 seq.InsightVision = m_InsightVision;
@@ -185,7 +179,6 @@ namespace Sequence
                 case MachineStateType.CriticalAlarm:
                     foreach (KeyValuePair<SQID, BaseClass> baseSeq in m_BaseSeq)
                     {
-                        //baseSeq.Value.StopAllMotorPulse();
                     }
                     break;
 
@@ -275,18 +268,5 @@ namespace Sequence
         {
             return m_BaseSeq.Where(x => x.Key == seqName).FirstOrDefault().Value.GetMaxCycleTime(perfID);
         }
-
-        #region Project Specific Properties
-        //bool IDelegateSeq.WriteTrayDataSuccess
-        //{
-        //    set
-        //    {
-        //        OutputLinearPnP module = m_BaseSeq.Where(x => x.Key == SQID.OutputLinearPnP).FirstOrDefault().Value as OutputLinearPnP;
-        //        Debug.Assert(module != null);
-        //        module.WriteTrayDataSuccess = value;
-        //    }
-        //}
-        #endregion
-
     }
 }

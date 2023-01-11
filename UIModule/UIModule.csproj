@@ -219,8 +219,6 @@
     <Compile Include="StandardViews\Services\TowerLight.cs" />
     <Compile Include="StandardViews\AboutViewModel.cs" />
     <Compile Include="StandardViews\ErrorAnalysisViewModel.cs" />
-    <Compile Include="StandardViews\LifeCycleViewModel.cs" />
-    <Compile Include="MainPanel\LotEntryViewModel.cs" />
     <Compile Include="StandardViews\LotHistoryViewModel.cs" />
     <Compile Include="RecipeViews\ProductRecipeViewModel.cs" />
     <Compile Include="RecipeViews\RecipeViewModel.cs" />
@@ -237,12 +235,6 @@
     </Compile>
     <Compile Include="StandardViews\ErrorAnalysisView.xaml.cs">
       <DependentUpon>ErrorAnalysisView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\LifeCycleView.xaml.cs">
-      <DependentUpon>LifeCycleView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainPanel\LotEntryView.xaml.cs">
-      <DependentUpon>LotEntryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StandardViews\LotHistoryView.xaml.cs">
       <DependentUpon>LotHistoryView.xaml</DependentUpon>
@@ -363,14 +355,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="StandardViews\ErrorAnalysisView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="StandardViews\LifeCycleView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainPanel\LotEntryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

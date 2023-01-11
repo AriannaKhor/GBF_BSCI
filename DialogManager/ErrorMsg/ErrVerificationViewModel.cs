@@ -113,7 +113,6 @@ namespace DialogManager.ErrorMsg
             set
             {
                 SetProperty(ref m_IsAllowStop, value);
-                //CheckSSRButtonAvail();
             }
         }
         private Visibility m_SkipTray = Visibility.Collapsed;
@@ -189,8 +188,6 @@ namespace DialogManager.ErrorMsg
         public DelegateCommand EndLotCommand { get; set; }
 
         private readonly IDialogService m_DialogService;
-        //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
-        //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
         public DelegateCommand<object> VerificationCommand { get; private set; }
 
         #endregion
@@ -259,9 +256,6 @@ namespace DialogManager.ErrorMsg
 
         private void OperationMethod(string Command)
         {
-            //SaveGlobalResult();
-            //m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
-            //m_resultsDatalog.ClearAll();
             if (Command == "Continue")
             {
                 Reset();

@@ -360,7 +360,6 @@ namespace TCPIPManager
             RequestClose?.Invoke(dialogResult);
         }
 
-
         private string GetDialogTableValue(string key)
         {
             return m_CultureResources.GetDialogValue(key);
@@ -409,13 +408,6 @@ namespace TCPIPManager
                 if (images.Count > 0)
                 {
                     Image first_image = images[0];
-
-                    //original way
-                    //Bitmap fitted_image = ResizeImage(first_image, 50, 50); ;
-                    //BitmapImage converttobitmapimg = Bitmap2BitmapImage(fitted_image);
-                    //m_Events.GetEvent<CodeReaderImage>().Publish(converttobitmapimg);
-
-                    //ky's way
                     BitmapImage liveimage;
                     Bitmap dImg = new Bitmap(first_image);
                     MemoryStream ms = new MemoryStream();
@@ -428,7 +420,6 @@ namespace TCPIPManager
                     liveimage = bImg;
                     m_Events.GetEvent<CodeReaderImage>().Publish(liveimage);
                 }
-
                 return read_result;
             }
         }

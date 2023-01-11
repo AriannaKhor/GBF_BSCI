@@ -44,7 +44,7 @@ namespace GreatechApp.Core.Modal
         public float VisWrongOrient { get; set; }
         public int DecodeBatchQuantity { get; set; }
         public int DecodeBoxQuantity { get; set; }
-        public int DecodeAccuQuantity { get; set; } 
+        public int DecodeAccuQuantity { get; set; }
         public string OverallResult { get; set; }
         public string ErrorMessage { get; set; }
         public string VisErrorMessage { get; set; }
@@ -56,23 +56,23 @@ namespace GreatechApp.Core.Modal
 
         public void ClearAll()
         {
-            UserId                  = string.Empty;
-            UserLvl                 = string.Empty;
-                                                  
-            TopVision               = string.Empty;
-            VisTotalPrdQty          = 0;
-            VisCorrectOrient        = 0;
-            VisWrongOrient          = 0;
-                                                  
-            CodeReader              = string.Empty;
-            DecodeBatchQuantity     = 0;
-            DecodeBoxQuantity       = 0;
-            DecodeAccuQuantity      = 0;
+            UserId = string.Empty;
+            UserLvl = string.Empty;
+
+            TopVision = string.Empty;
+            VisTotalPrdQty = 0;
+            VisCorrectOrient = 0;
+            VisWrongOrient = 0;
+
+            CodeReader = string.Empty;
+            DecodeBatchQuantity = 0;
+            DecodeBoxQuantity = 0;
+            DecodeAccuQuantity = 0;
             OverallResult = string.Empty;
 
-            ErrorMessage            = string.Empty;
-            Remarks                 = string.Empty;
-            ApprovedBy              = string.Empty;
+            ErrorMessage = string.Empty;
+            Remarks = string.Empty;
+            ApprovedBy = string.Empty;
         }
 
         public sealed class ResultsDatalogMap : ClassMap<ResultsDatalog>

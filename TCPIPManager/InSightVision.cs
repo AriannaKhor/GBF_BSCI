@@ -50,19 +50,16 @@ namespace TCPIPManager
 #endif
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
-            //GetProductQuantityConfig();
         }
-#endregion
+        #endregion
 
-#region Method
+        #region Method
         public void ConnectVision()
         {
             try
             {
                 SystemConfig sysCfg = SystemConfig.Open(@"..\Config Section\General\System.Config");
                 m_topvisIp = sysCfg.NetworkDevices[0].IPAddress;
-                //m_CvsInSightDisplay.InSight = m_InsightV1;
-                //m_CvsInSightDisplay.InSight.Connect(m_topvisIp, "admin", "", true, false);// Determine the state of the sensor
                 m_InsightV1.Connect(m_topvisIp, "admin", "", true, false);
                 m_InsightV1.SoftOnline = true;
 
@@ -157,8 +154,6 @@ namespace TCPIPManager
 #endif
 
                 allowVisResultchg = true;
-
-                //VisionLive();
             }
             catch (Exception ex)
             {
@@ -217,9 +212,9 @@ namespace TCPIPManager
 
             return destImage;
         }
-#endregion
+        #endregion
 
-#region Event
+        #region Event
         private void InsightV1_ResultsChanged(object sender, System.EventArgs e)
         {
             try
@@ -294,7 +289,6 @@ namespace TCPIPManager
             }
             m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Vision connection state:" + " " + m_InsightV1.State.ToString() });
         }
-
-#endregion
+        #endregion
     }
 }

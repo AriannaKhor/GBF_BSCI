@@ -43,13 +43,11 @@ namespace UIModule
             containerRegistry.RegisterForNavigation<UserView>();
             containerRegistry.RegisterForNavigation<LotHistoryView>();
             containerRegistry.RegisterForNavigation<SettingView>();
-            containerRegistry.RegisterForNavigation<LifeCycleView>();
             containerRegistry.RegisterForNavigation<ErrorAnalysisView>();
             containerRegistry.RegisterForNavigation<SeqParameterView>();
             containerRegistry.RegisterForNavigation<TowerLightView>();
             containerRegistry.RegisterForNavigation<IOView>();
             containerRegistry.RegisterForNavigation<TCPIPView>();
-
 
             //Dialog Views
             containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
@@ -58,14 +56,8 @@ namespace UIModule
             containerRegistry.RegisterDialog<ErrVerificationView, ErrVerificationViewModel>();
             containerRegistry.RegisterDialog<ForcedEndLotView, ForcedEndLotViewModel>();
 
-
-
-
             // Recipe Views
             containerRegistry.RegisterForNavigation<RecipeView>();
-
-            // Module View
-            //containerRegistry.RegisterForNavigation<SampleSeqView>();
 
         }
     }

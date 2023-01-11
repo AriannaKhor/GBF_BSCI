@@ -135,7 +135,6 @@
             Title = GetStringTableValue("LotHistory");
 
         }
-
         #endregion
 
         #region Method
@@ -151,7 +150,6 @@
             m_RecipeContext.TblLot.FromSqlRaw("SELECT TOP 25 * FROM TblLot ORDER BY Start_Time DESC").ToList();
             LotHistoryCollection = m_RecipeContext.TblLot.Local.ToObservableCollection();
         }
-
         #endregion
     }
 }

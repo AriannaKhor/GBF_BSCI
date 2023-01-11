@@ -25,6 +25,7 @@ namespace DialogManager.ErrorMsg
         public ErrVerificationView()
         {
             InitializeComponent();
+            PassImage.Source = new BitmapImage(new Uri(@"/GreatechApp.Core;component/Icon/hidden.png", UriKind.Relative));
         }
 
         private void Password_Click(object sender, RoutedEventArgs e)
@@ -34,7 +35,7 @@ namespace DialogManager.ErrorMsg
                 IsMaskPass = false;
                 MaskPass.Visibility = Visibility.Visible;
                 UnMaskPass.Visibility = Visibility.Collapsed;
-                //PassImage.Source = new BitmapImage(new Uri(@"/GreatechApp.Core;component/Icon/hidden.png", UriKind.Relative));
+                PassImage.Source = new BitmapImage(new Uri(@"/GreatechApp.Core;component/Icon/hidden.png", UriKind.Relative));
                 MaskPass.Focus();
             }
             else
@@ -42,7 +43,7 @@ namespace DialogManager.ErrorMsg
                 IsMaskPass = true;
                 MaskPass.Visibility = Visibility.Collapsed;
                 UnMaskPass.Visibility = Visibility.Visible;
-                // PassImage.Source = new BitmapImage(new Uri(@"/GreatechApp.Core;component/Icon/view.png", UriKind.Relative));
+                PassImage.Source = new BitmapImage(new Uri(@"/GreatechApp.Core;component/Icon/view.png", UriKind.Relative));
                 UnMaskPass.Focus();
             }
         }

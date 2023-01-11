@@ -106,8 +106,6 @@ namespace IOManager
             }
         }
 
-
-
         bool InitMoxaIO()
         {
             int ret;

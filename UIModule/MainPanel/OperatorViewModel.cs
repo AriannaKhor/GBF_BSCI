@@ -28,7 +28,6 @@ namespace UIModule.MainPanel
         private static object m_SynDesignItem = new object();
         private static object m_SyncLog = new object();
         CTimer m_timeOut = new CTimer();
-
         public DelegateCommand<string> NavigationCommand { get; set; }
         public DelegateCommand<string> TriggerVisCmd { get; private set; }
         #endregion
@@ -217,7 +216,6 @@ namespace UIModule.MainPanel
             get { return m_DataLogCollection; }
             set { SetProperty(ref m_DataLogCollection, value); }
         }
-
 
         private FixedSizeObservableCollection<Datalog> m_SoftwareResultCollection;
 
@@ -557,9 +555,6 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Others
-
-
-
         public bool KeepAlive
         {
             get
@@ -569,11 +564,9 @@ namespace UIModule.MainPanel
         }
 
         #endregion
-
         #endregion
 
-        #region Enum 
-
+        #region Enum
         #endregion
     }
 }

@@ -21,8 +21,6 @@ namespace UIModule.MainPanel
     {
         private Thread EStopWinThread;
         private EStopView eStopView;
-        //private CvsInSight m_InsightV1 = new CvsInSight();
-      
 
         public const string GrayIcon = "/GreatechApp.Core;component/Icon/GrayIcon.png";
         public const string GreenIcon = "/GreatechApp.Core;component/Icon/GreenIcon.png";
@@ -118,7 +116,6 @@ namespace UIModule.MainPanel
             set
             {
                 SetProperty(ref m_IsAllowStart, value);
-                //CheckSSRButtonAvail();
             }
         }
 
@@ -129,7 +126,6 @@ namespace UIModule.MainPanel
             set
             {
                 SetProperty(ref m_IsAllowStop, value);
-                //CheckSSRButtonAvail();
             }
         }
 
@@ -143,12 +139,6 @@ namespace UIModule.MainPanel
 
         #region Hardware SSR Button
         private DispatcherTimer tmrButtonMonitor;
-
-        //private int StartButton = (int)IN.DI0104_Input5; // Assign Start Button Input
-        //private int StopButton = (int)IN.DI0105_Input6; // Assign Stop Button Input
-
-        //private int StartButtonIndic = (int)OUT.DO0104_Output5; // Assign Start button indicator output
-        //private int StopButtonIndic = (int)OUT.DO0105_Output6; // Assign stop button indicator output
         #endregion
 
         #region System Clock
@@ -276,12 +266,6 @@ namespace UIModule.MainPanel
             tmrSysClock.Tick += new EventHandler(tmrSysClock_Tick);
             tmrSysClock.Start();
 
-            //// TCP/IP Monitor
-            //m_tmrTCPMonitor = new DispatcherTimer();
-            //m_tmrTCPMonitor.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            //m_tmrTCPMonitor.Tick += new EventHandler(m_tmrTCPMonitor_Tick);
-            //m_tmrTCPMonitor.Start();
-
             MenuVisibility = Visibility.Collapsed;
             IsTCPIPListOpen = false;
             DisableAllBtn();
@@ -347,10 +331,6 @@ namespace UIModule.MainPanel
             if (CanAccess)
             {
                 IsAllowStart = true;
-                //if (m_InsightV1.State == CvsInSightState.Online || Global.CodeReaderConnStatus == ConnectionState.Connected.ToString())
-                //{
-                //    IsAllowStart = true;
-                //    IsAllowStop = false;
             }
         }
 
@@ -632,9 +612,6 @@ namespace UIModule.MainPanel
 
         protected virtual void CloseDialog(string parameter)
         {
-            //m_TmrButtonMonitor.Stop();
-            // Turn off Reset Button LED
-            //m_IO.WriteBit(ResetButtonIndic, false);
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
         #endregion

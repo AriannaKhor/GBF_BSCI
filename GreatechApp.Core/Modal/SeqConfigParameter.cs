@@ -65,7 +65,6 @@ namespace GreatechApp.Core.Modal
         #endregion
     }
 
-
     public class OptionMember : BindableBase
     {
         private int m_ChoiceId;

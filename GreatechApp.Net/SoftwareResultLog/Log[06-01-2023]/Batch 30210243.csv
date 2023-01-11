@@ -277,3 +277,14 @@ o,Operator,06-01-2023 | 12:28:00.995,TopVision,25,25,0,CodeReader,281,26,0,NG,Bo
 o,Operator,06-01-2023 | 12:28:48.199,TopVision,25,25,0,CodeReader,281,26,0,NG,BoxQtyNotMatch,N/A,Admin
 o,Operator,06-01-2023 | 12:28:57.647,TopVision,25,25,0,CodeReader,281,26,0,NG,BoxQtyNotMatch,N/A,Admin
 t,Technician,06-01-2023 | 12:29:33.240,TopVision,25,25,0,CodeReader,281,26,0,NG,BoxQtyNotMatch,N/A,Admin
+a,Admin,06-01-2023 | 14:31:52.052,TopVision,26,26,0,CodeReader,281,26,26,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:31:54.599,TopVision,26,26,0,CodeReader,281,26,52,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:31:56.990,TopVision,26,26,0,CodeReader,281,26,78,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:31:58.448,TopVision,26,26,0,CodeReader,281,26,104,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:31:59.904,TopVision,26,26,0,CodeReader,281,26,130,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:32:01.458,TopVision,26,26,0,CodeReader,281,26,156,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:32:02.925,TopVision,26,26,0,CodeReader,281,26,182,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:32:04.405,TopVision,26,26,0,CodeReader,281,26,208,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:32:05.904,TopVision,26,26,0,CodeReader,281,26,234,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:32:07.807,TopVision,26,26,0,CodeReader,281,26,260,OK,N/A,N/A,N/A
+a,Admin,06-01-2023 | 14:32:14.467,TopVision,26,26,0,CodeReader,281,26,312,NG,ExceedTotalBatchQty,N/A,Admin

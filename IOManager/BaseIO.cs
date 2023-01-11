@@ -46,25 +46,12 @@ namespace IOManager
             set { m_OutputMapList = value; }
         }
 
-        //private List<VacuumCylinderIO> m_VacuumCylinderList = new List<VacuumCylinderIO>();
-        //public List<VacuumCylinderIO> VacuumCylinderList
-        //{
-        //    get { return m_VacuumCylinderList; }
-        //    set { m_VacuumCylinderList = value; }
-        //}
         private Dictionary<OUT, SQID> m_IOKeyList = new Dictionary<OUT, SQID>();
         public Dictionary<OUT, SQID> IOKeyList
         {
             get { return m_IOKeyList; }
             set { m_IOKeyList = value; }
         }
-        //public void AssignInput(SQID seqName, IN masterInput)
-        //{
-        //    if (!InputMapList.ContainsKey(seqName))
-        //        InputMapList.Add(seqName, new List<object>() { { masterInput } });
-        //    else
-        //        InputMapList[seqName].Add(masterInput);
-        //}
         public void AssignOutput(SQID seqName, OUT masterOutput)
         {
             if (!OutputMapList.ContainsKey(seqName))

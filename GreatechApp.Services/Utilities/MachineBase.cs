@@ -25,10 +25,7 @@ namespace GreatechApp.Services.Utilities
         public const string SwitchOnIcon = "/Resources/Images/switch-on.png";
         public const string SwitchOffIcon = "/Resources/Images/switch-off.png";
         public const bool DblSol = true;
-        public const bool SkipIntLChk = true;    // certain IO trigger such as tower lights & buzzer does not require interlock check
-        //public static IBaseMC IMC = IoC.Get<IBaseMC>();
-        //private static IEventAggregator m_Events = IoC.Get<IEventAggregator>();
-        //IDialogService _dialogService;
+        public const bool SkipIntLChk = true; // certain IO trigger such as tower lights & buzzer does not require interlock check
 
         public enum MessageMode
         {
@@ -140,122 +137,7 @@ namespace GreatechApp.Services.Utilities
         /// <param name="ioNum"></param>
         /// <param name="slaveNo"></param>
         /// <returns>ushort</returns>
-        //protected ushort CalDevIdxNum(ushort ioNum, ushort slaveNo)
-        //{
-        //    return (ushort)(ioNum +
-        //        ((IoC.Get<SystemConfig>().DigitalIO.MaxBitPerPort * IoC.Get<SystemConfig>().DigitalIO.MaxPortNum) * slaveNo));
-        //}
-
-        //public static void ShowMessage(Exception ex)
-        //{
-        //    var dialog = new Dialog<Answer>(DialogType.Error, ex.ToString(), Answer.Ok);
-        //    var vm = new DialogViewModel();
-        //    vm.Dialog = dialog;
-        //    IoC.Get<IWindowManager>().ShowDialog(vm);
-        //}
-
-        //public static void ShowMessage(string Message, MessageMode PrompDialog = MessageMode.PopUpDialog, DialogType dialogType = DialogType.Error, Answer answer = Answer.Ok)
-        //{
-        //    m_Events.PublishOnUIThread(new Datalog(LogMsgType.Alarm, Message, ViewName.None));
-
-        //    if (PrompDialog == MessageMode.PopUpDialog)
-        //    {
-        //        var dialog = new Dialog<Answer>(dialogType, Message, answer);
-        //        var vm = new DialogViewModel();
-        //        vm.Dialog = dialog;
-        //        IoC.Get<IWindowManager>().ShowDialog(vm);
-        //    }
-        //}
-
-        //public static void ShowMessage(Exception exception, MessageMode PrompDialog = MessageMode.PopUpDialog, DialogType dialogType = DialogType.Error, Answer answer = Answer.Ok)
-        //{
-        //    m_Events.PublishOnUIThread(new Datalog(LogMsgType.Alarm, exception.ToString(), ViewName.None));
-
-        //    if (PrompDialog == MessageMode.PopUpDialog)
-        //    {
-        //        var dialog = new Dialog<Answer>(dialogType, exception.ToString(), answer);
-        //        var vm = new DialogViewModel();
-        //        vm.Dialog = dialog;
-        //        IoC.Get<IWindowManager>().ShowDialog(vm);
-        //    }
-        //}
-
-        //public static bool ShowMessage(string Question, DialogType dialogType, Answer answer1, Answer answer2, ViewName viewname, MessageMode PrompDialog = MessageMode.PopUpDialog)
-        //{
-        //    bool result = false;
-        //    m_Events.PublishOnUIThread(new Datalog(LogMsgType.Info, Question, viewname));
-
-        //    if (PrompDialog == MessageMode.PopUpDialog)
-        //    {
-        //        var dialog = new Dialog<Answer>(dialogType, Question, answer1, answer2);
-        //        var vm = new DialogViewModel();
-        //        vm.Dialog = dialog;
-        //        IoC.Get<IWindowManager>().ShowDialog(vm);
-
-        //        if (vm.Dialog.GivenResponse == Answer.Yes)
-        //        {
-        //            result = true;
-        //        }
-        //        else if (vm.Dialog.GivenResponse == Answer.Ok)
-        //        {
-        //            result = true;
-        //        }
-        //        else if (vm.Dialog.GivenResponse == Answer.No)
-        //        {
-        //            result = false;
-        //        }
-        //        else if (vm.Dialog.GivenResponse == Answer.Cancel)
-        //        {
-        //            result = false;
-        //        }
-        //        else if (vm.Dialog.GivenResponse == Answer.Retry)
-        //        {
-        //            result = true;
-        //        }
-        //        else if (vm.Dialog.GivenResponse == Answer.Ignore)
-        //        {
-        //            result = false;
-        //        }
-        //    }
-        //    return result;
-        //}
-
-        //public static void DisplayErrorMessage(AggregateException ex)
-        //{
-        //    m_Events.PublishOnUIThread(new Datalog(LogMsgType.Alarm, ex.ToString(), ViewName.None));
-
-        //    StringBuilder errMsg = new StringBuilder();
-        //    List<Exception> exList = ex.InnerExceptions.ToList();
-        //    string caption = ex.GetType() == null ? "N/A" : ex.GetType().Name;
-
-        //    errMsg.AppendLine(ex.Message).AppendLine();
-
-        //    #region Build error message.
-        //    foreach (Exception exp in exList)
-        //    {
-        //        string type = exp.GetType() == null ? "N/A" : exp.GetType().Name + "\n";
-        //        string message = exp.Message == null ? "N/A" : exp.Message + "\n";
-        //        string declaringType = exp.TargetSite.DeclaringType == null ? "N/A" : exp.TargetSite.DeclaringType.Name + "\n";
-        //        string targetSite = exp.TargetSite == null ? "N/A" : exp.TargetSite.Name + "\n";
-        //        string stackTrace = exp.StackTrace == null ? "N/A" : exp.StackTrace + "\n";
-
-        //        errMsg.Append(
-        //            "Type: " + type +
-        //            "Message: " + message +
-        //            "Declaring Type: " + declaringType +
-        //            "Target Site: " + targetSite +
-        //            "Stack Trace:\n " + stackTrace +
-        //            "\n\n");
-        //    }
-        //    #endregion
-
-        //    // Display the error message.
-        //    var dialog = new Dialog<Answer>(DialogType.Error, errMsg.ToString(), Answer.Ok);
-        //    var vm = new DialogViewModel();
-        //    vm.Dialog = dialog;
-        //    IoC.Get<IWindowManager>().ShowDialog(vm);
-        //}
-
+        
         /// <summary>
         /// Pad the specified character as the leading characters and trailing characters to the target string. 
         /// </summary>

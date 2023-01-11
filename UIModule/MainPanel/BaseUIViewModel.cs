@@ -23,11 +23,9 @@ namespace UIModule.MainPanel
         public ITCPIP m_TCPIP;
         public IInsightVision m_InsightVision;
         public ICodeReader m_CodeReader;
-        //public IBaseMotion m_Motion;
         public IShowDialog m_ShowDialog;
         public IBaseIO m_IO;
         public IUser m_CurrentUser;
-        //public ISecsGem m_SecsGem;
         public AuthService m_AuthService;
         public SystemConfig m_SystemConfig;
         public CultureResources m_CultureResources;
@@ -44,14 +42,11 @@ namespace UIModule.MainPanel
             m_InsightVision = (IInsightVision)ContainerLocator.Container.Resolve(typeof(IInsightVision));
             m_CodeReader = (ICodeReader)ContainerLocator.Container.Resolve(typeof(ICodeReader));
             m_IO = (IBaseIO)ContainerLocator.Container.Resolve(typeof(IBaseIO));
-            //m_Motion = (IBaseMotion)ContainerLocator.Container.Resolve(typeof(IBaseMotion));
-            //m_SecsGem = (ISecsGem)ContainerLocator.Container.Resolve(typeof(ISecsGem));
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             m_CurrentUser = (DefaultUser)ContainerLocator.Container.Resolve(typeof(DefaultUser));
             m_CultureResources = (CultureResources)ContainerLocator.Container.Resolve(typeof(CultureResources));
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
             m_AuthService = (AuthService)ContainerLocator.Container.Resolve(typeof(AuthService));
-
 
             m_EventAggregator.GetEvent<ValidateLogin>().Subscribe(OnValidateLogin);
             m_EventAggregator.GetEvent<CultureChanged>().Subscribe(OnCultureChanged);

@@ -28,8 +28,6 @@ namespace GreatechApp.Shell
         IInsightVision InsightVision;
         ICodeReader CodeReader;
         IBaseIO IO;
-        //IBaseMotion Motion;
-        //ISecsGem SecsGem;
         SystemConfig SysConfig;
         CultureResources m_CultureResources;
 
@@ -40,8 +38,6 @@ namespace GreatechApp.Shell
             InsightVision = container.Resolve<IInsightVision>();
             CodeReader = container.Resolve<ICodeReader>();
             IO = container.Resolve<IBaseIO>();
-            //Motion = container.Resolve<IBaseMotion>();
-            //SecsGem = container.Resolve<ISecsGem>();
             SysConfig = container.Resolve<SystemConfig>();
             m_CultureResources = cultureResources;
 

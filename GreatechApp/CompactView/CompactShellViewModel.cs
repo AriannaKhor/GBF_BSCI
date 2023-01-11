@@ -28,8 +28,6 @@ namespace GreatechApp.CompactView
         IInsightVision InsightVision;
         ICodeReader CodeReader;
         IBaseIO IO;
-        //IBaseMotion Motion;
-        //ISecsGem SecsGem;
         SystemConfig SysConfig;
         CultureResources m_CultureResources;
 
@@ -40,8 +38,6 @@ namespace GreatechApp.CompactView
             InsightVision = container.Resolve<IInsightVision>();
             CodeReader = container.Resolve<ICodeReader>();
             IO = container.Resolve<IBaseIO>();
-            //Motion = container.Resolve<IBaseMotion>();
-            //SecsGem = container.Resolve<ISecsGem>();
             SysConfig = container.Resolve<SystemConfig>();
             m_CultureResources = cultureResources;
 
@@ -90,11 +86,6 @@ namespace GreatechApp.CompactView
             {
                 TCPIP.clientSockets[i].Disconnect();
             }
-        
-            // Close IO (Vacuum / Air Pressure etc...)
-            //IO.WriteBit((int)OUT.DO0101_RedTowerLight, false);
-            //IO.WriteBit((int)OUT.DO0102_AmberTowerLight, false);
-            //IO.WriteBit((int)OUT.DO0103_GreenTowerLight, false);
             IO.WriteBit((int)OUT.DO0100_Buzzer, false);
         }
         #endregion

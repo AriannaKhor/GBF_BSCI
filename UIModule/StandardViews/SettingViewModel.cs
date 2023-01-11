@@ -66,9 +66,6 @@
             if (tabControlRegion == null)
             {
                 tabControlRegion = m_RegionManager.Regions[RegionNames.SettingTabControlRegion];
-
-                //tabControlRegion.Add(m_ContainerProvider.Resolve<SeqParameterView>());
-                //tabControlRegion.Add(m_ContainerProvider.Resolve<TowerLightView>());
                 tabControlRegion.Add(m_ContainerProvider.Resolve<ProductQtyView>());
             }
         }

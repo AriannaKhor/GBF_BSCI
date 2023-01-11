@@ -13,7 +13,6 @@ namespace Sequence.MachineSeq
         #region Enum
         public enum ErrorCode
         {
-
             MissingResult,//1
             BatchNotMatch,//2
             BoxQtyNotMatch,//3
@@ -45,12 +44,9 @@ namespace Sequence.MachineSeq
         {
             m_SeqNum = SN.EOS;
         }
-
         #endregion
 
-
         #region Thread
-
         public override void OnRunSeq(object sender, EventArgs args)
         {
             try
@@ -109,21 +105,12 @@ namespace Sequence.MachineSeq
                 base.SequenceOperation(sequence);
             }
         }
-
         #region IO
         internal override void IOMapping()
         {
-            #region Input
-            //AssignIO(IN.DI0100_E_StopBtn);
-            #endregion
-
             #region Output
-            //AssignIO(OUT.DO0101_RedTowerLight);
-            //AssignIO(OUT.DO0102_AmberTowerLight);
-            //AssignIO(OUT.DO0103_GreenTowerLight);
             AssignIO(OUT.DO0100_Buzzer);
             #endregion
-
         }
         #endregion
     }

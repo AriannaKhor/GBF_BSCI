@@ -27,9 +27,6 @@ namespace UIModule.MainPanel
     public class EquipmentViewModel : BaseUIViewModel
     {
         #region Variable
-        //private const string MarkerLayoutFile = @"..\AppData\MarkerLayout.dat";
-        //private static object m_SynMarker = new object();
-        //private static object m_SynDesignItem = new object();
         private static object m_SyncLog = new object();
         CTimer m_timeOut = new CTimer();
         private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
@@ -328,10 +325,6 @@ namespace UIModule.MainPanel
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachName")} : {m_SystemConfig.Machine.EquipName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
 
-            ////Software Results Log
-            //SoftwareResultCollection = new FixedSizeObservableCollection<Datalog>();
-            //SoftwareResultCollection.CollectionChanged += this.OnSoftwareResultCollectionChanged;
-
             m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
             m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
             CodeReaderConnStatus = Global.CodeReaderConnStatus;
@@ -395,66 +388,6 @@ namespace UIModule.MainPanel
                 }
             }
         }
-        //private void OnResultLog(ResultsDatalog resultsDatalog)
-        //{
-        //    lock (m_SyncLog)
-        //    {
-        //        {
-        //            //create log directory V2
-        //            string date = DateTime.Now.ToString("dd-MM-yyyy");
-        //            string filePath = $"{m_SystemConfig.FolderPath.SoftwareResultLog}Log[{date}]\\";
-        //            if (!Directory.Exists(filePath))
-        //                Directory.CreateDirectory(filePath);
-
-        //            if (m_resultsDatalog.OverallResult != null && m_resultsDatalog.VisTotalPrdQty != 0)
-        //            {
-        //                string filename = $"Batch {Global.CurrentBatchNum}.csv";
-        //                filename = filePath + filename;
-
-        //                var records = new List<ResultsDatalog>();
-        //                records.Add(resultsDatalog);
-
-        //                if (tempvisquantityholder != m_resultsDatalog.VisTotalPrdQty)
-        //                {
-        //                    if (m_resultsDatalog.OverallResult != "PendingResult" && Global.CurrentBatchNum != null && Global.CurrentBatchNum != string.Empty)
-        //                    {
-        //                        if (!File.Exists(filename.ToString()))
-        //                        {
-        //                            //create new .csv file and initialize the headers
-        //                            using (var writer = new StreamWriter(filename))
-        //                            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-        //                            {
-        //                                csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
-        //                                csv.WriteRecords(records);
-        //                            }
-        //                        }
-        //                        else
-        //                        {
-        //                            //append to .csv file
-        //                            var configList = new CsvConfiguration(CultureInfo.InvariantCulture)
-        //                            {
-        //                                HasHeaderRecord = false
-        //                            };
-
-        //                            using (var stream = File.Open(filename, FileMode.Append))
-        //                            using (var writer = new StreamWriter(stream))
-        //                            using (var csv = new CsvWriter(writer, configList))
-        //                            {
-        //                                csv.Context.RegisterClassMap<ResultsDatalog.ResultsDatalogMap>();
-        //                                csv.WriteRecords(records);
-        //                            }
-        //                        }
-        //                        tempvisquantityholder = m_resultsDatalog.VisTotalPrdQty;
-        //                    }
-        //                }
-        //            }
-        //            else
-        //            {
-        //                date = DateTime.Now.ToString("dd-MM-yyyy");
-        //            }
-        //        }
-        //    }
-        //}
         #endregion
 
         #region Vision
@@ -538,7 +471,6 @@ namespace UIModule.MainPanel
             }
         }
         
-
         private void OnCodeReaderImg(BitmapImage img)
         {
             CodeReaderImage = img;
@@ -555,8 +487,6 @@ namespace UIModule.MainPanel
         public override void OnValidateLogin(bool IsAuthenticated)
         {
             base.OnValidateLogin(IsAuthenticated);
-            // IsAllowEditMarker = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
-            //IsAllowAccessEquipment = m_AuthService.CurrentUser.UserLevel == ACL.UserLevel.Admin && m_AuthService.CurrentUser.IsAuthenticated ? Visibility.Visible : Visibility.Collapsed;
             if (m_AuthService.CurrentUser.IsAuthenticated)
             {
                 IsAllowEquipment = Visibility.Visible;
@@ -582,27 +512,6 @@ namespace UIModule.MainPanel
                 DataLogCollection.Add(new Datalog(log.MsgType, log.MsgText));
             });
         }
-
-        //private void OnSoftwareResultCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (e.Action == NotifyCollectionChangedAction.Add)
-        //        {
-        //            Datalog resultLog = e.NewItems[0] as Datalog;
-
-        //            if (resultLog == null)
-        //            {
-        //                return;
-        //            }
-        //            WriteSoftwareResultLog(resultLog);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message, ex.Source);
-        //    }
-        //}
 
         private void OnDatalogCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

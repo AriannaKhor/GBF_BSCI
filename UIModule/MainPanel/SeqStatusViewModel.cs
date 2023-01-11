@@ -289,11 +289,6 @@ namespace UIModule.MainPanel
         {
             try
             {
-                //if (IsSkipCoreSeq && updatedSeqStatus.SeqName == SQID.CriticalScan.ToString())
-                //{
-                //    return;
-                //}
-
                 if (IsRunTracking)
                 {
                     Application.Current.Dispatcher.Invoke(() =>

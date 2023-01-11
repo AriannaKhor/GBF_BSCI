@@ -265,7 +265,6 @@
     <Compile Include="Modal\SeqNumTrackData.cs" />
     <Compile Include="Modal\SeqStatus.cs" />
     <Compile Include="Modal\TCPIPParameter.cs" />
-    <Compile Include="Modal\ToolLifeParameter.cs" />
     <Compile Include="Modal\Towerlightlist.cs" />
     <Compile Include="Modal\UserList.cs" />
     <Compile Include="Mvvm\RegionViewModelBase.cs" />
@@ -497,6 +496,7 @@
     <EmbeddedResource Include="Resources\StringTable.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StringTable.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\OutputTable.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

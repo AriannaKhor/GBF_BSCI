@@ -27,8 +27,6 @@ namespace DialogManager.ErrorMsg
         private CultureResources m_CultureResources;
         public IUser m_CurrentUser;
 
-        //private DispatcherTimer m_TmrButtonMonitor;
-
         private BitmapImage m_Image;
         public BitmapImage Image
         {
@@ -118,7 +116,6 @@ namespace DialogManager.ErrorMsg
             set
             {
                 SetProperty(ref m_IsAllowStart, value);
-                //CheckSSRButtonAvail();
             }
         }
 
@@ -129,15 +126,12 @@ namespace DialogManager.ErrorMsg
             set
             {
                 SetProperty(ref m_IsAllowStop, value);
-                //CheckSSRButtonAvail();
             }
         }
         public DelegateCommand<string> OperationCommand { get; private set; }
         public DelegateCommand EndLotCommand { get; set; }
 
         private readonly IDialogService m_DialogService;
-        //private int ResetButton = (int)IN.DI0103_Input4; // Assign Reset Button
-        //private int ResetButtonIndic = (int)OUT.DO0104_Output5; // Assign Reset Button Indicator
 
         #endregion
 
@@ -155,9 +149,6 @@ namespace DialogManager.ErrorMsg
             OperationCommand = new DelegateCommand<string>(OperationMethod);
             EndLotCommand = new DelegateCommand(RaiseEndLotPopup);
             AlarmDetail = new AlarmParameter();
-            //m_TmrButtonMonitor = new DispatcherTimer();
-            //m_TmrButtonMonitor.Interval = new TimeSpan(0, 0, 0, 0, 300);
-            //m_TmrButtonMonitor.Tick += m_TmrButtonMonitor_Tick;
         }
 
         #endregion
@@ -251,9 +242,6 @@ namespace DialogManager.ErrorMsg
 
         protected virtual void CloseDialog(string parameter)
         {
-            //m_TmrButtonMonitor.Stop();
-            // Turn off Reset Button LED
-            //m_IO.WriteBit(ResetButtonIndic, false);
             RaiseRequestClose(new DialogResult(ButtonResult.OK));
         }
         #endregion
@@ -276,9 +264,6 @@ namespace DialogManager.ErrorMsg
 
         public virtual void OnDialogOpened(IDialogParameters parameters)
         {
-            // Turn on Reset Button LED
-            //m_IO.WriteBit(ResetButtonIndic, true);
-
             string[] split = parameters.GetValue<string>("message").Split(';');
 
             AlarmDetail.Module = (SQID)Enum.Parse(typeof(SQID), split[8]);
@@ -318,7 +303,6 @@ namespace DialogManager.ErrorMsg
             {
                 ResetVis = Visibility.Visible;
                 OkVis = Visibility.Collapsed;
-                //m_TmrButtonMonitor.Start();
             }
             else
             {

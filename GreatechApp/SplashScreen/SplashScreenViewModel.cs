@@ -84,8 +84,6 @@ namespace GreatechApp.SplashScreen
             UpdateStatus(m_CultureResources.GetStringValue("IO"), 60);
             IO = m_container.Resolve<IBaseIO>();
 
-            //IO.MaxBitPerDevice = SysConfig.DigitalIO.MaxBitPerPort;
-
             if (IO.OpenDevice())
             {
                 IO.StartScanIO();
@@ -101,47 +99,18 @@ namespace GreatechApp.SplashScreen
             }
             #endregion
 
-            #region TCPIP
-//            UpdateStatus(m_CultureResources.GetStringValue("TCPIP"), 80);
-
-//            if (SysConfig.NetworkDevices.Count > 0)
-//            {
-//                TCPIP = m_container.Resolve<ITCPIP>();
-
-//                Thread.Sleep(500);
-
-//                for (int i = 0; i < TCPIP.clientSockets.Count; i++)
-//                {
-//                    if (!TCPIP.clientSockets[i].IsAlive)
-//                    {
-//                        Application.Current.Dispatcher.Invoke(() =>
-//                        {
-//#if !SIMULATION
-//                            MessageBox.Show($"{m_CultureResources.GetStringValue("TCPIP")} : [ {TCPIP.clientSockets[i].Name} ] {m_CultureResources.GetStringValue("FailConnect")}", m_CultureResources.GetStringValue("TCPIP"), MessageBoxButton.OK);
-//#endif
-//                        });
-//                    }
-//                }
-//            }
-            #endregion
-
             #region Utilities
             m_container.Resolve<TowerLight>();
-
             Global.MachineStatus = MachineStateType.Idle;
-
-            //m_container.Resolve<OEECalculation>();
             #endregion
 
             #region Sequence
             UpdateStatus(m_CultureResources.GetStringValue("Sequence"), 90);
-
             m_container.Resolve<DelegateSeq>();
             #endregion
 
             #region Others
             UpdateStatus(m_CultureResources.GetStringValue("LoadComplete"), 100);
-
             Application.Current.Dispatcher.Invoke(() =>
             {
                 CloseDialog();

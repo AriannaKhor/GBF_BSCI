@@ -73,7 +73,12 @@
                             <TextBox Text="{Binding UserID}" Grid.Row="3"  Width="80" Margin="137,8,333,9" Height="20"></TextBox>
                             <Label Grid.Row="3" Content="Password: " FontSize="16" Margin="240,0,0,0" VerticalAlignment="Top"/>
                             <PasswordBox x:Name="MaskPass" Grid.Row="3"  Margin="200,0,0,0" VerticalContentAlignment="Center" Width="80" Height="20" PasswordChanged="MaskPass_PasswordChanged" Password=""/>
-                            <TextBox x:Name="UnMaskPass" Grid.Column="2"  Text="{Binding Password, Mode=TwoWay, ElementName=MaskPass}" FontSize="15" FontWeight="SemiBold" MaxWidth="160" VerticalContentAlignment="Center" Visibility="Collapsed"/>
+                            <TextBox x:Name="UnMaskPass" Grid.Row="3"  Margin="200,0,0,0" VerticalContentAlignment="Center" Width="80" Height="20" Text="{Binding Password, Mode=TwoWay, ElementName=MaskPass}" FontSize="15" FontWeight="SemiBold" MaxWidth="160" Visibility="Collapsed"/>
+                            <Button x:Name="PassBtn" Grid.Row="3" Grid.Column="2" Margin="350,0,0,0" Width="30" Height="25" BorderBrush="Transparent" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center"  Click="Password_Click">
+                                <Button.Content>
+                                    <Image x:Name="PassImage" />
+                                </Button.Content>
+                            </Button>
                             <Button Grid.Row="3" Command="{Binding VerificationCommand}" Margin="480,0,0,0" CommandParameter="{Binding ElementName=MaskPass}" Grid.Column="2" Content="Verify" Width="70" Height="30" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15" />
                             <Label Grid.Row="5" Content="Remarks: " FontSize="16" Margin="3" VerticalAlignment="Top" />
                             <TextBox Text="{Binding remarks}" Grid.Row="5" Grid.Column="2" Margin="22,0,0,0" Width="300" Height="20"></TextBox>

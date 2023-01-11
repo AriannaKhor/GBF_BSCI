@@ -30,8 +30,6 @@ namespace DialogManager.ErrorMsg
         private CultureResources m_CultureResources;
         private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
 
-        //private DispatcherTimer m_TmrButtonMonitor;
-
         private BitmapImage m_Image;
         public BitmapImage Image
         {
@@ -232,9 +230,6 @@ namespace DialogManager.ErrorMsg
 
         private void OperationMethod(string Command)
         {
-            //SaveGlobalResult();
-            //m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
-            //m_resultsDatalog.ClearAll();
             if (Command == "EndLot")
             {
                 m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });

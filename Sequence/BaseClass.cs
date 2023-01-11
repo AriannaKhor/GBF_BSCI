@@ -89,8 +89,6 @@ namespace Sequence
 
         protected CTimer _TmrPerfScan = new CTimer();
 
-        //protected AxisModel m_AxisModel = new AxisModel();
-
         internal Dictionary<int, string> MotCfgs = new Dictionary<int, string>();
 
         protected SeqConfig m_SeqCfg;
@@ -334,7 +332,6 @@ namespace Sequence
         {
 
         }
-
         internal virtual void CheckTestRunSN()
         {
 
@@ -611,124 +608,11 @@ namespace Sequence
 
         }
 
-        //protected virtual void AssignVacuumIO(string vacuumName, IN? pickedUpSns, OUT vacuum, OUT? purge)
-        //{
-        //    // Vacuum input and output pairing 
-        //    IO.VacuumCylinderList.Add(new VacuumCylinderIO
-        //    {
-        //        SeqName = SeqName,
-        //        VacuumName = vacuumName,
-        //        Vacuum = vacuum,
-        //        VacuumPickedUpSns1 = pickedUpSns,
-        //        Purge = purge,
-
-        //    });
-
-        //    // Assign Vacuum Output into Seq OutputList
-        //    IO.AssignOutput(SeqName, vacuum);
-        //    if (purge != null)
-        //        IO.AssignOutput(SeqName, purge.Value);
-
-        //    // Assign Vacuum Input into Seq InputList
-        //    if (pickedUpSns != null)
-        //        IO.AssignInput(SeqName, pickedUpSns.Value);
-        //}
-
-        //protected virtual void AssignVacuumIO(string vacuumName, IN? vacuumOnSns, IN? pickedUpSns, OUT vacuum, OUT? purge)
-        //{
-        //    // vacuumOnSns is sensor of checking is vacuum turned on after writebit
-        //    // pickedUpsns is sensor of checking vacuum picked up successfully
-
-        //    // Vacuum input and output pairing 
-        //    IO.VacuumCylinderList.Add(new VacuumCylinderIO
-        //    {
-        //        SeqName = SeqName,
-        //        VacuumName = vacuumName,
-        //        Vacuum = vacuum,
-        //        VacuumPressureSns1 = vacuumOnSns,
-        //        Purge = purge,
-        //        VacuumPickedUpSns1 = pickedUpSns,
-        //    });
-
-        //    // Assign Vacuum Output into Seq OutputList
-        //    IO.AssignOutput(SeqName, vacuum);
-        //    if (purge != null)
-        //        IO.AssignOutput(SeqName, purge.Value);
-
-        //    // Assign Vacuum Input into Seq InputList
-        //    if (vacuumOnSns != null)
-        //        IO.AssignInput(SeqName, vacuumOnSns.Value);
-        //    if (pickedUpSns != null)
-        //        IO.AssignInput(SeqName, pickedUpSns.Value);
-        //}
-
-        //protected virtual void AssignCylinderIO(string doubleSolenoidCylinderName, IN? workSns1, IN? workSns2, IN? restSns1, IN? restSns2, OUT work, OUT? rest)
-        //{
-        //    // Cylinder input and output pairing 
-        //    IO.VacuumCylinderList.Add(new VacuumCylinderIO
-        //    {
-        //        SeqName = SeqName,
-        //        CylinderName = doubleSolenoidCylinderName,
-        //        Work = work,
-        //        WorkSns1 = workSns1,
-        //        WorkSns2 = workSns2,
-        //        Rest = rest,
-        //        RestSns1 = restSns1,
-        //        RestSns2 = restSns2
-        //    });
-
-        //    // Assign Cylinder Output into Seq OutputList
-        //    IO.AssignOutput(SeqName, work);
-        //    if (rest != null)
-        //        IO.AssignOutput(SeqName, rest.Value);
-
-        //    // Assign Cylinder Input into Seq InputList
-        //    if(workSns1 !=null)
-        //        IO.AssignInput(SeqName, workSns1.Value);
-        //    if(restSns1 !=null)
-        //        IO.AssignInput(SeqName, restSns1.Value);
-        //    if (workSns2 != null)
-        //        IO.AssignInput(SeqName, workSns2.Value);
-        //    if (restSns2 != null)
-        //        IO.AssignInput(SeqName, restSns2.Value);
-        //}
-
-        //protected virtual void AssignCylinderIO(string singleSolenoidCylinderName, IN workSns, IN restSns, OUT work)
-        //{
-        //    // Cylinder input and output pairing 
-        //    IO.VacuumCylinderList.Add(new VacuumCylinderIO
-        //    {
-        //        SeqName = SeqName,
-        //        CylinderName = singleSolenoidCylinderName,
-        //        Work = work,
-        //        WorkSns1 = workSns,
-        //        RestSns1 = restSns,
-        //    });
-
-        //    // Assign Cylinder Output into Seq OutputList
-        //    IO.AssignOutput(SeqName, work);
-
-        //    // Assign Cylinder Input into Seq InputList
-        //    IO.AssignInput(SeqName, workSns);
-        //    IO.AssignInput(SeqName, restSns);
-        //}
-
-        //protected virtual void AssignIO(IN masterInput)
-        //{
-        //    // Assign selected input from masterlist into Seq InputList
-        //    IO.AssignInput(SeqName, masterInput);
-        //}
         protected virtual void AssignIO(OUT masterOutput)
         {
             // Assign selected output from masterlist into Seq OutputList
             IO.AssignOutput(SeqName, masterOutput);
         }
-
-        //protected void AssignIO(object key, IN ioNum)
-        //{
-        //    m_IOTbl.Add(key, ioNum);
-        //    IO.AssignInput(SeqName, ioNum);
-        //}
 
         protected void AssignIO(object key, OUT ioNum)
         {

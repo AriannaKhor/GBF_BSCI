@@ -123,7 +123,6 @@ namespace UIModule.MainPanel
             set
             {
                 SetProperty(ref m_IsAllowStart, value);
-                //CheckSSRButtonAvail();
             }
         }
 
@@ -134,7 +133,6 @@ namespace UIModule.MainPanel
             set
             {
                 SetProperty(ref m_IsAllowStop, value);
-               // CheckSSRButtonAvail();
             }
         }
 
@@ -187,16 +185,6 @@ namespace UIModule.MainPanel
             get { return m_IsEndingLot; }
             set { SetProperty(ref m_IsEndingLot, value); }
         }
-        #endregion
-
-        #region Hardware SSR Button
-        //private DispatcherTimer tmrButtonMonitor;
-
-        //private int StartButton = (int)IN.DI0104_Input5; // Assign Start Button Input
-        //private int StopButton = (int)IN.DI0105_Input6; // Assign Stop Button Input
-
-        //private int StartButtonIndic = (int)OUT.DO0104_Output5; // Assign Start button indicator output
-        //private int StopButtonIndic = (int)OUT.DO0105_Output6; // Assign stop button indicator output
         #endregion
 
         #region System Clock
@@ -439,14 +427,12 @@ namespace UIModule.MainPanel
         public DelegateCommand ReconnectAllTCP { get; set; }
 
         private readonly IDialogService m_DialogService;
-        //OEECalculation m_OEECalculation;
         private static object m_SyncOEE = new object();
         private DispatcherTimer tmrOEEUpdate;
 
-        public CompactViewModel(IDialogService dialogService, OEECalculation oEECalculation)
+        public CompactViewModel(IDialogService dialogService)
         {
             m_DialogService = dialogService;
-            //m_OEECalculation = oEECalculation;
 
             m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineStateChange);
             m_EventAggregator.GetEvent<PerformanceEntity>().Subscribe(OnPerformanceChange);
@@ -467,13 +453,6 @@ namespace UIModule.MainPanel
             IsLogin = Visibility.Visible;
             IsLogout = Visibility.Collapsed;
             LoginStatus = "Login";
-
-            ////OEE Clock
-            //tmrOEEUpdate = new DispatcherTimer();
-            //tmrOEEUpdate.Interval = new TimeSpan(0, 0, 1); // 1 second timer
-            //tmrOEEUpdate.Tick += tmrOEEUpdate_Tick;
-            //// This timer will run as long as the application is alive.
-            //tmrOEEUpdate.Start();
 
             // System Clock
             tmrSysClock = new DispatcherTimer();
@@ -580,15 +559,14 @@ namespace UIModule.MainPanel
 
         public void IdleMode()
         {
-            //if (CanAccess)
-            //{
-                IsAllowInit = true;
-                IsAllowAutoMode = true;
-                IsAllowDryRun = true;
-                IsAllowStart = false;
-                IsAllowStop = false;
-                IsAllowReset = false;
-            //}
+
+            IsAllowInit = true;
+            IsAllowAutoMode = true;
+            IsAllowDryRun = true;
+            IsAllowStart = false;
+            IsAllowStop = false;
+            IsAllowReset = false;
+
         }
 
         public void ReadyMode()
@@ -602,24 +580,6 @@ namespace UIModule.MainPanel
 
             CycleTime = "0";
             UPH = "0";
-        }
-
-        public void CheckSSRButtonAvail()
-        {
-            if (IsAllowStart || IsAllowStop)
-            {
-                // start monitoring button activity
-                //tmrButtonMonitor.Start();
-            }
-            else
-            {
-                // stop monitoring button activity
-                //tmrButtonMonitor.Stop();
-            }
-
-            // Turn ON/OFF hardware SSR button LED
-           // m_IO.WriteBit(StartButtonIndic, IsAllowStart);
-            //m_IO.WriteBit(StopButtonIndic, IsAllowStop);
         }
         #endregion
 
@@ -710,28 +670,6 @@ namespace UIModule.MainPanel
                 MessageBox.Show(ex.Message, ex.Source);
             }
         }
-
-
-        //public void tmrButtonMonitor_Tick(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (IsAllowStart && m_IO.ReadBit(StartButton))
-        //        {
-        //            StartOperation();
-        //        }
-        //        else if (IsAllowStop && m_IO.ReadBit(StopButton))
-        //        {
-        //            StopOperation();
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        tmrButtonMonitor.Stop();
-        //        MessageBox.Show(ex.Message, ex.Source);
-        //    }
-        //}
 
         private void m_tmrTCPMonitor_Tick(object sender, EventArgs e)
         {
@@ -959,32 +897,6 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Method
-        //private void tmrOEEUpdate_Tick(object sender, EventArgs arg)
-        //{
-        //    if (Monitor.TryEnter(m_SyncOEE))
-        //    {
-        //        try
-        //        {   // OEE Chart
-        //            Availability = m_OEECalculation.Availability;
-        //            Performance = m_OEECalculation.Performance;
-        //            Quality = m_OEECalculation.Quality;
-        //            OEE = m_OEECalculation.OEE;
-        //            //RefreshSysPerf();
-
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            tmrOEEUpdate.Stop();
-        //            m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Error, MsgText = $"{GetStringTableValue("OEEUpdateError")} : {ex.Message}" });
-        //        }
-        //        finally
-        //        {
-        //            // Ensure the lock is released.
-        //            Monitor.Exit(m_SyncOEE);
-        //        }
-        //    }
-        //}
-
         void RaiseLoginPopup()
         {
             m_DialogService.ShowDialog(DialogList.LoginView.ToString(),

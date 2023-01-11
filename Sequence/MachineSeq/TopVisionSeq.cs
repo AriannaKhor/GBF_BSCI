@@ -25,7 +25,6 @@ namespace Sequence.MachineSeq
         private SN m_PrevSeqNum;
         private SN[] m_SeqRsm = new SN[Total_RSM];
         private string m_FailType;
-
         #endregion
 
         #region Enum
@@ -38,7 +37,6 @@ namespace Sequence.MachineSeq
             // Runnning Routine
             TriggerVis,
         }
-
         #endregion
 
         #region Constructor
@@ -49,7 +47,6 @@ namespace Sequence.MachineSeq
         #endregion
 
         #region Thread
-
         public override void OnRunSeq(object sender, EventArgs args)
         {
             try
@@ -90,8 +87,6 @@ namespace Sequence.MachineSeq
             Publisher.GetEvent<MachineOperation>().Subscribe(SequenceOperation, filter => filter.TargetSeqName == SeqName);
         }
 
-
-
         internal override void SequenceOperation(SequenceEvent sequence)
         {
             lock (m_SyncEvent)
@@ -113,19 +108,11 @@ namespace Sequence.MachineSeq
         #region IO
         internal override void IOMapping()
         {
-            #region Input
-            //AssignIO(IN.DI0100_E_StopBtn);
-            #endregion
-
             #region Output
-            //AssignIO(OUT.DO0101_RedTowerLight);
-            //AssignIO(OUT.DO0102_AmberTowerLight);
-            //AssignIO(OUT.DO0103_GreenTowerLight);
             AssignIO(OUT.DO0100_Buzzer);
             #endregion
 
         }
         #endregion
     }
-
 }

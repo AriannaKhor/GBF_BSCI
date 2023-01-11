@@ -25,8 +25,6 @@ namespace Sequence.MachineSeq
             BoxQtyNotMatch,//4
             ExceedTotalBatchQty,//5
             ExceedUpperLimit, //6
-
-
         }
         #endregion
 
@@ -250,19 +248,13 @@ namespace Sequence.MachineSeq
 
         public override void StartProduction()
         {
-            //if (!checkOp)
-            //{
-            //    m_SeqNum = SN.Begin;
-            //}
             m_SeqNum = SN.Begin;
-
         }
 
         public override void OperationChecking(bool checkopr)
         {
             if (checkopr)
             {
-                //checkopr = false;
                 checkOp = true;
             }
         }
@@ -271,14 +263,7 @@ namespace Sequence.MachineSeq
         #region IO
         internal override void IOMapping()
         {
-            #region Input
-            //AssignIO(IN.DI0100_E_StopBtn);
-            #endregion
-
             #region Output
-            //AssignIO(OUT.DO0101_RedTowerLight);
-            //AssignIO(OUT.DO0102_AmberTowerLight);
-            //AssignIO(OUT.DO0103_GreenTowerLight);
             AssignIO(OUT.DO0100_Buzzer);
             #endregion
         }
