@@ -43,7 +43,6 @@ namespace UIModule
             containerRegistry.RegisterForNavigation<UserView>();
             containerRegistry.RegisterForNavigation<LotHistoryView>();
             containerRegistry.RegisterForNavigation<SettingView>();
-            containerRegistry.RegisterForNavigation<ErrorAnalysisView>();
             containerRegistry.RegisterForNavigation<SeqParameterView>();
             containerRegistry.RegisterForNavigation<TowerLightView>();
             containerRegistry.RegisterForNavigation<IOView>();

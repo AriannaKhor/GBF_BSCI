@@ -186,7 +186,6 @@
     </Compile>
     <Compile Include="MainPanel\EStopViewModel.cs" />
     <Compile Include="MainPanel\HomeViewModel.cs" />
-    <Compile Include="MainPanel\SeqStatusViewModel.cs" />
     <Compile Include="MainPanel\ToolbarViewModel.cs" />
     <Compile Include="MainPanel\BypassView.xaml.cs">
       <DependentUpon>BypassView.xaml</DependentUpon>
@@ -196,9 +195,6 @@
     </Compile>
     <Compile Include="MainPanel\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainPanel\SeqStatusView.xaml.cs">
-      <DependentUpon>SeqStatusView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPanel\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
@@ -218,7 +214,6 @@
     <Compile Include="StandardViews\Services\OEECalculation.cs" />
     <Compile Include="StandardViews\Services\TowerLight.cs" />
     <Compile Include="StandardViews\AboutViewModel.cs" />
-    <Compile Include="StandardViews\ErrorAnalysisViewModel.cs" />
     <Compile Include="StandardViews\LotHistoryViewModel.cs" />
     <Compile Include="RecipeViews\ProductRecipeViewModel.cs" />
     <Compile Include="RecipeViews\RecipeViewModel.cs" />
@@ -232,9 +227,6 @@
     <Compile Include="StandardViews\UserViewModel.cs" />
     <Compile Include="StandardViews\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="StandardViews\ErrorAnalysisView.xaml.cs">
-      <DependentUpon>ErrorAnalysisView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StandardViews\LotHistoryView.xaml.cs">
       <DependentUpon>LotHistoryView.xaml</DependentUpon>
@@ -334,10 +326,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPanel\SeqStatusView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainPanel\Toolbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -353,10 +341,6 @@
     <Page Include="StandardViews\AboutView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="StandardViews\ErrorAnalysisView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StandardViews\LotHistoryView.xaml">
       <Generator>MSBuild:Compile</Generator>

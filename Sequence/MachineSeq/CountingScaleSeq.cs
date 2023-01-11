@@ -19,12 +19,10 @@ namespace Sequence.MachineSeq
         public enum ErrorCode
         {
             WrongOrientation, //0
-            VisionOverallResultRejected,//1
-            BatchNotMatch,//2
-            ContainerNumberExist,//3
-            BoxQtyNotMatch,//4
-            ExceedTotalBatchQty,//5
-            ExceedUpperLimit, //6
+            BatchNotMatch,//1
+            BoxQtyNotMatch,//2
+            ExceedTotalBatchQty,//3
+            ExceedUpperLimit, //4
         }
         #endregion
 

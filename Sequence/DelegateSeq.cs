@@ -110,8 +110,6 @@ namespace Sequence
 
                 seq.MachOperation = new DelegateCommand<string>(seq.MachineOperation);
 
-                seq.TLOperation = new DelegateCommand(seq.ToolLifeOperation);
-
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     ApplicationCommands.OperationCommand.RegisterCommand(seq.MachOperation);

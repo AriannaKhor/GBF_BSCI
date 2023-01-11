@@ -47,7 +47,6 @@
 
     public enum ErrorCode
     {
-        MissingResult,
         BatchNotMatch,
         BoxQtyNotMatch,
         ExceedTotalBatchQty,

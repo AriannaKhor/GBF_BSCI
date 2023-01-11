@@ -143,11 +143,6 @@
         public SolidColorBrush StatusColor;
     }
 
-    public class RefreshToolLife : PubSubEvent
-    {
-
-    }
-
     public class TCPIPStatus : PubSubEvent<TCPIPStatus>
     {
         public NetworkDev TCPDevice;

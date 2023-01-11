@@ -157,39 +157,11 @@ namespace ConfigManager
             get { return (string)this["SoftwareResultLog"]; }
         }
 
-        [ConfigurationProperty("SeqInfoLog", DefaultValue = @"..\SeqInfoLog\", IsRequired = true)]
-        public string SeqInfoLog
-        {
-            set { this["SeqInfoLog"] = value; }
-            get { return (string)this["SeqInfoLog"]; }
-        }
-
-        [ConfigurationProperty("CommCfgPath", DefaultValue = @"..\Config Section\CommSetting\", IsRequired = false)]
-        public string CommCfgPath
-        {
-            set { this["CommCfgPath"] = value; }
-            get { return (string)this["CommCfgPath"]; }
-        }
-
-        [ConfigurationProperty("LiveSeqLog", DefaultValue = @"..\LiveSeqLog\", IsRequired = true)]
-        public string LiveSeqLog
-        {
-            set { this["LiveSeqLog"] = value; }
-            get { return (string)this["LiveSeqLog"]; }
-        }
-
         [ConfigurationProperty("OEELog", DefaultValue = @"..\OEELog\", IsRequired = true)]
         public string OEELog
         {
             set { this["OEELog"] = value; }
             get { return (string)this["OEELog"]; }
-        }
-
-        [ConfigurationProperty("AnalysisLog", DefaultValue = @"..\AnalysisLog\", IsRequired = true)]
-        public string AnalysisLog
-        {
-            set { this["AnalysisLog"] = value; }
-            get { return (string)this["AnalysisLog"]; }
         }
     }
 
@@ -223,13 +195,6 @@ namespace ConfigManager
             set { this["EquipName"] = value; }
             get { return (string)this["EquipName"]; }
         }
-
-        //[ConfigurationProperty("OperaName", DefaultValue = "Put Machine Name Here", IsRequired = true)]
-        //public string OperaName
-        //{
-        //    set { this["OperaName"] = value; }
-        //    get { return (string)this["OperaName"]; }
-        //}
 
         [ConfigurationProperty("HardVer", DefaultValue = "1.0.0", IsRequired = true)]
         public string HardVer

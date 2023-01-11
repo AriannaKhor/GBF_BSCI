@@ -30,20 +30,4 @@ namespace GreatechApp.Core.Enums
         [Description("Code Reader")]
         CodeReader,
     }
-
-    public enum ToolLifeID
-    {
-        Test1,
-        Test2,
-        Test3,
-        Test4,
-        Test5,
-        Test6,
-    }
-
-    public enum ToolLifeType
-    {
-        Cleaning,
-        ToolLife,
-    }
 }

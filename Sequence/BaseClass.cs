@@ -551,11 +551,6 @@ namespace Sequence
         }
 
         public DelegateCommand TLOperation { get; set; }
-
-        public virtual void ToolLifeOperation()
-        {
-
-        }
         #endregion
 
         #region Cylinder

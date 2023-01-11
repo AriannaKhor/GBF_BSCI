@@ -148,7 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseCfg.cs" />
-    <Compile Include="Constant\CounterCFG.cs" />
     <Compile Include="ErrorConfig.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="Constant\MotCFG.cs" />

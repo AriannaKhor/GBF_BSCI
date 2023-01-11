@@ -103,7 +103,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <WrapPanel Grid.Column="0">
-                            <Label Content="{Binding Path=TotalBatchQuantity, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground="Black"/>
+                            <Label Content="{Binding Path=TotalBatchQuantity, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" Foreground="Black"/>
                             <Label Content="{Binding ViewCurrentBatchTotalQuantity}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                         <WrapPanel Grid.Column="1">
@@ -111,7 +111,7 @@
                             <Label Content="{Binding ViewAccumulateCurrentTotalBatchQuantity}" Foreground="{Binding CurrentTotalBatchQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         </WrapPanel>
                         <WrapPanel Grid.Column="2">
-                            <Label Content="{Binding Path=TotalCurrentBoxQuantity, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center"  Margin="10" Foreground="Black"/>
+                            <Label Content="{Binding Path=TotalCurrentBoxQuantity, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center"  Margin="3" Foreground="Black"/>
                             <Label Content= "{Binding ViewCurrentBoxQuantity}" Foreground="{Binding CurrentQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" />
                         </WrapPanel>
                     </Grid>

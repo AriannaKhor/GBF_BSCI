@@ -379,12 +379,6 @@ Press ESC to cancel.</value>
   <data name="TestRunNotFound" xml:space="preserve">
     <value>Test Run mode not found</value>
   </data>
-  <data name="ToolLifeCounter" xml:space="preserve">
-    <value>Tool Life Counter</value>
-  </data>
-  <data name="ToolMaxCounter" xml:space="preserve">
-    <value>Tool life Max Counter</value>
-  </data>
   <data name="TurnOnServo" xml:space="preserve">
     <value>Servo is not ON. Do you want to turn on servo?</value>
   </data>

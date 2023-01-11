@@ -13,10 +13,9 @@ namespace Sequence.MachineSeq
         #region Enum
         public enum ErrorCode
         {
-            MissingResult,//1
-            BatchNotMatch,//2
-            BoxQtyNotMatch,//3
-            ExceedTotalBatchQty,//4
+            BatchNotMatch,//1
+            BoxQtyNotMatch,//2
+            ExceedTotalBatchQty,//3
         }
         #endregion
 

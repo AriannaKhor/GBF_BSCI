@@ -17,6 +17,7 @@ namespace Sequence.MachineSeq
         public enum ErrorCode
         {
             WrongOrientation, //0
+            ExceedUpperLimit, //1
         }
         #endregion
 

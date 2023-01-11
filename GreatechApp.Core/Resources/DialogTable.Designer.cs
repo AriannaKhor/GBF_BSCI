@@ -833,24 +833,6 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tool Life Counter.
-        /// </summary>
-        public static string ToolLifeCounter {
-            get {
-                return ResourceManager.GetString("ToolLifeCounter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tool life Max Counter.
-        /// </summary>
-        public static string ToolMaxCounter {
-            get {
-                return ResourceManager.GetString("ToolMaxCounter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Servo is not ON. Do you want to turn on servo?.
         /// </summary>
         public static string TurnOnServo {

@@ -203,16 +203,7 @@ namespace GreatechApp.Core.Resources {
                 return ResourceManager.GetString("AllPurgeOn", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All ToolLife counter.
-        /// </summary>
-        public static string AllToolLifeCounter {
-            get {
-                return ResourceManager.GetString("AllToolLifeCounter", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to All Vacuum Off.
         /// </summary>
@@ -813,15 +804,6 @@ namespace GreatechApp.Core.Resources {
         public static string CurrentShift {
             get {
                 return ResourceManager.GetString("CurrentShift", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Current Tool Life.
-        /// </summary>
-        public static string CurrentToolLife {
-            get {
-                return ResourceManager.GetString("CurrentToolLife", resourceCulture);
             }
         }
         
@@ -2300,15 +2282,6 @@ namespace GreatechApp.Core.Resources {
         public static string MaxCycleTimeMessage {
             get {
                 return ResourceManager.GetString("MaxCycleTimeMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max Tool Life.
-        /// </summary>
-        public static string MaxToolLife {
-            get {
-                return ResourceManager.GetString("MaxToolLife", resourceCulture);
             }
         }
         
@@ -4292,14 +4265,6 @@ namespace GreatechApp.Core.Resources {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to ToolLife Cycle.
-        /// </summary>
-        public static string ToolLifeCycle {
-            get {
-                return ResourceManager.GetString("ToolLifeCycle", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to Tool Name.
