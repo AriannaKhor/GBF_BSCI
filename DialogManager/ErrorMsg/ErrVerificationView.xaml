@@ -8,7 +8,7 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="600" Background="Transparent">
+             d:DesignHeight="700" d:DesignWidth="600" Background="Transparent">
 
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">

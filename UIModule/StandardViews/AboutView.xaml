@@ -92,7 +92,7 @@
                     <Label Grid.Row="10" Grid.Column="1" FontSize="12" Name="lblCompanyEmail" FontWeight="DemiBold" HorizontalAlignment="Left" Content="info@greatech-group.com"  />
                     <Label Grid.Row="11" Grid.Column="1" FontSize="12" Name="lblCompanyWebsite" FontWeight="DemiBold" HorizontalAlignment="Left" Content="www.greatech-group.com"  />
                     <Label Grid.Row="1" Grid.Column="3" FontSize="12" Name="lblModel" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding MachineModel}"  />
-                    <Label Grid.Row="2" Grid.Column="3" FontSize="12" Name="lblSerialNo" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding SerialNumber}"/>
+                    <Label Grid.Row="2" Grid.Column="3" FontSize="12" Name="lblSerialNo" FontWeight="DemiBold" HorizontalAlignment="Left" Content="GI130-1089-G00000-001"/>
                     <Label Grid.Row="3" Grid.Column="3" FontSize="12" Name="lblMachineBuildDate" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=MachBuildDateValue, Source={StaticResource StringTableODP}}"/>
                     <Label Grid.Row="4" Grid.Column="3" FontSize="12" Name="lblCurrent" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=MacCurrent, Source={StaticResource StringTableODP}}"/>
                     <Label Grid.Row="5" Grid.Column="3" FontSize="12" Name="lblLineVoltageVAC" FontWeight="DemiBold" HorizontalAlignment="Left" Content="{Binding Path=VacValue, Source={StaticResource StringTableODP}}"/>

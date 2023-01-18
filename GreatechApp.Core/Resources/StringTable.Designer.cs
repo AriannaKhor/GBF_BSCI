@@ -203,7 +203,16 @@ namespace GreatechApp.Core.Resources {
                 return ResourceManager.GetString("AllPurgeOn", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All ToolLife counter.
+        /// </summary>
+        public static string AllToolLifeCounter {
+            get {
+                return ResourceManager.GetString("AllToolLifeCounter", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to All Vacuum Off.
         /// </summary>
@@ -718,7 +727,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copyright © 2021 | Greatech.
+        ///   Looks up a localized string similar to Copyright © 2022 | Greatech.
         /// </summary>
         public static string CopyRightValue {
             get {
@@ -804,6 +813,15 @@ namespace GreatechApp.Core.Resources {
         public static string CurrentShift {
             get {
                 return ResourceManager.GetString("CurrentShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Tool Life.
+        /// </summary>
+        public static string CurrentToolLife {
+            get {
+                return ResourceManager.GetString("CurrentToolLife", resourceCulture);
             }
         }
         
@@ -1393,7 +1411,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 50/60Hz.
+        ///   Looks up a localized string similar to 50Hz.
         /// </summary>
         public static string FrequencyValue {
             get {
@@ -2077,7 +2095,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 15A.
+        ///   Looks up a localized string similar to 11.2.
         /// </summary>
         public static string MacCurrent {
             get {
@@ -2095,7 +2113,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1-January-2021.
+        ///   Looks up a localized string similar to December 2022.
         /// </summary>
         public static string MachBuildDateValue {
             get {
@@ -2282,6 +2300,15 @@ namespace GreatechApp.Core.Resources {
         public static string MaxCycleTimeMessage {
             get {
                 return ResourceManager.GetString("MaxCycleTimeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Tool Life.
+        /// </summary>
+        public static string MaxToolLife {
+            get {
+                return ResourceManager.GetString("MaxToolLife", resourceCulture);
             }
         }
         
@@ -4265,6 +4292,14 @@ namespace GreatechApp.Core.Resources {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to ToolLife Cycle.
+        /// </summary>
+        public static string ToolLifeCycle {
+            get {
+                return ResourceManager.GetString("ToolLifeCycle", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Tool Name.
@@ -4645,7 +4680,7 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1-Phase 200VAC.
+        ///   Looks up a localized string similar to 1-Phase 240VAC.
         /// </summary>
         public static string VacValue {
             get {

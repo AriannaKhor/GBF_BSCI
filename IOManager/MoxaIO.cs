@@ -13,7 +13,6 @@ namespace IOManager
     public class MoxaIO : BaseIO, IMoxaIO
     {
         #region  Variables
-        internal int m_NumOfIOCardInput = 0;
         internal int m_NumOfIOCardOutput = 0;
         internal bool m_FailTriggerOutBit;
         internal const ushort Port = 502;
@@ -22,23 +21,17 @@ namespace IOManager
         internal string Password = "";
         internal uint TimeOut = 2000;
 
-        internal int[] DI_hConnection = null;
         internal int[] DO_hConnection = null;
 
-        internal string[] m_DI_IpAddress = new string[MaxCardSlot];
         internal string[] m_DO_IpAddress = new string[MaxCardSlot];
 
-        internal uint[] dwGetDIValue = null;
         internal uint[] dwGetDOValue = null;
 
-        internal uint[] retDIValue = new uint[10];
         internal uint[] retDOValue = new uint[10];
 
-        internal bool[,] InputBitStatus = new bool[MaxCardSlot, MaxBit];
         internal bool[,] OutputBitStatus = new bool[MaxCardSlot, MaxBit];
 
         static public bool[,] SetOutput = new bool[MaxCardSlot, MaxBit];
-        Thread[] InRefresh = new Thread[MaxCardSlot];
         Thread[] OutRefresh = new Thread[MaxCardSlot];
 
         public bool IsConnected { set; get; } = false;
@@ -49,11 +42,7 @@ namespace IOManager
         {
             SystemConfig SysCfg = SystemConfig.Open(@"..\Config Section\General\System.Config");
 
-            m_NumOfIOCardInput = SysCfg.IOInDevices.Count;
             m_NumOfIOCardOutput = SysCfg.IOOutDevices.Count;
-
-            for (int i = 0; i < SysCfg.IOInDevices.Count; i++)
-                m_DI_IpAddress[i] = SysCfg.IOInDevices[i].DeviceAddress;
 
             for (int i = 0; i < SysCfg.IOOutDevices.Count; i++)
                 m_DO_IpAddress[i] = SysCfg.IOOutDevices[i].DeviceAddress;
@@ -63,11 +52,6 @@ namespace IOManager
 
         public override void StartScanIO()
         {
-            for (int i = 0; i < m_NumOfIOCardInput; i++)
-            {
-                InRefresh[i] = new Thread(ReadInput);
-                InRefresh[i].Start(i);
-            }
             for (int i = 0; i < m_NumOfIOCardOutput; i++)
             {
                 OutRefresh[i] = new Thread(ReadOutput);
@@ -78,11 +62,6 @@ namespace IOManager
         public override bool OpenDevice()
         {
             return InitMoxaIO();
-        }
-
-        public override bool ReadBit(int bit)
-        {
-            return MoxaInputBitStatus(bit);
         }
 
         public override bool ReadOutBit(int bit)
@@ -114,25 +93,9 @@ namespace IOManager
             {
                 ret = MXIO.MXEIO_Init();
 
-                DI_hConnection = new int[m_NumOfIOCardInput];
                 DO_hConnection = new int[m_NumOfIOCardOutput];
-                dwGetDIValue = new uint[m_NumOfIOCardInput + 1];
                 dwGetDOValue = new uint[m_NumOfIOCardOutput + 1];
 
-                for (int _i = 0; _i < DI_hConnection.Length; _i++)
-                {
-                    ret = MXIO.MXEIO_E1K_Connect(Encoding.UTF8.GetBytes(m_DI_IpAddress[_i]), Port, TimeOut, out DI_hConnection[_i], Encoding.UTF8.GetBytes(Password));
-                    if (ret != MXIO.MXIO_OK)
-                    {
-                        Debug.WriteLine("InitMoxaIO, MXEIO_E1K_Connect - return code :" + ret);
-                        IsConnected = false;
-                        ErrorMsg = "Connect Input Module Fail\r\n";
-                    }
-                    else
-                    {
-                        Console.WriteLine($"MOXA_DI {_i}: Connected!");
-                    }
-                }
 
                 for (int _i = 0; _i < DO_hConnection.Length; _i++)
                 {
@@ -158,16 +121,6 @@ namespace IOManager
             }
         }
 
-        private bool MoxaInputBitStatus(int bit)
-        {
-            lock (this)
-            {
-                int slot = bit / MaxBitPerDevice;
-                int index = bit % MaxBitPerDevice;
-                return InputBitStatus[slot, index];
-            }
-        }
-
         private bool MoxaOutputBitStatus(int bit)
         {
             lock (this)
@@ -176,55 +129,6 @@ namespace IOManager
                 int index = bit % MaxBitPerDevice;
                 return OutputBitStatus[slot, index];
             }
-        }
-
-        void ReadInput(object slot)
-        {
-            int ret;
-            int bitNo = 1;
-            int Slot = (int)slot;
-            byte[] byteStatus = new byte[1];
-
-            do
-            {
-                Thread.Sleep(1);
-                if (IsConnected)
-                {
-                    try
-                    {
-                        ret = MXIO.E1K_DI_Reads(DI_hConnection[Slot], 0, 16, ref dwGetDIValue[Slot]);
-                        if (ret != MXIO.MXIO_OK)
-                        {
-                            ErrorMsg = "ReadMoxaInput(), m_IsConnected = false.";
-                            MXIO.MXEIO_CheckConnection(DI_hConnection[Slot], TimeOut, byteStatus);
-                            if (byteStatus[0] == 1)
-                            {
-                                MXIO.MXEIO_E1K_Connect(Encoding.UTF8.GetBytes(m_DI_IpAddress[Slot]), Port, TimeOut, out DI_hConnection[Slot], Encoding.UTF8.GetBytes(Password));
-                            }
-                        }
-
-                        for (int i = 0; i <= 15; i++)
-                        {
-                            if ((dwGetDIValue[Slot] & bitNo) == bitNo)
-                            {
-                                InputBitStatus[Slot, i] = true;
-                            }
-                            else
-                            {
-                                InputBitStatus[Slot, i] = false;
-                            }
-                            bitNo *= 2;
-                        }
-                        bitNo = 1;
-                    }
-                    catch (Exception ex)
-                    {
-                        ErrorMsg = ex.Message.ToString();
-                        return;
-                    }
-                }
-            }
-            while (true);
         }
 
         void ReadOutput(object slot)

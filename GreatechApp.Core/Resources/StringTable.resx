@@ -286,7 +286,7 @@
     <value>CopyRight</value>
   </data>
   <data name="CopyRightValue" xml:space="preserve">
-    <value>Copyright © 2021 | Greatech</value>
+    <value>Copyright © 2022 | Greatech</value>
   </data>
   <data name="Count" xml:space="preserve">
     <value>Count</value>
@@ -421,7 +421,7 @@
     <value>Frequency</value>
   </data>
   <data name="FrequencyValue" xml:space="preserve">
-    <value>50/60Hz</value>
+    <value>50Hz</value>
   </data>
   <data name="From" xml:space="preserve">
     <value>From</value>
@@ -556,13 +556,13 @@
     <value>Low</value>
   </data>
   <data name="MacCurrent" xml:space="preserve">
-    <value>15A</value>
+    <value>11.2</value>
   </data>
   <data name="MachBuildDate" xml:space="preserve">
     <value>Machine Build Date</value>
   </data>
   <data name="MachBuildDateValue" xml:space="preserve">
-    <value>1-January-2021</value>
+    <value>December 2022</value>
   </data>
   <data name="MachID" xml:space="preserve">
     <value>Machine ID</value>
@@ -1572,7 +1572,7 @@ Red    : Machine Down</value>
     <value>Vacuum</value>
   </data>
   <data name="VacValue" xml:space="preserve">
-    <value>1-Phase 200VAC</value>
+    <value>1-Phase 240VAC</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>
