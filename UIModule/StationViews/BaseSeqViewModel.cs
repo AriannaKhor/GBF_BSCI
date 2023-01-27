@@ -510,7 +510,7 @@ namespace UIModule.StationViews
         {
             get
             {
-                if (m_AuthService.CurrentUser.IsAuthenticated && m_AuthService.CheckAccess(ACL.Motion) && m_AuthService.CheckAccess(ACL.IO)
+                if (m_AuthService.CurrentUser.IsAuthenticated && m_AuthService.CheckAccess(ACL.IO)
                     && Global.MachineStatus != MachineStateType.Running && Global.MachineStatus != MachineStateType.Stopped && Global.MachineStatus != MachineStateType.Initializing)
                 {
                     return true;

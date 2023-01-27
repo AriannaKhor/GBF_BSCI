@@ -82,6 +82,7 @@
                             <Button Grid.Row="3" Command="{Binding VerificationCommand}" Margin="480,0,0,0" CommandParameter="{Binding ElementName=MaskPass}" Grid.Column="2" Content="Verify" Width="70" Height="30" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15" />
                             <Label Grid.Row="5" Content="Remarks: " FontSize="16" Margin="3" VerticalAlignment="Top" />
                             <TextBox Text="{Binding remarks}" Grid.Row="5" Grid.Column="2" Margin="22,0,0,0" Width="300" Height="20"></TextBox>
+                            <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding RemarksMessage}" TextWrapping="Wrap" FontSize="15"  Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ErrMessage}" TextWrapping="Wrap" FontSize="15" Margin="0,0,30,0" Foreground="Red" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </ScrollViewer>

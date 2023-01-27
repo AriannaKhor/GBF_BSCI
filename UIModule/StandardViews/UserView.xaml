@@ -289,8 +289,6 @@
                                 <DataGridTextColumn Binding="{Binding User_Desc}" Header="{Binding Path=UserLevel, Source={StaticResource StringTableODP}}" Width="*"/>
                                 <DataGridCheckBoxColumn Binding="{Binding Setting, UpdateSourceTrigger=PropertyChanged}" Header="{Binding Path=Setting, Source={StaticResource StringTableODP}}" Width="*" />
                                 <DataGridCheckBoxColumn Binding="{Binding IO, UpdateSourceTrigger=PropertyChanged}" Header="{Binding Path=IO, Source={StaticResource StringTableODP}}" Width="*" />
-                                <DataGridCheckBoxColumn Binding="{Binding Communication, UpdateSourceTrigger=PropertyChanged}" Header="{Binding Path=Communication, Source={StaticResource StringTableODP}}" Width="*" />
-                                <DataGridCheckBoxColumn Binding="{Binding Motion, UpdateSourceTrigger=PropertyChanged}" Header="{Binding Path=Motion, Source={StaticResource StringTableODP}}" Width="*" />
                                 <DataGridCheckBoxColumn Binding="{Binding User_Management, UpdateSourceTrigger=PropertyChanged}" Header="{Binding Path=UserAccount, Source={StaticResource StringTableODP}}" Width="*" />
                             </DataGrid.Columns>
                             <i:Interaction.Triggers>

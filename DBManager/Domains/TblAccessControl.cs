@@ -14,8 +14,6 @@ namespace DBManager.Domains
         public string User_Desc { get; set; }
         public bool Setting { get; set; }
         public bool IO { get; set; }
-        public bool Communication { get; set; }
-        public bool Motion { get; set; }
         public bool User_Management { get; set; }
 
         public virtual ICollection<TblUser> TblUser { get; set; }

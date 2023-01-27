@@ -167,8 +167,6 @@ namespace GreatechApp.Services.Utilities
                     accCtrl.User_Desc = selectedAccessControl.User_Desc;
                     accCtrl.Setting = selectedAccessControl.Setting;
                     accCtrl.IO = selectedAccessControl.IO;
-                    accCtrl.Communication = selectedAccessControl.Communication;
-                    accCtrl.Motion = selectedAccessControl.Motion;
                     accCtrl.User_Management = selectedAccessControl.User_Management;
                     db.TblAccessControl.Update(accCtrl);
                     db.SaveChanges();

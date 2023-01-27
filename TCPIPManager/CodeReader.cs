@@ -245,6 +245,7 @@ namespace TCPIPManager
                 Global.CurrentApprovalLevel = "N/A";
             }
 
+
             m_resultsDatalog.UserId = Global.UserId;
             m_resultsDatalog.UserLvl = Global.UserLvl;
             DateTime currentTime = DateTime.Now;

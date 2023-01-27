@@ -58,8 +58,8 @@
                             <RowDefinition Height="70"/>
                         </Grid.RowDefinitions>
                         <WrapPanel >
-                            <Label Content="{Binding Path=TotalQuantity, Source={StaticResource StringTableODP}}" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground ="Black" FontWeight="Bold"/>
-                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding ProductQuantityFG}" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Label Content="{Binding Path=TotalQuantity, Source={StaticResource StringTableODP}}" FontSize="35" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4" Foreground ="Black" FontWeight="Bold"/>
+                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding ProductQuantityFG}" FontWeight="Bold" FontSize="35" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </WrapPanel>
                     </Grid>
 
@@ -68,8 +68,8 @@
                             <RowDefinition Height="160"/>
                         </Grid.RowDefinitions>
                         <WrapPanel >
-                            <Label Content="{Binding Path=CorrectOrientation, Source={StaticResource StringTableODP}}"  FontSize="25" VerticalAlignment="Center"  Margin="17" Foreground ="Black" FontWeight="Bold" />
-                            <Label Content="{Binding VisProductCrtOrientation}" Foreground="{Binding CorrectOrientationFG}" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left"   />
+                            <Label Content="{Binding Path=CorrectOrientation, Source={StaticResource StringTableODP}}"  FontSize="35" VerticalAlignment="Center"  Margin="17" Foreground ="Black" FontWeight="Bold" />
+                            <Label Content="{Binding VisProductCrtOrientation}" Foreground="{Binding CorrectOrientationFG}" FontWeight="Bold" FontSize="35" VerticalAlignment="Center" HorizontalAlignment="Left"   />
                         </WrapPanel>
                     </Grid>
 
@@ -78,8 +78,8 @@
                             <RowDefinition Height="220"/>
                         </Grid.RowDefinitions>
                         <WrapPanel >
-                            <Label Content="{Binding Path=WrongOrientation, Source={StaticResource StringTableODP}}"  FontSize="25" VerticalAlignment="Center"  Margin="20" Foreground ="Black" FontWeight="Bold"/>
-                            <Label Content= "{Binding VisProductWrgOrientation}" Foreground="{Binding WrgOrientationFG}" FontWeight="Bold" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <Label Content="{Binding Path=WrongOrientation, Source={StaticResource StringTableODP}}"  FontSize="35" VerticalAlignment="Center"  Margin="35" Foreground ="Black" FontWeight="Bold"/>
+                            <Label Content= "{Binding VisProductWrgOrientation}" Foreground="{Binding WrgOrientationFG}" FontWeight="Bold" FontSize="35" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                         </WrapPanel>
                     </Grid>
                 </Grid>
