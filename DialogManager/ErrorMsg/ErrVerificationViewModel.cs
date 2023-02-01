@@ -165,6 +165,13 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_ErrMessage, value); }
         }
 
+        private string m_RemarksMessage;
+        public string RemarksMessage
+        {
+            get { return m_RemarksMessage; }
+            set { SetProperty(ref m_RemarksMessage, value); }
+        }
+
         private bool m_IsSkipRetest;
         public bool IsSkipRetest
         {
@@ -231,7 +238,7 @@ namespace DialogManager.ErrorMsg
             if (m_AuthService.Authenticate(UserID, password))
             {
                 var currentUserLevel = m_AuthService.CurrentUser.UserLevel;
-                if (currentUserLevel == ACL.UserLevel.Admin || currentUserLevel == ACL.UserLevel.Engineer || currentUserLevel == ACL.UserLevel.Technician)
+                if ((currentUserLevel == ACL.UserLevel.Admin || currentUserLevel == ACL.UserLevel.Engineer || currentUserLevel == ACL.UserLevel.Technician) && (remarks != null || remarks != string.Empty))
                 {
                     if (remarks != null && remarks != string.Empty)
                     {
@@ -251,6 +258,10 @@ namespace DialogManager.ErrorMsg
                 else
                 {
                     btnYesEnable = false;
+                    if (remarks == null || remarks == string.Empty)
+                    {
+                        RemarksMessage = "Enter remarks";
+                    }
                     ErrMessage = m_CultureResources.GetStringValue("InvalidLoginInfo");
                 }
             }
