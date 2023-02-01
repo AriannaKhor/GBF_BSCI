@@ -87,9 +87,11 @@ namespace Sequence.MachineSeq
                             if (m_SeqFlag.ProcVisCont)
                             {
                                 m_SeqFlag.ProcVisCont = false;
+                                
                                 switch (m_ContType)
                                 {
                                     case "ReTriggerVis":
+                                        m_TmrDelay.Time_Out = 0.1f;
                                         m_SeqNum = SN.TriggerVis;
                                         break;
 
@@ -143,6 +145,7 @@ namespace Sequence.MachineSeq
                                     case "BoxQtyNotMatch":
                                         Global.ErrorMsg = ErrorCode.BoxQtyNotMatch.ToString();
                                         RaiseError((int)ErrorCode.BoxQtyNotMatch);
+                                        m_TmrDelay.Time_Out = 0.1f;
                                         m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
                                         break;
 

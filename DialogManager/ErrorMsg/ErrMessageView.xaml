@@ -80,9 +80,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <CheckBox Grid.Column="2" Visibility="{Binding SkipRetestVis}" IsChecked="{Binding IsSkipRetest}" Content="{Binding Path=SkipRetest, Source={StaticResource StringTableODP}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <Button Grid.Column="3" Visibility="{Binding ResetVis}" Content="OK" Command="{Binding OperationCommand}" CommandParameter="OK" Width="70" Height="30" HorizontalAlignment="Right" Margin="10,5" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15"/>
-                    <Button Grid.Column="2" Content="End Lot" Command="{Binding OperationCommand}" CommandParameter="EndLot" Width="70" Height="30" HorizontalAlignment="Right" Margin="0,6,85,6" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15" Grid.ColumnSpan="2"/>
+                    <Button Grid.Column="2" Visibility="{Binding ResetVis}" Content="OK" Command="{Binding OperationCommand}" CommandParameter="OK" Width="70" Height="30" HorizontalAlignment="Left" Margin="10,5" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15" IsDefault="True"/>
+                    <Button Grid.Column="1" Content="End Lot" Command="{Binding OperationCommand}" CommandParameter="EndLot" Width="70" Height="30" HorizontalAlignment="left" Style="{DynamicResource styGlassButton}" Background="Silver" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" FontSize="15" Grid.ColumnSpan="2" IsCancel="True"/>
                 </Grid>
             </Grid>
         </Grid>

@@ -133,7 +133,9 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure want to End Current Lot:.
+        ///   Looks up a localized string similar to Are you sure want to End Current Batch:                                                                                                                                                                                                             Notes:
+        ///Press Enter to End Lot. 
+        ///Press ESC to Continue the process..
         /// </summary>
         public static string AskConfirmEndLot {
             get {
@@ -599,7 +601,7 @@ namespace GreatechApp.Core.Resources {
         ///
         ///Notes:
         ///Press Enter to continue. 
-        ///Press ESC to cancel..
+        ///Press ESC to Abort and End Lot..
         /// </summary>
         public static string OKResult {
             get {

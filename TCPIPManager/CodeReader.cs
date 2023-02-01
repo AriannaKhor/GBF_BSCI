@@ -34,10 +34,10 @@ using System.Xml;
 
 namespace TCPIPManager
 {
-    public class CodeReader :ICodeReader
+    public class CodeReader : ICodeReader, IDialogAware
     {
         #region Variable
-        private bool canContAnalyse = false;
+        private readonly IDialogService m_DialogService;
         public SystemConfig m_SystemConfig;
         private IPAddress codereaderIp;
         private DataManSystem m_CodeReader = null;
@@ -52,12 +52,15 @@ namespace TCPIPManager
         private bool temp = false;
         private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
 
+        public string Title => throw new NotImplementedException();
+
         #endregion
 
         #region Constructor
-        public CodeReader(IEventAggregator eventAggregator, ResultsDatalog resultsDatalog)
+        public CodeReader(IEventAggregator eventAggregator, ResultsDatalog resultsDatalog, IDialogService dialogService)
         {
             m_Events = eventAggregator;
+            m_DialogService = dialogService;
 
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
 #if !SIMULATION
@@ -99,7 +102,7 @@ namespace TCPIPManager
                 m_CodeReader.Disconnect();
                 m_CodeReader.Connect(); // Uncomment it when connected with the code reader
                 m_CodeReader.SetResultTypes(requested_result_types);
-                
+
             }
             catch (Exception ex)
             {
@@ -158,39 +161,43 @@ namespace TCPIPManager
 
                                 if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
                                 {
-                                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
+                                    ButtonResult dialogResult = m_ShowDialog.Show
+                                    (DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.Yes, ButtonResult.No);
 
                                     if (dialogResult == ButtonResult.Yes)
                                     {
                                         m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
                                         m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                                         m_Events.GetEvent<MachineState>().Publish(MachineStateType.Idle);
+                                        ResetCounter();
+                                        CloseDialog("");
                                     }
                                     else if (dialogResult == ButtonResult.No)
                                     {
                                         Global.CodeReaderResult = resultstatus.NG.ToString();
                                         Global.OverallResult = Global.CodeReaderResult;
                                         m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-                                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderFail, FailType = "ExceedTotalBatchQty" });
+                                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
+                                        CloseDialog("");
                                     }
                                 }
                                 else
                                 {
-                                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK, ButtonResult.Cancel);
+                                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK, ButtonResult.Abort);
                                     if (dialogResult == ButtonResult.OK)
                                     {
-                                        ResetCounter();
+                                        Reset();
                                         m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcCodeReaderCont });
                                         CloseDialog("");
                                     }
-                                    else if (dialogResult == ButtonResult.Cancel)
+                                    else if (dialogResult == ButtonResult.Abort)
                                     {
-                                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                                        m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
-                                        m_Events.GetEvent<MachineState>().Publish(MachineStateType.Idle);
-                                        Global.ContAccumBatchQty = false;
-                                        ResetCounter();
-                                        CloseDialog("");
+                                        Application.Current.Dispatcher.Invoke(() =>
+                                        {
+                                            m_DialogService.ShowDialog(DialogList.ForcedEndLotView.ToString(),
+                                            new DialogParameters($"message={""}"),
+                                            null);
+                                        });
                                     }
                                 }
                             }
@@ -228,12 +235,12 @@ namespace TCPIPManager
             {
                 MessageBox.Show(ex.Message, ex.Source);
             }
-            
+
         }
 
         private void SaveGlobalResult()
         {
-            if(Global.CurrentLotBatchNum == null || Global.CurrentLotBatchNum == String.Empty)
+            if (Global.CurrentLotBatchNum == null || Global.CurrentLotBatchNum == String.Empty)
             {
                 Global.CurrentLotBatchNum = Global.CurrentBatchNum;
             }
@@ -321,6 +328,40 @@ namespace TCPIPManager
         }
 
         private void ResetCounter()
+        {
+            #region Code Reader
+            Global.CurrentContainerNum = String.Empty;
+            Global.CurrentBatchQuantity = 0;
+            Global.CurrentBoxQuantity = 0;
+            Global.CurrentBatchNum = String.Empty;
+            Global.LotInitialBatchNo = String.Empty;
+            Global.AccumulateCurrentBatchQuantity = 0;
+            Global.CodeReaderResult = resultstatus.PendingResult.ToString();
+
+            if (!Global.ContAccumBatchQty)
+            {
+                Global.ContAccumBatchQty = true;
+                Global.AccumulateCurrentBatchQuantity = 0;
+                Global.CurrentLotBatchNum = String.Empty;
+            }
+            #endregion
+
+            #region Top Vision
+            Global.VisProductQuantity = 0f;
+            Global.VisProductCrtOrientation = 0f;
+            Global.VisProductWrgOrientation = 0f;
+            Global.VisInspectResult = resultstatus.PendingResult.ToString();
+            m_Events.GetEvent<TopVisionResultEvent>().Publish();
+            m_Events.GetEvent<OnCodeReaderEndResultEvent>().Publish();
+            #endregion
+
+            #region Error
+            Global.ErrorMsg = string.Empty;
+            #endregion
+
+        }
+
+        private void Reset()
         {
             #region Code Reader
             Global.CurrentContainerNum = String.Empty;
@@ -471,6 +512,21 @@ namespace TCPIPManager
                 AnalyseResult(returnedresult);
             }
         }
-#endregion
+
+        public bool CanCloseDialog()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnDialogClosed()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnDialogOpened(IDialogParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

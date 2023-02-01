@@ -453,7 +453,7 @@ namespace UIModule.MainPanel
             ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
             ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
             ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-            ViewCurrentBatchNumber = Global.CurrentBatchNum;
+            ViewCurrentBatchNumber = Global.LotInitialBatchNo;
             CodeReaderResult = Global.CodeReaderResult;
 
             if (Global.CodeReaderResult == "OK")

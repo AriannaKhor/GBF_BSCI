@@ -218,7 +218,7 @@ namespace UIModule.StandardViews
         {
             get
             {
-                if (m_AuthService.CheckAccess(ACL.Communication) && m_AuthService.CurrentUser.IsAuthenticated && Global.MachineStatus != MachineStateType.Running)
+                if (m_AuthService.CurrentUser.IsAuthenticated && Global.MachineStatus != MachineStateType.Running)
                 {
                     return true;
                 }

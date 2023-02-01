@@ -175,7 +175,7 @@ namespace DialogManager.ErrorMsg
             {
                 CloseDialog("");
 
-                ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
+                ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.Yes, ButtonResult.No);
 
                 if (dialogResult == ButtonResult.Yes) //lot ended
                 {
@@ -198,7 +198,6 @@ namespace DialogManager.ErrorMsg
                     Reset();
                     m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
                 }
-                //CloseDialog("");
             }
         }
 
@@ -210,6 +209,7 @@ namespace DialogManager.ErrorMsg
             Global.AccumulateCurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
+            Global.LotInitialBatchNo = String.Empty;
             Global.CurrentLotBatchNum = String.Empty;
             Global.CodeReaderResult = resultstatus.PendingResult.ToString();
             #endregion

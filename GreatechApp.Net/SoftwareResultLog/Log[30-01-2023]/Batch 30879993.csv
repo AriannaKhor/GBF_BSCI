@@ -1,0 +1,14 @@
+User ID,User Level,Timestamp,Inspection Type,Total Quantity,Correct Orientation,Wrong Orientation,Inspection Type,Decoded Batch Quantity,Decoded Box Quantity,Accumulated Batch Quantity,Overall Result,Messages,Remarks,Approved By
+o,Operator,30-01-2023 | 15:21:15.179,TopVision,25,25,0,CodeReader,184,26,0,NG,BatchNotMatch,a,Admin
+o,Operator,30-01-2023 | 15:21:27.128,TopVision,26,26,0,CodeReader,184,26,26,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:21:35.662,TopVision,26,26,0,CodeReader,184,26,26,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:23:40.418,TopVision,26,26,0,CodeReader,184,26,26,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:27:29.723,TopVision,26,26,0,CodeReader,184,26,26,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:27:51.873,TopVision,26,26,0,CodeReader,184,26,52,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:28:28.893,TopVision,26,26,0,CodeReader,184,26,78,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:28:59.336,TopVision,26,26,0,CodeReader,184,26,104,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:29:25.644,TopVision,26,26,0,CodeReader,184,26,130,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:29:44.696,TopVision,26,26,0,CodeReader,184,26,156,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:30:16.149,TopVision,14,14,0,CodeReader,184,14,170,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:30:42.030,TopVision,14,14,0,CodeReader,184,14,184,OK,N/A,N/A,N/A
+o,Operator,30-01-2023 | 15:41:56.725,TopVision,14,14,0,CodeReader,184,14,198,NG,ExceedTotalBatchQty,a,Admin

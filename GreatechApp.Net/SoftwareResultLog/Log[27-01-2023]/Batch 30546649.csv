@@ -1,0 +1,23 @@
+User ID,User Level,Timestamp,Inspection Type,Total Quantity,Correct Orientation,Wrong Orientation,Inspection Type,Decoded Batch Quantity,Decoded Box Quantity,Accumulated Batch Quantity,Overall Result,Messages,Remarks,Approved By
+o,Operator,27-01-2023 | 10:26:13.376,TopVision,26,26,0,CodeReader,285,26,26,OK,N/A,N/A,N/A
+o,Operator,27-01-2023 | 10:26:16.516,TopVision,26,26,0,CodeReader,285,26,52,OK,N/A,N/A,N/A
+o,Operator,27-01-2023 | 10:26:18.979,TopVision,26,26,0,CodeReader,285,26,78,OK,N/A,N/A,N/A
+o,Operator,27-01-2023 | 10:26:21.226,TopVision,26,26,0,CodeReader,285,26,104,OK,N/A,N/A,N/A
+o,Operator,27-01-2023 | 10:26:49.762,TopVision,26,26,0,CodeReader,281,26,104,NG,BatchNotMatch,N/A,Admin
+a,Admin,27-01-2023 | 10:27:35.150,TopVision,26,26,0,CodeReader,285,10,0,NG,BoxQtyNotMatch,N/A,Technician
+o,Operator,27-01-2023 | 10:39:54.593,TopVision,26,26,0,CodeReader,285,26,26,OK,N/A,N/A,N/A
+o,Operator,27-01-2023 | 10:40:00.982,TopVision,0,0,0,CodeReader,0,0,26,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:01:33.733,TopVision,23,23,0,CodeReader,285,26,0,NG,BatchNotMatch,N/A,Engineer
+o,Operator,27-01-2023 | 16:14:54.454,TopVision,26,26,0,CodeReader,285,26,0,NG,BatchNotMatch,N/A,Engineer
+o,Operator,27-01-2023 | 16:15:06.007,TopVision,24,24,0,CodeReader,285,26,0,NG,BatchNotMatch,N/A,Engineer
+o,Operator,27-01-2023 | 16:15:56.953,TopVision,26,26,0,CodeReader,285,26,26,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:16:14.991,TopVision,26,26,0,CodeReader,285,26,52,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:16:43.429,TopVision,26,26,0,CodeReader,285,26,78,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:17:03.766,TopVision,26,26,0,CodeReader,285,26,104,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:17:08.785,TopVision,26,26,0,CodeReader,285,26,130,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:17:11.976,TopVision,26,26,0,CodeReader,285,26,156,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:17:14.814,TopVision,26,26,0,CodeReader,285,26,182,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:17:17.585,TopVision,26,26,0,CodeReader,285,26,208,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:17:20.438,TopVision,26,26,0,CodeReader,285,26,234,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:17:24.714,TopVision,26,26,0,CodeReader,285,26,260,OK,N/A,N/A,N/A
+e,Engineer,27-01-2023 | 16:20:33.869,TopVision,26,26,0,CodeReader,285,26,286,NG,ExceedTotalBatchQty,N/A,Engineer

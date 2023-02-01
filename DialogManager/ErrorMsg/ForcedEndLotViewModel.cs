@@ -148,6 +148,17 @@ namespace DialogManager.ErrorMsg
             }
         }
 
+        private string m_RemarksMessage;
+        public string RemarksMessage
+        {
+            get { return m_RemarksMessage; }
+            set
+            {
+                SetProperty(ref m_RemarksMessage, value);
+                Global.Remarks = value;
+            }
+        }
+
         private bool m_IsSkipRetest;
         public bool IsSkipRetest
         {
@@ -193,19 +204,23 @@ namespace DialogManager.ErrorMsg
 
             if (m_AuthService.Authenticate(UserID, password))
             {
-                if(remarks == null || remarks == string.Empty)
-                {
-                    remarks = "N/A";
-                }
                 var currentUserLevel = m_AuthService.CurrentUser.UserLevel;
                 if (currentUserLevel == ACL.UserLevel.Admin || currentUserLevel == ACL.UserLevel.Engineer || currentUserLevel == ACL.UserLevel.Technician)
                 {
-                    btnYesEnable = true;
-                    ErrMessage = "Valid Login";
-                    Global.CurrentApprovalLevel = currentUserLevel.ToString();
-                    SaveGlobalResult();
-                    m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
-                    m_resultsDatalog.ClearAll();
+                    if (remarks != null && remarks != string.Empty)
+                    {
+                        btnYesEnable = true;
+                        ErrMessage = "Valid Login";
+                        Global.CurrentApprovalLevel = currentUserLevel.ToString();
+                        SaveGlobalResult();
+                        m_EventAggregator.GetEvent<ResultLoggingEvent>().Publish(m_resultsDatalog);
+                        m_resultsDatalog.ClearAll();
+                    }
+                    else
+                    {
+                        btnYesEnable = false;
+                        ErrMessage = "Enter Remarks";                    
+                    }
                 }
                 else
                 {
@@ -215,6 +230,7 @@ namespace DialogManager.ErrorMsg
             }
             else
             {
+                btnYesEnable = false;
                 ErrMessage = m_CultureResources.GetStringValue("InvalidLoginInfo");
             }
         }
@@ -258,6 +274,7 @@ namespace DialogManager.ErrorMsg
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
             Global.CurrentLotBatchNum = String.Empty;
+            Global.LotInitialBatchNo = String.Empty;
             Global.CodeReaderResult = resultstatus.PendingResult.ToString();
             #endregion
 
