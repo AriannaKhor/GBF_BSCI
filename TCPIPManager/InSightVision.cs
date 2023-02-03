@@ -82,6 +82,7 @@ namespace TCPIPManager
                 // Display a message and consume the exception.
                 VisConnectionStatus(false, true, false, "Disconnected");
                 MachineBase.ShowMessage(ex);
+                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception1 Vision connection state:" + " " + m_InsightV1.State.ToString() });
             }
             catch (CvsSensorAlreadyConnectedException ex)
             {
@@ -89,6 +90,7 @@ namespace TCPIPManager
                 // Display a message and consume the exception.
                 VisConnectionStatus(false, true, false, "Disconnected");
                 MachineBase.ShowMessage(ex);
+                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception2 Vision connection state:" + " " + m_InsightV1.State.ToString() });
             }
             catch (CvsInvalidLogonException ex)
             {
@@ -97,11 +99,13 @@ namespace TCPIPManager
                 if (ex.IsInvalidUsername)
                 {
                     MachineBase.ShowMessage(ex);
+                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception3a Vision connection state:" + " " + m_InsightV1.State.ToString() });
                 }
                 else
                 {
                     VisConnectionStatus(false, true, false, "Disconnected");
                     MachineBase.ShowMessage(ex);
+                    m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception3b Vision connection state:" + " " + m_InsightV1.State.ToString() });
                 }
             }
             catch (CvsNetworkException ex)
@@ -110,12 +114,14 @@ namespace TCPIPManager
                 // Display a message and consume the exception.
                 VisConnectionStatus(false, true, false, "Disconnected");
                 MachineBase.ShowMessage(ex);
+                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception4 Vision connection state:" + " " + m_InsightV1.State.ToString() });
             }
             catch (Exception ex)
             {
                 // Consume any other exception that may occur
                 VisConnectionStatus(false, true, false, "Disconnected");
                 MachineBase.ShowMessage(ex);
+                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception5 Vision connection state:" + " " + m_InsightV1.State.ToString() });
             }
         }
 
@@ -142,22 +148,21 @@ namespace TCPIPManager
                 if (m_InsightV1.State == CvsInSightState.NotConnected)
                 {
 #if !SIMULATION
-
                     ConnectVision();
 #endif
                 }
-                Thread.Sleep(500);
+                Thread.Sleep(300);
 #if SIMULATION
                 m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "TriggerCodeReader" });
 #else
                 m_InsightV1.ManualAcquire(); // Request a new acquisition to generate new results // capture Image *remember to check in-sight whether the spread sheet view is set to "Manual"
 #endif
-
                 allowVisResultchg = true;
             }
             catch (Exception ex)
             {
                 MachineBase.ShowMessage(ex);
+                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception during TriggerVisCapture Vision connection state:" + " " + m_InsightV1.State.ToString() });
             }
         }
 
@@ -241,10 +246,17 @@ namespace TCPIPManager
 
                         if (Global.VisOverallResult == "OK")
                         {
-                            if (Global.VisProductQuantity == 0.000 && Global.VisProductCrtOrientation == 0.000 && Global.VisProductCrtOrientation == 0.000)
+                            if (Global.VisProductQuantity == 0 && Global.VisProductCrtOrientation == 0 && Global.VisProductCrtOrientation == 0)
                             {
                                 Global.VisInspectResult = resultstatus.NoBoxDetected.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "ReTriggerVis" });
+                                if (!Global.EndTrigger)
+                                {
+                                     m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "ReTriggerVis" });
+                                }
+                                else
+                                {
+                                    Global.EndTrigger = false;
+                                }
                             }
                             else if (Global.VisProductQuantity > m_MaxQuantity)
                             {
@@ -265,11 +277,13 @@ namespace TCPIPManager
                     }
                     VisionImg();
                     m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
+                    m_Events.GetEvent<BoxChecking>().Publish();
                 }
             }
             catch (Exception ex)
             {
                 MachineBase.ShowMessage(ex);
+                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception during Insight-ResultChanged Vision connection state:" + " " + m_InsightV1.State.ToString() });
             }
         }
 
@@ -285,6 +299,7 @@ namespace TCPIPManager
                     break;
                 case CvsInSightState.NotConnected:
                     VisConnectionStatus(false, true, false, "Disconnected");
+                    ConnectVision();
                     break;
             }
             m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Vision connection state:" + " " + m_InsightV1.State.ToString() });

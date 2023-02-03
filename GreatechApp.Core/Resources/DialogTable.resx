@@ -301,10 +301,10 @@ Press ESC to cancel.</value>
   </data>
   <data name="OKResult" xml:space="preserve">
     <value>Proceed with new box.
-
 Notes:
 Press Enter to continue. 
-Press ESC to Abort and End Lot.</value>
+Press ESC to Abort and End Lot.
+Box Count: </value>
   </data>
   <data name="OperatorIDEmpty" xml:space="preserve">
     <value>Please Make Sure Operator ID is not Empty</value>

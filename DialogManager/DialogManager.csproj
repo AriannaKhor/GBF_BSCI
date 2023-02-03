@@ -168,6 +168,10 @@
       <DependentUpon>ForcedEndLotView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ErrorMsg\ForcedEndLotViewModel.cs" />
+    <Compile Include="ErrorMsg\NormalEndLotView.xaml.cs">
+      <DependentUpon>NormalEndLotView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorMsg\NormalEndLotViewModel.cs" />
     <Compile Include="ErrorOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -217,6 +221,10 @@
     <Page Include="ErrorMsg\ForcedEndLotView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ErrorMsg\NormalEndLotView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Login\LoginView.xaml">
       <SubType>Designer</SubType>

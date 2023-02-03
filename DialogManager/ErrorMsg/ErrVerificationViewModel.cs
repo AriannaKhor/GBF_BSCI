@@ -165,13 +165,6 @@ namespace DialogManager.ErrorMsg
             set { SetProperty(ref m_ErrMessage, value); }
         }
 
-        private string m_RemarksMessage;
-        public string RemarksMessage
-        {
-            get { return m_RemarksMessage; }
-            set { SetProperty(ref m_RemarksMessage, value); }
-        }
-
         private bool m_IsSkipRetest;
         public bool IsSkipRetest
         {
@@ -344,6 +337,8 @@ namespace DialogManager.ErrorMsg
             Global.CurrentBatchNum = String.Empty;
             Global.CurrentLotBatchNum = String.Empty;
             Global.LotInitialBatchNo = String.Empty;
+            Global.LotInitialTotalBatchQuantity = 0;
+            Global.CurrentBoxCount = 0;
             Global.CodeReaderResult = resultstatus.PendingResult.ToString();
             #endregion
 

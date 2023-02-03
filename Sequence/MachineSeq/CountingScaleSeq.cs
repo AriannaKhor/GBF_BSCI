@@ -241,6 +241,9 @@ namespace Sequence.MachineSeq
                         case MachineOperationType.ProcContErrRtn:
                             m_SeqNum = SN.ErrorRoutine;
                             break;
+                        case MachineOperationType.ProcCont:
+                            m_SeqNum = SN.Begin;
+                            break;
                     }
                 }
                 base.SequenceOperation(sequence);

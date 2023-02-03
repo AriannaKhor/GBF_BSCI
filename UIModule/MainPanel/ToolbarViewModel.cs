@@ -253,6 +253,7 @@ namespace UIModule.MainPanel
             ReconnectAllTCP = new DelegateCommand(OnReconnectAllTCP);
 
             m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineStateChange);
+            m_EventAggregator.GetEvent<BoxChecking>().Subscribe(OnBoxChecking);
 
             ApplicationCommands.OperationCommand.RegisterCommand(OperationCommand);
 
@@ -274,6 +275,8 @@ namespace UIModule.MainPanel
             EquipStatus = "Idle";
             m_EventAggregator.GetEvent<MachineState>().Publish(Global.MachineStatus);
         }
+
+
 
         #region System Clock
         public string SysDate { get; private set; }
@@ -310,9 +313,16 @@ namespace UIModule.MainPanel
 
         public void ProductionMode()
         {
-            IsAllowStart = false;
-            IsAllowStop = false;
-         
+            if (Global.VisInspectResult == resultstatus.NoBoxDetected.ToString())
+            {
+                IsAllowStart = false;
+                IsAllowStop = true;
+            }
+            else
+            {
+                IsAllowStart = false;
+                IsAllowStop = false;
+            }
         }
 
         public void StopMode()
@@ -328,10 +338,8 @@ namespace UIModule.MainPanel
 
         public void IdleMode()
         {
-            if (CanAccess)
-            {
-                IsAllowStart = true;
-            }
+            IsAllowStart = true;
+            IsAllowStop = false;
         }
 
         public void ReadyMode()
@@ -347,15 +355,15 @@ namespace UIModule.MainPanel
         {
             switch (state)
             {
-                case MachineStateType.Ready:
-                    Global.MachineStatus = MachineStateType.Ready;
-                    ReadyMode();
-                    EquipStateIcon = GreenIcon;
-                    EquipStatus = "Ready";
-                    break;
+                //case MachineStateType.Ready:
+                //    Global.MachineStatus = MachineStateType.Ready;
+                //    ReadyMode();
+                //    EquipStateIcon = GreenIcon;
+                //    EquipStatus = "Ready";
+                //    break;
 
                 case MachineStateType.Running:
-                    ProductionMode();
+                    OnBoxChecking();
                     EquipStateIcon = GreenIcon;
 
                     if (IsEndingLot)
@@ -365,12 +373,12 @@ namespace UIModule.MainPanel
                     Global.MachineStatus = MachineStateType.Running;
                     break;
 
-                case MachineStateType.Stopped:
-                    Global.MachineStatus = MachineStateType.Stopped;
-                    StopMode();
-                    EquipStateIcon = RedIcon;
-                    EquipStatus = "Stopped";
-                    break;
+                //case MachineStateType.Stopped:
+                //    Global.MachineStatus = MachineStateType.Stopped;
+                //    StopMode();
+                //    EquipStateIcon = RedIcon;
+                //    EquipStatus = "Stopped";
+                //    break;
 
                 case MachineStateType.Error:
                     Global.MachineStatus = MachineStateType.Error;
@@ -379,13 +387,13 @@ namespace UIModule.MainPanel
                     EquipStatus = "Error";
                     break;
 
-                case MachineStateType.Lot_Ended:
-                    Global.MachineStatus = MachineStateType.Lot_Ended;
-                    IsEndingLot = false;
-                    IdleMode();
-                    EquipStateIcon = GrayIcon;
-                    EquipStatus = "LotEnded";
-                    break;
+                //case MachineStateType.Lot_Ended:
+                //    Global.MachineStatus = MachineStateType.Lot_Ended;
+                //    IsEndingLot = false;
+                //    IdleMode();
+                //    EquipStateIcon = GrayIcon;
+                //    EquipStatus = "LotEnded";
+                //    break;
 
                 case MachineStateType.Idle:
                     Global.MachineStatus = MachineStateType.Idle;
@@ -397,6 +405,11 @@ namespace UIModule.MainPanel
                     }
                     break;
             }
+        }
+
+        private void OnBoxChecking()
+        {
+            ProductionMode();
         }
         public override void OnValidateLogin(bool IsAuthenticated)
         {
@@ -411,7 +424,7 @@ namespace UIModule.MainPanel
                 IsLogin = Visibility.Collapsed;
                 IsLogout = Visibility.Visible;
                 LoginStatus = "Logout";
-                if (m_CurrentUser.UserLevel == ACL.UserLevel.Admin && m_SystemConfig.Machine.AdminEStop) 
+                if (m_CurrentUser.UserLevel == ACL.UserLevel.Admin && m_SystemConfig.Machine.AdminEStop)
                 {
                     EStopWinThread = new Thread(new ThreadStart(SetupEStopWindow));
                     EStopWinThread.SetApartmentState(ApartmentState.STA);
@@ -429,12 +442,12 @@ namespace UIModule.MainPanel
         }
 
         private void SetupEStopWindow()
-		{
+        {
             eStopView = new EStopView();
             eStopView.Show();
             Dispatcher.Run();
         }
-  
+
         public override void OnCultureChanged()
         {
             TCPIPStatusWithCulture = GetStringTableValue(TCPIPStatus);
@@ -450,13 +463,6 @@ namespace UIModule.MainPanel
             {
                 m_RegionManager.RequestNavigate(RegionNames.CenterContentRegion, navigatePath);
             }
-        }
-
-        private void Reset()
-        {
-            m_EventAggregator.GetEvent<CheckOperation>().Publish(true);
-            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Running);
-            CloseDialog("");
         }
 
         void RaiseLoginPopup()
@@ -490,13 +496,13 @@ namespace UIModule.MainPanel
 
         void OnTCPIPList(string command)
         {
-            if(command == "Open")
+            if (command == "Open")
             {
-                if(!IsTCPIPListOpen)
+                if (!IsTCPIPListOpen)
                     IsTCPIPListOpen = true;
                 CloseMenuPopup();
             }
-            else if(command == "Close")
+            else if (command == "Close")
             {
                 IsTCPIPListOpen = false;
             }
@@ -522,10 +528,10 @@ namespace UIModule.MainPanel
                 UserLvl = " ";
                 IsLogin = Visibility.Visible;
                 IsLogout = Visibility.Collapsed;
-                if(EStopWinThread != null)
-				{
-                    if(EStopWinThread.IsAlive)
-					{
+                if (EStopWinThread != null)
+                {
+                    if (EStopWinThread.IsAlive)
+                    {
                         Dispatcher.FromThread(EStopWinThread).Invoke(() =>
                         {
                             eStopView.Close();
@@ -544,62 +550,21 @@ namespace UIModule.MainPanel
             }
             else if (Command == "Stop")
             {
-                CloseDialog("");
-                if (Global.AccumulateCurrentBatchQuantity == Global.LotInitialTotalBatchQuantity)
+                Global.EndTrigger = true;
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("EndLot"), GetDialogTableValue("AskConfirmEndLot") + " " + Global.LotInitialBatchNo, ButtonResult.No, ButtonResult.Yes);
-
-                    if (dialogResult == ButtonResult.Yes)
-                    {
-                        Global.AccumulateCurrentBatchQuantity = Global.LotInitialTotalBatchQuantity = 0;
-                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
-                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
-                        ResetCounter();
-
-                    }
-                    else if (dialogResult == ButtonResult.No)
-                    {
-                        Reset();
-                        m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcContErrRtn });
-                    }
-                }
-                else
-                {
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-                    RaiseEndLotPopup();
-                }
-                CloseDialog("");
+                    m_DialogService.ShowDialog(DialogList.NormalEndLotView.ToString(),
+                    new DialogParameters($"message={""}"),
+                    null);
+                });
             }
-        }
-
-        private void ResetCounter()
-        {
-            #region Code Reader
-            Global.CurrentContainerNum = String.Empty;
-            Global.CurrentBatchQuantity = 0;
-            Global.AccumulateCurrentBatchQuantity = 0;
-            Global.CurrentBoxQuantity = 0;
-            Global.CurrentBatchNum = String.Empty;
-            Global.CurrentLotBatchNum = String.Empty;
-            #endregion
-
-            #region Top Vision
-            Global.VisProductQuantity = 0f;
-            Global.VisProductCrtOrientation =0f;
-            Global.VisProductWrgOrientation = 0f;
-            Global.TopVisionEndLot = true;
-            Global.CodeReaderEndLot = true;
-            m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
-            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
-            #endregion
         }
 
         private void OnReconnectTCP(TCPDisplay tcp)
         {
             m_TCPIP.clientSockets[tcp.ID].Disconnect();
             m_TCPIP.clientSockets[tcp.ID].Reconnect();
-            if(!m_TCPIP.clientSockets[tcp.ID].IsAlive)
+            if (!m_TCPIP.clientSockets[tcp.ID].IsAlive)
                 m_ShowDialog.Show(DialogIcon.Error, m_TCPIP.clientSockets[tcp.ID].Name + " " + GetDialogTableValue("FailReconnect"));
 
         }
@@ -623,7 +588,7 @@ namespace UIModule.MainPanel
         }
         private void OnReconnectAllTCP()
         {
-            foreach(TCPDisplay tcpip in TCPCollection)
+            foreach (TCPDisplay tcpip in TCPCollection)
             {
                 if (!m_TCPIP.clientSockets[tcpip.ID].IsAlive)
                 {

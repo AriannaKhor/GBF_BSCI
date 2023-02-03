@@ -182,7 +182,7 @@ namespace DialogManager.ErrorMsg
                     if (Global.VisInspectResult == "NG") // for wrong and exceed
                     {
                         m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
+                        m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.LotInitialBatchNo });
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                         ResetCounter();
                     }
@@ -211,6 +211,8 @@ namespace DialogManager.ErrorMsg
             Global.CurrentBatchNum = String.Empty;
             Global.LotInitialBatchNo = String.Empty;
             Global.CurrentLotBatchNum = String.Empty;
+            Global.LotInitialTotalBatchQuantity = 0;
+            Global.CurrentBoxCount = 0;
             Global.CodeReaderResult = resultstatus.PendingResult.ToString();
             #endregion
 

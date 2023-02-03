@@ -54,6 +54,7 @@ namespace UIModule
             containerRegistry.RegisterDialog<ErrMessageView, ErrMessageViewModel>();
             containerRegistry.RegisterDialog<ErrVerificationView, ErrVerificationViewModel>();
             containerRegistry.RegisterDialog<ForcedEndLotView, ForcedEndLotViewModel>();
+            containerRegistry.RegisterDialog<NormalEndLotView, NormalEndLotViewModel>();
 
             // Recipe Views
             containerRegistry.RegisterForNavigation<RecipeView>();

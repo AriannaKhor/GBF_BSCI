@@ -38,6 +38,7 @@ namespace TCPIPManager
     {
         #region Variable
         private readonly IDialogService m_DialogService;
+        private string m_Title = "Code Reader";
         public SystemConfig m_SystemConfig;
         private IPAddress codereaderIp;
         private DataManSystem m_CodeReader = null;
@@ -183,7 +184,9 @@ namespace TCPIPManager
                                 }
                                 else
                                 {
-                                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult"), ButtonResult.OK, ButtonResult.Abort);
+                                    Global.CurrentBoxCount++;
+                                    ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("PassResult"), GetDialogTableValue("OKResult") + " " + Global.CurrentBoxCount, ButtonResult.OK, ButtonResult.Abort);
+                          
                                     if (dialogResult == ButtonResult.OK)
                                     {
                                         Reset();
@@ -194,7 +197,7 @@ namespace TCPIPManager
                                     {
                                         Application.Current.Dispatcher.Invoke(() =>
                                         {
-                                            m_DialogService.ShowDialog(DialogList.ForcedEndLotView.ToString(),
+                                            m_DialogService.ShowDialog(DialogList.NormalEndLotView.ToString(),
                                             new DialogParameters($"message={""}"),
                                             null);
                                         });
@@ -240,7 +243,7 @@ namespace TCPIPManager
 
         private void SaveGlobalResult()
         {
-            if (Global.CurrentLotBatchNum == null || Global.CurrentLotBatchNum == String.Empty)
+            if (Global.CurrentLotBatchNum == null && Global.CurrentLotBatchNum == String.Empty)
             {
                 Global.CurrentLotBatchNum = Global.CurrentBatchNum;
             }
@@ -288,6 +291,7 @@ namespace TCPIPManager
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to send TRIGGER ON/OFF commands: " + ex.ToString());
+                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception during TriggerCodeReader CodeReader connection state:" + " " + Global.CodeReaderConnStatus });
             }
         }
 
@@ -323,6 +327,7 @@ namespace TCPIPManager
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to send TRIGGER ON/OFF commands: " + ex.ToString());
+                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception during GetReadStringFromResultXml CodeReader connection state:" + " " + Global.CodeReaderConnStatus });
             }
 
             return "";
@@ -335,8 +340,11 @@ namespace TCPIPManager
             Global.CurrentBatchQuantity = 0;
             Global.CurrentBoxQuantity = 0;
             Global.CurrentBatchNum = String.Empty;
+            Global.CurrentLotBatchNum = String.Empty;
             Global.LotInitialBatchNo = String.Empty;
             Global.AccumulateCurrentBatchQuantity = 0;
+            Global.LotInitialTotalBatchQuantity = 0;
+            Global.CurrentBoxCount = 0;
             Global.CodeReaderResult = resultstatus.PendingResult.ToString();
 
             if (!Global.ContAccumBatchQty)
@@ -497,11 +505,14 @@ namespace TCPIPManager
         private void OnSystemConnected(object sender, System.EventArgs args)
         {
             m_Events.GetEvent<OnCodeReaderConnectedEvent>().Publish();
+           // m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " OnSystemConnected - CodeReader connection state:" + " " + Global.CodeReaderConnStatus });
         }
 
         private void OnSystemDisconnected(object sender, System.EventArgs args)
         {
             m_Events.GetEvent<OnCodeReaderDisconnectedEvent>().Publish();
+           // m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " OnSystemDisconnected - CodeReader connection state:" + " " + Global.CodeReaderConnStatus });
+
         }
 
         private void Results_ComplexResultCompleted(object sender, ComplexResult complexResult)

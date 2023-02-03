@@ -598,10 +598,10 @@ namespace GreatechApp.Core.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to Proceed with new box.
-        ///
         ///Notes:
         ///Press Enter to continue. 
-        ///Press ESC to Abort and End Lot..
+        ///Press ESC to Abort and End Lot.
+        ///Box Count: .
         /// </summary>
         public static string OKResult {
             get {

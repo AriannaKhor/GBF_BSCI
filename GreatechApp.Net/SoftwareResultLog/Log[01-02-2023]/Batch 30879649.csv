@@ -1,0 +1,23 @@
+User ID,User Level,Timestamp,Inspection Type,Total Quantity,Correct Orientation,Wrong Orientation,Inspection Type,Decoded Batch Quantity,Decoded Box Quantity,Accumulated Batch Quantity,Overall Result,Messages,Remarks,Approved By
+o,Operator,01-02-2023 | 16:13:57.513,TopVision,26,26,0,CodeReader,268,26,26,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:15:11.837,TopVision,26,26,0,CodeReader,268,26,52,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:15:41.666,TopVision,26,26,0,CodeReader,268,26,78,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:16:14.956,TopVision,26,26,0,CodeReader,268,26,104,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:16:50.736,TopVision,26,26,0,CodeReader,268,26,130,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:17:20.492,TopVision,26,26,0,CodeReader,268,26,156,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:17:57.690,TopVision,26,26,0,CodeReader,268,26,182,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:18:25.979,TopVision,26,26,0,CodeReader,268,26,208,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:18:53.044,TopVision,26,26,0,CodeReader,268,26,234,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:19:18.859,TopVision,26,26,0,CodeReader,268,26,260,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:20:06.136,TopVision,8,8,0,CodeReader,268,8,268,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:21:50.182,TopVision,26,26,0,CodeReader,262,26,26,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:22:15.819,TopVision,26,26,0,CodeReader,262,26,52,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:22:51.771,TopVision,26,26,0,CodeReader,262,26,78,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:23:20.775,TopVision,26,26,0,CodeReader,262,26,104,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:23:49.404,TopVision,26,26,0,CodeReader,262,26,130,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:24:24.043,TopVision,26,26,0,CodeReader,262,26,156,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:24:49.303,TopVision,26,26,0,CodeReader,262,26,182,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:25:14.390,TopVision,26,26,0,CodeReader,262,26,208,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:25:47.867,TopVision,26,26,0,CodeReader,262,26,234,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:26:24.632,TopVision,14,14,0,CodeReader,262,14,248,OK,N/A,N/A,N/A
+o,Operator,01-02-2023 | 16:27:09.664,TopVision,14,14,0,CodeReader,262,14,262,OK,N/A,N/A,N/A

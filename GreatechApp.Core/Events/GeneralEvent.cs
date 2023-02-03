@@ -104,6 +104,11 @@
 
     }
 
+    public class BoxChecking: PubSubEvent
+    {
+
+    }
+
     public class TestRunEvent : PubSubEvent<TestRunEvent>
     {
         public SQID SeqName;
