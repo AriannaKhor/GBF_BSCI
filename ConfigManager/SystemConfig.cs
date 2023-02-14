@@ -105,11 +105,18 @@ namespace ConfigManager
             get { return (NetworkDeviceCollection)this["NetworkDevices"]; }
         }
 
-        [ConfigurationProperty("ServerSockets")]
-        public NetworkDeviceCollection ServerSockets
+        [ConfigurationProperty("VisionDevices")]
+        public VisionDeviceCollection VisionDevices
         {
-            set { this["ServerSockets"] = value; }
-            get { return (NetworkDeviceCollection)this["ServerSockets"]; }
+            set { this["VisionDevices"] = value; }
+            get { return (VisionDeviceCollection)this["VisionDevices"]; }
+        }
+
+        [ConfigurationProperty("SerialPortDevices")]
+        public SerialPortDeviceCollection SerialPortDevices
+        {
+            set { this["SerialPortDevices"] = value; }
+            get { return (SerialPortDeviceCollection)this["SerialPortDevices"]; }
         }
 
         [ConfigurationProperty("SeqCfg")]
@@ -511,6 +518,46 @@ namespace ConfigManager
         #endregion
     }
 
+    public class VisionDeviceCollection : ConfigurationElementCollection
+    {
+        #region Vision Devices Collection
+        public VisionDevices this[int idx]
+        {
+            get { return base.BaseGet(idx) as VisionDevices; }
+        }
+
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new VisionDevices();
+        }
+
+        protected override object GetElementKey(ConfigurationElement element)
+        {
+            return ((VisionDevices)element).ID;
+        }
+        #endregion
+    }
+
+    public class SerialPortDeviceCollection : ConfigurationElementCollection
+    {
+        #region Serial Port Devices Collection
+        public SerialPortDevice this[int idx]
+        {
+            get { return base.BaseGet(idx) as SerialPortDevice; }
+        }
+
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new SerialPortDevice();
+        }
+
+        protected override object GetElementKey(ConfigurationElement element)
+        {
+            return ((SerialPortDevice)element).ID;
+        }
+        #endregion
+    }
+
     public class NetworkDevice : ConfigurationElement
     {
         #region Network Device
@@ -532,7 +579,7 @@ namespace ConfigManager
             get { return (string)this["Name"]; }
         }
 
-        [ConfigurationProperty("IPAddress", DefaultValue = "192.0.0.10", IsRequired = false)]
+        [ConfigurationProperty("IPAddress", IsRequired = false)]
         public string IPAddress
         {
             set { this["IPAddress"] = value; }
@@ -560,7 +607,137 @@ namespace ConfigManager
             get { return (string)this["ReceivedDataFormat"]; }
         }
 
-        [ConfigurationProperty("Type", DefaultValue = "Scanner", IsRequired = true)]
+        [ConfigurationProperty("Type", IsRequired = true)]
+        public string Type
+        {
+            set { this["Type"] = value; }
+            get { return (string)this["Type"]; }
+        }
+        #endregion
+    }
+
+    public class VisionDevices : ConfigurationElement
+    {
+        #region Vision Devices
+        public VisionDevices()
+        {
+        }
+
+        [ConfigurationProperty("ID", DefaultValue = 0, IsRequired = true)]
+        public int ID
+        {
+            set { this["ID"] = value; }
+            get { return (int)this["ID"]; }
+        }
+
+        [ConfigurationProperty("Name", DefaultValue = "Default", IsRequired = true)]
+        public string Name
+        {
+            set { this["Name"] = value; }
+            get { return (string)this["Name"]; }
+        }
+
+        [ConfigurationProperty("IPAddress", IsRequired = false)]
+        public string IPAddress
+        {
+            set { this["IPAddress"] = value; }
+            get { return (string)this["IPAddress"]; }
+        }
+
+        [ConfigurationProperty("Port", DefaultValue = 0, IsRequired = true)]
+        public int Port
+        {
+            set { this["Port"] = value; }
+            get { return (int)this["Port"]; }
+        }
+
+        [ConfigurationProperty("SendDataFormat", DefaultValue = "ASCII", IsRequired = true)]
+        public string SendDataFormat
+        {
+            set { this["SendDataFormat"] = value; }
+            get { return (string)this["SendDataFormat"]; }
+        }
+
+        [ConfigurationProperty("ReceivedDataFormat", DefaultValue = "ASCII", IsRequired = true)]
+        public string ReceivedDataFormat
+        {
+            set { this["ReceivedDataFormat"] = value; }
+            get { return (string)this["ReceivedDataFormat"]; }
+        }
+
+        [ConfigurationProperty("Type", IsRequired = true)]
+        public string Type
+        {
+            set { this["Type"] = value; }
+            get { return (string)this["Type"]; }
+        }
+        #endregion
+    }
+
+    public class SerialPortDevice : ConfigurationElement
+    {
+        #region Serial Port Device
+        public SerialPortDevice()
+        {
+        }
+
+        [ConfigurationProperty("ID", DefaultValue = 0, IsRequired = true)]
+        public int ID
+        {
+            set { this["ID"] = value; }
+            get { return (int)this["ID"]; }
+        }
+
+        [ConfigurationProperty("Name", IsRequired = true)]
+        public string Name
+        {
+            set { this["Name"] = value; }
+            get { return (string)this["Name"]; }
+        }
+
+        [ConfigurationProperty("BaudRate", DefaultValue = "9600", IsRequired = false)]
+        public string BaudRate
+        {
+            set { this["BaudRate"] = value; }
+            get { return (string)this["BaudRate"]; }
+        }
+
+        [ConfigurationProperty("Parity", IsRequired = true)]
+        public string Parity
+        {
+            set { this["Parity"] = value; }
+            get { return (string)this["Parity"]; }
+        }
+
+        [ConfigurationProperty("PortName", IsRequired = true)]
+        public string PortName
+        {
+            set { this["PortName"] = value; }
+            get { return (string)this["PortName"]; }
+        }
+
+        [ConfigurationProperty("StopBit", DefaultValue = "1", IsRequired = true)]
+        public string StopBit
+        {
+            set { this["StopBit"] = value; }
+            get { return (string)this["StopBit"]; }
+        }
+
+        [ConfigurationProperty("Handshake", DefaultValue = "none", IsRequired = true)]
+        public string Handshake
+        {
+            set { this["Handshake"] = value; }
+            get { return (string)this["Handshake"]; }
+        }
+
+        [ConfigurationProperty("Format", DefaultValue = "ASCII", IsRequired = true)]
+        public string Format
+        {
+            set { this["Format"] = value; }
+            get { return (string)this["Format"]; }
+        }
+
+        [ConfigurationProperty("Type", DefaultValue = "Weighing Scale", IsRequired = true)]
         public string Type
         {
             set { this["Type"] = value; }

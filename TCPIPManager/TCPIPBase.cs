@@ -40,9 +40,16 @@ namespace TCPIPManager
             m_TCPIPMsg = new TCPIPMsg();
 
             clientSockets = new List<ClientSocket>();
+            ConnectTCPClientNetworkDevices();
 
-            serverSockets = new List<ServerSocket>();
+            //serverSockets = new List<ServerSocket>();
+           //ConnectTCPServerNetworkDevices();
+        }
+        #endregion
 
+        #region Method
+        public void ConnectTCPClientNetworkDevices()
+        {
             foreach (NetworkDevice device in m_SysCfg.NetworkDevices)
             {
                 try
@@ -53,29 +60,32 @@ namespace TCPIPManager
                     socket.Connect(device.IPAddress, device.Port, senderDataFormat, receiverDataFormat);
                     clientSockets.Add(socket);
                     Thread.Sleep(1000);
-                    clientSockets[device.ID].Name = EnumHelper.GetDescription(((NetworkDev)(int)device.ID));
+                    clientSockets[device.ID].Name = EnumHelper.GetDescription((NetworkDev)(int)device.ID);
                     clientSockets[device.ID].ConnectionStateChanged += new ConnectionStateChangedEventHandler(OnClientSocket_StatusChanged);
                     clientSockets[device.ID].MessageReceived += new MessageReceivedEventHandler(OnClientSocket_MessageReceived);
-                }
-                catch(Exception ex)
-                {
-                    SupportMethod.ShowExceptionMessage(ex, Output.MessageBox);
-                }
-            }
-
-            foreach(NetworkDevice device in m_SysCfg.ServerSockets)
-            {
-                try
-                {
-                    ServerSocket socket = new ServerSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp, 1024, 2048, false);
-                    socket.Start(IPAddress.Any, device.Port);
-                    serverSockets.Add(socket);
                 }
                 catch (Exception ex)
                 {
                     SupportMethod.ShowExceptionMessage(ex, Output.MessageBox);
                 }
             }
+        }
+
+        public void ConnectTCPServerNetworkDevices()
+        {
+            //foreach(NetworkDevice device in m_SysCfg.ServerSockets)
+            //{
+            //    try
+            //    {
+            //        ServerSocket socket = new ServerSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp, 1024, 2048, false);
+            //        socket.Start(IPAddress.Any, device.Port);
+            //        serverSockets.Add(socket);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        SupportMethod.ShowExceptionMessage(ex, Output.MessageBox);
+            //    }
+            //}
         }
         #endregion
 

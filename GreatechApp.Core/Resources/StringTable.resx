@@ -1697,4 +1697,22 @@ Red    : Machine Down</value>
   <data name="ProductQuantity" xml:space="preserve">
     <value>Product Quantity</value>
   </data>
+  <data name="Serial Connection Error" xml:space="preserve">
+    <value>Serial Port Connection Error</value>
+  </data>
+  <data name="Serial Port Connect" xml:space="preserve">
+    <value>Serial Port Connection</value>
+  </data>
+  <data name="Vision Connect Error" xml:space="preserve">
+    <value>Vision Connection Error</value>
+  </data>
+  <data name="Vision Connection" xml:space="preserve">
+    <value>Vision Connection</value>
+  </data>
+  <data name="MES Connection" xml:space="preserve">
+    <value>MES Connection</value>
+  </data>
+  <data name="MESConnectionError" xml:space="preserve">
+    <value>MES Connection Error</value>
+  </data>
 </root>

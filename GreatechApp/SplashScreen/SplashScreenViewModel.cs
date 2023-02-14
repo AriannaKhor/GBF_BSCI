@@ -7,6 +7,7 @@ using IOManager;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Sequence;
+using SerialPortManager;
 using System;
 using System.Globalization;
 using System.Reflection;
@@ -25,7 +26,9 @@ namespace GreatechApp.SplashScreen
          
         IContainerProvider m_container;
         IBaseIO IO;
-        ITCPIP TCPIP;
+        IInsightVision Vision;
+        ITCPIP Tcpip;
+        ISerialPort Serial;
         ISQLOperation SQLOperation;
         SystemConfig SysConfig;
         CultureResources m_CultureResources;
@@ -80,10 +83,71 @@ namespace GreatechApp.SplashScreen
             }
             #endregion
 
-            #region IO
-            UpdateStatus(m_CultureResources.GetStringValue("IO"), 60);
-            IO = m_container.Resolve<IBaseIO>();
+            #region Vision
+            UpdateStatus("Vision", 50);
+            Vision = m_container.Resolve<IInsightVision>();
+#if !SIMULATION
+            if (Vision.VisConnectionStatus())
+            {
+                Vision.ConnectVision();
+            }
+            else
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MessageBox.Show($"{m_CultureResources.GetStringValue("Vision Connect Error")} : {IO.ErrorMsg}", m_CultureResources.GetStringValue("Vision Connection"), MessageBoxButton.OK);
+                });
+            }
+#endif
 
+#endregion
+
+            #region Serial Port
+            UpdateStatus("Serial Port", 60);
+            Serial = m_container.Resolve<ISerialPort>();
+#if !SIMULATION
+            if (!Serial.IsPortOpen())
+            {
+                Serial.OpenSerialPort();
+            }
+            else
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MessageBox.Show($"{m_CultureResources.GetStringValue("Serial Connection Error")} : {IO.ErrorMsg}", m_CultureResources.GetStringValue("Serial Port Connect"), MessageBoxButton.OK);
+                });
+            }
+#endif
+            #endregion
+
+            #region MES 
+            UpdateStatus("MES", 70);
+            Tcpip = m_container.Resolve<ITCPIP>();
+#if !SIMULATION
+            if (Tcpip.clientSockets.Count > 0)
+            {
+                for (int i = 0; i<Tcpip.clientSockets.Count; i++)
+                {
+                    if (!Tcpip.clientSockets[i].IsAlive)
+                    {
+                       Tcpip.ConnectTCPClientNetworkDevices();
+                    }
+                }
+            }
+            else
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    MessageBox.Show($"{m_CultureResources.GetStringValue("MESConnectionError")} : {IO.ErrorMsg}", m_CultureResources.GetStringValue("MES Connection"), MessageBoxButton.OK);
+                });
+            }
+#endif
+            #endregion
+
+            #region IO
+            UpdateStatus(m_CultureResources.GetStringValue("IO"), 80);
+            IO = m_container.Resolve<IBaseIO>();
+#if !SIMULATION
             if (IO.OpenDevice())
             {
                 IO.StartScanIO();
@@ -92,11 +156,12 @@ namespace GreatechApp.SplashScreen
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-#if !SIMULATION
+
                     MessageBox.Show($"{m_CultureResources.GetStringValue("IOError")} : {IO.ErrorMsg}", m_CultureResources.GetStringValue("IOConnection"), MessageBoxButton.OK);
-#endif
+
                 });
             }
+#endif
             #endregion
 
             #region Utilities

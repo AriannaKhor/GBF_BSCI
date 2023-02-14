@@ -2340,6 +2340,24 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MES Connection.
+        /// </summary>
+        public static string MES_Connection {
+            get {
+                return ResourceManager.GetString("MES Connection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MES Connection Error.
+        /// </summary>
+        public static string MESConnectionError {
+            get {
+                return ResourceManager.GetString("MESConnectionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message.
         /// </summary>
         public static string Message {
@@ -3708,6 +3726,24 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Serial Port Connection Error.
+        /// </summary>
+        public static string Serial_Connection_Error {
+            get {
+                return ResourceManager.GetString("Serial Connection Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial Port Connection.
+        /// </summary>
+        public static string Serial_Port_Connect {
+            get {
+                return ResourceManager.GetString("Serial Port Connect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial Number.
         /// </summary>
         public static string SerialNo {
@@ -4712,6 +4748,24 @@ namespace GreatechApp.Core.Resources {
         public static string Vision {
             get {
                 return ResourceManager.GetString("Vision", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vision Connection Error.
+        /// </summary>
+        public static string Vision_Connect_Error {
+            get {
+                return ResourceManager.GetString("Vision Connect Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vision Connection.
+        /// </summary>
+        public static string Vision_Connection {
+            get {
+                return ResourceManager.GetString("Vision Connection", resourceCulture);
             }
         }
         
