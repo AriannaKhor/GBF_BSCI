@@ -95,7 +95,7 @@ namespace GreatechApp.SplashScreen
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    MessageBox.Show($"{m_CultureResources.GetStringValue("Vision Connect Error")} : {IO.ErrorMsg}", m_CultureResources.GetStringValue("Vision Connection"), MessageBoxButton.OK);
+                    MessageBox.Show($"{m_CultureResources.GetStringValue("Vision Connect Error")} ", m_CultureResources.GetStringValue("Vision Connection"), MessageBoxButton.OK);
                 });
             }
 #endif
@@ -114,7 +114,7 @@ namespace GreatechApp.SplashScreen
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    MessageBox.Show($"{m_CultureResources.GetStringValue("Serial Connection Error")} : {IO.ErrorMsg}", m_CultureResources.GetStringValue("Serial Port Connect"), MessageBoxButton.OK);
+                    MessageBox.Show($"{m_CultureResources.GetStringValue("Serial Connection Error")}", m_CultureResources.GetStringValue("Serial Port Connect"), MessageBoxButton.OK);
                 });
             }
 #endif
@@ -123,6 +123,7 @@ namespace GreatechApp.SplashScreen
             #region MES 
             UpdateStatus("MES", 70);
             Tcpip = m_container.Resolve<ITCPIP>();
+            int ConnectClientCount = 0;
 #if !SIMULATION
             if (Tcpip.clientSockets.Count > 0)
             {
@@ -130,7 +131,19 @@ namespace GreatechApp.SplashScreen
                 {
                     if (!Tcpip.clientSockets[i].IsAlive)
                     {
-                       Tcpip.ConnectTCPClientNetworkDevices();
+                        if(ConnectClientCount < 3)
+                        {
+                            ConnectClientCount++;
+                            Tcpip.ConnectTCPClientNetworkDevices();
+                        }
+                        else
+                        {
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                MessageBox.Show($"{m_CultureResources.GetStringValue("MESConnectionError")}", m_CultureResources.GetStringValue("MES Connection"), MessageBoxButton.OK);
+                            });
+                        }
+                     
                     }
                 }
             }
@@ -138,7 +151,7 @@ namespace GreatechApp.SplashScreen
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    MessageBox.Show($"{m_CultureResources.GetStringValue("MESConnectionError")} : {IO.ErrorMsg}", m_CultureResources.GetStringValue("MES Connection"), MessageBoxButton.OK);
+                    MessageBox.Show($"{m_CultureResources.GetStringValue("MESConnectionError")}", m_CultureResources.GetStringValue("MES Connection"), MessageBoxButton.OK);
                 });
             }
 #endif

@@ -21,7 +21,7 @@ namespace SerialPortManager
         private Parity SerialPortParity;
         private StopBits SerialPortStopBits;
         private Handshake SerialPortHandshake;
-        private SerialPortInfo m_serialPortInfo;
+        private SerialPortInfo m_serialPortInfo = new SerialPortInfo();
         private SerialPortMsg m_SerialPortMsg;
         private StringBuilder m_ErrMsg = new StringBuilder();
         private SystemConfig m_sysCfg = SystemConfig.Open(@"..\Config Section\General\System.Config");
@@ -52,6 +52,7 @@ namespace SerialPortManager
         #region Constructor
         public SerialPortBase(IEventAggregator eventAggregator)
         {
+            m_SerialPortBaseinfo = new ObservableCollection<SerialPortInfo>();
             m_Event = eventAggregator;
             GetSerialPortInfo();
         }
@@ -79,7 +80,7 @@ namespace SerialPortManager
         #region Get Serial Port Info
         public void GetSerialPortInfo()
         {
-            int SerialPortCount = m_sysCfg.SerialPortDevices.Count;
+            int SerialPortCount = m_sysCfg.SerialPortDevices.Count-1;
             Int32.TryParse(m_sysCfg.SerialPortDevices[SerialPortCount].BaudRate, out int baudrate);
             Int32.TryParse(m_sysCfg.SerialPortDevices[SerialPortCount].Parity, out int parity);
             Int32.TryParse(m_sysCfg.SerialPortDevices[SerialPortCount].StopBit, out int stopbit);

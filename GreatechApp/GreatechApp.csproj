@@ -163,6 +163,10 @@
   <PropertyGroup>
     <ApplicationIcon>G-Logo.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -296,7 +300,7 @@
       <Name>Sequence</Name>
     </ProjectReference>
     <ProjectReference Include="..\SerialPortManager\SerialPortManager.csproj">
-      <Project>{A26E73BD-86D3-4186-9656-A035A21D1093}</Project>
+      <Project>{a26e73bd-86d3-4186-9656-a035a21d1093}</Project>
       <Name>SerialPortManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\TCPIPManager\TCPIPManager.csproj">
