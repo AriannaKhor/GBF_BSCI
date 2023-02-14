@@ -295,6 +295,10 @@
       <Project>{46658b31-1e7b-4975-93b6-d8b75d00bcfa}</Project>
       <Name>Sequence</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SerialPortManager\SerialPortManager.csproj">
+      <Project>{A26E73BD-86D3-4186-9656-A035A21D1093}</Project>
+      <Name>SerialPortManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TCPIPManager\TCPIPManager.csproj">
       <Project>{ffab358d-9e76-4c94-9fe3-eff9b3f56e0a}</Project>
       <Name>TCPIPManager</Name>

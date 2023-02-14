@@ -46,7 +46,7 @@ namespace TCPIPManager
 
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
 #if !SIMULATION
-            m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(ConnectVision);
+            //m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(ConnectVision);
 #endif
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
@@ -59,10 +59,12 @@ namespace TCPIPManager
             try
             {
                 SystemConfig sysCfg = SystemConfig.Open(@"..\Config Section\General\System.Config");
-                m_topvisIp = sysCfg.NetworkDevices[0].IPAddress;
-                m_InsightV1.Connect(m_topvisIp, "admin", "", true, false);
-                m_InsightV1.SoftOnline = true;
-
+                int visDevicesCount = sysCfg.VisionDevices.Count;
+                foreach(VisionDevices devices in sysCfg.VisionDevices)
+                {
+                    m_InsightV1.Connect(devices.IPAddress, "admin", "", true, false);
+                    m_InsightV1.SoftOnline = true;
+                }
                 switch (m_InsightV1.State)
                 {
                     case CvsInSightState.Offline:
@@ -130,6 +132,18 @@ namespace TCPIPManager
             Global.VisionConnStatus = status;
             Global.VisConnection = visConnection;
             m_Events.GetEvent<VisionConnectionEvent>().Publish();
+        }
+
+        public bool VisConnectionStatus()
+        {
+            if (Global.VisConnection)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void GetProductQuantityConfig()

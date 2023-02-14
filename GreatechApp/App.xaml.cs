@@ -12,6 +12,7 @@ using IOManager;
 using Prism.Ioc;
 using Prism.Modularity;
 using Sequence;
+using SerialPortManager;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -123,20 +124,15 @@ namespace GreatechApp
 
             containerRegistry.RegisterSingleton(typeof(DefaultUser));
             containerRegistry.RegisterSingleton(typeof(BaseIO));
-            //containerRegistry.RegisterSingleton(typeof(BaseMotion));
             containerRegistry.RegisterSingleton(typeof(TCPIPBase));
             containerRegistry.RegisterSingleton(typeof(InSightVision));
             containerRegistry.RegisterSingleton(typeof(CodeReader));
-            //containerRegistry.RegisterSingleton(typeof(SerialPortBase));
+            containerRegistry.RegisterSingleton(typeof(SerialPortBase));
             containerRegistry.RegisterSingleton(typeof(ErrorOperation));
             containerRegistry.RegisterSingleton(typeof(DelegateSeq));
             containerRegistry.RegisterSingleton(typeof(SystemConfig));
-            //containerRegistry.RegisterSingleton(typeof(OEECalculation));
             containerRegistry.RegisterSingleton(typeof(TowerLight));
             containerRegistry.RegisterSingleton(typeof(CultureResources));
-
-            //OEEConfig oeecfg = OEEConfig.Open(@"..\Config Section\OEE\OEE.Config");
-            //containerRegistry.RegisterInstance(oeecfg);
 
             SystemConfig sysConfig = SystemConfig.Open(@"..\Config Section\General\System.Config");
             containerRegistry.RegisterInstance(sysConfig);
@@ -144,20 +140,15 @@ namespace GreatechApp
             containerRegistry.Register<ITCPIP, TCPIPBase>();
             containerRegistry.Register<IInsightVision, InSightVision>();
             containerRegistry.Register<ICodeReader, CodeReader>();
-            //containerRegistry.Register<ISerialPort, SerialPortBase>();
-            //containerRegistry.Register<ISecsGem, SecsGemBase>();
+            containerRegistry.Register<ISerialPort, SerialPortBase>();
             containerRegistry.Register<IError, ErrorOperation>();
             containerRegistry.Register<ISQLOperation, SQLOperation>();
             containerRegistry.Register<IShowDialog, ShowDialog>();
             containerRegistry.Register<IDelegateSeq, DelegateSeq>();
-            //containerRegistry.Register<IOEECalculation, OEECalculation>();
 
             MapObject<IBaseIO> baseIO = new MapObject<IBaseIO>();
             IBaseIO ioInstance = baseIO.CreateObject(sysConfig.DigitalIO.ClassName);
             containerRegistry.RegisterInstance<IBaseIO>(ioInstance);
-
-            // IO Interlock Registration
-            //containerRegistry.Register<IIOInterlock, BaseIOIntL>("BaseIO");
         }
 
         protected override IModuleCatalog CreateModuleCatalog()

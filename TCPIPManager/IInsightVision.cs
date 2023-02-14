@@ -9,5 +9,7 @@ namespace TCPIPManager
     public interface IInsightVision
     {
         void TriggerVisCapture();
+        bool VisConnectionStatus();
+        void ConnectVision();
     }
 }

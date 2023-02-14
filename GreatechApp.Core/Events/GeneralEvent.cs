@@ -8,7 +8,11 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
-
+    public class SerialPortMsg : PubSubEvent<SerialPortMsg>
+    {
+        public string PortName;
+        public string Message;
+    }
     public class ResultLoggingEvent : PubSubEvent<ResultsDatalog>
     {
 

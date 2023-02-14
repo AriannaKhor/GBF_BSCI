@@ -7,5 +7,8 @@ namespace TCPIPManager
     {
         List<ClientSocket> clientSockets { get; set; }
         List<ServerSocket> serverSockets { get; set; }
+
+        void ConnectTCPClientNetworkDevices();
+        void ConnectTCPServerNetworkDevices();
     }
 }
