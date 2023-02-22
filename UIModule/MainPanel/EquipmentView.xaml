@@ -24,105 +24,188 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
         <!--Equipment View-->
-        <Grid Grid.Row="0" Background="GhostWhite" IsEnabled="{Binding CanAccess}" Width="Auto" Height="Auto">
+        <Grid Grid.Row="0" Background="GhostWhite" Width="Auto" Height="Auto">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <GroupBox Header="{Binding Path=TopInspection, Source={StaticResource StringTableODP}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!--Device Status-->
+            <GroupBox Grid.Row="0" Grid.Column ="0" Grid.ColumnSpan="10" Header="{Binding Path=DeviceStatus, Source={StaticResource StringTableODP}}" Margin="5"  >
+                <WrapPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Label Content="{Binding Path=TopVision, Source={StaticResource StringTableODP}}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" Margin="10"/>
+                    <Label Content="{Binding VisionConnStatus}" Foreground="{Binding StatusFG}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <Label Content="{Binding Path=WeighingScale, Source={StaticResource StringTableODP}}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" Margin="10"/>
+                    <Label Content="{Binding WeighingConnStatus}" Foreground="{Binding CdStatusFG}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                </WrapPanel>
+            </GroupBox>
+            
+            <!--Top Vision-->
+            <GroupBox Grid.Row="1" Grid.Column="0" Header="{Binding Path=TopVision, Source={StaticResource StringTableODP}}" Margin="5"  >
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <WrapPanel Grid.Row="0">
-                        <Label Content="{Binding Path=Status, Source={StaticResource StringTableODP}}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" Margin="10"/>
-                        <Label Content="{Binding VisionConnStatus}" Foreground="{Binding StatusFG}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                    </WrapPanel>
 
-                    <Label Grid.Row="1" Content="{Binding VisInspectResult}" Foreground="{Binding VisResultFG}" Background="{Binding VisResultBG}" Width="300" FontWeight="Bold" FontSize="30" VerticalAlignment="Stretch"
-                           HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
-                    <Image Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding VisImage}" MaxHeight="500" Stretch="Uniform"/>
-                    <Grid Grid.Row="2" VerticalAlignment="Top">
+                    <Grid Grid.Row="2" VerticalAlignment="Top" Width="Auto" Height="Auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <WrapPanel >
-                            <Label Content="{Binding Path=TotalQuantity, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Foreground="Black"/>
-                            <Label Content="{Binding VisProductQuantity}" Foreground="{Binding ProductQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </WrapPanel>
-                        <WrapPanel Grid.Column="1">
-                            <Label Content="{Binding Path=CorrectOrientation, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center"  Margin="10" Foreground="Black"/>
-                            <Label Content="{Binding VisProductCrtOrientation}" Foreground="{Binding CorrectOrientationFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </WrapPanel>
-                        <WrapPanel Grid.Column="2">
-                            <Label Content="{Binding Path=WrongOrientation, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center"  Margin="10" Foreground="Black"/>
-                            <Label Content= "{Binding VisProductWrgOrientation}" Foreground="{Binding WrgOrientationFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </WrapPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Path=ExpectingResult, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                        <Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=LiveView, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                        <Image Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding VisLiveImage}" MaxHeight="350" MaxWidth="500" Stretch="Uniform"/>
+                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=PreviousView, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                        <Image Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding VisPreviousImage}" MaxHeight="350" MaxWidth="500" Stretch="Uniform"/>
                     </Grid>
                 </Grid>
             </GroupBox>
-
-            <GroupBox Grid.Column="1" Header="{Binding Path=CodeReader, Source={StaticResource StringTableODP}}"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsEnabled="{Binding EnableCodeReader}">
+            
+            <!--Classification Output-->
+            <GroupBox Grid.Row="1" Grid.Column="1" Width="Auto" Height="Auto" Header="{Binding Path=ClassificationOutput, Source={StaticResource StringTableODP}}"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsEnabled="{Binding EnableCodeReader}" Margin="5">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <WrapPanel Grid.Row="0">
-                        <Label Content="{Binding Path=Status, Source={StaticResource StringTableODP}}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" Margin="10" Foreground="Black"/>
-                        <Label Content="{Binding CodeReaderConnStatus}" Foreground="{Binding CdStatusFG}" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <Label Content="{Binding Path=Batch, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50,0,0,0" Foreground="Black"/>
-                        <Label Content="{Binding ViewCurrentBatchNumber}" Foreground="{Binding BatchNoFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,0,0"/>
-                        <Label Content="{Binding Path=Container, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="50,0,0,0" Foreground="Black"/>
-                        <Label Content="{Binding ViewCurrentContainerNumber}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="50,0,0,0"/>
-                    </WrapPanel>
-                    <Label Grid.Row="1" Content="{Binding CodeReaderResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" Width="300"  FontWeight="Bold" FontSize="30"
-                           VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="70,0,70,0"/>
-                    <Image Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="2" Source="{Binding CodeReaderImage}" MaxHeight="350" MaxWidth="500" Stretch="Uniform"/>
-                    <Grid Grid.Row="2" VerticalAlignment="Top">
+                    <Grid Grid.Row="2" VerticalAlignment="Top" Width="Auto" Height="Auto">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <WrapPanel Grid.Column="0">
-                            <Label Content="{Binding Path=TotalBatchQuantity, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3" Foreground="Black"/>
-                            <Label Content="{Binding ViewCurrentBatchTotalQuantity}" Foreground="{Binding BatchTotalQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </WrapPanel>
-                        <WrapPanel Grid.Column="1">
-                            <Label Content="{Binding Path=TotalCurrentBatchQuantity, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center" Margin="3" Foreground="Black"/>
-                            <Label Content="{Binding ViewAccumulateCurrentTotalBatchQuantity}" Foreground="{Binding CurrentTotalBatchQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        </WrapPanel>
-                        <WrapPanel Grid.Column="2">
-                            <Label Content="{Binding Path=TotalCurrentBoxQuantity, Source={StaticResource StringTableODP}}"  FontSize="15" FontWeight="Bold" VerticalAlignment="Center"  Margin="3" Foreground="Black"/>
-                            <Label Content= "{Binding ViewCurrentBoxQuantity}" Foreground="{Binding CurrentQuantityFG}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                        </WrapPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Content="{Binding WeighingResult}" Foreground="{Binding CdResultFG}" Background="{Binding CdResultBG}" Width="300"  FontWeight="Bold" FontSize="40"
+                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="50"/>
+                      
+                        <!--Details-->
+                        <Expander Grid.Row="1" Grid.Column="1" Height="400" Template="{StaticResource StretchyExpanderToUp}" OverridesDefaultStyle="True" IsExpanded="False" Header="{Binding Path=Details, Source={StaticResource StringTableODP}}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="2" VerticalAlignment="Top" Width="Auto" Height="Auto">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="400"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="100"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Content="{Binding Path=Classification, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="1" Grid.Column="0" Content="{Binding Path=InitialSlipSheet, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="2" Grid.Column="0" Content="{Binding Path=ReversePouch, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="3" Grid.Column="0" Content="{Binding Path=ColorPouch, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="4" Grid.Column="0" Content="{Binding Path=InvertColorPouch, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="5" Grid.Column="0" Content="{Binding Path=DFU, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="6" Grid.Column="0" Content="{Binding Path=CheckEmpty, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="7" Grid.Column="0" Content="{Binding Path=LightIntensity, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="8" Grid.Column="0" Content="{Binding Path=PouchColor, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding Path=StatusClassification, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=StatusInitialSlipSheet, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Path=StatusReversePouch, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="3" Grid.Column="1" Content="{Binding Path=StatusColorPouch, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Path=StatusInvertColorPouch, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="5" Grid.Column="1" Content="{Binding Path=StatusDFU, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="6" Grid.Column="1" Content="{Binding Path=StatusCheckEmpty, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="7" Grid.Column="1" Content="{Binding Path=StatusLightIntensity, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                        <Label Grid.Row="8" Grid.Column="1" Content="{Binding Path=StatusPouchColor, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+
+                                        <Label Grid.Row="0" Grid.Column="2" Content="{Binding Path=StatusSummary, Source={StaticResource StringTableODP}}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Black"/>
+                                    <FlowDocumentScrollViewer Grid.Row="10" Grid.ColumnSpan="10" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                                        <FlowDocument>
+                                            <Paragraph FontSize="12pt">Overall Result:</Paragraph>
+                                            <Table>
+                                                <TableRowGroup Paragraph.TextAlignment="left" DataContext="{Binding}">
+                                                    <TableRow FontWeight="Bold"  FontSize="10pt">
+                                                        <TableCell>
+                                                            <Paragraph>Top Vision (pcs)</Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>Weighing Scale (pcs)</Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>Weight Range</Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>Actual Weight</Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>Status</Paragraph>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell>
+                                                            <Paragraph>
+                                                                <Label Content="{Binding Path=VisionPcs, Source={StaticResource StringTableODP}}"></Label>
+                                                            </Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>
+                                                                <Label Content="{Binding Path=WeighingPcs, Source={StaticResource StringTableODP}}"></Label>
+                                                            </Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>
+                                                                <Label Content="{Binding Path=WeightRange, Source={StaticResource StringTableODP}}"></Label>
+                                                            </Paragraph>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            <Paragraph>
+                                                                <Label Content="{Binding Path=ActualWeight, Source={StaticResource StringTableODP}}"></Label>
+                                                            </Paragraph>
+                                                        </TableCell>
+                                                         <TableCell>
+                                                            <Paragraph>
+                                                                <Label Content="{Binding Path=OverallStatus, Source={StaticResource StringTableODP}}"></Label>
+                                                            </Paragraph>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableRowGroup>
+                                            </Table>
+                                        </FlowDocument>
+                                    </FlowDocumentScrollViewer>
+                                </Grid>
+                            </Grid>
+                        </Expander>
                     </Grid>
                 </Grid>
             </GroupBox>
-        </Grid>
+    </Grid>
 
-        <!--DataLog-->
-        <Expander Grid.Row="1" Grid.Column="1" Template="{StaticResource StretchyExpanderToUp}" OverridesDefaultStyle="True" IsExpanded="False" Header="{Binding Path=Datalog, Source={StaticResource StringTableODP}}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                <ListView x:Name="dataloglist"  ItemsSource="{Binding DataLogCollection, UpdateSourceTrigger=PropertyChanged}" MaxHeight="220" GridViewColumnHeader.Click="ListView_Click">
+    <!--DataLog-->
+        <Expander Grid.Row="3" Grid.Column="1" Template="{StaticResource StretchyExpanderToUp}" OverridesDefaultStyle="True" IsExpanded="False" MaxHeight="200" Header="{Binding Path=Datalog, Source={StaticResource StringTableODP}}">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+                <ListView x:Name="dataloglist"  ItemsSource="{Binding DataLogCollection, UpdateSourceTrigger=PropertyChanged}" GridViewColumnHeader.Click="ListView_Click">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False" ColumnHeaderToolTip="Status">
                             <GridViewColumn Width="90" Header="{Binding Path=Date, Source={StaticResource StringTableODP}}">

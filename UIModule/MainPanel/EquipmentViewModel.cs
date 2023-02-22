@@ -58,13 +58,6 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_VisionConnStatus, value); }
         }
 
-        private string m_CodeReaderConnStatus;
-        public string CodeReaderConnStatus
-        {
-            get { return m_CodeReaderConnStatus; }
-            set { SetProperty(ref m_CodeReaderConnStatus, value); }
-        }
-
         private string m_SelectedVisRcp;
         public string SelectedVisRcp
         {
@@ -72,79 +65,18 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_SelectedVisRcp, value); }
         }
 
-
-        private string m_VisInspectResult = resultstatus.PendingResult.ToString();
-        public string VisInspectResult
+        private string m_WeighingResult = resultstatus.PendingResult.ToString();
+        public string WeighingResult
         {
-            get { return m_VisInspectResult; }
-            set { SetProperty(ref m_VisInspectResult, value); }
+            get { return m_WeighingResult; }
+            set { SetProperty(ref m_WeighingResult, value); }
         }
 
-        private string m_CodeReaderResult = resultstatus.PendingResult.ToString();
-        public string CodeReaderResult
+        private string m_VisClassification;
+        public string VisClassification
         {
-            get { return m_CodeReaderResult; }
-            set { SetProperty(ref m_CodeReaderResult, value); }
-        }
-
-        private float m_VisProductQuantity;
-        public float VisProductQuantity
-        {
-            get { return m_VisProductQuantity; }
-            set
-            {
-
-                SetProperty(ref m_VisProductQuantity, value);
-            }
-        }
-
-        private float m_VisProductCrtOrientation;
-        public float VisProductCrtOrientation
-        {
-            get { return m_VisProductCrtOrientation; }
-            set { SetProperty(ref m_VisProductCrtOrientation, value); }
-        }
-
-        private float m_VisProductWrgOrientation;
-        public float VisProductWrgOrientation
-        {
-            get { return m_VisProductWrgOrientation; }
-            set { SetProperty(ref m_VisProductWrgOrientation, value); }
-        }
-
-        private string m_ViewCurrentBatchNumber;
-        public string ViewCurrentBatchNumber
-        {
-            get { return m_ViewCurrentBatchNumber; }
-            set { SetProperty(ref m_ViewCurrentBatchNumber, value); }
-        }
-
-        private string m_ViewCurrentContainerNumber;
-        public string ViewCurrentContainerNumber
-        {
-            get { return m_ViewCurrentContainerNumber; }
-            set { SetProperty(ref m_ViewCurrentContainerNumber, value); }
-        }
-
-        private int m_ViewCurrentBatchTotalQuantity;
-        public int ViewCurrentBatchTotalQuantity
-        {
-            get { return m_ViewCurrentBatchTotalQuantity; }
-            set { SetProperty(ref m_ViewCurrentBatchTotalQuantity, value); }
-        }
-
-        private int m_ViewAccumulateCurrentTotalBatchQuantity;
-        public int ViewAccumulateCurrentTotalBatchQuantity
-        {
-            get { return m_ViewAccumulateCurrentTotalBatchQuantity; }
-            set { SetProperty(ref m_ViewAccumulateCurrentTotalBatchQuantity, value); }
-        }
-
-        private int m_ViewCurrentBoxQuantity;
-        public int ViewCurrentBoxQuantity
-        {
-            get { return m_ViewCurrentBoxQuantity; }
-            set { SetProperty(ref m_ViewCurrentBoxQuantity, value); }
+            get { return m_VisClassification; }
+            set { SetProperty(ref m_VisClassification, value); }
         }
 
         private string m_TriggerLiveVis = "Trigger Live";
@@ -168,19 +100,11 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_CdStatusFG, value); }
         }
 
-        private SolidColorBrush m_ProductQuantityFG = System.Windows.Media.Brushes.Black;
-        public SolidColorBrush ProductQuantityFG
+        private SolidColorBrush m_VisClassificationFG = System.Windows.Media.Brushes.Black;
+        public SolidColorBrush VisClassificationFG
         {
-            get { return m_ProductQuantityFG; }
-            set { SetProperty(ref m_ProductQuantityFG, value); }
-        }
-
-
-        private SolidColorBrush m_VisResultFG = System.Windows.Media.Brushes.Black;
-        public SolidColorBrush VisResultFG
-        {
-            get { return m_VisResultFG; }
-            set { SetProperty(ref m_VisResultFG, value); }
+            get { return m_VisClassificationFG; }
+            set { SetProperty(ref m_VisClassificationFG, value); }
         }
 
         private SolidColorBrush m_CdResultFG = System.Windows.Media.Brushes.Black;
@@ -190,32 +114,11 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_CdResultFG, value); }
         }
 
-        private SolidColorBrush m_VisResultBG = System.Windows.Media.Brushes.Transparent;
-        public SolidColorBrush VisResultBG
-        {
-            get { return m_VisResultBG; }
-            set { SetProperty(ref m_VisResultBG, value); }
-        }
-
         private SolidColorBrush m_CdResultBG = System.Windows.Media.Brushes.Transparent;
         public SolidColorBrush CdResultBG
         {
             get { return m_CdResultBG; }
             set { SetProperty(ref m_CdResultBG, value); }
-        }
-
-        private SolidColorBrush m_CorrectOrientationFG = System.Windows.Media.Brushes.Black;
-        public SolidColorBrush CorrectOrientationFG
-        {
-            get { return m_CorrectOrientationFG; }
-            set { SetProperty(ref m_CorrectOrientationFG, value); }
-        }
-
-        private SolidColorBrush m_WrgOrientationFG = System.Windows.Media.Brushes.Black;
-        public SolidColorBrush WrgOrientationFG
-        {
-            get { return m_WrgOrientationFG; }
-            set { SetProperty(ref m_WrgOrientationFG, value); }
         }
 
         private FixedSizeObservableCollection<Datalog> m_DataLogCollection;
@@ -264,18 +167,18 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_IsEquipViewLoaded, value); }
         }
 
-        private BitmapImage m_VisImage;
-        public BitmapImage VisImage
+        private BitmapImage m_VisLiveImage;
+        public BitmapImage VisLiveImage
         {
-            get { return m_VisImage; }
-            set { SetProperty(ref m_VisImage, value); }
+            get { return m_VisLiveImage; }
+            set { SetProperty(ref m_VisLiveImage, value); }
         }
 
-        private BitmapImage m_CodeReaderImage;
-        public BitmapImage CodeReaderImage
+        private BitmapImage m_VisPreviousImage;
+        public BitmapImage VisPreviousImage
         {
-            get { return m_CodeReaderImage; }
-            set { SetProperty(ref m_CodeReaderImage, value); }
+            get { return m_VisPreviousImage; }
+            set { SetProperty(ref m_VisPreviousImage, value); }
         }
         #endregion
 
@@ -298,11 +201,7 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<DatalogEntity>().Subscribe(OnDatalogEntity);
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Subscribe(OnTopVisionResult);//
             m_EventAggregator.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
-            m_EventAggregator.GetEvent<OnCodeReaderConnectedEvent>().Subscribe(OnCodeReaderConnected);//
-            m_EventAggregator.GetEvent<OnCodeReaderDisconnectedEvent>().Subscribe(OnCodeReaderDisconnected);//
-            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Subscribe(OnCodeReaderEndResult);//
             m_EventAggregator.GetEvent<TopVisionImage>().Subscribe(OnTopVisionImg);//
-            m_EventAggregator.GetEvent<CodeReaderImage>().Subscribe(OnCodeReaderImg);//
             m_EventAggregator.GetEvent<ResultLoggingEvent>().Subscribe(OnResultLog);//
 
 
@@ -325,12 +224,9 @@ namespace UIModule.MainPanel
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachName")} : {m_SystemConfig.Machine.EquipName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
 
-            //m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
-            m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
-            CodeReaderConnStatus = Global.CodeReaderConnStatus;
+            m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
+            VisionConnStatus = Global.VisionConnStatus;
         }
-
-
         #endregion
 
         #region Event
@@ -350,7 +246,7 @@ namespace UIModule.MainPanel
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
 
-                    if (Global.OverallResult!=null && Global.CurrentLotBatchNum !=null && Global.CurrentLotBatchNum !=string.Empty)
+                    if (Global.OverallResult != null && Global.CurrentLotBatchNum != null && Global.CurrentLotBatchNum != string.Empty)
                     {
                         string filename = $"Batch {Global.CurrentLotBatchNum}.csv";
                         filename = filePath + filename;
@@ -393,39 +289,32 @@ namespace UIModule.MainPanel
         #region Vision
         private void OnTopVisionResult()
         {
-            VisInspectResult = Global.VisInspectResult;
-            VisProductQuantity = Global.VisProductQuantity;
-            VisProductCrtOrientation = Global.VisProductCrtOrientation;
-            VisProductWrgOrientation = Global.VisProductWrgOrientation;
+            VisClassification = Global.VisClassification;
 
             if (Global.VisInspectResult == "OK")
             {
-                VisResultBG = System.Windows.Media.Brushes.Green;
-                ProductQuantityFG = System.Windows.Media.Brushes.Green;
-                CorrectOrientationFG = System.Windows.Media.Brushes.Green;
-                WrgOrientationFG = System.Windows.Media.Brushes.Green;
+                VisClassificationFG = System.Windows.Media.Brushes.Green;
             }
             else if (Global.VisInspectResult == "NG")
             {
-                VisResultBG = System.Windows.Media.Brushes.Red;
-                ProductQuantityFG = System.Windows.Media.Brushes.Red;
-                CorrectOrientationFG = System.Windows.Media.Brushes.Red;
-                WrgOrientationFG = System.Windows.Media.Brushes.Red;
+                VisClassificationFG = System.Windows.Media.Brushes.Red;
             }
             else
             {
-                VisImage = null;
-                VisResultBG = System.Windows.Media.Brushes.Transparent;
-                ProductQuantityFG = System.Windows.Media.Brushes.Black;
-                CorrectOrientationFG = System.Windows.Media.Brushes.Black;
-                WrgOrientationFG = System.Windows.Media.Brushes.Black;
+                VisLiveImage = null;
+                VisPreviousImage = null;
+                VisClassificationFG = System.Windows.Media.Brushes.Black;
             }
         }
-
+        #region Vision Live Image
         private void OnTopVisionImg(BitmapImage img)
         {
-            VisImage = img;
+            VisLiveImage = img;
         }
+        #endregion
+        #region Vision Previous Image
+
+        #endregion
         #endregion
 
         #region Code Reader
@@ -434,48 +323,13 @@ namespace UIModule.MainPanel
         {
             Global.CodeReaderConnStatus = "Connected";
             CdStatusFG = System.Windows.Media.Brushes.Green;
-            CodeReaderConnStatus = Global.CodeReaderConnStatus;
-
-
         }
         //New Can Be Use
         private void OnCodeReaderDisconnected()
         {
             Global.CodeReaderConnStatus = "Disconnected";
             CdStatusFG = System.Windows.Media.Brushes.Red;
-            CodeReaderConnStatus = Global.CodeReaderConnStatus;
-
         }
-
-        private void OnCodeReaderEndResult()
-        {
-            ViewCurrentContainerNumber = Global.CurrentContainerNum;
-            ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-            ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
-            ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-            ViewCurrentBatchNumber = Global.LotInitialBatchNo;
-            CodeReaderResult = Global.CodeReaderResult;
-
-            if (Global.CodeReaderResult == "OK")
-            {
-                CdResultBG = System.Windows.Media.Brushes.Green;
-            }
-            else if (Global.CodeReaderResult == "NG")
-            {
-                CdResultBG = System.Windows.Media.Brushes.Red;
-            }
-            else
-            {
-                CodeReaderImage = null;
-                CdResultBG = System.Windows.Media.Brushes.Transparent;
-            }
-        }
-        
-        private void OnCodeReaderImg(BitmapImage img)
-        {
-            CodeReaderImage = img;
-        }
-
         #endregion
 
         private void OnNavigation(string page)
@@ -490,14 +344,11 @@ namespace UIModule.MainPanel
             if (m_AuthService.CurrentUser.IsAuthenticated)
             {
                 IsAllowEquipment = Visibility.Visible;
-
             }
             else
             {
                 IsAllowEquipment = Visibility.Collapsed;
-
             }
-
         }
 
         private void OnDatalogEntity(DatalogEntity log)
