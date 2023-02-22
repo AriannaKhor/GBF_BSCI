@@ -106,6 +106,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string ActualWeight {
+            get {
+                return ResourceManager.GetString("ActualWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -448,6 +457,33 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check Empty.
+        /// </summary>
+        public static string CheckEmpty {
+            get {
+                return ResourceManager.GetString("CheckEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classification.
+        /// </summary>
+        public static string Classification {
+            get {
+                return ResourceManager.GetString("Classification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classification Output.
+        /// </summary>
+        public static string ClassificationOutput {
+            get {
+                return ResourceManager.GetString("ClassificationOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cleaning Counter.
         /// </summary>
         public static string CleaningCounter {
@@ -561,6 +597,15 @@ namespace GreatechApp.Core.Resources {
         public static string CodeReader {
             get {
                 return ResourceManager.GetString("CodeReader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3) Color Pouch.
+        /// </summary>
+        public static string ColorPouch {
+            get {
+                return ResourceManager.GetString("ColorPouch", resourceCulture);
             }
         }
         
@@ -1042,6 +1087,33 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Device Status.
+        /// </summary>
+        public static string DeviceStatus {
+            get {
+                return ResourceManager.GetString("DeviceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5) DFU.
+        /// </summary>
+        public static string DFU {
+            get {
+                return ResourceManager.GetString("DFU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Directory.
         /// </summary>
         public static string Directory {
@@ -1326,6 +1398,15 @@ namespace GreatechApp.Core.Resources {
         public static string ExeTime {
             get {
                 return ResourceManager.GetString("ExeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expecting:.
+        /// </summary>
+        public static string ExpectingResult {
+            get {
+                return ResourceManager.GetString("ExpectingResult", resourceCulture);
             }
         }
         
@@ -1654,6 +1735,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1) Initial Slip Sheet.
+        /// </summary>
+        public static string InitialSlipSheet {
+            get {
+                return ResourceManager.GetString("InitialSlipSheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INIT STATE.
         /// </summary>
         public static string InitState {
@@ -1704,6 +1794,15 @@ namespace GreatechApp.Core.Resources {
         public static string InvalidLoginInfo {
             get {
                 return ResourceManager.GetString("InvalidLoginInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4) Invert Color Pouch.
+        /// </summary>
+        public static string InvertColorPouch {
+            get {
+                return ResourceManager.GetString("InvertColorPouch", resourceCulture);
             }
         }
         
@@ -1843,6 +1942,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Light Intensity.
+        /// </summary>
+        public static string LightIntensity {
+            get {
+                return ResourceManager.GetString("LightIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line Voltage VAC.
         /// </summary>
         public static string LineVol {
@@ -1866,6 +1974,15 @@ namespace GreatechApp.Core.Resources {
         public static string LiveTracking {
             get {
                 return ResourceManager.GetString("LiveTracking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live View:.
+        /// </summary>
+        public static string LiveView {
+            get {
+                return ResourceManager.GetString("LiveView", resourceCulture);
             }
         }
         
@@ -3033,6 +3150,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pass.
+        /// </summary>
+        public static string OverallStatus {
+            get {
+                return ResourceManager.GetString("OverallStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overall Yield.
         /// </summary>
         public static string OverallYield {
@@ -3168,6 +3294,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pouch Color.
+        /// </summary>
+        public static string PouchColor {
+            get {
+                return ResourceManager.GetString("PouchColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Power VA.
         /// </summary>
         public static string Power {
@@ -3209,6 +3344,15 @@ namespace GreatechApp.Core.Resources {
         public static string Preset {
             get {
                 return ResourceManager.GetString("Preset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous View:.
+        /// </summary>
+        public static string PreviousView {
+            get {
+                return ResourceManager.GetString("PreviousView", resourceCulture);
             }
         }
         
@@ -3524,6 +3668,15 @@ namespace GreatechApp.Core.Resources {
         public static string Rest {
             get {
                 return ResourceManager.GetString("Rest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2) Reverse Pouch.
+        /// </summary>
+        public static string ReversePouch {
+            get {
+                return ResourceManager.GetString("ReversePouch", resourceCulture);
             }
         }
         
@@ -3996,6 +4149,105 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string StatusCheckEmpty {
+            get {
+                return ResourceManager.GetString("StatusCheckEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string StatusClassification {
+            get {
+                return ResourceManager.GetString("StatusClassification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absent.
+        /// </summary>
+        public static string StatusColorPouch {
+            get {
+                return ResourceManager.GetString("StatusColorPouch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absent.
+        /// </summary>
+        public static string StatusDFU {
+            get {
+                return ResourceManager.GetString("StatusDFU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absent.
+        /// </summary>
+        public static string StatusFinalSlipSheet {
+            get {
+                return ResourceManager.GetString("StatusFinalSlipSheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absent.
+        /// </summary>
+        public static string StatusInitialSlipSheet {
+            get {
+                return ResourceManager.GetString("StatusInitialSlipSheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absent.
+        /// </summary>
+        public static string StatusInvertColorPouch {
+            get {
+                return ResourceManager.GetString("StatusInvertColorPouch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string StatusLightIntensity {
+            get {
+                return ResourceManager.GetString("StatusLightIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string StatusPouchColor {
+            get {
+                return ResourceManager.GetString("StatusPouchColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absent.
+        /// </summary>
+        public static string StatusReversePouch {
+            get {
+                return ResourceManager.GetString("StatusReversePouch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status Summary.
+        /// </summary>
+        public static string StatusSummary {
+            get {
+                return ResourceManager.GetString("StatusSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Steady.
         /// </summary>
         public static string Steady {
@@ -4361,6 +4613,15 @@ namespace GreatechApp.Core.Resources {
         public static string TopInspection {
             get {
                 return ResourceManager.GetString("TopInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Vision.
+        /// </summary>
+        public static string TopVision {
+            get {
+                return ResourceManager.GetString("TopVision", resourceCulture);
             }
         }
         
@@ -4743,6 +5004,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Classification.
+        /// </summary>
+        public static string VisClassification {
+            get {
+                return ResourceManager.GetString("VisClassification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vision.
         /// </summary>
         public static string Vision {
@@ -4770,6 +5040,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1.
+        /// </summary>
+        public static string VisionPcs {
+            get {
+                return ResourceManager.GetString("VisionPcs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warning.
         /// </summary>
         public static string Warning {
@@ -4784,6 +5063,33 @@ namespace GreatechApp.Core.Resources {
         public static string WarningOccurence {
             get {
                 return ResourceManager.GetString("WarningOccurence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.
+        /// </summary>
+        public static string WeighingPcs {
+            get {
+                return ResourceManager.GetString("WeighingPcs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WeighingScale.
+        /// </summary>
+        public static string WeighingScale {
+            get {
+                return ResourceManager.GetString("WeighingScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 315-320.
+        /// </summary>
+        public static string WeightRange {
+            get {
+                return ResourceManager.GetString("WeightRange", resourceCulture);
             }
         }
         

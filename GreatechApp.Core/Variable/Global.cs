@@ -44,13 +44,17 @@ namespace GreatechApp.Core.Variable
 
         //InsightVision
         public static string VisionConnStatus;
+        public static string VisClassification;
         public static bool VisConnection;
         public static float VisProductQuantity;
         public static float VisProductCrtOrientation;
         public static float VisProductWrgOrientation;
         public static string VisOverallResult;
         public static string VisInspectResult = resultstatus.PendingResult.ToString();
-        public static bool EndTrigger = false; 
+        public static bool EndTrigger = false;
+
+        //Weighing Scale
+        public static string WeighingResult;
 
         //Code Reader Result
         public static string CurrentContainerNum;

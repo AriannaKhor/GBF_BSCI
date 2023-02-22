@@ -1715,4 +1715,106 @@ Red    : Machine Down</value>
   <data name="MESConnectionError" xml:space="preserve">
     <value>MES Connection Error</value>
   </data>
+  <data name="CheckEmpty" xml:space="preserve">
+    <value>Check Empty</value>
+  </data>
+  <data name="Classification" xml:space="preserve">
+    <value>Classification</value>
+  </data>
+  <data name="ClassificationOutput" xml:space="preserve">
+    <value>Classification Output</value>
+  </data>
+  <data name="ColorPouch" xml:space="preserve">
+    <value>3) Color Pouch</value>
+  </data>
+  <data name="DeviceStatus" xml:space="preserve">
+    <value>Device Status</value>
+  </data>
+  <data name="DFU" xml:space="preserve">
+    <value>5) DFU</value>
+  </data>
+  <data name="ExpectingResult" xml:space="preserve">
+    <value>Expecting:</value>
+  </data>
+  <data name="InitialSlipSheet" xml:space="preserve">
+    <value>1) Initial Slip Sheet</value>
+  </data>
+  <data name="InvertColorPouch" xml:space="preserve">
+    <value>4) Invert Color Pouch</value>
+  </data>
+  <data name="LightIntensity" xml:space="preserve">
+    <value>Light Intensity</value>
+  </data>
+  <data name="LiveView" xml:space="preserve">
+    <value>Live View:</value>
+  </data>
+  <data name="PouchColor" xml:space="preserve">
+    <value>Pouch Color</value>
+  </data>
+  <data name="PreviousView" xml:space="preserve">
+    <value>Previous View:</value>
+  </data>
+  <data name="ReversePouch" xml:space="preserve">
+    <value>2) Reverse Pouch</value>
+  </data>
+  <data name="StatusClassification" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="StatusSummary" xml:space="preserve">
+    <value>Status Summary</value>
+  </data>
+  <data name="TopVision" xml:space="preserve">
+    <value>Top Vision</value>
+  </data>
+  <data name="VisClassification" xml:space="preserve">
+    <value>Classification</value>
+  </data>
+  <data name="WeighingScale" xml:space="preserve">
+    <value>WeighingScale</value>
+  </data>
+  <data name="ActualWeight" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="OverallStatus" xml:space="preserve">
+    <value>Pass</value>
+  </data>
+  <data name="StatusCheckEmpty" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="StatusColorPouch" xml:space="preserve">
+    <value>Absent</value>
+  </data>
+  <data name="StatusDFU" xml:space="preserve">
+    <value>Absent</value>
+  </data>
+  <data name="StatusFinalSlipSheet" xml:space="preserve">
+    <value>Absent</value>
+  </data>
+  <data name="StatusInitialSlipSheet" xml:space="preserve">
+    <value>Absent</value>
+  </data>
+  <data name="StatusInvertColorPouch" xml:space="preserve">
+    <value>Absent</value>
+  </data>
+  <data name="StatusLightIntensity" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="StatusPouchColor" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="StatusReversePouch" xml:space="preserve">
+    <value>Absent</value>
+  </data>
+  <data name="VisionPcs" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="WeighingPcs" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="WeightRange" xml:space="preserve">
+    <value>315-320</value>
+  </data>
 </root>
