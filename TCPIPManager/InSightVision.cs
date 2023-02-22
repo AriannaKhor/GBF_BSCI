@@ -54,6 +54,7 @@ namespace TCPIPManager
         #endregion
 
         #region Method
+        #region Connect Vision
         public void ConnectVision()
         {
             try
@@ -126,7 +127,14 @@ namespace TCPIPManager
                 m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception5 Vision connection state:" + " " + m_InsightV1.State.ToString() });
             }
         }
-
+        #endregion
+        public void EditCell(string colorRcp)
+        {
+            // Define which cell you want to modify
+            CvsCellLocation cell = new CvsCellLocation(0,'B');
+            //Modify the cell with the specific value
+            m_InsightV1.SetExpression(cell,colorRcp,true);
+        }
         public void VisConnectionStatus(bool visConnection, bool canConnect, bool canDisconnect, string status)
         {
             Global.VisionConnStatus = status;
@@ -312,9 +320,15 @@ namespace TCPIPManager
                     VisConnectionStatus(true, false, true, "Connected");
                     break;
                 case CvsInSightState.NotConnected:
+
+#if !SIMULATION
                     VisConnectionStatus(false, true, false, "Disconnected");
                     ConnectVision();
                     break;
+#else
+                    VisConnectionStatus(true, false, true, "Connected");
+                    break;
+#endif  
             }
             m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Vision connection state:" + " " + m_InsightV1.State.ToString() });
         }

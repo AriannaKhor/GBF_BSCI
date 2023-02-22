@@ -326,7 +326,7 @@ namespace UIModule.MainPanel
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
 
             //m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
-            m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
+           // m_EventAggregator.GetEvent<RequestCodeReaderConnectionEvent>().Publish();
             CodeReaderConnStatus = Global.CodeReaderConnStatus;
         }
 

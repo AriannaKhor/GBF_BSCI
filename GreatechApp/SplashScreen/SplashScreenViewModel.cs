@@ -87,7 +87,7 @@ namespace GreatechApp.SplashScreen
             UpdateStatus("Vision", 50);
             Vision = m_container.Resolve<IInsightVision>();
 #if !SIMULATION
-            if (Vision.VisConnectionStatus())
+            if (!Vision.VisConnectionStatus())
             {
                 Vision.ConnectVision();
             }
@@ -100,7 +100,7 @@ namespace GreatechApp.SplashScreen
             }
 #endif
 
-#endregion
+            #endregion
 
             #region Serial Port
             UpdateStatus("Serial Port", 60);

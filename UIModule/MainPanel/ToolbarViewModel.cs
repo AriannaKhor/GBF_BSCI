@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using TCPIPManager;
 
 namespace UIModule.MainPanel
 {
@@ -238,11 +239,12 @@ namespace UIModule.MainPanel
         public event Action<string> EStopWindEvent;
 
         private readonly IDialogService m_DialogService;
+        private readonly IInsightVision m_insightVision;
 
-        public ToolbarViewModel(IDialogService dialogService)
+        public ToolbarViewModel(IDialogService dialogService, IInsightVision insightVision)
         {
             m_DialogService = dialogService;
-
+            m_insightVision = insightVision;
             OperationCommand = new DelegateCommand<string>(OperationMethod);
             NavigateCommand = new DelegateCommand<string>(Navigate); //For Lot Entry 
             LoginDialogCommand = new DelegateCommand(RaiseLoginPopup);

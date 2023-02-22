@@ -11,5 +11,6 @@ namespace TCPIPManager
         void TriggerVisCapture();
         bool VisConnectionStatus();
         void ConnectVision();
+        void EditCell(string colorRcp);
     }
 }
