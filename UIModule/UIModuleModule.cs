@@ -47,8 +47,6 @@ namespace UIModule
             containerRegistry.RegisterForNavigation<TowerLightView>();
             containerRegistry.RegisterForNavigation<IOView>();
             containerRegistry.RegisterForNavigation<TCPIPView>();
-            containerRegistry.RegisterForNavigation<SerialPortsView>();
-
 
             //Dialog Views
             containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
