@@ -35,11 +35,11 @@
 
         public bool TimeOut()
         {
-            if (Global.SeqStop && Global.AutoMode && Global.MachineStatus != Core.Enums.MachineStateType.Recovery)
-            {
-                m_StartTime = Mili_Time;
-                return false;
-            }
+            //if (Global.SeqStop && Global.AutoMode && Global.MachineStatus != Core.Enums.MachineStateType.Recovery)
+            //{
+            //    m_StartTime = Mili_Time;
+            //    return false;
+            //}
             // Timeout will not occur if machine is not running. (Prevents error timeout when process not running)
             return CalculateRunTime();
         }

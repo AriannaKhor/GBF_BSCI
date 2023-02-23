@@ -126,7 +126,6 @@ namespace GreatechApp
             containerRegistry.RegisterSingleton(typeof(BaseIO));
             containerRegistry.RegisterSingleton(typeof(TCPIPBase));
             containerRegistry.RegisterSingleton(typeof(InSightVision));
-            containerRegistry.RegisterSingleton(typeof(CodeReader));
             containerRegistry.RegisterSingleton(typeof(SerialPortBase));
             containerRegistry.RegisterSingleton(typeof(ErrorOperation));
             containerRegistry.RegisterSingleton(typeof(DelegateSeq));
@@ -139,7 +138,6 @@ namespace GreatechApp
 
             containerRegistry.Register<ITCPIP, TCPIPBase>();
             containerRegistry.Register<IInsightVision, InSightVision>();
-            containerRegistry.Register<ICodeReader, CodeReader>();
             containerRegistry.Register<ISerialPort, SerialPortBase>();
             containerRegistry.Register<IError, ErrorOperation>();
             containerRegistry.Register<ISQLOperation, SQLOperation>();

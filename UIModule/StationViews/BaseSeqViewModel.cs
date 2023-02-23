@@ -511,7 +511,7 @@ namespace UIModule.StationViews
             get
             {
                 if (m_AuthService.CurrentUser.IsAuthenticated && m_AuthService.CheckAccess(ACL.IO)
-                    && Global.MachineStatus != MachineStateType.Running && Global.MachineStatus != MachineStateType.Stopped && Global.MachineStatus != MachineStateType.Initializing)
+                    && Global.MachineStatus != MachineStateType.Running)
                 {
                     return true;
                 }

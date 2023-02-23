@@ -76,11 +76,6 @@ namespace UIModule.RecipeViews
 
                 tabControlRegion.Add(m_ContainerProvider.Resolve<ProductRecipeView>());
             }
-
-            if (Global.InitDone && (Global.MachineStatus == MachineStateType.Lot_Ended || Global.MachineStatus == MachineStateType.Ready || Global.MachineStatus == MachineStateType.Init_Done))
-            {
-                m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.ReInit);
-            }
         }
         #endregion
 

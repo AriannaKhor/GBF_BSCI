@@ -121,39 +121,11 @@ namespace UIModule.MainPanel
                             ShowInitState = Visibility.Collapsed;
                             IsLotEntryExpand = false;
                             break;
-
-                        case MachineStateType.Ready:
-                            IsLotEntryExpand = false;
-                            break;
-
-                        case MachineStateType.Stopped:
-                            IsLotEntryExpand = true;
-                            break;
-
-                        case MachineStateType.Warning:
-                            break;
-
                         case MachineStateType.Error:
-                            break;
-
-                        case MachineStateType.Ending_Lot:
-                            IsLotEntryExpand = false;
-                            break;
-
-                        case MachineStateType.Lot_Ended:
-                            // Update Lot Data
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                m_SQLOperation.UpdateLotData(Global.LotInitialBatchNo, DateTime.Now, Global.TotalInput, Global.TotalOutput);
-                            });
-                            IsLotEntryExpand = true;
                             break;
 
                         case MachineStateType.Idle:
                             IsLotEntryExpand = true;
-                            break;
-
-                        case MachineStateType.CriticalAlarm:
                             break;
                     }
                 }

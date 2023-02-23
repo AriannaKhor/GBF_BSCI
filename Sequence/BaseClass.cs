@@ -107,8 +107,6 @@ namespace Sequence
 
         public IInsightVision InsightVision;
 
-        public ICodeReader CodeReader;
-
         public IShowDialog ShowDialog;
 
 #if MOXA
@@ -158,7 +156,6 @@ namespace Sequence
         [StructLayout(LayoutKind.Sequential)]
         protected struct BaseFlag
         {
-            internal bool Bypass;
             internal bool StartLot;
             internal bool BeginSeq;
             internal bool BeginInit;
@@ -340,11 +337,6 @@ namespace Sequence
         #endregion
 
         #region Properties
-        public virtual void OnBypassStation(bool state)
-        {
-            m_SeqFlag.Bypass = state;
-        }
-
         public virtual void OperationChecking(bool checkopr)
         {
 
@@ -424,10 +416,6 @@ namespace Sequence
 
                 case MachineOperationType.ProcReady:
                     m_SeqFlag.ProcReady = true;
-                    break;
-
-                case MachineOperationType.ProcCodeReaderCont:
-                    m_SeqFlag.ProcCodeReaderCont = true;
                     break;
 
                 case MachineOperationType.ProcVisCont:

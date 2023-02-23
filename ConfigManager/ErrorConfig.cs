@@ -12,9 +12,6 @@ namespace ConfigManager
     {
         private static readonly string SectionName = "Err_Lib";
 
-        //Queue m_IOAdd = new Queue();
-        //Queue m_MtrAxis = new Queue();
-
         public ErrorConfig()
         {
         }
@@ -124,12 +121,6 @@ namespace ConfigManager
             set { this["ErrTable"] = value; }
             get { return (ErrTblCollection)this["ErrTable"]; }
         }
-
-        //public bool RetestValue
-        //{
-        //    set;
-        //    get;
-        //}
     }
 
     [ConfigurationCollection(typeof(Alarm), AddItemName = "Alarm")]

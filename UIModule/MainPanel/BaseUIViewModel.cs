@@ -22,7 +22,6 @@ namespace UIModule.MainPanel
         public ISQLOperation m_SQLOperation;
         public ITCPIP m_TCPIP;
         public IInsightVision m_InsightVision;
-        public ICodeReader m_CodeReader;
         public IShowDialog m_ShowDialog;
         public IBaseIO m_IO;
         public IUser m_CurrentUser;
@@ -40,7 +39,6 @@ namespace UIModule.MainPanel
             m_DelegateSeq = (IDelegateSeq)ContainerLocator.Container.Resolve(typeof(IDelegateSeq));
             m_TCPIP = (ITCPIP)ContainerLocator.Container.Resolve(typeof(ITCPIP));
             m_InsightVision = (IInsightVision)ContainerLocator.Container.Resolve(typeof(IInsightVision));
-            m_CodeReader = (ICodeReader)ContainerLocator.Container.Resolve(typeof(ICodeReader));
             m_IO = (IBaseIO)ContainerLocator.Container.Resolve(typeof(IBaseIO));
             m_ShowDialog = (IShowDialog)ContainerLocator.Container.Resolve(typeof(IShowDialog));
             m_CurrentUser = (DefaultUser)ContainerLocator.Container.Resolve(typeof(DefaultUser));

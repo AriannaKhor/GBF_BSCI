@@ -26,7 +26,6 @@ namespace GreatechApp.CompactView
         IShowDialog ShowDialog;
         ITCPIP TCPIP;
         IInsightVision InsightVision;
-        ICodeReader CodeReader;
         IBaseIO IO;
         SystemConfig SysConfig;
         CultureResources m_CultureResources;
@@ -36,7 +35,6 @@ namespace GreatechApp.CompactView
             ShowDialog = container.Resolve<IShowDialog>();
             TCPIP = container.Resolve<ITCPIP>();
             InsightVision = container.Resolve<IInsightVision>();
-            CodeReader = container.Resolve<ICodeReader>();
             IO = container.Resolve<IBaseIO>();
             SysConfig = container.Resolve<SystemConfig>();
             m_CultureResources = cultureResources;
@@ -55,8 +53,7 @@ namespace GreatechApp.CompactView
 
             if (dialogResult == ButtonResult.Yes)
             {
-                if (Global.MachineStatus == MachineStateType.Idle || Global.MachineStatus == MachineStateType.Lot_Ended || Global.MachineStatus == MachineStateType.Ready
-                    || Global.MachineStatus == MachineStateType.Init_Done || Global.MachineStatus == MachineStateType.ReInit || Global.MachineStatus == MachineStateType.CriticalAlarm || Global.MachineStatus == MachineStateType.InitFail)
+                if (Global.MachineStatus == MachineStateType.Idle)
                 {
                     AppClosingTask();
 

@@ -284,7 +284,7 @@ namespace DialogManager.ErrorMsg
             else if (Command == "EndLot")
             {
                 m_EventAggregator.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.EndLotComp });
-                m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
+               // m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = "Endlot" + Global.CurrentBatchNum });
                 m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                 ResetCounter();
             }
@@ -295,7 +295,7 @@ namespace DialogManager.ErrorMsg
         {
             if (Global.CurrentLotBatchNum == null || Global.CurrentLotBatchNum == String.Empty)
             {
-                Global.CurrentLotBatchNum = Global.CurrentBatchNum;
+               // Global.CurrentLotBatchNum = Global.CurrentBatchNum;
             }
 
             if (Global.OverallResult == "OK")
@@ -313,10 +313,6 @@ namespace DialogManager.ErrorMsg
             m_resultsDatalog.Date = currentTime.ToString("d", dateFormat);
             m_resultsDatalog.Time = currentTime.ToString("HH:mm:ss.fff", DateTimeFormatInfo.InvariantInfo);
             m_resultsDatalog.Timestamp = m_resultsDatalog.Date + " | " + m_resultsDatalog.Time;
-            m_resultsDatalog.CodeReader = inspectiontype.CodeReader.ToString();
-            m_resultsDatalog.DecodeBatchQuantity = Global.CurrentBatchQuantity;
-            m_resultsDatalog.DecodeBoxQuantity = Global.CurrentBoxQuantity;
-            m_resultsDatalog.DecodeAccuQuantity = Global.AccumulateCurrentBatchQuantity;
             m_resultsDatalog.OverallResult = Global.OverallResult;
             m_resultsDatalog.TopVision = inspectiontype.TopVision.ToString();
             m_resultsDatalog.VisTotalPrdQty = Global.VisProductQuantity;
@@ -330,16 +326,16 @@ namespace DialogManager.ErrorMsg
         private void ResetCounter()
         {
             #region Code Reader
-            Global.CurrentContainerNum = String.Empty;
-            Global.CurrentBatchQuantity = 0;
-            Global.AccumulateCurrentBatchQuantity = 0;
-            Global.CurrentBoxQuantity = 0;
-            Global.CurrentBatchNum = String.Empty;
+            //Global.CurrentContainerNum = String.Empty;
+            //Global.CurrentBatchQuantity = 0;
+            //Global.AccumulateCurrentBatchQuantity = 0;
+            //Global.CurrentBoxQuantity = 0;
+            //Global.CurrentBatchNum = String.Empty;
             Global.CurrentLotBatchNum = String.Empty;
             Global.LotInitialBatchNo = String.Empty;
             Global.LotInitialTotalBatchQuantity = 0;
-            Global.CurrentBoxCount = 0;
-            Global.CodeReaderResult = resultstatus.PendingResult.ToString();
+            //Global.CurrentBoxCount = 0;
+            //Global.CodeReaderResult = resultstatus.PendingResult.ToString();
             #endregion
 
             #region Top Vision
@@ -348,7 +344,6 @@ namespace DialogManager.ErrorMsg
             Global.VisProductWrgOrientation = 0f;
             Global.VisInspectResult = resultstatus.PendingResult.ToString();
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
-            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             #endregion
 
             #region Error
@@ -413,17 +408,6 @@ namespace DialogManager.ErrorMsg
             else
             {
                 SkipRetestVis = Visibility.Collapsed;
-            }
-
-            if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing)
-            {
-                YesSituation = Visibility.Visible;
-                NoSituation = Visibility.Collapsed;
-            }
-            else
-            {
-                YesSituation = Visibility.Collapsed;
-                NoSituation = Visibility.Visible;
             }
         }
         #endregion

@@ -38,7 +38,6 @@ namespace GreatechApp.Core.Modal
         public string UserId { get; set; }
         public string UserLvl { get; set; }
         public string TopVision { get; set; }
-        public string CodeReader { get; set; }
         public float VisTotalPrdQty { get; set; }
         public float VisCorrectOrient { get; set; }
         public float VisWrongOrient { get; set; }
@@ -48,7 +47,6 @@ namespace GreatechApp.Core.Modal
         public string OverallResult { get; set; }
         public string ErrorMessage { get; set; }
         public string VisErrorMessage { get; set; }
-        public string CodeReaderErrorMessage { get; set; }
         public string Remarks { get; set; }
         public string ForceEndLotRemarks { get; set; }
         public string ApprovedBy { get; set; }
@@ -64,7 +62,7 @@ namespace GreatechApp.Core.Modal
             VisCorrectOrient = 0;
             VisWrongOrient = 0;
 
-            CodeReader = string.Empty;
+            //CodeReader = string.Empty;
             DecodeBatchQuantity = 0;
             DecodeBoxQuantity = 0;
             DecodeAccuQuantity = 0;
@@ -86,7 +84,7 @@ namespace GreatechApp.Core.Modal
                 Map(m => m.VisTotalPrdQty).Name("Total Quantity");
                 Map(m => m.VisCorrectOrient).Name("Correct Orientation");
                 Map(m => m.VisWrongOrient).Name("Wrong Orientation");
-                Map(m => m.CodeReader).Name("Inspection Type");
+                //Map(m => m.CodeReader).Name("Inspection Type");
                 Map(m => m.DecodeBatchQuantity).Name("Decoded Batch Quantity");
                 Map(m => m.DecodeBoxQuantity).Name("Decoded Box Quantity");
                 Map(m => m.DecodeAccuQuantity).Name("Accumulated Batch Quantity");

@@ -178,7 +178,6 @@
   <ItemGroup>
     <Compile Include="BaseSocket.cs" />
     <Compile Include="ClientSocket.cs" />
-    <Compile Include="CodeReader.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Enums\Output.cs" />
     <Compile Include="EventArgs\ConnectionStateChangedEventArgs.cs" />
@@ -191,7 +190,6 @@
     <Compile Include="EventHandler\MessageReceivedEventHandler.cs" />
     <Compile Include="EventHandler\MessageSentEventHandler.cs" />
     <Compile Include="EventHandler\ServerAcceptedEventHandler.cs" />
-    <Compile Include="ICodeReader.cs" />
     <Compile Include="IInsightVision.cs" />
     <Compile Include="Infrastructure\Metadata.cs" />
     <Compile Include="Infrastructure\SupportMethod.cs" />

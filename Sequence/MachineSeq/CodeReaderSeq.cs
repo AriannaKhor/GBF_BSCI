@@ -60,7 +60,7 @@ namespace Sequence.MachineSeq
                             break;
 
                         case SN.TriggerCodeReader:
-                            CodeReader.TriggerCodeReader();
+                            //CodeReader.TriggerCodeReader();
                             m_SeqNum = SN.EOS;
                             break;
                             #endregion

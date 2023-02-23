@@ -198,10 +198,6 @@
     <Compile Include="Message\MessageView.xaml.cs">
       <DependentUpon>MessageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WarningMsg\WarningMessageView.xaml.cs">
-      <DependentUpon>WarningMessageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WarningMsg\WarningMessageViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -231,10 +227,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Message\MessageView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WarningMsg\WarningMessageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,6 +264,9 @@
       <Project>{f9180ee7-9889-4e7e-8edb-052a2777fc37}</Project>
       <Name>IOManager</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WarningMsg\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

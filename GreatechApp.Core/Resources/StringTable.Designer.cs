@@ -428,16 +428,7 @@ namespace GreatechApp.Core.Resources {
                 return ResourceManager.GetString("BuzzerInt", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bypass Station.
-        /// </summary>
-        public static string BypassStation {
-            get {
-                return ResourceManager.GetString("BypassStation", resourceCulture);
-            }
-        }
-        
+       
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>

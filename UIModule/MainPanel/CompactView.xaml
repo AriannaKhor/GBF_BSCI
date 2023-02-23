@@ -259,7 +259,6 @@
                             </Label>
                         </Grid>
                     </Expander.Header>
-                    <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.BypassRegion}"/>
                 </Expander>
 
                 <Grid Grid.Column="1" Margin="0,0,0.4,0.4">

@@ -20,7 +20,6 @@ namespace UIModule.MainPanel
     public class ToolbarViewModel : BaseUIViewModel
     {
         private Thread EStopWinThread;
-        private EStopView eStopView;
 
         public const string GrayIcon = "/GreatechApp.Core;component/Icon/GrayIcon.png";
         public const string GreenIcon = "/GreatechApp.Core;component/Icon/GreenIcon.png";
@@ -355,13 +354,6 @@ namespace UIModule.MainPanel
         {
             switch (state)
             {
-                //case MachineStateType.Ready:
-                //    Global.MachineStatus = MachineStateType.Ready;
-                //    ReadyMode();
-                //    EquipStateIcon = GreenIcon;
-                //    EquipStatus = "Ready";
-                //    break;
-
                 case MachineStateType.Running:
                     OnBoxChecking();
                     EquipStateIcon = GreenIcon;
@@ -373,27 +365,12 @@ namespace UIModule.MainPanel
                     Global.MachineStatus = MachineStateType.Running;
                     break;
 
-                //case MachineStateType.Stopped:
-                //    Global.MachineStatus = MachineStateType.Stopped;
-                //    StopMode();
-                //    EquipStateIcon = RedIcon;
-                //    EquipStatus = "Stopped";
-                //    break;
-
                 case MachineStateType.Error:
                     Global.MachineStatus = MachineStateType.Error;
                     ErrorMode();
                     EquipStateIcon = RedIcon;
                     EquipStatus = "Error";
                     break;
-
-                //case MachineStateType.Lot_Ended:
-                //    Global.MachineStatus = MachineStateType.Lot_Ended;
-                //    IsEndingLot = false;
-                //    IdleMode();
-                //    EquipStateIcon = GrayIcon;
-                //    EquipStatus = "LotEnded";
-                //    break;
 
                 case MachineStateType.Idle:
                     Global.MachineStatus = MachineStateType.Idle;
@@ -443,8 +420,6 @@ namespace UIModule.MainPanel
 
         private void SetupEStopWindow()
         {
-            eStopView = new EStopView();
-            eStopView.Show();
             Dispatcher.Run();
         }
 
@@ -528,18 +503,7 @@ namespace UIModule.MainPanel
                 UserLvl = " ";
                 IsLogin = Visibility.Visible;
                 IsLogout = Visibility.Collapsed;
-                if (EStopWinThread != null)
-                {
-                    if (EStopWinThread.IsAlive)
-                    {
-                        Dispatcher.FromThread(EStopWinThread).Invoke(() =>
-                        {
-                            eStopView.Close();
-                        });
-                    }
-
-                    EStopWinThread.Abort();
-                }
+            
                 m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("LoggedOut")}." });
                 m_AuthService.CurrentUser.IsAuthenticated = false;
                 m_EventAggregator.GetEvent<ValidateLogin>().Publish(false);

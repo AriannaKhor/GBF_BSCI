@@ -26,7 +26,6 @@ namespace TCPIPManager
         #region Variable
         private string m_topvisIp;
         private string m_Title = "Top Vision";
-        private bool m_EnableCodeReader;
         private bool allowVisResultchg = false;
         public SystemConfig m_SystemConfig;
         public ProductQtyConfig productQtyConfig;

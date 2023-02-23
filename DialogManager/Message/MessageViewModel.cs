@@ -148,11 +148,6 @@ namespace DialogManager.Message
                 case DialogIcon.Stop:
                     Image = new BitmapImage(new System.Uri("/GreatechApp.Core;component/Icon/stopsign.png", uriKind: UriKind.RelativeOrAbsolute));
                     break;
-
-                case DialogIcon.Warning:
-                    Image = new BitmapImage(new System.Uri("/GreatechApp.Core;component/Icon/warning.png", uriKind: UriKind.RelativeOrAbsolute));
-                    break;
-
             }
         }
         #endregion
