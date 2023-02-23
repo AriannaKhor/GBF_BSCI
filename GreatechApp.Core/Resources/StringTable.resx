@@ -1778,6 +1778,12 @@ Red    : Machine Down</value>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="MES" xml:space="preserve">
+    <value>MES</value>
+  </data>
+  <data name="MESConnection" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
   <data name="OverallStatus" xml:space="preserve">
     <value>Pass</value>
   </data>
