@@ -32,6 +32,7 @@ namespace TCPIPManager
         public ProductQtyConfig productQtyConfig;
         private CvsInSight m_InsightV1 = new CvsInSight();
         private readonly IEventAggregator m_Events;
+        private readonly IContainerProvider m_container;
         private float m_MaxQuantity;
         public ObservableCollection<ProductQuantityParameter> ProductQuantityLimit;
 
@@ -43,14 +44,36 @@ namespace TCPIPManager
         public InSightVision(IEventAggregator eventAggregator)
         {
             m_Events = eventAggregator;
-
             m_SystemConfig = (SystemConfig)ContainerLocator.Container.Resolve(typeof(SystemConfig));
-#if !SIMULATION
-            //m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(ConnectVision);
-#endif
             m_InsightV1.ResultsChanged += new System.EventHandler(InsightV1_ResultsChanged);
             m_InsightV1.StateChanged += new Cognex.InSight.CvsStateChangedEventHandler(InsightV1_StateChanged);
+            OnRequestVisConnEvent();
+            //m_Events.GetEvent<RequestVisionConnectionEvent>().Subscribe(OnRequestVisConnEvent);
         }
+
+        private void OnRequestVisConnEvent()
+        {
+            switch (m_InsightV1.State)
+            {
+                case CvsInSightState.Offline:
+                    VisConnectionStatus(true, false, true, "Connected Successfully in Offline mode...");
+                    break;
+                case CvsInSightState.Online:
+                    VisConnectionStatus(true, false, true, "Connected");
+                    break;
+                case CvsInSightState.NotConnected:
+
+#if !SIMULATION
+                    VisConnectionStatus(false, true, false, "Disconnected");
+                    ConnectVision();
+                    break;
+#else
+                    VisConnectionStatus(true, false, true, "Connected");
+                    break;
+#endif  
+            }
+        }
+
         #endregion
 
         #region Method
@@ -66,18 +89,7 @@ namespace TCPIPManager
                     m_InsightV1.Connect(devices.IPAddress, "admin", "", true, false);
                     m_InsightV1.SoftOnline = true;
                 }
-                switch (m_InsightV1.State)
-                {
-                    case CvsInSightState.Offline:
-                        VisConnectionStatus(true, false, true, "Connected Successfully in Offline mode...");
-                        break;
-                    case CvsInSightState.Online:
-                        VisConnectionStatus(true, false, true, "Connected");
-                        break;
-                    case CvsInSightState.NotConnected:
-                        VisConnectionStatus(false, true, false, "Disconnected");
-                        break;
-                }
+                //OnRequestVisConnEvent();
             }
             catch (CvsInSightLockedException ex)
             {
@@ -214,31 +226,6 @@ namespace TCPIPManager
                 MachineBase.ShowMessage(ex);
             }
         }
-
-        public static Bitmap ResizeImage(Image image, int width, int height)
-        {
-            var destRect = new Rectangle(0, 0, width, height);
-            var destImage = new Bitmap(width, height);
-
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            using (var graphics = Graphics.FromImage(destImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                using (var wrapMode = new ImageAttributes())
-                {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
-                }
-            }
-
-            return destImage;
-        }
         #endregion
 
         #region Event
@@ -246,8 +233,7 @@ namespace TCPIPManager
         {
             try
             {
-                GetProductQuantityConfig();
-
+#if !SIMULATION
                 if (allowVisResultchg)
                 {
                     allowVisResultchg = false;
@@ -255,83 +241,102 @@ namespace TCPIPManager
                     CvsCell cellResult2 = m_InsightV1.Results.Cells["D21"];
                     CvsCell cellResult3 = m_InsightV1.Results.Cells["D22"];
                     CvsCell cellResult4 = m_InsightV1.Results.Cells["I23"];
+                    CvsCell cellResult5 = m_InsightV1.Results.Cells["I23"];
 
                     if (!string.IsNullOrEmpty(cellResult1.Text) && cellResult1.Text.ToUpper() != "NULL" && cellResult1.Text.ToUpper() != "ERR" &&
                                 !string.IsNullOrEmpty(cellResult2.Text) && cellResult2.Text.ToUpper() != "NULL" && cellResult2.Text.ToUpper() != "ERR" &&
                                 !string.IsNullOrEmpty(cellResult3.Text) && cellResult3.Text.ToUpper() != "NULL" && cellResult3.Text.ToUpper() != "ERR" &&
-                                !string.IsNullOrEmpty(cellResult4.Text) && cellResult4.Text.ToUpper() != "NULL" && cellResult4.Text.ToUpper() != "ERR")
+                                !string.IsNullOrEmpty(cellResult4.Text) && cellResult4.Text.ToUpper() != "NULL" && cellResult4.Text.ToUpper() != "ERR" &&
+                                !string.IsNullOrEmpty(cellResult5.Text) && cellResult4.Text.ToUpper() != "NULL" && cellResult5.Text.ToUpper() != "ERR")
                     {
-                        Global.VisProductQuantity = float.Parse(cellResult1.Text);
-                        Global.VisProductCrtOrientation = float.Parse(cellResult2.Text);
-                        Global.VisProductWrgOrientation = float.Parse(cellResult3.Text);
-                        Global.VisOverallResult = cellResult4.Text;
-
-                        if (Global.VisOverallResult == "OK")
-                        {
-                            if (Global.VisProductQuantity == 0 && Global.VisProductCrtOrientation == 0 && Global.VisProductCrtOrientation == 0)
-                            {
-                                Global.VisInspectResult = resultstatus.NoBoxDetected.ToString();
-                                if (!Global.EndTrigger)
-                                {
-                                     m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "ReTriggerVis" });
-                                }
-                                else
-                                {
-                                    Global.EndTrigger = false;
-                                }
-                            }
-                            else if (Global.VisProductQuantity > m_MaxQuantity)
-                            {
-                                Global.VisInspectResult = resultstatus.NG.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisFail, FailType = "ExceedUpperLimit" });
-                            }
-                            else
-                            {
-                                Global.VisInspectResult = resultstatus.OK.ToString();
-                                m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "TriggerCodeReader" });
-                            }
-                        }
-                        else
-                        {
-                            Global.VisInspectResult = resultstatus.NG.ToString();
-                            m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisFail, FailType = "WrongOrientation" });
-                        }
+                        Global.VisSlipSheet = cellResult1.Text;
+                        Global.VisReversePouch = cellResult2.Text;
+                        Global.VisColorPouch = cellResult3.Text;
+                        Global.VisInvertColorPouch = cellResult4.Text;
+                        Global.VisDFU = cellResult5.Text;
                     }
-                    VisionImg();
-                    m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
-                    m_Events.GetEvent<BoxChecking>().Publish();
+#else
+                
+#endif
                 }
             }
             catch (Exception ex)
             {
-                MachineBase.ShowMessage(ex);
-                m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception during Insight-ResultChanged Vision connection state:" + " " + m_InsightV1.State.ToString() });
+
             }
         }
+        //private void InsightV1_ResultsChanged(object sender, System.EventArgs e)
+        //{
+        //    try
+        //    {
+        //        GetProductQuantityConfig();
+
+        //        if (allowVisResultchg)
+        //        {
+        //            allowVisResultchg = false;
+        //            CvsCell cellResult1 = m_InsightV1.Results.Cells["D20"];
+        //            CvsCell cellResult2 = m_InsightV1.Results.Cells["D21"];
+        //            CvsCell cellResult3 = m_InsightV1.Results.Cells["D22"];
+        //            CvsCell cellResult4 = m_InsightV1.Results.Cells["I23"];
+
+        //            if (!string.IsNullOrEmpty(cellResult1.Text) && cellResult1.Text.ToUpper() != "NULL" && cellResult1.Text.ToUpper() != "ERR" &&
+        //                        !string.IsNullOrEmpty(cellResult2.Text) && cellResult2.Text.ToUpper() != "NULL" && cellResult2.Text.ToUpper() != "ERR" &&
+        //                        !string.IsNullOrEmpty(cellResult3.Text) && cellResult3.Text.ToUpper() != "NULL" && cellResult3.Text.ToUpper() != "ERR" &&
+        //                        !string.IsNullOrEmpty(cellResult4.Text) && cellResult4.Text.ToUpper() != "NULL" && cellResult4.Text.ToUpper() != "ERR")
+        //            {
+        //                Global.VisProductQuantity = float.Parse(cellResult1.Text);
+        //                Global.VisProductCrtOrientation = float.Parse(cellResult2.Text);
+        //                Global.VisProductWrgOrientation = float.Parse(cellResult3.Text);
+        //                Global.VisOverallResult = cellResult4.Text;
+
+        //                if (Global.VisOverallResult == "OK")
+        //                {
+        //                    if (Global.VisProductQuantity == 0 && Global.VisProductCrtOrientation == 0 && Global.VisProductCrtOrientation == 0)
+        //                    {
+        //                        Global.VisInspectResult = resultstatus.NoBoxDetected.ToString();
+        //                        if (!Global.EndTrigger)
+        //                        {
+        //                             m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "ReTriggerVis" });
+        //                        }
+        //                        else
+        //                        {
+        //                            Global.EndTrigger = false;
+        //                        }
+        //                    }
+        //                    else if (Global.VisProductQuantity > m_MaxQuantity)
+        //                    {
+        //                        Global.VisInspectResult = resultstatus.NG.ToString();
+        //                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisFail, FailType = "ExceedUpperLimit" });
+        //                    }
+        //                    else
+        //                    {
+        //                        Global.VisInspectResult = resultstatus.OK.ToString();
+        //                        m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisCont, ContType = "TriggerCodeReader" });
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    Global.VisInspectResult = resultstatus.NG.ToString();
+        //                    m_Events.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CountingScaleSeq, MachineOpr = MachineOperationType.ProcVisFail, FailType = "WrongOrientation" });
+        //                }
+        //            }
+        //            VisionImg();
+        //            m_Events.GetEvent<TopVisionResultEvent>().Publish(); //Publish Vision Result
+        //            m_Events.GetEvent<BoxChecking>().Publish();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MachineBase.ShowMessage(ex);
+        //        m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Exception during Insight-ResultChanged Vision connection state:" + " " + m_InsightV1.State.ToString() });
+        //    }
+        //}
 
         private void InsightV1_StateChanged(object sender, CvsStateChangedEventArgs e)
         {
-            switch (m_InsightV1.State)
-            {
-                case CvsInSightState.Offline:
-                    VisConnectionStatus(true, false, true, "Connected Successfully in Offline mode...");
-                    break;
-                case CvsInSightState.Online:
-                    VisConnectionStatus(true, false, true, "Connected");
-                    break;
-                case CvsInSightState.NotConnected:
-
-#if !SIMULATION
-                    VisConnectionStatus(false, true, false, "Disconnected");
-                    ConnectVision();
-                    break;
-#else
-                    VisConnectionStatus(true, false, true, "Connected");
-                    break;
-#endif  
-            }
+            OnRequestVisConnEvent();
             m_Events.GetEvent<DatalogEntity>().Publish(new DatalogEntity { DisplayView = m_Title, MsgType = LogMsgType.Info, MsgText = " Vision connection state:" + " " + m_InsightV1.State.ToString() });
         }
-        #endregion
+#endregion
     }
 }

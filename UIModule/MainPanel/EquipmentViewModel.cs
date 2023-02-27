@@ -224,8 +224,8 @@ namespace UIModule.MainPanel
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachName")} : {m_SystemConfig.Machine.EquipName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
 
-            m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
-            VisionConnStatus = Global.VisionConnStatus;
+            //m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
+            //VisionConnStatus = Global.VisionConnStatus;
         }
         #endregion
 

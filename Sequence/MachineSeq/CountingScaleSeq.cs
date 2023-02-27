@@ -15,7 +15,7 @@ namespace Sequence.MachineSeq
 {
     public class CountingScaleSeq : BaseClass
     {
-        #region Enum
+        #region Other Enum
         public enum ErrorCode
         {
             WrongOrientation, //0
@@ -33,7 +33,7 @@ namespace Sequence.MachineSeq
         private string m_ContType;
         #endregion
 
-        #region Enum
+        #region Seq Case Enum
         public enum SN
         {
             NONE = -2,
@@ -41,15 +41,18 @@ namespace Sequence.MachineSeq
             Begin,
 
             // Runnning Routine
+            WaitForCurtainSensorSignalBreak,
+            WaitForCurtainSensorSignalSafe,
             TriggerVis,
-            TriggerCodeReader,
-            WaitVisionResult,
-            RetryVisionResult,
-            WaitCodeReaderResult,
+            DetectInitialSlipSheet,
+            DetectForReversePouch,
+            DetectColorPouch,
+            DetectInvertColorPouch,
+            DetectDFU,
+            DetectFinalSlipSheet,
+            GetWeightFromScale,
+            CompareVisResultandScaleResult,
             EndLot,
-            //Error Routine
-            ErrorRoutine,
-            WaitResumeError,
         }
         #endregion
 
@@ -70,100 +73,213 @@ namespace Sequence.MachineSeq
                     switch (m_SeqNum)
                     {
                         #region Running Routine
+
+                        #region Begin
                         case SN.Begin:
-                            m_TmrDelay.Time_Out = 0.1f;
-                            m_SeqNum = SN.TriggerVis;
+                            m_SeqNum = SN.WaitForCurtainSensorSignalBreak;
+                            break;
+                        #endregion
+
+                        #region Curtain Sensor
+                        case SN.WaitForCurtainSensorSignalBreak:
+#if SIMULATION
+                            inputsignal = 0;
+#endif
+                            if (inputsignal == (int)IN.DI0100_CurtainSensor)
+                            {
+                                m_SeqNum = SN.WaitForCurtainSensorSignalSafe;
+                            }
                             break;
 
+                        case SN.WaitForCurtainSensorSignalSafe:
+#if SIMULATION
+                            inputsignal = 1;
+#endif
+                            if (inputsignal == (int)IN.DI0100_CurtainSensor + 1)
+                            {
+                                m_TmrDelay.Time_Out = 0.1f;
+                                m_SeqNum = SN.TriggerVis;
+                            }
+                            break;
+
+                        #endregion
+
+                        #region Vision
+
+                        #region Trigger Vision
                         case SN.TriggerVis:
                             if (m_TmrDelay.TimeOut())
                             {
-                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcStart });
-                                m_SeqNum = SN.WaitVisionResult;
-                            }
-                            break;
-
-                        case SN.WaitVisionResult:
-                            if (m_SeqFlag.ProcVisCont)
-                            {
-                                m_SeqFlag.ProcVisCont = false;
-                                
-                                switch (m_ContType)
+                                if (OverallQtyCount == 0)
                                 {
-                                    case "ReTriggerVis":
-                                        m_TmrDelay.Time_Out = 0.1f;
-                                        m_SeqNum = SN.TriggerVis;
-                                        break;
-
-                                    case "TriggerCodeReader":
-                                        m_TmrDelay.Time_Out = 0.1f;
-                                        m_SeqNum = SN.TriggerCodeReader;
-                                        break;
+                                    Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcStart });
+                                    m_SeqNum = SN.DetectInitialSlipSheet;
+                                }
+                                if (OverallPouchesCount != RcpQty && OverallQtyCount != 0)
+                                {
+                                    Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.TopVisionSeq, MachineOpr = MachineOperationType.ProcStart });
+                                    if (!resumeError)
+                                    {
+                                        m_SeqNum = m_SeqRsm[(int)RSM.Src];
+                                    }
+                                    else
+                                    {
+                                        resumeError = false;
+                                        m_SeqNum = m_SeqRsm[(int)RSM.Err];
+                                    }
+                                }
+                                else
+                                {
+                                    m_SeqNum = SN.DetectDFU;
                                 }
                             }
-                            else if (m_SeqFlag.ProcVisFail)
-                            {
-                                m_SeqFlag.ProcVisFail = false;
+                            break;
+                        #endregion
 
-                                switch (m_FailType)
-                                {
-                                    case "WrongOrientation":
-                                        Global.ErrorMsg = ErrorCode.WrongOrientation.ToString();
-                                        RaiseError((int)ErrorCode.WrongOrientation);
-                                        break;
-                                    case "ExceedUpperLimit":
-                                        Global.ErrorMsg = ErrorCode.ExceedUpperLimit.ToString();
-                                        RaiseError((int)ErrorCode.ExceedUpperLimit);
-                                        break;
-                                }
-                                m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
-                                m_SeqNum = SN.ErrorRoutine;
+                        #region Process
+                        case SN.DetectInitialSlipSheet:
+#if SIMULATION
+                            Global.VisSlipSheet = 1;
+#endif
+                            if (Global.VisSlipSheet == resultseqtyp.SlipSheet.ToString())
+                            {
+                                ResetGlobalResult();
+                                OverallQtyCount++;
+                                SlipSheetCount++;
+                                m_SeqRsm[(int)RSM.Src] = SN.DetectForReversePouch;
                             }
+                            else
+                            {
+
+                            }
+                            m_SeqNum = SN.WaitForCurtainSensorSignalBreak;
+                            break;
+                        case SN.DetectForReversePouch:
+#if SIMULATION
+                            Global.VisReversePouch = 2;
+#endif
+                            if (Global.VisReversePouch == resultseqtyp.ReversePouch.ToString())
+                            {
+                                ResetGlobalResult();
+                                OverallQtyCount++;
+                                m_SeqRsm[(int)RSM.Src] = SN.DetectColorPouch;
+                            }
+                            else
+                            {
+                                resumeError = true;
+                                m_SeqRsm[(int)RSM.Err] = SN.DetectForReversePouch;
+                            }
+                            m_SeqNum = SN.WaitForCurtainSensorSignalBreak;
                             break;
 
-                        case SN.TriggerCodeReader:
-                            if (m_TmrDelay.TimeOut())
+                        case SN.DetectColorPouch:
+#if SIMULATION
+                            Global.VisColorPouch = 3;
+#endif
+                            if (Global.VisColorPouch == resultseqtyp.ColorPouch.ToString())
                             {
-                                Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.CodeReaderSeq, MachineOpr = MachineOperationType.ProcStart });
-                                m_SeqNum = SN.WaitCodeReaderResult;
+                                ResetGlobalResult();
+                                OverallQtyCount++;
+                                OverallPouchesCount++;
+                                ClrPouchQty++;
+                                m_SeqRsm[(int)RSM.Src] = SN.DetectInvertColorPouch;
                             }
+                            else
+                            {
+                                resumeError = true;
+                                m_SeqRsm[(int)RSM.Err] = SN.DetectColorPouch;
+                            }
+                            m_SeqNum = SN.WaitForCurtainSensorSignalBreak;
                             break;
 
-                        case SN.WaitCodeReaderResult:
-                            if (m_SeqFlag.ProcCodeReaderFail)
+                        case SN.DetectInvertColorPouch:
+#if SIMULATION
+                            Global.VisInvertColorPouch = 4;
+#endif
+                            if (Global.VisInvertColorPouch == resultseqtyp.InvertColorPouch.ToString())
                             {
-                                m_SeqFlag.ProcCodeReaderFail = false;
-
-                                switch (m_FailType)
-                                {
-                                    case "BatchNotMatch":
-                                        Global.ErrorMsg = ErrorCode.BatchNotMatch.ToString();
-                                        RaiseVerificationError((int)ErrorCode.BatchNotMatch);
-                                        m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
-                                        break;
-
-                                    case "BoxQtyNotMatch":
-                                        Global.ErrorMsg = ErrorCode.BoxQtyNotMatch.ToString();
-                                        RaiseError((int)ErrorCode.BoxQtyNotMatch);
-                                        m_TmrDelay.Time_Out = 0.1f;
-                                        m_SeqRsm[(int)RSM.Err] = SN.TriggerVis;
-                                        break;
-
-                                    case "ExceedTotalBatchQty":
-                                        Global.ErrorMsg = ErrorCode.ExceedTotalBatchQty.ToString();
-                                        RaiseVerificationError((int)ErrorCode.ExceedTotalBatchQty);
-                                        m_SeqRsm[(int)RSM.Err] = SN.TriggerCodeReader;
-                                        break;
-                                }
-
-                                m_SeqNum = SN.ErrorRoutine;
+                                ResetGlobalResult();
+                                OverallQtyCount++;
+                                OverallPouchesCount++;
+                                InvertClrPouchQty++;
+                                m_SeqRsm[(int)RSM.Src] = SN.DetectColorPouch;
                             }
-                            else if (m_SeqFlag.ProcCodeReaderCont)
+                            else
                             {
-                                m_SeqFlag.ProcCodeReaderCont = false;
-                                m_SeqNum = SN.Begin;
+                                resumeError = true;
+                                m_SeqRsm[(int)RSM.Err] = SN.DetectInvertColorPouch;
+                            }
+                            m_SeqNum = SN.WaitForCurtainSensorSignalBreak;
+                            break;
+
+                        case SN.DetectDFU:
+#if SIMULATION
+                            Global.VisDFU = 5;
+#endif
+                            if (Global.VisDFU == resultseqtyp.DFU.ToString())
+                            {
+                                ResetGlobalResult();
+                                OverallQtyCount++;
+                                m_SeqRsm[(int)RSM.Src] = SN.DetectFinalSlipSheet;
+                            }
+                            else
+                            {
+                                resumeError = true;
+                                m_SeqRsm[(int)RSM.Err] = SN.DetectDFU;
+                            }
+                            m_SeqNum = SN.WaitForCurtainSensorSignalBreak;
+                            break;
+
+                        case SN.DetectFinalSlipSheet:
+#if SIMULATION
+                            Global.VisSlipSheet = 1;
+#endif
+                            if (Global.VisSlipSheet == resultseqtyp.SlipSheet.ToString())
+                            {
+                                ResetGlobalResult();
+                                OverallQtyCount++;
+                                m_SeqNum = SN.GetWeightFromScale;
+                            }
+                            else
+                            {
+                                resumeError = true;
+                                m_SeqRsm[(int)RSM.Err] = SN.DetectFinalSlipSheet;
+                                m_SeqNum = SN.WaitForCurtainSensorSignalBreak;
                             }
                             break;
+                        #endregion
+
+                        #endregion
+
+                        #region Weighing Scale
+                        case SN.GetWeightFromScale:
+                            m_TmrDelay.Time_Out = 0.1f;
+                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.OhausScaleSeq, MachineOpr = MachineOperationType.ProcStart });
+                            m_SeqNum = SN.CompareVisResultandScaleResult;
+                            break;
+
+                        case SN.CompareVisResultandScaleResult:
+                            //if ((Actual Scale Pouch Qty == OverallPouchesCount) && (Actual Scale Weightage >= min weight && Actual Scale Weightage <=min weight)
+                            //{
+                            //   normal end lot & log
+                            //  m_SeqNum = SN.EndLot;
+                            //}
+                            //else
+                            //{
+                            //  retry++;
+                            //  if(retry>3)
+                            //  {
+                            //      //End Lot Verification & Log 
+                            //      m_SeqNum = SN.EndLot;
+                            //  }
+                            //  else
+                            //  {
+                            //       m_SeqNum = SN.GetWeightFromScale;
+                            //  }
+                            //}
+                            break;
+                        #endregion
+
                         #endregion
 
                         #region End Lot
@@ -175,21 +291,6 @@ namespace Sequence.MachineSeq
                             }
                             break;
                         #endregion
-
-                        #region Error Routine
-                        case SN.ErrorRoutine:
-                            m_SeqNum = SN.WaitResumeError;
-                            break;
-
-                        case SN.WaitResumeError:
-                            if (Global.MachineStatus == MachineStateType.Running)
-                            {
-                                m_SeqNum = m_SeqRsm[(int)RSM.Err];
-                                m_SeqRsm[(int)RSM.Err] = SN.NONE;
-                                m_TmrDelay.Time_Out = 0.1f;
-                            }
-                            break;
-                            #endregion
                     }
                 }
             }
@@ -204,9 +305,9 @@ namespace Sequence.MachineSeq
                 m_SeqNum = SN.EOS;
             }
         }
-        #endregion
+#endregion
 
-        #region Events
+#region Events
         public override void SubscribeSeqEvent()
         {
             Publisher.GetEvent<MachineOperation>().Subscribe(SequenceOperation, filter => filter.TargetSeqName == SeqName);
@@ -262,15 +363,15 @@ namespace Sequence.MachineSeq
                 checkOp = true;
             }
         }
-        #endregion
+#endregion
 
-        #region IO
+#region IO
         internal override void IOMapping()
         {
-            #region Output
+#region Output
             AssignIO(OUT.DO0100_Buzzer);
-            #endregion
+#endregion
         }
-        #endregion
+#endregion
     }
 }

@@ -5,9 +5,10 @@
         None = -1,
 
         // Machine Sequence
-        TopVisionSeq = 0,
-        CodeReaderSeq = 1,
-        CountingScaleSeq = 2,
+        TopVisionSeq,
+        CodeReaderSeq,
+        OhausScaleSeq,
+        CountingScaleSeq,
     }
 
     public enum MachineOperationType

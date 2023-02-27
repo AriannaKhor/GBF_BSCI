@@ -82,6 +82,23 @@ namespace Sequence
 
         protected bool InitialStart = true;
 
+        //For GBF 
+        public int inputsignal;
+
+        public int SlipSheetCount;
+
+        public int OverallQtyCount;
+
+        public int OverallPouchesCount;
+
+        public int RcpQty;
+
+        public int ClrPouchQty;
+
+        public int InvertClrPouchQty;
+
+        public bool resumeError;
+
         private Dictionary<object, object> m_IOTbl = new Dictionary<object, object>();
 
         //Performance count
@@ -201,6 +218,14 @@ namespace Sequence
         }
 
         #region Method
+        public void ResetGlobalResult()
+        {
+            Global.VisSlipSheet = string.Empty;
+            Global.VisReversePouch = string.Empty;
+            Global.VisColorPouch = string.Empty;
+            Global.VisInvertColorPouch = string.Empty;
+            Global.VisDFU = string.Empty;
+        }
         public string GetStringTableValue(string key)
         {
             return CultureResources.GetStringValue(key);

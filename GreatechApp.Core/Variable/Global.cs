@@ -43,18 +43,27 @@ namespace GreatechApp.Core.Variable
         public static int LotInitialTotalBatchQuantity;
 
         //InsightVision
-        public static string VisionConnStatus;
         public static string VisClassification;
         public static bool VisConnection;
         public static float VisProductQuantity;
         public static float VisProductCrtOrientation;
         public static float VisProductWrgOrientation;
-        public static string VisOverallResult;
         public static string VisInspectResult = resultstatus.PendingResult.ToString();
-        public static bool EndTrigger = false;
 
-        //Weighing Scale
-        public static string WeighingResult;
+        //GBF Insight Vision
+        public static string VisionConnStatus;
+        public static string VisOverallResult;
+        public static string VisSlipSheet;
+        public static string VisReversePouch;
+        public static string VisColorPouch;
+        public static string VisInvertColorPouch;
+        public static string VisDFU;
+
+        //GBF Weighing Scale
+        public static string WeighingActualQty;
+        public static string WeighingActualWeightageFirstTry;
+        public static string WeighingActualWeightageSecTry;
+        public static string WeighingActualWeightageThirdTry;
 
         //Code Reader Result
         public static string CurrentContainerNum;

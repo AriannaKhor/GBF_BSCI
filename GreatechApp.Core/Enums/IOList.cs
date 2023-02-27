@@ -2,6 +2,7 @@
 {
     public enum IN : int
     {
+        DI0100_CurtainSensor,
     }
 
     public enum OUT : int
