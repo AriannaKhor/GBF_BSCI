@@ -538,8 +538,6 @@ namespace UIModule.StandardViews.Services
 
         public void OEEInputOutput()
         {
-            TotalInput = Global.TotalInput;
-            TotalOutput = Global.TotalOutput;
 
             int TimeDiff = Convert.ToInt32(Math.Floor((DateTime.Now - Convert.ToDateTime(NewStartTime)).TotalHours));
 
@@ -611,24 +609,6 @@ namespace UIModule.StandardViews.Services
         {
             switch (state)
             {
-                case MachineStateType.Ready:
-                    machineRunning = false;
-                    machineError = false;
-                    break;
-
-                case MachineStateType.Initializing:
-                    machineRunning = false;
-                    machineError = false;
-                    break;
-
-                case MachineStateType.Init_Done:
-                    machineRunning = false;
-                    machineError = false;
-                    // Init completed, waiting for user to enter lot info
-                    // Planned DownTime
-                    StartPlannedDownTimeTimer();
-                    break;
-
                 case MachineStateType.Running:
                     machineRunning = true;
                     machineError = false;
@@ -638,46 +618,11 @@ namespace UIModule.StandardViews.Services
                     StopAllDowntimeTimers();
                     break;
 
-                case MachineStateType.Stopped:
-                    machineRunning = false;
-                    machineError = false;
-
-                    // When user press Stop (with no alarms)
-                    // Planned DownTime - waiting for machine to be ready
-                    StartPlannedDownTimeTimer();
-                    break;
-
-                case MachineStateType.Warning:
-                    machineRunning = false;
-                    machineError = true;
-
-                    StartUnplannedDowntimeTimer();
-                    break;
-
                 case MachineStateType.Error:
                     machineRunning = false;
                     machineError = true;
                     // Unplanned DownTime - Breakdown.
                     StartUnplannedDowntimeTimer();
-                    break;
-
-                case MachineStateType.CriticalAlarm:
-                    machineRunning = false;
-                    machineError = true;
-                    // Unplanned DownTime - Breakdown.
-                    StartUnplannedDowntimeTimer();
-                    break;
-
-                case MachineStateType.Ending_Lot:
-                    machineRunning = true;
-                    machineError = false;
-                    break;
-
-                case MachineStateType.Lot_Ended:
-                    machineRunning = false;
-                    machineError = false;
-                    //Planned DownTime - Waiting for change over
-                    StartPlannedDownTimeTimer();
                     break;
 
                 case MachineStateType.Idle:

@@ -18,7 +18,6 @@ namespace GreatechApp.Core.Enums
     public enum inspectiontype
     {
         TopVision,
-        CodeReader,
     }
 
     public enum resultseqtyp

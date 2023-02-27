@@ -21,26 +21,6 @@
     {
 
     }
-    public class CodeReaderImage : PubSubEvent<BitmapImage>
-    {
-
-    }
-    public class OnCodeReaderEndResultEvent : PubSubEvent
-    {
-
-    }
-    public class OnCodeReaderDisconnectedEvent : PubSubEvent
-    {
-
-    }
-    public class OnCodeReaderConnectedEvent : PubSubEvent
-    {
-
-    }
-    public class RequestCodeReaderConnectionEvent : PubSubEvent
-    {
-
-    }
     public class RequestVisionLiveViewEvent: PubSubEvent
     {
 

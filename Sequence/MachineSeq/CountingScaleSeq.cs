@@ -328,17 +328,17 @@ namespace Sequence.MachineSeq
                             m_SeqFlag.ProcVisCont = true;
                             m_ContType = sequence.ContType;
                             break;
-                        case MachineOperationType.ProcCodeReaderCont:
-                            m_SeqFlag.ProcCodeReaderCont = true;
-                            break;
+                        //case MachineOperationType.ProcCodeReaderCont:
+                        //    m_SeqFlag.ProcCodeReaderCont = true;
+                        //    break;
                         case MachineOperationType.ProcVisFail:
                             m_SeqFlag.ProcVisFail = true;
                             m_FailType = sequence.FailType;
                             break;
-                        case MachineOperationType.ProcCodeReaderFail:
-                            m_SeqFlag.ProcCodeReaderFail = true;
-                            m_FailType = sequence.FailType;
-                            break;
+                        //case MachineOperationType.ProcCodeReaderFail:
+                        //    m_SeqFlag.ProcCodeReaderFail = true;
+                        //    m_FailType = sequence.FailType;
+                        //    break;
                         case MachineOperationType.ProcContErrRtn:
                             m_SeqNum = SN.ErrorRoutine;
                             break;

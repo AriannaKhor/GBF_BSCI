@@ -250,7 +250,6 @@
     <Compile Include="Interface\ISQLOperation.cs" />
     <Compile Include="Interface\ISystemConfig.cs" />
     <Compile Include="Modal\AlarmParameter.cs" />
-    <Compile Include="Modal\Bypass.cs" />
     <Compile Include="Modal\Datalog.cs" />
     <Compile Include="Modal\ErrRecovery.cs" />
     <Compile Include="Modal\InitStatus.cs" />

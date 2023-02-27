@@ -1,5 +1,4 @@
 ﻿using ConfigManager;
-using DialogManager.WarningMsg;
 using GreatechApp.Core.Cultures;
 using GreatechApp.Core.Enums;
 using GreatechApp.Core.Events;
@@ -20,11 +19,9 @@ namespace DialogManager
     public class ErrorOperation : BindableBase, IError
     {
         #region Variables
-        public WarningMessageView warningMessageView;
         private static object m_SyncRaiseError = new object();
 
         private bool IsErrorPrompting = false;
-        private bool IsWarningPrompting = false;
         private SQID m_SQID;
         public SQID SeqName
         {
@@ -50,8 +47,6 @@ namespace DialogManager
 
             showDialog = new ShowDialog(dialogService, cultureResources);
             ErrorList = new List<AlarmParameter>();
-            m_EventAggregator.GetEvent<WarningMsgOperation>().Subscribe(OnWarningMsgOperation);
-            m_EventAggregator.GetEvent<WarningStatusCheck>().Subscribe(OnWarningStatusCheck);
         }
         #endregion
 
@@ -73,21 +68,6 @@ namespace DialogManager
                         Recovery = errorConfig.ErrTable[ErrorCode].Recovery,
                         AlarmType = m_CultureResources.GetStringTable().GetKey(errorConfig.ErrTable[ErrorCode].AlarmType),
                     };
-
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        ErrorList.Remove(ErrorList.Where(key => key.ErrorCode == Alarm.ErrorCode && key.Module == (SQID)Enum.Parse(typeof(SQID), Alarm.Station)).FirstOrDefault());
-                        warningMessageView.RemoveWarning(Alarm);
-                    });
-                }
-
-                if (!ErrorList.Any(key => key.AlarmType.Equals("Warning", StringComparison.CurrentCultureIgnoreCase)))
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        warningMessageView.Close();
-                        IsWarningPrompting = false;
-                    });
                 }
             }
         }
@@ -126,25 +106,6 @@ namespace DialogManager
                             PromptError();
                         }
                     }
-                    else if (Alarm.AlarmType.Equals("Warning"))
-                    {
-                        if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing && Global.MachineStatus != MachineStateType.InitFail)
-                        {
-                            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Warning);
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                if (!IsWarningPrompting)
-                                {
-                                    IsWarningPrompting = true;
-
-                                    warningMessageView = new WarningMessageView();
-                                    warningMessageView.Show();
-                                }
-                                warningMessageView.AddWarning(Alarm);
-                            });
-                        }
-                    }
-
                     return Alarm.Causes;
                 }
                 else
@@ -177,7 +138,7 @@ namespace DialogManager
                         RetestOption = errorConfig.ErrTable[ErrorCode].RetestOption,
                         IsStopPage = errorConfig.ErrTable[ErrorCode].IsStoppage,
                     };
-                   
+
                     // Add Error Detail
                     ErrorList.Add(Alarm);
 
@@ -187,24 +148,6 @@ namespace DialogManager
                         {
                             IsErrorPrompting = true;
                             PromptVerificationError();
-                        }
-                    }
-                    else if (Alarm.AlarmType.Equals("Warning"))
-                    {
-                        if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing && Global.MachineStatus != MachineStateType.InitFail)
-                        {
-                            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Warning);
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                if (!IsWarningPrompting)
-                                {
-                                    IsWarningPrompting = true;
-
-                                    warningMessageView = new WarningMessageView();
-                                    warningMessageView.Show();
-                                }
-                                warningMessageView.AddWarning(Alarm);
-                            });
                         }
                     }
                     return Alarm.Causes;
@@ -218,14 +161,11 @@ namespace DialogManager
 
         private void PromptError()
         {
-            // If error raise from Critical Scan or Initializing, skip this
-            if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing && Global.MachineStatus != MachineStateType.InitFail)
-            {
-                // If alarm type is error, stop the machine
-                Global.MachineStatus = MachineStateType.Error;
-                Global.SeqStop = true;
-                m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-            }
+            // If alarm type is error, stop the machine
+            Global.MachineStatus = MachineStateType.Error;
+            // Global.SeqStop = true;
+            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
+
 
             AlarmParameter alarm = ErrorList.Where(key => key.AlarmType.Equals("Error", StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
@@ -238,10 +178,6 @@ namespace DialogManager
             if (ErrorList.Where(key => key.AlarmType.Equals("Error", StringComparison.CurrentCultureIgnoreCase)).Count() == 0)
             {
                 IsErrorPrompting = false;
-                if (Global.MachineStatus != MachineStateType.CriticalAlarm)
-				{
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Recovery);
-                }
             }
             else
             {
@@ -252,14 +188,11 @@ namespace DialogManager
 
         private void PromptVerificationError()
         {
-            // If error raise from Critical Scan or Initializing, skip this
-            if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing && Global.MachineStatus != MachineStateType.InitFail)
-            {
-                // If alarm type is error, stop the machine
-                Global.MachineStatus = MachineStateType.Error;
-                Global.SeqStop = true;
-                m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-            }
+            // If alarm type is error, stop the machine
+            Global.MachineStatus = MachineStateType.Error;
+            // Global.SeqStop = true;
+            m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
+
 
             AlarmParameter alarm = ErrorList.Where(key => key.AlarmType.Equals("Error", StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
@@ -272,36 +205,11 @@ namespace DialogManager
             if (ErrorList.Where(key => key.AlarmType.Equals("Error", StringComparison.CurrentCultureIgnoreCase)).Count() == 0)
             {
                 IsErrorPrompting = false;
-                if (Global.MachineStatus != MachineStateType.CriticalAlarm)
-                {
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Recovery);
-                }
             }
             else
             {
                 PromptVerificationError();
             }
         }
-        #region Event
-        private void OnWarningMsgOperation(WarningMsgOperation alarm)
-        {
-            ErrorList.Remove(ErrorList.Where(key => key.ErrorCode == alarm.ErrorCode && key.Module ==(SQID)Enum.Parse(typeof(SQID), alarm.Station)).FirstOrDefault());
-            if(!ErrorList.Any(key=> key.AlarmType.Equals("Warning", StringComparison.CurrentCultureIgnoreCase)))
-            {
-                warningMessageView.Close();
-                IsWarningPrompting = false;
-            }
-        }
-        private void OnWarningStatusCheck()
-        {
-            if (ErrorList.Any(key => key.AlarmType.Equals("Warning", StringComparison.CurrentCultureIgnoreCase)))
-            {
-                if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing && Global.MachineStatus != MachineStateType.InitFail)
-                {
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Warning);
-                }
-            }
-        }
-        #endregion
     }
 }

@@ -186,12 +186,12 @@ namespace DialogManager.ErrorMsg
                         m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Idle);
                         ResetCounter();
                     }
-                    else if (Global.CodeReaderResult == "NG") //for unequal
-                    {
-                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
-                        RaiseEndLotPopup();
-                    }
-                    CloseDialog("");
+                    //else if (Global.CodeReaderResult == "NG") //for unequal
+                    //{
+                    //    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Error);
+                    //    RaiseEndLotPopup();
+                    //}
+                    //CloseDialog("");
                 }
                 else if (dialogResult == ButtonResult.No) //reset and return same error
                 {
@@ -204,17 +204,11 @@ namespace DialogManager.ErrorMsg
         private void ResetCounter()
         {
             #region Code Reader
-            Global.CurrentContainerNum = String.Empty;
-            Global.CurrentBatchQuantity = 0;
-            Global.AccumulateCurrentBatchQuantity = 0;
-            Global.CurrentBoxQuantity = 0;
-            Global.CurrentBatchNum = String.Empty;
+           
             Global.LotInitialBatchNo = String.Empty;
             Global.CurrentLotBatchNum = String.Empty;
             Global.LotInitialTotalBatchQuantity = 0;
-            Global.CurrentBoxCount = 0;
-            Global.CodeReaderResult = resultstatus.PendingResult.ToString();
-            #endregion
+              #endregion
 
             #region Top Vision
             Global.VisProductQuantity = 0f;
@@ -222,7 +216,6 @@ namespace DialogManager.ErrorMsg
             Global.VisProductWrgOrientation = 0f;
             Global.VisInspectResult = resultstatus.PendingResult.ToString();
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Publish();
-            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Publish();
             #endregion
 
             #region Error
@@ -301,16 +294,7 @@ namespace DialogManager.ErrorMsg
                 SkipRetestVis = Visibility.Collapsed;
             }
 
-            if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing)
-            {
-                ResetVis = Visibility.Visible;
-                OkVis = Visibility.Collapsed;
-            }
-            else
-            {
-                ResetVis = Visibility.Collapsed;
-                OkVis = Visibility.Visible;
-            }
+        
         }
         #endregion
 

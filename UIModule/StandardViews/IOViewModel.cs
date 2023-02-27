@@ -29,7 +29,7 @@ using UIModule.MainPanel;
 
 namespace UIModule.StandardViews
 {
-    public class IOViewModel : BaseUIViewModel, IAccessService, INavigationAware
+    public class IOViewModel : BaseUIViewModel, IAccessService
     {
         #region Variable
         private string _title = "IO";
@@ -125,16 +125,6 @@ namespace UIModule.StandardViews
             tmr_UpdateStatus.Stop();
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            tmr_UpdateStatus.Start();
-            UpdateIOList(this, null);
-            if (Global.InitDone && (Global.MachineStatus == MachineStateType.Lot_Ended || Global.MachineStatus == MachineStateType.Ready || Global.MachineStatus == MachineStateType.Init_Done))
-            {
-                m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.ReInit);
-            }
-        }
-
         #endregion
 
         #region Event
@@ -182,7 +172,7 @@ namespace UIModule.StandardViews
 
         private void Command(IOList ioParam)
         {
-            if (Global.MachineStatus != MachineStateType.Running && Global.MachineStatus != MachineStateType.Initializing)
+            if (Global.MachineStatus != MachineStateType.Running)
             {
                 m_IO.WriteBit(ioParam.Tag, ioParam.Status);
             }
@@ -273,7 +263,7 @@ namespace UIModule.StandardViews
             get
             {
                 if (m_AuthService.CheckAccess(ACL.IO) && m_AuthService.CurrentUser.IsAuthenticated
-                    && Global.MachineStatus != MachineStateType.Running && Global.MachineStatus != MachineStateType.Initializing && Global.MachineStatus != MachineStateType.CriticalAlarm)
+                    && Global.MachineStatus != MachineStateType.Running)
                 {
                     return true;
                 }

@@ -21,7 +21,6 @@ namespace UIModule.MainPanel
     public class CompactViewModel : BaseUIViewModel
     {
         private Thread EStopWinThread;
-        private EStopView eStopView;
         public const string GrayIcon = "/GreatechApp.Core;component/Icon/GrayIcon.png";
         public const string GreenIcon = "/GreatechApp.Core;component/Icon/GreenIcon.png";
         public const string RedIcon = "/GreatechApp.Core;component/Icon/RedIcon.png";
@@ -29,41 +28,6 @@ namespace UIModule.MainPanel
 
         public const string Connected = "/GreatechApp.Core;component/Icon/TCPConnected.png";
         public const string Disconnected = "/GreatechApp.Core;component/Icon/TCPDisconnected.png";
-
-        #region InitStatus
-        private Visibility m_ShowInitState;
-
-        public Visibility ShowInitState
-        {
-            get { return m_ShowInitState; }
-            set { SetProperty(ref m_ShowInitState, value); }
-        }
-
-        private ObservableCollection<InitStatus> m_SeqCollecion;
-        public ObservableCollection<InitStatus> SeqCollection
-        {
-            get { return m_SeqCollecion; }
-            set { SetProperty(ref m_SeqCollecion, value); }
-        }
-        #endregion
-
-        #region Bypass Expand
-        private bool m_IsBypassExpand;
-        public bool IsBypassExpand
-        {
-            get { return m_IsBypassExpand; }
-            set { SetProperty(ref m_IsBypassExpand, value); }
-        }
-        #endregion
-
-        #region LotEntry
-        private bool m_IsLotEntryExpand;
-        public bool IsLotEntryExpand
-        {
-            get { return m_IsLotEntryExpand; }
-            set { SetProperty(ref m_IsLotEntryExpand, value); }
-        }
-        #endregion
 
         #region Control Visibility
         private Visibility m_IsLogin = Visibility.Collapsed;
@@ -141,42 +105,6 @@ namespace UIModule.MainPanel
         {
             get { return m_IsAllowReset; }
             set { SetProperty(ref m_IsAllowReset, value); }
-        }
-
-        private bool m_IsAllowAutoMode;
-        public bool IsAllowAutoMode
-        {
-            get { return m_IsAllowAutoMode; }
-            set { SetProperty(ref m_IsAllowAutoMode, value); }
-        }
-
-        private bool m_IsAllowDryRun;
-        public bool IsAllowDryRun
-        {
-            get { return m_IsAllowDryRun; }
-            set { SetProperty(ref m_IsAllowDryRun, value); }
-        }
-
-        private bool m_IsAutoMode;
-        public bool IsAutoMode
-        {
-            get { return m_IsAutoMode; }
-            set
-            {
-                SetProperty(ref m_IsAutoMode, value);
-                Global.AutoMode = m_IsAutoMode;
-            }
-        }
-
-        private bool m_IsDryRun;
-        public bool IsDryRun
-        {
-            get { return m_IsDryRun; }
-            set
-            {
-                SetProperty(ref m_IsDryRun, value);
-                Global.DryRun = m_IsDryRun;
-            }
         }
 
         private bool m_IsEndingLot = false;
@@ -437,12 +365,10 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineStateChange);
             m_EventAggregator.GetEvent<PerformanceEntity>().Subscribe(OnPerformanceChange);
             m_EventAggregator.GetEvent<PerformanceCompact>().Subscribe(OnPerformanceCompactChange);
-            m_EventAggregator.GetEvent<RefreshTotalInputOutput>().Subscribe(OnInOutCountUpdate);
             m_EventAggregator.GetEvent<DatalogEntity>().Subscribe(OnDatalogEntity, filter => filter.MsgType == LogMsgType.Error || filter.MsgType == LogMsgType.Warning);
 
 
             OperationCommand = new DelegateCommand<string>(OperationMethod);
-            InitCommand = new DelegateCommand<string>(InitOperation);
             LoginDialogCommand = new DelegateCommand(RaiseLoginPopup);
             TCPIPListCommand = new DelegateCommand<string>(OnTCPIPList);
             ReconnectTCP = new DelegateCommand<TCPDisplay>(OnReconnectTCP);
@@ -466,24 +392,12 @@ namespace UIModule.MainPanel
             EquipStateIcon = GrayIcon;
             EquipStatus = "Idle";
 
-            IsAutoMode = true;
-
             UPH = "0";
             CycleTime = "0";
             TotalInput = "0";
             TotalOutput = "0";
             Throughput = "0";
 
-            ShowInitState = Visibility.Collapsed;
-            m_EventAggregator.GetEvent<MachineOperation>().Subscribe(UpdateMachineOperation);
-            m_EventAggregator.GetEvent<MachineState>().Subscribe(UpdateMachineState);
-
-            // Add machine seq into init status colection except core seq
-            SeqCollection = new ObservableCollection<InitStatus>();
-            for (int i = m_DelegateSeq.CoreSeqNum; i < m_DelegateSeq.TotalSeq; i++)
-            {
-                SeqCollection.Add(new InitStatus((SQID)i));
-            }
             OnMachineStateChange(Global.MachineStatus);
         }
 
@@ -511,8 +425,6 @@ namespace UIModule.MainPanel
         public void DisableAllBtn()
         {
             IsAllowInit = false;
-            IsAllowAutoMode = false;
-            IsAllowDryRun = false;
             IsAllowStart = false;
             IsAllowStop = false;
             IsAllowReset = false;
@@ -522,8 +434,6 @@ namespace UIModule.MainPanel
         {
             IsAllowInit = false;
             IsAllowStart = false;
-            IsAllowAutoMode = false;
-            IsAllowDryRun = false;
             IsAllowStop = true;
             IsAllowReset = false;
         }
@@ -531,18 +441,13 @@ namespace UIModule.MainPanel
         public void ErrorMode()
         {
             IsAllowInit = false;
-            IsAllowAutoMode = false;
-            IsAllowDryRun = false;
             IsAllowStop = false;
             IsAllowReset = true;
         }
-
         public void RecoveryMode()
         {
             IsAllowStart = true;
             IsAllowInit = true; ;
-            IsAllowAutoMode = false;
-            IsAllowDryRun = false;
             IsAllowStop = false;
             IsAllowReset = false;
         }
@@ -550,8 +455,6 @@ namespace UIModule.MainPanel
         public void StopMode()
         {
             IsAllowInit = true;
-            IsAllowAutoMode = true;
-            IsAllowDryRun = false;
             IsAllowStart = true;
             IsAllowStop = false;
             IsAllowReset = false;
@@ -561,19 +464,14 @@ namespace UIModule.MainPanel
         {
 
             IsAllowInit = true;
-            IsAllowAutoMode = true;
-            IsAllowDryRun = true;
             IsAllowStart = false;
             IsAllowStop = false;
-            IsAllowReset = false;
-
+            IsAllowReset = false;      
         }
 
         public void ReadyMode()
         {
             IsAllowInit = true;
-            IsAllowAutoMode = true;
-            IsAllowDryRun = true;
             IsAllowStart = true;
             IsAllowStop = false;
             IsAllowReset = false;
@@ -584,92 +482,6 @@ namespace UIModule.MainPanel
         #endregion
 
         #region Event
-        private void UpdateMachineOperation(SequenceEvent evArg)
-        {
-            lock (evArg)
-            {
-                Debug.Assert(evArg != null);
-                switch (evArg.MachineOpr)
-                {
-                    case MachineOperationType.InitDone:
-                        string stateIcon = evArg.InitSuccess ? GreenIcon : RedIcon;
-                        // Change state icon when init done or fail
-                        int index = SeqCollection.IndexOf(SeqCollection.Where(x => x.SeqID == evArg.TargetSeqName).First());
-                        SeqCollection[index].StateIcon = stateIcon;
-                        break;
-                }
-            }
-        }
-
-        private void UpdateMachineState(MachineStateType stateType)
-        {
-            try
-            {
-                lock (this)
-                {
-                    switch (stateType)
-                    {
-                        case MachineStateType.Initializing:
-                            SeqCollection.ToList().ForEach(key => key.StateIcon = GrayIcon);
-                            ShowInitState = Visibility.Visible;
-                            IsLotEntryExpand = false;
-                            break;
-
-                        case MachineStateType.Init_Done:
-                            ShowInitState = Visibility.Visible;
-                            IsLotEntryExpand = true;
-                            break;
-
-                        case MachineStateType.Running:
-                            ShowInitState = Visibility.Collapsed;
-                            IsLotEntryExpand = false;
-                            break;
-
-                        case MachineStateType.Ready:
-                            IsLotEntryExpand = false;
-                            break;
-
-                        case MachineStateType.Stopped:
-                            break;
-
-                        case MachineStateType.Warning:
-                            break;
-
-                        case MachineStateType.Error:
-                            break;
-
-                        case MachineStateType.Ending_Lot:
-                            IsLotEntryExpand = false;
-                            break;
-
-                        case MachineStateType.Lot_Ended:
-                            // Update Lot Data
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                m_SQLOperation.UpdateLotData(Global.LotInitialBatchNo, DateTime.Now, Global.TotalInput, Global.TotalOutput);
-                            });
-                            IsLotEntryExpand = true;
-                            break;
-
-                        case MachineStateType.Idle:
-                            break;
-
-                        case MachineStateType.InitFail:
-                            break;
-
-                        case MachineStateType.ReInit:
-                            break;
-
-                        case MachineStateType.CriticalAlarm:
-                            break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.Source);
-            }
-        }
 
         private void m_tmrTCPMonitor_Tick(object sender, EventArgs e)
         {
@@ -693,40 +505,10 @@ namespace UIModule.MainPanel
             }
         }
 
-        private void OnInOutCountUpdate()
-        {
-            TotalInput = Global.TotalInput.ToString();
-            TotalOutput = Global.TotalOutput.ToString();
-        }
-
         private void OnMachineStateChange(MachineStateType state)
         {
             switch (state)
             {
-                case MachineStateType.Ready:
-                    Global.MachineStatus = MachineStateType.Ready;
-                    ReadyMode();
-                    EquipStateIcon = GreenIcon;
-                    EquipStatus = "Ready";
-                    break;
-
-                case MachineStateType.Initializing:
-                    Global.MachineStatus = MachineStateType.Initializing;
-                    IsAllowInit = false;
-                    IsAllowStart = false;
-                    IsAllowDryRun = true;
-                    IsEndingLot = false;
-                    EquipStateIcon = GreenIcon;
-                    EquipStatus = "Initializing";
-                    break;
-
-                case MachineStateType.Init_Done:
-                    Global.MachineStatus = MachineStateType.Init_Done;
-                    IsAllowInit = true;
-                    EquipStateIcon = GreenIcon;
-                    EquipStatus = "InitDone";
-                    break;
-
                 case MachineStateType.Running:
                     ProductionMode();
                     EquipStateIcon = GreenIcon;
@@ -737,46 +519,12 @@ namespace UIModule.MainPanel
                         EquipStatus = "Running";
                     Global.MachineStatus = MachineStateType.Running;
                     break;
-
-                case MachineStateType.Stopped:
-                    Global.MachineStatus = MachineStateType.Stopped;
-                    StopMode();
-                    EquipStateIcon = RedIcon;
-                    EquipStatus = "Stopped";
-                    break;
-
-                case MachineStateType.Warning:
-                    Global.MachineStatus = MachineStateType.Warning;
-                    ProductionMode();
-                    EquipStateIcon = YellowIcon;
-                    EquipStatus = "Warning";
-                    break;
-
+                    
                 case MachineStateType.Error:
                     Global.MachineStatus = MachineStateType.Error;
                     ErrorMode();
                     EquipStateIcon = RedIcon;
                     EquipStatus = "Error";
-                    break;
-
-                case MachineStateType.Ending_Lot:
-                    Global.MachineStatus = MachineStateType.Running;
-                    IsEndingLot = true;
-                    if (EquipStatus == "Stopped")
-                    {
-                        ApplicationCommands.OperationCommand.Execute("Start");
-                    }
-                    ProductionMode();
-                    EquipStateIcon = GreenIcon;
-                    EquipStatus = "LotEnding";
-                    break;
-
-                case MachineStateType.Lot_Ended:
-                    Global.MachineStatus = MachineStateType.Lot_Ended;
-                    IsEndingLot = false;
-                    IdleMode();
-                    EquipStateIcon = GrayIcon;
-                    EquipStatus = "LotEnded";
                     break;
 
                 case MachineStateType.Idle:
@@ -787,37 +535,6 @@ namespace UIModule.MainPanel
                         EquipStateIcon = GrayIcon;
                         EquipStatus = "Idle";
                     }
-                    break;
-
-                case MachineStateType.Recovery:
-                    if (Global.MachineStatus != MachineStateType.CriticalAlarm && Global.MachineStatus != MachineStateType.Initializing && Global.MachineStatus != MachineStateType.InitFail)
-                    {
-                        Global.MachineStatus = MachineStateType.Recovery;
-                        RecoveryMode();
-                        EquipStateIcon = GreenIcon;
-                        EquipStatus = "Recovering";
-                    }
-                    break;
-
-                case MachineStateType.CriticalAlarm:
-                    Global.MachineStatus = MachineStateType.CriticalAlarm;
-                    IdleMode();
-                    EquipStateIcon = RedIcon;
-                    EquipStatus = "CriticalError";
-                    break;
-
-                case MachineStateType.InitFail:
-                    Global.MachineStatus = MachineStateType.InitFail;
-                    IdleMode();
-                    EquipStateIcon = RedIcon;
-                    EquipStatus = "InitFail";
-                    break;
-
-                case MachineStateType.ReInit:
-                    Global.MachineStatus = MachineStateType.ReInit;
-                    IdleMode();
-                    EquipStateIcon = GrayIcon;
-                    EquipStatus = "ReInit";
                     break;
             }
         }
@@ -850,8 +567,6 @@ namespace UIModule.MainPanel
 
         private void SetupEStopWindow()
         {
-            eStopView = new EStopView();
-            eStopView.Show();
             Dispatcher.Run();
         }
 
@@ -917,25 +632,6 @@ namespace UIModule.MainPanel
             }
         }
 
-        private void InitOperation(string command)
-        {
-            IsTCPIPListOpen = false;
-            if (command == "Init")
-            {
-                ButtonResult dialogResult = m_ShowDialog.Show(DialogIcon.Question, GetDialogTableValue("MachineInit"), GetDialogTableValue("AskConfirmInit"), ButtonResult.No, ButtonResult.Yes);
-
-                if (dialogResult == ButtonResult.Yes)
-                {
-                    Global.InitDone = false;
-                    Global.SeqStop = false;
-                    m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Initializing);
-                    m_EventAggregator.GetEvent<InitOperation>().Publish();
-                    ApplicationCommands.OperationCommand.Execute("Init");
-
-                }
-            }
-        }
-
         private void OperationMethod(string Command)
         {
             if (Command == "Logout")
@@ -945,18 +641,6 @@ namespace UIModule.MainPanel
                 LoginStatus = "Login";
                 IsLogin = Visibility.Visible;
                 IsLogout = Visibility.Collapsed;
-                if (EStopWinThread != null)
-                {
-                    if (EStopWinThread.IsAlive)
-                    {
-                        Dispatcher.FromThread(EStopWinThread).Invoke(() =>
-                        {
-                            eStopView.Close();
-                        });
-                    }
-
-                    EStopWinThread.Abort();
-                }
                 m_EventAggregator.GetEvent<DatalogEntity>().Publish(new DatalogEntity() { MsgType = LogMsgType.Info, MsgText = $"{GetStringTableValue("User")} {m_CurrentUser.Username} {GetStringTableValue("LoggedOut")}." });
                 m_AuthService.CurrentUser.IsAuthenticated = false;
                 m_EventAggregator.GetEvent<ValidateLogin>().Publish(false);

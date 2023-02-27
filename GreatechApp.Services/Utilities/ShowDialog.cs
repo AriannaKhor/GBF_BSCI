@@ -78,9 +78,6 @@ namespace GreatechApp.Services.Utilities
                 case DialogIcon.Stop:
                     Btn1Result = ButtonResult.OK;
                     break;
-                case DialogIcon.Warning:
-                    Btn1Result = ButtonResult.OK;
-                    break;
             }
             return Show(icon, m_CultureResources.GetDialogValue(icon.ToString()), Message, Btn1Result, Btn2Result, Btn3Result);
         }
@@ -131,9 +128,6 @@ namespace GreatechApp.Services.Utilities
                     Btn2Result = ButtonResult.Yes;
                     break;
                 case DialogIcon.Stop:
-                    Btn1Result = ButtonResult.OK;
-                    break;
-                case DialogIcon.Warning:
                     Btn1Result = ButtonResult.OK;
                     break;
             }

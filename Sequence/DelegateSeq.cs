@@ -30,7 +30,6 @@ namespace Sequence
         private IEventAggregator m_EventAggregator;
         private ITCPIP m_TCPIP;
         private IInsightVision   m_InsightVision;
-        private ICodeReader m_CodeReader;
         private IError m_Error;
         private SystemConfig m_SysConfig;
         private IBaseIO m_BaseIO;
@@ -40,13 +39,11 @@ namespace Sequence
 
         Dictionary<SQID, BaseClass> m_BaseSeq;
 
-        public DelegateSeq(IEventAggregator eventAggregator, IError error, IBaseIO io, SystemConfig sysconfig, ITCPIP tcpip,IInsightVision insightvision,ICodeReader codereader, IShowDialog showDialog, CultureResources cultureResources)
+        public DelegateSeq(IEventAggregator eventAggregator, IError error, IBaseIO io, SystemConfig sysconfig, ITCPIP tcpip,IInsightVision insightvision, IShowDialog showDialog, CultureResources cultureResources)
         {
             m_EventAggregator = eventAggregator;
             m_TCPIP = tcpip;
             m_InsightVision = insightvision;
-            m_CodeReader = codereader;
-            //m_BaseMotion = motion;
             m_Error = error;
             m_SysConfig = sysconfig;
             m_BaseIO = io;
@@ -61,7 +58,6 @@ namespace Sequence
             m_BaseSeq = new Dictionary<SQID, BaseClass>()
             {
                 { SQID.TopVisionSeq, new TopVisionSeq() },
-                { SQID.CodeReaderSeq, new CodeReaderSeq() },
                 { SQID.CountingScaleSeq, new CountingScaleSeq() },
             };
 
@@ -75,7 +71,7 @@ namespace Sequence
             /// Subscribe for TCP/IP
             m_BaseSeq[SQID.TopVisionSeq].SubscribeTCPMessage();
             /// Subscribe for SerialPort Event
-            m_BaseSeq[SQID.CodeReaderSeq].SubscribeSerialMessage();
+            //m_BaseSeq[SQID.CodeReaderSeq].SubscribeSerialMessage();
 
             m_EventAggregator.GetEvent<MachineOperation>().Subscribe(OnSeqInitCompleted, filter => filter.MachineOpr == MachineOperationType.InitDone);
             m_EventAggregator.GetEvent<InitOperation>().Subscribe(OnInit);
@@ -99,7 +95,6 @@ namespace Sequence
                 seq.SysCfgs = m_SysConfig;
                 seq.TCPIP = m_TCPIP;
                 seq.InsightVision = m_InsightVision;
-                seq.CodeReader = m_CodeReader;
                 seq.ShowDialog = ShowDialog;
                 seq.CultureResources = m_CultureResources;
                 seq.SubscribeSeqEvent();
@@ -121,7 +116,6 @@ namespace Sequence
                 IPollEngine.Priority_Level = ThreadPriority.AboveNormal;
             }
         }
-
 
         public int TotalSeq { get { return m_BaseSeq.Count; } }
         public int CoreSeqNum { get; set; }
@@ -147,21 +141,6 @@ namespace Sequence
                     InitFailCount++;
                 }
                 InitCompletedCount++;
-
-                if (InitCompletedCount == MachineSeqNum)  // Exclude CriticalScan Module
-                {
-                    if (InitFailCount > 0)
-                    {
-                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.InitFail);
-                    }
-                    else
-                    {
-                        m_EventAggregator.GetEvent<MachineState>().Publish(MachineStateType.Init_Done);
-                        Global.InitDone = true;
-                    }
-                    InitFailCount = 0;
-                    InitCompletedCount = 0;
-                }
             }
         }
 
@@ -174,12 +153,6 @@ namespace Sequence
         {
             switch (state)
             {
-                case MachineStateType.CriticalAlarm:
-                    foreach (KeyValuePair<SQID, BaseClass> baseSeq in m_BaseSeq)
-                    {
-                    }
-                    break;
-
                 case MachineStateType.Running:
                     foreach (KeyValuePair<SQID, BaseClass> baseSeq in m_BaseSeq)
                     {
@@ -187,15 +160,6 @@ namespace Sequence
                     }
                     break;
             }
-        }
-
-        private void OnCheckOperation(bool CheckOp)
-        {
-            foreach (KeyValuePair<SQID, BaseClass> baseSeq in m_BaseSeq)
-            {
-                baseSeq.Value.OperationChecking(CheckOp);
-            }
-            
         }
 
         public string GetSeqNum(SQID seqName)
@@ -206,11 +170,6 @@ namespace Sequence
         public bool GetIsAliveStatus(int sqid)
         {
             return IPollEngine.IsAlive(sqid);
-        }
-
-        public void BypassStation(SQID id, bool state)
-        {
-            m_BaseSeq[id].OnBypassStation(state);
         }
 
         public Dictionary<int, string> GetMotCfg(SQID seqName)

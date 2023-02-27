@@ -171,7 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainPanel\BaseUIViewModel.cs" />
-    <Compile Include="MainPanel\BypassViewModel.cs" />
     <Compile Include="MainPanel\CompactView.xaml.cs">
       <DependentUpon>CompactView.xaml</DependentUpon>
     </Compile>
@@ -181,15 +180,8 @@
     </Compile>
     <Compile Include="MainPanel\OperatorViewModel.cs" />
     <Compile Include="MainPanel\EquipmentViewModel.cs" />
-    <Compile Include="MainPanel\EStopView.xaml.cs">
-      <DependentUpon>EStopView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainPanel\EStopViewModel.cs" />
     <Compile Include="MainPanel\HomeViewModel.cs" />
     <Compile Include="MainPanel\ToolbarViewModel.cs" />
-    <Compile Include="MainPanel\BypassView.xaml.cs">
-      <DependentUpon>BypassView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainPanel\EquipmentView.xaml.cs">
       <DependentUpon>EquipmentView.xaml</DependentUpon>
     </Compile>
@@ -302,10 +294,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainPanel\BypassView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainPanel\CompactView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -315,10 +303,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPanel\EquipmentView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainPanel\EStopView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

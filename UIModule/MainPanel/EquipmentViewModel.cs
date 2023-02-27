@@ -317,21 +317,6 @@ namespace UIModule.MainPanel
         #endregion
         #endregion
 
-        #region Code Reader
-        //New Can Be Use
-        private void OnCodeReaderConnected()
-        {
-            Global.CodeReaderConnStatus = "Connected";
-            CdStatusFG = System.Windows.Media.Brushes.Green;
-        }
-        //New Can Be Use
-        private void OnCodeReaderDisconnected()
-        {
-            Global.CodeReaderConnStatus = "Disconnected";
-            CdStatusFG = System.Windows.Media.Brushes.Red;
-        }
-        #endregion
-
         private void OnNavigation(string page)
         {
             if (page != null)
@@ -420,56 +405,6 @@ namespace UIModule.MainPanel
 
         #endregion
 
-        #region Code Reader
-
-        #endregion
-
-        #region Log
-        private void WriteSoftwareResultLog(Datalog log)
-        {
-            lock (m_SyncLog)
-            {
-                string executableName = System.IO.Path.GetDirectoryName(
-                         System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-                executableName = executableName.Replace("file:\\", string.Empty);
-                FileInfo executableFileInfo = new FileInfo(executableName);
-                string logDirectory = executableFileInfo.DirectoryName +
-                    m_SystemConfig.FolderPath.AppLog.Replace(@"..", string.Empty);
-                if (!Directory.Exists(logDirectory))
-                {
-                    // Create the station folder in AppData directory
-                    Directory.CreateDirectory(logDirectory);
-                }
-
-                // Write the log information to the file
-                FileStream fs = null;
-                StringBuilder fileName = new StringBuilder();
-                fileName.Append(m_SystemConfig.FolderPath.SoftwareResultLog).
-                    Append("Log[").Append(log.Date).Append("].log");
-                // Check whether this file exist.
-                // A new datalog file will be created for each day.
-                if (!File.Exists(fileName.ToString()))
-                {
-                    fs = new FileStream(fileName.ToString(), FileMode.Create, FileAccess.Write);
-                }
-                else
-                {
-                    fs = new FileStream(fileName.ToString(), FileMode.Append, FileAccess.Write);
-                }
-                using (StreamWriter logWriter = new StreamWriter(fs))
-                {
-                    StringBuilder logData = new StringBuilder();
-                    logData.Append(log.Date).Append(" | ").
-                        Append(log.Time).Append(" |").
-                        Append(log.MsgType).Append("| ").
-                        Append(log.MsgText);
-                    logWriter.WriteLine(logData.ToString());
-                    logWriter.Close();
-                }
-            }
-        }
-
-
         private void WriteLog(Datalog log)
         {
             lock (m_SyncLog)
@@ -521,21 +456,6 @@ namespace UIModule.MainPanel
         {
             IsEquipViewLoaded = false;
         }
-
-        public bool KeepAlive
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Enum 
-
         #endregion
     }
 }

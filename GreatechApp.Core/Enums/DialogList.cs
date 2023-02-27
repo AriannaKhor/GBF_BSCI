@@ -17,6 +17,5 @@
         Information,
         Stop,
         Question,
-        Warning,
     }
 }

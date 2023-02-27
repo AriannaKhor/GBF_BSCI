@@ -54,13 +54,6 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_VisionConnStatus, value); }
         }
 
-        private string m_CodeReaderConnStatus;
-        public string CodeReaderConnStatus
-        {
-            get { return m_CodeReaderConnStatus; }
-            set { SetProperty(ref m_CodeReaderConnStatus, value); }
-        }
-
         private string m_SelectedVisRcp;
         public string SelectedVisRcp
         {
@@ -74,13 +67,6 @@ namespace UIModule.MainPanel
         {
             get { return m_VisInspectResult; }
             set { SetProperty(ref m_VisInspectResult, value); }
-        }
-
-        private string m_CodeReaderResult = resultstatus.PendingResult.ToString();
-        public string CodeReaderResult
-        {
-            get { return m_CodeReaderResult; }
-            set { SetProperty(ref m_CodeReaderResult, value); }
         }
 
         private float m_VisProductQuantity;
@@ -232,14 +218,6 @@ namespace UIModule.MainPanel
             set { SetProperty(ref m_TopVisRecipeList, value); }
         }
 
-        private Visibility m_IsAllowEditMarker;
-
-        public Visibility IsAllowEditMarker
-        {
-            get { return m_IsAllowEditMarker; }
-            set { SetProperty(ref m_IsAllowEditMarker, value); }
-        }
-
         private Visibility m_IsAllowOperator = Visibility.Collapsed;
 
         public Visibility IsAllowOperator
@@ -260,13 +238,6 @@ namespace UIModule.MainPanel
         {
             get { return m_VisImage; }
             set { SetProperty(ref m_VisImage, value); }
-        }
-
-        private BitmapImage m_CodeReaderImage;
-        public BitmapImage CodeReaderImage
-        {
-            get { return m_CodeReaderImage; }
-            set { SetProperty(ref m_CodeReaderImage, value); }
         }
         #endregion
 
@@ -289,11 +260,7 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<ResultlogEntity>().Subscribe(OnResultlogEntity);
             m_EventAggregator.GetEvent<TopVisionResultEvent>().Subscribe(OnTopVisionResult);//
             m_EventAggregator.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
-            m_EventAggregator.GetEvent<OnCodeReaderConnectedEvent>().Subscribe(OnCodeReaderConnected);//
-            m_EventAggregator.GetEvent<OnCodeReaderDisconnectedEvent>().Subscribe(OnCodeReaderDisconnected);//
-            m_EventAggregator.GetEvent<OnCodeReaderEndResultEvent>().Subscribe(OnCodeReaderEndResult);//
             m_EventAggregator.GetEvent<TopVisionImage>().Subscribe(OnTopVisionImg);//
-            m_EventAggregator.GetEvent<CodeReaderImage>().Subscribe(OnCodeReaderImg);//
 
             //Button Command
             NavigationCommand = new DelegateCommand<string>(OnNavigation);
@@ -315,7 +282,6 @@ namespace UIModule.MainPanel
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
 
             //m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
-            CodeReaderConnStatus = Global.CodeReaderConnStatus;
         }
 
         #endregion
@@ -361,53 +327,6 @@ namespace UIModule.MainPanel
         {
             VisImage = img;
         }
-        #endregion
-
-        #region Code Reader
-        //New Can Be Use
-        private void OnCodeReaderConnected()
-        {
-            Global.CodeReaderConnStatus = ConnectionState.Connected.ToString();
-            CdStatusFG = System.Windows.Media.Brushes.Green;
-            CodeReaderConnStatus = Global.CodeReaderConnStatus;
-
-        }
-        //New Can Be Use
-        private void OnCodeReaderDisconnected()
-        {
-            Global.CodeReaderConnStatus = ConnectionState.Disconnected.ToString();
-            CdStatusFG = System.Windows.Media.Brushes.Red;
-            CodeReaderConnStatus = Global.CodeReaderConnStatus;
-        }
-        //New Can Be Use
-        private void OnCodeReaderEndResult()
-        {
-            ViewCurrentContainerNumber = Global.CurrentContainerNum;
-            ViewCurrentBatchTotalQuantity = Global.CurrentBatchQuantity;
-            ViewAccumulateCurrentTotalBatchQuantity = Global.AccumulateCurrentBatchQuantity;
-            ViewCurrentBoxQuantity = Global.CurrentBoxQuantity;
-            ViewCurrentBatchNumber = Global.CurrentBatchNum;
-            CodeReaderResult = Global.CodeReaderResult;
-
-            if (Global.CodeReaderResult == "OK")
-            {
-                CdResultBG = System.Windows.Media.Brushes.Green;
-            }
-            else if (Global.CodeReaderResult == "NG")
-            {
-                CdResultBG = System.Windows.Media.Brushes.Red;
-            }
-            else
-            {
-                CdResultBG = System.Windows.Media.Brushes.Transparent;
-            }
-        }
-
-        private void OnCodeReaderImg(BitmapImage img)
-        {
-            CodeReaderImage = img;
-        }
-
         #endregion
 
         private void OnNavigation(string page)
@@ -503,10 +422,6 @@ namespace UIModule.MainPanel
 
         #endregion
 
-        #region Code Reader
-
-        #endregion
-
         #region Log
         private void WriteLog(Datalog log)
         {
@@ -552,20 +467,6 @@ namespace UIModule.MainPanel
             }
         }
         #endregion
-
-        #region Others
-        public bool KeepAlive
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        #endregion
-        #endregion
-
-        #region Enum
         #endregion
     }
 }
