@@ -1823,4 +1823,7 @@ Red    : Machine Down</value>
   <data name="WeightRange" xml:space="preserve">
     <value>315-320</value>
   </data>
+  <data name="test" xml:space="preserve">
+    <value>test</value>
+  </data>
 </root>

@@ -51,6 +51,7 @@ namespace GreatechApp.Core.Variable
         public static string ForceEndLotRemarks;
         public static string CurrentApprovalLevel;
         public static string ForceEndLotCurrentApprovalLevel;
+        public static bool EndTrigger;
 
         // Machine Status
         public static MachineStateType MachineStatus = MachineStateType.Idle;

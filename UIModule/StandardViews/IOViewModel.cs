@@ -29,7 +29,7 @@ using UIModule.MainPanel;
 
 namespace UIModule.StandardViews
 {
-    public class IOViewModel : BaseUIViewModel, IAccessService
+    public class IOViewModel : BaseUIViewModel, IAccessService, INavigationAware
     {
         #region Variable
         private string _title = "IO";
@@ -72,6 +72,10 @@ namespace UIModule.StandardViews
         private List<DictionaryEntry> m_OutputResources { get; set; }
 
         public DelegateCommand<IOList> IOCommand { get; private set; }
+
+
+        private IEnumerable<IIOInterlock> m_IOIntLCollection;
+        private IIOInterlock m_IOIntL;
         private Timer tmr_UpdateStatus;
 
         public DelegateCommand SelectedItemChanged { get; set; }
@@ -81,6 +85,9 @@ namespace UIModule.StandardViews
 
         public IOViewModel()
         {
+            m_IOIntLCollection = ContainerLocator.Container.Resolve<Func<IEnumerable<IIOInterlock>>>()();
+            m_IOIntL = m_IOIntLCollection.FirstOrDefault();
+
             RaisePropertyChanged(nameof(CanAccess));
 
             m_EventAggregator.GetEvent<MachineState>().Subscribe(OnMachineState);
@@ -123,6 +130,12 @@ namespace UIModule.StandardViews
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             tmr_UpdateStatus.Stop();
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            tmr_UpdateStatus.Start();
+            UpdateIOList(this, null);
         }
 
         #endregion
@@ -172,6 +185,7 @@ namespace UIModule.StandardViews
 
         private void Command(IOList ioParam)
         {
+
             if (Global.MachineStatus != MachineStateType.Running)
             {
                 m_IO.WriteBit(ioParam.Tag, ioParam.Status);
@@ -218,6 +232,17 @@ namespace UIModule.StandardViews
 
                 if (SelectedModuleStation == "ALL")
                 {
+                    foreach (IN input in Enum.GetValues(typeof(IN)))
+                    {
+                        InputList.Add(new IOList()
+                        {
+                            Assignment = (string)m_InputResources.Where(x => x.Key.ToString() == input.ToString()).FirstOrDefault().Value,
+                            Description = (string)m_InputResources.Where(x => x.Key.ToString() == input.ToString()).FirstOrDefault().Value,
+                            Tag = (int)input,
+                            Status = m_IO.ReadBit((int)input),
+                        });
+                    }
+
                     foreach (OUT output in Enum.GetValues(typeof(OUT)))
                     {
                         OutputList.Add(new IOList()
@@ -225,12 +250,30 @@ namespace UIModule.StandardViews
                             Assignment = (string)m_OutputResources.Where(x => x.Key.ToString() == output.ToString()).FirstOrDefault().Value,
                             Description = (string)m_OutputResources.Where(x => x.Key.ToString() == output.ToString()).FirstOrDefault().Value,
                             Tag = (int)output,
-                            Status = m_IO.ReadBit((int)output),
+                            Status = m_IO.ReadOutBit((int)output),
                         });
                     }
                 }
                 else
                 {
+                    if (m_IO.InputMapList.Where(x => x.Key == (SQID)Enum.Parse(typeof(SQID), SelectedModuleStation)).Count() > 0)
+                    {
+                        var inputs = m_IO.InputMapList.Where(x => x.Key == (SQID)Enum.Parse(typeof(SQID), SelectedModuleStation)).First().Value;
+
+                        foreach (object inputObj in inputs)
+                        {
+                            IN input = (IN)Enum.Parse(typeof(IN), inputObj.ToString());
+
+                            InputList.Add(new IOList()
+                            {
+                                Assignment = (string)m_InputResources.Where(x => x.Key.ToString() == input.ToString()).FirstOrDefault().Value,
+                                Description = (string)m_InputResources.Where(x => x.Key.ToString() == input.ToString()).FirstOrDefault().Value,
+                                Tag = (int)input,
+                                Status = m_IO.ReadBit((int)input),
+                            });
+                        }
+                    }
+
                     if (m_IO.OutputMapList.Where(x => x.Key == (SQID)Enum.Parse(typeof(SQID), SelectedModuleStation)).Count() > 0)
                     {
                         var outputs = m_IO.OutputMapList.Where(x => x.Key == (SQID)Enum.Parse(typeof(SQID), SelectedModuleStation)).First().Value;

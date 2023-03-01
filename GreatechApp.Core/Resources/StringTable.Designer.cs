@@ -428,7 +428,16 @@ namespace GreatechApp.Core.Resources {
                 return ResourceManager.GetString("BuzzerInt", resourceCulture);
             }
         }
-       
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bypass Station.
+        /// </summary>
+        public static string BypassStation {
+            get {
+                return ResourceManager.GetString("BypassStation", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
@@ -4442,6 +4451,15 @@ namespace GreatechApp.Core.Resources {
         public static string Terminal {
             get {
                 return ResourceManager.GetString("Terminal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to test.
+        /// </summary>
+        public static string test {
+            get {
+                return ResourceManager.GetString("test", resourceCulture);
             }
         }
         

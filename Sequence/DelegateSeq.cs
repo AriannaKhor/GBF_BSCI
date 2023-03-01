@@ -58,7 +58,8 @@ namespace Sequence
             m_BaseSeq = new Dictionary<SQID, BaseClass>()
             {
                 { SQID.TopVisionSeq, new TopVisionSeq() },
-                { SQID.CountingScaleSeq, new CountingScaleSeq() },
+                { SQID.CountingScaleSeq, new CountingScaleSeq()
+                },
             };
 
             CoreSeqNum = CoreSeqList.Count;
