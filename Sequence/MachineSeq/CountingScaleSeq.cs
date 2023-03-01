@@ -340,7 +340,7 @@ namespace Sequence.MachineSeq
                         //    m_FailType = sequence.FailType;
                         //    break;
                         case MachineOperationType.ProcContErrRtn:
-                            m_SeqNum = SN.ErrorRoutine;
+                           // m_SeqNum = SN.ErrorRoutine;
                             break;
                         case MachineOperationType.ProcCont:
                             m_SeqNum = SN.Begin;
