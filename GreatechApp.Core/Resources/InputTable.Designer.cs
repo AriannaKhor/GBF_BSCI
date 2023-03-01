@@ -61,11 +61,11 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I0100 | E Stop Button.
+        ///   Looks up a localized string similar to I0100 | Curtain Sensor.
         /// </summary>
-        public static string DI0100_E_StopBtn {
+        public static string DI0100_CurtainSensor {
             get {
-                return ResourceManager.GetString("DI0100_E_StopBtn", resourceCulture);
+                return ResourceManager.GetString("DI0100_CurtainSensor", resourceCulture);
             }
         }
         

@@ -61,7 +61,7 @@
                     </ListView>
                 </GroupBox>
             </Expander>
-
+            
             <GroupBox Header="{Binding Path=Input, Source={StaticResource StringTableODP}}" Grid.Column="1" IsEnabled="{Binding CanAccess}">
                 <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" mahApp:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True">
                     <ItemsControl ItemsSource="{Binding InputList, Mode=TwoWay}" >

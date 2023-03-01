@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DI0100_E_StopBtn" xml:space="preserve">
-    <value>I0100 | E Stop Button</value>
+  <data name="DI0100_CurtainSensor" xml:space="preserve">
+    <value>I0100 | Curtain Sensor</value>
   </data>
   <data name="DI0101_AirPressure" xml:space="preserve">
     <value>I0101 | Air Pressure</value>

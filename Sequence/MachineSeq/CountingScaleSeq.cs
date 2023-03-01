@@ -150,7 +150,7 @@ namespace Sequence.MachineSeq
                             }
                             else
                             {
-
+                                
                             }
                             m_SeqNum = SN.WaitForCurtainSensorSignalBreak;
                             break;
@@ -248,13 +248,12 @@ namespace Sequence.MachineSeq
                             }
                             break;
                         #endregion
-
                         #endregion
 
                         #region Weighing Scale
                         case SN.GetWeightFromScale:
                             m_TmrDelay.Time_Out = 0.1f;
-                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.OhausScaleSeq, MachineOpr = MachineOperationType.ProcStart });
+                           // Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.OhausScaleSeq, MachineOpr = MachineOperationType.ProcStart });
                             m_SeqNum = SN.CompareVisResultandScaleResult;
                             break;
 
@@ -279,7 +278,6 @@ namespace Sequence.MachineSeq
                             //}
                             break;
                         #endregion
-
                         #endregion
 
                         #region End Lot
@@ -339,9 +337,9 @@ namespace Sequence.MachineSeq
                         //    m_SeqFlag.ProcCodeReaderFail = true;
                         //    m_FailType = sequence.FailType;
                         //    break;
-                        case MachineOperationType.ProcContErrRtn:
-                           // m_SeqNum = SN.ErrorRoutine;
-                            break;
+                        //case MachineOperationType.ProcContErrRtn:
+                        //    m_SeqNum = SN.ErrorRoutine;
+                        //    break;
                         case MachineOperationType.ProcCont:
                             m_SeqNum = SN.Begin;
                             break;
