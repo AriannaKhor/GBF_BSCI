@@ -31,6 +31,7 @@ namespace UIModule.MainPanel
         CTimer m_timeOut = new CTimer();
         private ResultsDatalog m_resultsDatalog = new ResultsDatalog();
         private float tempvisquantityholder = 0;
+        private bool serialresultcount;
 
         public DelegateCommand<string> NavigationCommand { get; set; }
         public DelegateCommand<string> TriggerVisCmd { get; private set; }
@@ -186,6 +187,7 @@ namespace UIModule.MainPanel
         public EquipmentViewModel(IEventAggregator eventAggregator)
         {
             TabPageHeader = GetStringTableValue("Equipment");
+            serialresultcount = true;
 
             Assembly asm = Assembly.GetEntryAssembly();
             AssemblyName asmName = asm.GetName();
@@ -203,7 +205,7 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
             m_EventAggregator.GetEvent<TopVisionImage>().Subscribe(OnTopVisionImg);//
             m_EventAggregator.GetEvent<ResultLoggingEvent>().Subscribe(OnResultLog);//
-
+            m_EventAggregator.GetEvent<SerialPortMsg>().Subscribe(OnSerialPortResult);
 
             //Button Command
             NavigationCommand = new DelegateCommand<string>(OnNavigation);
@@ -223,9 +225,6 @@ namespace UIModule.MainPanel
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("SerialNo")} : {Environment.MachineName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachName")} : {m_SystemConfig.Machine.EquipName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
-
-            //m_EventAggregator.GetEvent<RequestVisionConnectionEvent>().Publish();
-            //VisionConnStatus = Global.VisionConnStatus;
         }
         #endregion
 
@@ -403,6 +402,22 @@ namespace UIModule.MainPanel
             }
         }
 
+        #endregion
+
+        #region Weighing Scale
+        private void OnSerialPortResult(ObservableCollection<SerialPortMsg> serialresult)
+        {
+            if (serialresultcount)
+            {
+                //Weight
+                serialresultcount = false;
+            }
+            else
+            {
+                //Pcs
+                serialresultcount = true;
+            }
+        }
         #endregion
 
         private void WriteLog(Datalog log)

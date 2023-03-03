@@ -5,13 +5,13 @@
     using Prism.Events;
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
-    public class SerialPortMsg : PubSubEvent<SerialPortMsg>
+    public class SerialPortMsg : PubSubEvent<ObservableCollection<SerialPortMsg>>
     {
-        public string PortName;
-        public string Message;
+        public string Messages;
     }
     public class ResultLoggingEvent : PubSubEvent<ResultsDatalog>
     {

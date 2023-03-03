@@ -17,6 +17,7 @@ using IOManager;
 using Prism.Commands;
 using Prism.Events;
 using Sequence.Framework;
+using SerialPortManager;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -83,7 +84,7 @@ namespace Sequence
         protected bool InitialStart = true;
 
         //For GBF 
-        public int inputsignal;
+        public bool inputsignal;
 
         public int SlipSheetCount;
 
@@ -123,6 +124,8 @@ namespace Sequence
         public ITCPIP TCPIP;
 
         public IInsightVision InsightVision;
+
+        public ISerialPort SerialPort;
 
         public IShowDialog ShowDialog;
 

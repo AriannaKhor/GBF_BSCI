@@ -6,8 +6,7 @@
 
         // Machine Sequence
         TopVisionSeq,
-        //CodeReaderSeq,
-        //OhausScaleSeq,
+        OhausScaleSeq,
         CountingScaleSeq,
     }
 

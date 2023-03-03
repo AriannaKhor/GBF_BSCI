@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Sequence.MachineSeq
 {
-    public class CodeReaderSeq : BaseClass
+    public class OhausScaleSeq : BaseClass
     {
         #region Enum
         public enum ErrorCode
@@ -33,13 +33,16 @@ namespace Sequence.MachineSeq
             BeginCodeReader,
 
             // Runnning Routine
-            TriggerCodeReader,
-            WaitCodeReaderResult,
+            TriggerWeighingScale,
+            TriggerWeighingScaleSendCurrentWeight,
+            WaitTriggerWeighingScaleSendCurrentWeight,
+            TriggerWeighingScaleSendCurrentQty,
+            WaitTriggerWeighingScaleSendCurrentQty,
         }
         #endregion
 
         #region Constructor
-        public CodeReaderSeq()
+        public OhausScaleSeq()
         {
             m_SeqNum = SN.EOS;
         }
@@ -55,13 +58,15 @@ namespace Sequence.MachineSeq
                     switch (m_SeqNum)
                     {
                         #region Running Routine
-                        case SN.BeginCodeReader:
-                            m_SeqNum = SN.TriggerCodeReader;
+                        case SN.TriggerWeighingScaleSendCurrentWeight:
+                            SerialPort.Send("S");
+                            m_TmrDelay.Time_Out = 0.1f;
                             break;
-
-                        case SN.TriggerCodeReader:
-                            //CodeReader.TriggerCodeReader();
-                            m_SeqNum = SN.EOS;
+                        case SN.TriggerWeighingScaleSendCurrentQty:
+                            if (m_TmrDelay.TimeOut())
+                            {
+                                SerialPort.Send("IP");
+                            }
                             break;
                             #endregion
                     }
@@ -96,7 +101,7 @@ namespace Sequence.MachineSeq
                     {
 
                         case MachineOperationType.ProcStart:
-                            m_SeqNum = SN.BeginCodeReader;
+                            m_SeqNum = SN.TriggerWeighingScaleSendCurrentWeight;
                             break;
                     }
                 }

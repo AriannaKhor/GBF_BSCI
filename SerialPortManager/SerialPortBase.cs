@@ -22,7 +22,6 @@ namespace SerialPortManager
         private StopBits SerialPortStopBits;
         private Handshake SerialPortHandshake;
         private SerialPortInfo m_serialPortInfo = new SerialPortInfo();
-        private SerialPortMsg m_SerialPortMsg;
         private StringBuilder m_ErrMsg = new StringBuilder();
         private SystemConfig m_sysCfg = SystemConfig.Open(@"..\Config Section\General\System.Config");
         private SerialPort m_SerialPort = new SerialPort();
@@ -255,9 +254,13 @@ namespace SerialPortManager
 
         public virtual void RaiseOnDataReceived(string Message)
         {
-            m_SerialPortMsg.PortName = m_serialPortInfo.PortName;
-            m_SerialPortMsg.Message = Message;
+            var m_SerialPortMsg = new ObservableCollection<SerialPortMsg>();
+            m_SerialPortMsg.Add(new SerialPortMsg()
+            {
+                Messages = Message
+            });
             m_Event.GetEvent<SerialPortMsg>().Publish(m_SerialPortMsg);
+            m_SerialPortMsg.Clear();
         }
         #endregion
 

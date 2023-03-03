@@ -83,9 +83,11 @@ namespace Sequence.MachineSeq
                         #region Curtain Sensor
                         case SN.WaitForCurtainSensorSignalBreak:
 #if SIMULATION
-                            inputsignal = 0;
+                            inputsignal = False;
+#else
+                            inputsignal = IO.ReadBit((int)IN.DI0100_CurtainSensor);
 #endif
-                            if (inputsignal == (int)IN.DI0100_CurtainSensor)
+                            if (!inputsignal)
                             {
                                 m_SeqNum = SN.WaitForCurtainSensorSignalSafe;
                             }
@@ -93,9 +95,11 @@ namespace Sequence.MachineSeq
 
                         case SN.WaitForCurtainSensorSignalSafe:
 #if SIMULATION
-                            inputsignal = 1;
+                            inputsignal = True;
+#else
+                            inputsignal = IO.ReadBit((int)IN.DI0100_CurtainSensor);
 #endif
-                            if (inputsignal == (int)IN.DI0100_CurtainSensor + 1)
+                            if (inputsignal)
                             {
                                 m_TmrDelay.Time_Out = 0.1f;
                                 m_SeqNum = SN.TriggerVis;
@@ -150,7 +154,8 @@ namespace Sequence.MachineSeq
                             }
                             else
                             {
-                                
+                                resumeError = true;
+                                m_SeqRsm[(int)RSM.Err] = SN.DetectInitialSlipSheet;
                             }
                             m_SeqNum = SN.WaitForCurtainSensorSignalBreak;
                             break;
@@ -253,7 +258,7 @@ namespace Sequence.MachineSeq
                         #region Weighing Scale
                         case SN.GetWeightFromScale:
                             m_TmrDelay.Time_Out = 0.1f;
-                           // Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.OhausScaleSeq, MachineOpr = MachineOperationType.ProcStart });
+                            Publisher.GetEvent<MachineOperation>().Publish(new SequenceEvent() { TargetSeqName = SQID.OhausScaleSeq, MachineOpr = MachineOperationType.ProcStart });
                             m_SeqNum = SN.CompareVisResultandScaleResult;
                             break;
 
@@ -326,20 +331,10 @@ namespace Sequence.MachineSeq
                             m_SeqFlag.ProcVisCont = true;
                             m_ContType = sequence.ContType;
                             break;
-                        //case MachineOperationType.ProcCodeReaderCont:
-                        //    m_SeqFlag.ProcCodeReaderCont = true;
-                        //    break;
                         case MachineOperationType.ProcVisFail:
                             m_SeqFlag.ProcVisFail = true;
                             m_FailType = sequence.FailType;
                             break;
-                        //case MachineOperationType.ProcCodeReaderFail:
-                        //    m_SeqFlag.ProcCodeReaderFail = true;
-                        //    m_FailType = sequence.FailType;
-                        //    break;
-                        //case MachineOperationType.ProcContErrRtn:
-                        //    m_SeqNum = SN.ErrorRoutine;
-                        //    break;
                         case MachineOperationType.ProcCont:
                             m_SeqNum = SN.Begin;
                             break;

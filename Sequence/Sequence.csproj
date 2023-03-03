@@ -197,7 +197,7 @@
     <Compile Include="IDelegateSeq.cs" />
     <Compile Include="MachineSeq\CountingScaleSeq.cs" />
     <Compile Include="MachineSeq\TopVisionSeq.cs" />
-    <Compile Include="MachineSeq\CodeReaderSeq.cs" />
+    <Compile Include="MachineSeq\OhausScaleSeq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +220,10 @@
     <ProjectReference Include="..\IOManager\IOManager.csproj">
       <Project>{f9180ee7-9889-4e7e-8edb-052a2777fc37}</Project>
       <Name>IOManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SerialPortManager\SerialPortManager.csproj">
+      <Project>{A26E73BD-86D3-4186-9656-A035A21D1093}</Project>
+      <Name>SerialPortManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\TCPIPManager\TCPIPManager.csproj">
       <Project>{ffab358d-9e76-4c94-9fe3-eff9b3f56e0a}</Project>
