@@ -1820,10 +1820,13 @@ Red    : Machine Down</value>
   <data name="WeighingPcs" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="WeightRange" xml:space="preserve">
+  <data name="ExpectedWeightRange" xml:space="preserve">
     <value>315-320</value>
   </data>
   <data name="test" xml:space="preserve">
     <value>test</value>
+  </data>
+  <data name="testw" xml:space="preserve">
+    <value>testw</value>
   </data>
 </root>

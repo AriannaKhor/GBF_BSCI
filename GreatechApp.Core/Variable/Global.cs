@@ -40,6 +40,9 @@ namespace GreatechApp.Core.Variable
         public static string VisInvertColorPouch;
         public static string VisDFU;
 
+        //GBF Base Class
+        public static int OverallQty;
+
         //Weighing Scale
         public static string WeighingResult;
         public static string OverallResult;

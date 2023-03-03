@@ -200,7 +200,7 @@ namespace UIModule.StandardViews.Services
             IsGreenBlinking = false;
             IsLightBlinking = false;
 
-            // turn off before loadin the setting 
+            // turn off before loading the setting 
             //IO.WriteBit((int)OUT.DO0101_RedTowerLight, false);
             //IO.WriteBit((int)OUT.DO0102_AmberTowerLight, false);
             //IO.WriteBit((int)OUT.DO0103_GreenTowerLight, false);

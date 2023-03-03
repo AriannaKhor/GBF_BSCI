@@ -1402,6 +1402,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 315-320.
+        /// </summary>
+        public static string ExpectedWeightRange {
+            get {
+                return ResourceManager.GetString("ExpectedWeightRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expecting:.
         /// </summary>
         public static string ExpectingResult {
@@ -4527,6 +4536,15 @@ namespace GreatechApp.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to testw.
+        /// </summary>
+        public static string testw {
+            get {
+                return ResourceManager.GetString("testw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Throughput.
         /// </summary>
         public static string Throughput {
@@ -5108,15 +5126,6 @@ namespace GreatechApp.Core.Resources {
         public static string WeighingScale {
             get {
                 return ResourceManager.GetString("WeighingScale", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 315-320.
-        /// </summary>
-        public static string WeightRange {
-            get {
-                return ResourceManager.GetString("WeightRange", resourceCulture);
             }
         }
         

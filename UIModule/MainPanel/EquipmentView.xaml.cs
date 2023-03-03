@@ -125,5 +125,10 @@ namespace UIModule.MainPanel
             dataView.SortDescriptions.Add(sd);
             dataView.Refresh();
         }
+
+        private void Label_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -83,9 +83,9 @@ namespace Sequence.MachineSeq
                         #region Curtain Sensor
                         case SN.WaitForCurtainSensorSignalBreak:
 #if SIMULATION
-                            inputsignal = 0;
+                            inputsignal = false; 
 #endif
-                            if (inputsignal == (int)IN.DI0100_CurtainSensor)
+                            if (!inputsignal == ReadBit(IN.DI0100_CurtainSensor))
                             {
                                 m_SeqNum = SN.WaitForCurtainSensorSignalSafe;
                             }
@@ -93,9 +93,9 @@ namespace Sequence.MachineSeq
 
                         case SN.WaitForCurtainSensorSignalSafe:
 #if SIMULATION
-                            inputsignal = 1;
+                            inputsignal = true;
 #endif
-                            if (inputsignal == (int)IN.DI0100_CurtainSensor + 1)
+                            if (inputsignal == ReadBit(IN.DI0100_CurtainSensor))
                             {
                                 m_TmrDelay.Time_Out = 0.1f;
                                 m_SeqNum = SN.TriggerVis;
@@ -146,6 +146,7 @@ namespace Sequence.MachineSeq
                                 ResetGlobalResult();
                                 OverallQtyCount++;
                                 SlipSheetCount++;
+                                Publisher.GetEvent<TopVisProductCountResult>().Publish(new TopVisProductCountResult { OverallQtyCountEvent = OverallQtyCount, SlipSheetCountEvent = SlipSheetCount});
                                 m_SeqRsm[(int)RSM.Src] = SN.DetectForReversePouch;
                             }
                             else
@@ -162,6 +163,7 @@ namespace Sequence.MachineSeq
                             {
                                 ResetGlobalResult();
                                 OverallQtyCount++;
+                                Publisher.GetEvent<TopVisProductCountResult>().Publish(new TopVisProductCountResult { OverallQtyCountEvent = OverallQtyCount});
                                 m_SeqRsm[(int)RSM.Src] = SN.DetectColorPouch;
                             }
                             else
@@ -182,6 +184,7 @@ namespace Sequence.MachineSeq
                                 OverallQtyCount++;
                                 OverallPouchesCount++;
                                 ClrPouchQty++;
+                                Publisher.GetEvent<TopVisProductCountResult>().Publish(new TopVisProductCountResult { OverallQtyCountEvent = OverallQtyCount, OverallPouchesCountEvent = OverallPouchesCount, ClrPouchQtyEvent = ClrPouchQty });
                                 m_SeqRsm[(int)RSM.Src] = SN.DetectInvertColorPouch;
                             }
                             else
@@ -202,6 +205,7 @@ namespace Sequence.MachineSeq
                                 OverallQtyCount++;
                                 OverallPouchesCount++;
                                 InvertClrPouchQty++;
+                                Publisher.GetEvent<TopVisProductCountResult>().Publish(new TopVisProductCountResult { OverallQtyCountEvent = OverallQtyCount, OverallPouchesCountEvent = OverallPouchesCount, InvertClrPouchQtyEvent = InvertClrPouchQty});
                                 m_SeqRsm[(int)RSM.Src] = SN.DetectColorPouch;
                             }
                             else
@@ -220,6 +224,7 @@ namespace Sequence.MachineSeq
                             {
                                 ResetGlobalResult();
                                 OverallQtyCount++;
+                                Publisher.GetEvent<TopVisProductCountResult>().Publish(new TopVisProductCountResult { OverallQtyCountEvent = OverallQtyCount });
                                 m_SeqRsm[(int)RSM.Src] = SN.DetectFinalSlipSheet;
                             }
                             else
@@ -238,6 +243,7 @@ namespace Sequence.MachineSeq
                             {
                                 ResetGlobalResult();
                                 OverallQtyCount++;
+                                Publisher.GetEvent<TopVisProductCountResult>().Publish(new TopVisProductCountResult { OverallQtyCountEvent = OverallQtyCount });
                                 m_SeqNum = SN.GetWeightFromScale;
                             }
                             else
@@ -361,12 +367,18 @@ namespace Sequence.MachineSeq
                 checkOp = true;
             }
         }
+
+        
 #endregion
 
 #region IO
         internal override void IOMapping()
         {
-#region Output
+            #region Input
+            AssignIO(IN.DI0100_CurtainSensor);
+            #endregion
+
+            #region Output
             AssignIO(OUT.DO0100_Buzzer);
 #endregion
         }
