@@ -52,6 +52,15 @@ namespace IOManager
             get { return m_IOKeyList; }
             set { m_IOKeyList = value; }
         }
+
+        public void AssignInput(SQID seqName, IN masterInput)
+        {
+            if (!InputMapList.ContainsKey(seqName))
+                InputMapList.Add(seqName, new List<object>() { { masterInput } });
+            else
+                InputMapList[seqName].Add(masterInput);
+        }
+
         public void AssignOutput(SQID seqName, OUT masterOutput)
         {
             if (!OutputMapList.ContainsKey(seqName))

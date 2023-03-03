@@ -174,27 +174,27 @@
                                         <TableRow>
                                             <TableCell>
                                                 <Paragraph>
-                                                    <Label Content="{Binding Path=VisionPcs, Source={StaticResource StringTableODP}}"></Label>
+                                                    <Label Content="{Binding Path=OverallVisQty}"></Label>
                                                 </Paragraph>
                                             </TableCell>
                                             <TableCell>
                                                 <Paragraph>
-                                                    <Label Content="{Binding Path=WeighingPcs, Source={StaticResource StringTableODP}}"></Label>
+                                                    <Label Content="{Binding Path=OverallWeightQty}"></Label>
                                                 </Paragraph>
                                             </TableCell>
                                             <TableCell>
                                                 <Paragraph>
-                                                    <Label Content="{Binding Path=WeightRange, Source={StaticResource StringTableODP}}"></Label>
+                                                    <Label Content="{Binding Path=ExpectedWeightRange, Source={StaticResource StringTableODP}}"></Label>
                                                 </Paragraph>
                                             </TableCell>
                                             <TableCell>
                                                 <Paragraph>
-                                                    <Label Content="{Binding Path=ActualWeight, Source={StaticResource StringTableODP}}"></Label>
+                                                    <Label Content="{Binding Path=ActualWeight}"></Label>
                                                 </Paragraph>
                                             </TableCell>
                                             <TableCell>
                                                 <Paragraph>
-                                                    <Label Content="{Binding Path=VisionPcs, Source={StaticResource StringTableODP}}"></Label>
+                                                    <Label Content="{Binding Path=OverallStatus}"></Label>
                                                 </Paragraph>
                                             </TableCell>
                                         </TableRow>

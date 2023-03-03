@@ -327,7 +327,6 @@ namespace UIModule.StationViews
         {
             m_EventAggregator.GetEvent<TestRunResult>().Unsubscribe(OnTestRunComplete);
             tmr_UpdateMotionStatus.Stop();
-
             tmr_UpdateIOStatus.Stop();
         }
 

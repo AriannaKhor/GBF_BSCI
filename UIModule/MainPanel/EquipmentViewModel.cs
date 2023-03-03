@@ -18,6 +18,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -85,6 +86,34 @@ namespace UIModule.MainPanel
         {
             get { return m_TriggerLiveVis; }
             set { SetProperty(ref m_TriggerLiveVis, value); }
+        }
+
+        private int m_OverallVisQty;
+        public int OverallVisQty
+        {
+            get { return m_OverallVisQty; }
+            set { SetProperty(ref m_OverallVisQty, value); }
+        }
+
+        private int m_OverallWeightQty;
+        public int OverallWeightQty
+        {
+            get { return m_OverallWeightQty; }
+            set { SetProperty(ref m_OverallWeightQty, value); }
+        }
+
+        private int m_ActualWeight;
+        public int ActualWeight
+        {
+            get { return m_ActualWeight; }
+            set { SetProperty(ref m_ActualWeight, value); }
+        }
+
+        private int m_OverallStatus;
+        public int OverallStatus
+        {
+            get { return m_OverallStatus; }
+            set { SetProperty(ref m_OverallStatus, value); }
         }
 
         private SolidColorBrush m_StatusFG;
@@ -205,6 +234,7 @@ namespace UIModule.MainPanel
             m_EventAggregator.GetEvent<VisionConnectionEvent>().Subscribe(OnVisionConnection); //
             m_EventAggregator.GetEvent<TopVisionImage>().Subscribe(OnTopVisionImg);//
             m_EventAggregator.GetEvent<ResultLoggingEvent>().Subscribe(OnResultLog);//
+            m_EventAggregator.GetEvent<TopVisProductCountResult>().Subscribe(OnTopVisProductCountResult);//
             m_EventAggregator.GetEvent<SerialPortMsg>().Subscribe(OnSerialPortResult);
 
             //Button Command
@@ -225,6 +255,11 @@ namespace UIModule.MainPanel
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("SerialNo")} : {Environment.MachineName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachName")} : {m_SystemConfig.Machine.EquipName}"));
             DataLogCollection.Add(new Datalog(LogMsgType.Info, $"--- {GetStringTableValue("MachID")} : {m_SystemConfig.Machine.MachineID}"));
+        }
+
+        private void OnTopVisProductCountResult(TopVisProductCountResult result)
+        {
+            OverallVisQty = result.OverallQtyCountEvent;
         }
         #endregion
 

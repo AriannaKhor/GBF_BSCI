@@ -37,6 +37,7 @@
 
     public class TopVisionResultEvent : PubSubEvent
     {
+
     }
        
     public class GetLiveImage : PubSubEvent
@@ -63,15 +64,6 @@
     {
 
     }
-    public class ReceivedHostMsg : PubSubEvent<string>
-    {
-
-    }
-    public class SecsGemCntrlState : PubSubEvent<string>
-    {
-
-    }
-
     
     public class MachineState : PubSubEvent<MachineStateType>
     {
@@ -81,6 +73,15 @@
     public class CheckOperation: PubSubEvent<bool>
     {
 
+    }
+
+    public class TopVisProductCountResult: PubSubEvent<TopVisProductCountResult>
+    {
+        public int SlipSheetCountEvent;
+        public int OverallQtyCountEvent;
+        public int OverallPouchesCountEvent;
+        public int ClrPouchQtyEvent;
+        public int InvertClrPouchQtyEvent;
     }
 
     public class MachineOperation : PubSubEvent<SequenceEvent>

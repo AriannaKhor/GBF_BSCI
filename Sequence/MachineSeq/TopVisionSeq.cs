@@ -109,6 +109,11 @@ namespace Sequence.MachineSeq
         #region IO
         internal override void IOMapping()
         {
+
+            #region Input
+            AssignIO(IN.DI0100_CurtainSensor);
+            #endregion
+
             #region Output
             AssignIO(OUT.DO0100_Buzzer);
             #endregion
